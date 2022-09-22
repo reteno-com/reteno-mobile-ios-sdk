@@ -33,7 +33,7 @@ The `NotificationServiceExtension` allows your iOS application to receive rich n
 **1.2**  Select `Notification Service Extension` then press `Next`.
 
 <p align="center">
-  <img src="../../Reteno/Reteno.docc/Resources/create_notification_service_extension.png" width = "50%"/>
+  <img src="Reteno/Reteno.docc/Resources/create_notification_service_extension.png" width = "50%"/>
 </p>
 
 **1.3**  Enter the product name as `NotificationServiceExtension` and press `Finish`.
@@ -41,7 +41,7 @@ The `NotificationServiceExtension` allows your iOS application to receive rich n
 Do not select `Activate` on the dialog that is shown after selecting `Finish`.
 
 <p align="center">
-  <img src="../../Reteno/Reteno.docc/Resources/choose_options_for_extension.png" width = "50%"/>
+  <img src="Reteno/Reteno.docc/Resources/choose_options_for_extension.png" width = "50%"/>
 </p>
 
 **1.4**  Press `Cancel` on the Activate scheme prompt.
@@ -55,7 +55,7 @@ If you activated by accident, you can switch back to debug your app within Xcode
 Check that the Deployment Target is set to the same value as your Main Application Target. Note that iOS versions under 10 will not be able to get Rich Media.
 
 <p align="center">
-  <img src="../../Reteno/Reteno.docc/Resources/configure_target.png" width = "50%"/>
+  <img src="Reteno/Reteno.docc/Resources/configure_target.png" width = "50%"/>
 </p>
 
 **1.6**  In the project navigator, select the `NotificationServiceExtension` folder and open the `NotificationService.swift` and replace the whole file's contents with the following code. Ignore any build errors at this point. We will import Reteno module which will resolve any errors.
@@ -211,13 +211,13 @@ Do it in the App Delegate `didFinishLaunchingWithOptions` method after configuri
 **4.2**  Click **"+ Capability"** if you do not have App Groups in your app yet.
 
 <p align="center">
-  <img src="../../Reteno/Reteno.docc/Resources/add_group_main_target.png" width = "50%"/>
+  <img src="Reteno/Reteno.docc/Resources/add_group_main_target.png" width = "50%"/>
 </p>
 
 **4.3**  Select App Groups.
 
 <p align="center">
-  <img src="../../Reteno/Reteno.docc/Resources/app_groups_capability.png" width = "50%"/>
+  <img src="Reteno/Reteno.docc/Resources/app_groups_capability.png" width = "50%"/>
 </p>
 
 **4.4**  Under App Groups click the **"+"** button.
@@ -227,7 +227,7 @@ Do it in the App Delegate `didFinishLaunchingWithOptions` method after configuri
 **4.6**  In the `NotificationServiceExtension` target and repeat steps **4.2** - **4.5** for extension target
 
 <p align="center">
-  <img src="../../Reteno/Reteno.docc/Resources/add_group_in_extension.png" width = "50%"/>
+  <img src="Reteno/Reteno.docc/Resources/add_group_in_extension.png" width = "50%"/>
 </p>
 
 Note that group name structure should be `group.{bundle_id}.reteno-local-storage` where `bundle_id` is the same as your **Main App target** "Bundle Identifier". **Do Not Include** NotificationServiceExtension.
