@@ -1,0 +1,6 @@
+// Specialization for the Staging
+
+#include "Base.xcconfig"
+
+BUILD_ENV = STAGING
+APP_TRANSPORT_SECURITY_ALLOWS_ARBITRARY_LOADS_KEY = NSAllowsArbitraryLoads

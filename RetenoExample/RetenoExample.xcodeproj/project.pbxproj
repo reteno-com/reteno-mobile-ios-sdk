@@ -1,0 +1,1324 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		118A153F1BD1BE345E73CA67 /* Pods_RetenoExample_NotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6A63ECAF8D0F08F0024AFD7 /* Pods_RetenoExample_NotificationServiceExtension.framework */; };
+		7004E8AB236C85060003EBCB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7004E8A9236C85060003EBCB /* Localizable.strings */; };
+		700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700D24DA236C6D3300918E21 /* MainFlowAssembly.swift */; };
+		7071CE18238305C700D34895 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7071CE17238305C700D34895 /* LaunchScreen.storyboard */; };
+		70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67552045A6AD00803C08 /* AppDelegate.swift */; };
+		70BF67CF2045A6AD00803C08 /* ApplicationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */; };
+		70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70BF67AF2045A6AD00803C08 /* Assets.xcassets */; };
+		AC4124DF388A3245289150A7 /* Pods_RetenoExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B755B5461F1CDB5C9D4A1D0 /* Pods_RetenoExample.framework */; };
+		B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1228DA808C0014ED15 /* MainModel.swift */; };
+		B52C7C1528DA80D10014ED15 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1428DA80D10014ED15 /* MainViewModel.swift */; };
+		B52C7C1728DA818B0014ED15 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1628DA818B0014ED15 /* MainViewController.swift */; };
+		B52C7C1F28DA83220014ED15 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1E28DA83220014ED15 /* NotificationService.swift */; };
+		B52C7C2328DA83220014ED15 /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B52C7C2D28DA92340014ED15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B52C7C2C28DA92340014ED15 /* GoogleService-Info.plist */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B52C7C2128DA83220014ED15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C52110221DAB85BC006CEBCE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B52C7C1B28DA83220014ED15;
+			remoteInfo = NotificationServiceExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B52C7C2B28DA83230014ED15 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B52C7C2328DA83220014ED15 /* NotificationServiceExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E8CBE417202228FD00186010 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		00230E203382F989BDEE404C /* Pods-FeatureCommon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.debug.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.debug.xcconfig"; sourceTree = "<group>"; };
+		013CE231394F0A6BDA657303 /* Pods-RetenoExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.debug.xcconfig"; sourceTree = "<group>"; };
+		03A1808A01EF31FB22D3A039 /* Pods-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.debug.xcconfig"; sourceTree = "<group>"; };
+		046BDAD35D280EACCF4300B9 /* Pods-MainMenu.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.production-debug.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.production-debug.xcconfig"; sourceTree = "<group>"; };
+		0AD6BFE5E7F2211A7DD95A35 /* Pods-FeatureCommon.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.staging-release.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.staging-release.xcconfig"; sourceTree = "<group>"; };
+		189E14F0C28C95AA3A13B59F /* Pods-UI.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.staging-debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		2619A193756A64D2D1C3F4FD /* Pods-UI.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.production-release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.production-release.xcconfig"; sourceTree = "<group>"; };
+		2E9BE80671C7517B9FB230A0 /* Pods-RetenoExample.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-debug.xcconfig"; sourceTree = "<group>"; };
+		3ADD3D3531D6027393E59D4B /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
+		3FB4DA2A38A43DB1256A02E8 /* Pods-MainMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.debug.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.debug.xcconfig"; sourceTree = "<group>"; };
+		4AD9FF1B1C8EF0F74A6B1634 /* Pods-MainMenu.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.staging-release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.staging-release.xcconfig"; sourceTree = "<group>"; };
+		505FCBED2052E6B0006CF982 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55D9F29E4222053695A8E317 /* Pods-UI.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.staging-release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.staging-release.xcconfig"; sourceTree = "<group>"; };
+		56B2037D1BF4F1B00160641C /* Pods-UI.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.production-debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.production-debug.xcconfig"; sourceTree = "<group>"; };
+		581CB6AC8B9512C71BCF6A1C /* Pods-Core.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.production-debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.production-debug.xcconfig"; sourceTree = "<group>"; };
+		5F1F0645A410B4A5147DA1A5 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
+		634F8430613D0E87E9F4C182 /* Pods-Auth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.release.xcconfig"; sourceTree = "<group>"; };
+		64A9384D18D1BB0F30A8D2C2 /* Pods_Auth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Auth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C251F865E4FD81D3CB6FFA0 /* Pods_MainMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MainMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D436F370ABE6B53FD7AC4E7 /* Pods-UI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.debug.xcconfig"; sourceTree = "<group>"; };
+		7004E8AA236C85060003EBCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		700D24DA236C6D3300918E21 /* MainFlowAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFlowAssembly.swift; sourceTree = "<group>"; };
+		7071CE17238305C700D34895 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7075EC14236C2E6E00327FF9 /* Environment.production.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Environment.production.plist; sourceTree = "<group>"; };
+		7075EC15236C2E6E00327FF9 /* Environment.development.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Environment.development.plist; sourceTree = "<group>"; };
+		7075EC16236C2E6E00327FF9 /* Environment.staging.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Environment.staging.plist; sourceTree = "<group>"; };
+		7075EC18236C2E8300327FF9 /* Production-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Production-Debug.xcconfig"; sourceTree = "<group>"; };
+		7075EC19236C2E8300327FF9 /* Staging-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Staging-Debug.xcconfig"; sourceTree = "<group>"; };
+		7075EC1A236C2E8300327FF9 /* Production-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Production-Release.xcconfig"; sourceTree = "<group>"; };
+		7075EC1C236C2E8300327FF9 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		7075EC1D236C2E8300327FF9 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		7075EC1E236C2E8300327FF9 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		7075EC1F236C2E8300327FF9 /* Staging.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
+		7075EC20236C2E8300327FF9 /* Production.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
+		7075EC21236C2E8300327FF9 /* Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		7075EC22236C2E8300327FF9 /* Development-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Development-Debug.xcconfig"; sourceTree = "<group>"; };
+		7075EC23236C2E8300327FF9 /* Staging-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Staging-Release.xcconfig"; sourceTree = "<group>"; };
+		7075EC24236C2E8300327FF9 /* Development-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Development-Release.xcconfig"; sourceTree = "<group>"; };
+		70BF67552045A6AD00803C08 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFlowCoordinator.swift; sourceTree = "<group>"; };
+		70BF67AF2045A6AD00803C08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		76C0DDEB3379C3D6DF04F99A /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		83030DA4C97EF2043137F794 /* Pods-Auth.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.production-debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.production-debug.xcconfig"; sourceTree = "<group>"; };
+		844B1D30B4FE94FE7A771FC6 /* Pods_UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8690A2926A92253B06E013B1 /* Pods-Auth.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.production-release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.production-release.xcconfig"; sourceTree = "<group>"; };
+		884E7374B6C5D8DD5FF453B5 /* Pods-Auth.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.staging-debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		8C74AC4639F918F92C4632AB /* Pods-FeatureCommon.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.staging-debug.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		8DB2450CF4BCF9FEA02DA14F /* Pods-FeatureCommon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.release.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.release.xcconfig"; sourceTree = "<group>"; };
+		91844822949832F3C9B7B368 /* Pods_FeatureCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FeatureCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		92FDABC977148E5DCBE89FA4 /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		93A91372763A2EFF197F2207 /* Pods-RetenoExample.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-release.xcconfig"; sourceTree = "<group>"; };
+		95477E8AC3D7C3335652D540 /* Pods-MainMenu.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.staging-debug.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		96CF0B0293E1BD570F00F58B /* Pods-Core.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.production-release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.production-release.xcconfig"; sourceTree = "<group>"; };
+		994D5CF6D9A7009B547D2F9C /* Pods-FeatureCommon.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.production-release.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.production-release.xcconfig"; sourceTree = "<group>"; };
+		9B755B5461F1CDB5C9D4A1D0 /* Pods_RetenoExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FE5738CA4935D8981757F35 /* Pods-RetenoExample.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-release.xcconfig"; sourceTree = "<group>"; };
+		A681BEF364297BE95883D53B /* Pods-FeatureCommon.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.production-debug.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.production-debug.xcconfig"; sourceTree = "<group>"; };
+		A6FE48775B2C68EBE005019B /* Pods-Auth.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.staging-release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.staging-release.xcconfig"; sourceTree = "<group>"; };
+		ACAD44963B4B6D88C0D21B6C /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		AE5ABA8520F93C50BCD45859 /* Pods_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B252167B001A427E41519467 /* Pods-MainMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.release.xcconfig"; sourceTree = "<group>"; };
+		B52C7C1228DA808C0014ED15 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
+		B52C7C1428DA80D10014ED15 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		B52C7C1628DA818B0014ED15 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B52C7C1E28DA83220014ED15 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		B52C7C2028DA83220014ED15 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B52C7C2C28DA92340014ED15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B52C7C2E28DAE5160014ED15 /* RetenoExample.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = RetenoExample.entitlements; sourceTree = "<group>"; };
+		B52C7C3928DB3B250014ED15 /* NotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		BD4EC3C5F65DB5B0C4BADC36 /* Pods-UI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.release.xcconfig"; sourceTree = "<group>"; };
+		C521102A1DAB85BC006CEBCE /* RetenoExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetenoExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5B7629666AADFDA356F6DDB /* Pods-Auth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.debug.xcconfig"; sourceTree = "<group>"; };
+		D8546FDC9A3B00AD8BDBBF54 /* Pods-MainMenu.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.production-release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.production-release.xcconfig"; sourceTree = "<group>"; };
+		E4E9C23CC4DDDD42BD685E33 /* Pods-Core.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.staging-release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.staging-release.xcconfig"; sourceTree = "<group>"; };
+		E6A63ECAF8D0F08F0024AFD7 /* Pods_RetenoExample_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6C663062A1DF3333F7BE745 /* Pods-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.release.xcconfig"; sourceTree = "<group>"; };
+		EC2062A50BE1033A244940D2 /* Pods-RetenoExample.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		F826678FCCB36EE09EBD3638 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; sourceTree = "<group>"; };
+		FAAE89E81B28BFDDE3A67323 /* Pods-RetenoExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.release.xcconfig"; sourceTree = "<group>"; };
+		FCF8F7791E4FCFECDA482150 /* Pods-Core.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.staging-debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.staging-debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B52C7C1928DA83220014ED15 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				118A153F1BD1BE345E73CA67 /* Pods_RetenoExample_NotificationServiceExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C52110271DAB85BC006CEBCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC4124DF388A3245289150A7 /* Pods_RetenoExample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1EE6FDB9A97FD76044569E18 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D5B7629666AADFDA356F6DDB /* Pods-Auth.debug.xcconfig */,
+				83030DA4C97EF2043137F794 /* Pods-Auth.production-debug.xcconfig */,
+				884E7374B6C5D8DD5FF453B5 /* Pods-Auth.staging-debug.xcconfig */,
+				634F8430613D0E87E9F4C182 /* Pods-Auth.release.xcconfig */,
+				A6FE48775B2C68EBE005019B /* Pods-Auth.staging-release.xcconfig */,
+				8690A2926A92253B06E013B1 /* Pods-Auth.production-release.xcconfig */,
+				03A1808A01EF31FB22D3A039 /* Pods-Core.debug.xcconfig */,
+				581CB6AC8B9512C71BCF6A1C /* Pods-Core.production-debug.xcconfig */,
+				FCF8F7791E4FCFECDA482150 /* Pods-Core.staging-debug.xcconfig */,
+				E6C663062A1DF3333F7BE745 /* Pods-Core.release.xcconfig */,
+				E4E9C23CC4DDDD42BD685E33 /* Pods-Core.staging-release.xcconfig */,
+				96CF0B0293E1BD570F00F58B /* Pods-Core.production-release.xcconfig */,
+				00230E203382F989BDEE404C /* Pods-FeatureCommon.debug.xcconfig */,
+				A681BEF364297BE95883D53B /* Pods-FeatureCommon.production-debug.xcconfig */,
+				8C74AC4639F918F92C4632AB /* Pods-FeatureCommon.staging-debug.xcconfig */,
+				8DB2450CF4BCF9FEA02DA14F /* Pods-FeatureCommon.release.xcconfig */,
+				0AD6BFE5E7F2211A7DD95A35 /* Pods-FeatureCommon.staging-release.xcconfig */,
+				994D5CF6D9A7009B547D2F9C /* Pods-FeatureCommon.production-release.xcconfig */,
+				3FB4DA2A38A43DB1256A02E8 /* Pods-MainMenu.debug.xcconfig */,
+				046BDAD35D280EACCF4300B9 /* Pods-MainMenu.production-debug.xcconfig */,
+				95477E8AC3D7C3335652D540 /* Pods-MainMenu.staging-debug.xcconfig */,
+				B252167B001A427E41519467 /* Pods-MainMenu.release.xcconfig */,
+				4AD9FF1B1C8EF0F74A6B1634 /* Pods-MainMenu.staging-release.xcconfig */,
+				D8546FDC9A3B00AD8BDBBF54 /* Pods-MainMenu.production-release.xcconfig */,
+				013CE231394F0A6BDA657303 /* Pods-RetenoExample.debug.xcconfig */,
+				2E9BE80671C7517B9FB230A0 /* Pods-RetenoExample.production-debug.xcconfig */,
+				EC2062A50BE1033A244940D2 /* Pods-RetenoExample.staging-debug.xcconfig */,
+				FAAE89E81B28BFDDE3A67323 /* Pods-RetenoExample.release.xcconfig */,
+				9FE5738CA4935D8981757F35 /* Pods-RetenoExample.staging-release.xcconfig */,
+				93A91372763A2EFF197F2207 /* Pods-RetenoExample.production-release.xcconfig */,
+				6D436F370ABE6B53FD7AC4E7 /* Pods-UI.debug.xcconfig */,
+				56B2037D1BF4F1B00160641C /* Pods-UI.production-debug.xcconfig */,
+				189E14F0C28C95AA3A13B59F /* Pods-UI.staging-debug.xcconfig */,
+				BD4EC3C5F65DB5B0C4BADC36 /* Pods-UI.release.xcconfig */,
+				55D9F29E4222053695A8E317 /* Pods-UI.staging-release.xcconfig */,
+				2619A193756A64D2D1C3F4FD /* Pods-UI.production-release.xcconfig */,
+				92FDABC977148E5DCBE89FA4 /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */,
+				3ADD3D3531D6027393E59D4B /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */,
+				76C0DDEB3379C3D6DF04F99A /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */,
+				ACAD44963B4B6D88C0D21B6C /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */,
+				5F1F0645A410B4A5147DA1A5 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */,
+				F826678FCCB36EE09EBD3638 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		505FCBEA2052E68E006CF982 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				505FCBED2052E6B0006CF982 /* Info.plist */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		7075EC13236C2E6E00327FF9 /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				7075EC14236C2E6E00327FF9 /* Environment.production.plist */,
+				7075EC15236C2E6E00327FF9 /* Environment.development.plist */,
+				7075EC16236C2E6E00327FF9 /* Environment.staging.plist */,
+			);
+			path = Environment;
+			sourceTree = "<group>";
+		};
+		7075EC17236C2E8300327FF9 /* xcconfig */ = {
+			isa = PBXGroup;
+			children = (
+				7075EC1B236C2E8300327FF9 /* Shared */,
+				7075EC18236C2E8300327FF9 /* Production-Debug.xcconfig */,
+				7075EC19236C2E8300327FF9 /* Staging-Debug.xcconfig */,
+				7075EC1A236C2E8300327FF9 /* Production-Release.xcconfig */,
+				7075EC22236C2E8300327FF9 /* Development-Debug.xcconfig */,
+				7075EC23236C2E8300327FF9 /* Staging-Release.xcconfig */,
+				7075EC24236C2E8300327FF9 /* Development-Release.xcconfig */,
+			);
+			path = xcconfig;
+			sourceTree = "<group>";
+		};
+		7075EC1B236C2E8300327FF9 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				7075EC1C236C2E8300327FF9 /* Debug.xcconfig */,
+				7075EC1D236C2E8300327FF9 /* Release.xcconfig */,
+				7075EC1E236C2E8300327FF9 /* Development.xcconfig */,
+				7075EC1F236C2E8300327FF9 /* Staging.xcconfig */,
+				7075EC20236C2E8300327FF9 /* Production.xcconfig */,
+				7075EC21236C2E8300327FF9 /* Base.xcconfig */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		70BF67542045A6AD00803C08 /* RetenoExample */ = {
+			isa = PBXGroup;
+			children = (
+				B52C7C2E28DAE5160014ED15 /* RetenoExample.entitlements */,
+				B52C7C2C28DA92340014ED15 /* GoogleService-Info.plist */,
+				70BF67552045A6AD00803C08 /* AppDelegate.swift */,
+				70BF677D2045A6AD00803C08 /* Flows */,
+				70BF67AE2045A6AD00803C08 /* Resources */,
+				505FCBEA2052E68E006CF982 /* SupportingFiles */,
+			);
+			path = RetenoExample;
+			sourceTree = "<group>";
+		};
+		70BF677D2045A6AD00803C08 /* Flows */ = {
+			isa = PBXGroup;
+			children = (
+				70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */,
+				70BF67952045A6AD00803C08 /* Main */,
+			);
+			path = Flows;
+			sourceTree = "<group>";
+		};
+		70BF67952045A6AD00803C08 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				700D24DA236C6D3300918E21 /* MainFlowAssembly.swift */,
+				B52C7C1228DA808C0014ED15 /* MainModel.swift */,
+				B52C7C1428DA80D10014ED15 /* MainViewModel.swift */,
+				B52C7C1628DA818B0014ED15 /* MainViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		70BF67AE2045A6AD00803C08 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7004E8A9236C85060003EBCB /* Localizable.strings */,
+				70BF67AF2045A6AD00803C08 /* Assets.xcassets */,
+				70BF67B22045A6AD00803C08 /* Storyboards */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		70BF67B22045A6AD00803C08 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				7071CE17238305C700D34895 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		B011396D30454A9E62A56B60 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				64A9384D18D1BB0F30A8D2C2 /* Pods_Auth.framework */,
+				AE5ABA8520F93C50BCD45859 /* Pods_Core.framework */,
+				91844822949832F3C9B7B368 /* Pods_FeatureCommon.framework */,
+				6C251F865E4FD81D3CB6FFA0 /* Pods_MainMenu.framework */,
+				9B755B5461F1CDB5C9D4A1D0 /* Pods_RetenoExample.framework */,
+				844B1D30B4FE94FE7A771FC6 /* Pods_UI.framework */,
+				E6A63ECAF8D0F08F0024AFD7 /* Pods_RetenoExample_NotificationServiceExtension.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B52C7C1D28DA83220014ED15 /* NotificationServiceExtension */ = {
+			isa = PBXGroup;
+			children = (
+				B52C7C3928DB3B250014ED15 /* NotificationServiceExtension.entitlements */,
+				B52C7C1E28DA83220014ED15 /* NotificationService.swift */,
+				B52C7C2028DA83220014ED15 /* Info.plist */,
+			);
+			path = NotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		C52110211DAB85BC006CEBCE = {
+			isa = PBXGroup;
+			children = (
+				70BF67542045A6AD00803C08 /* RetenoExample */,
+				7075EC13236C2E6E00327FF9 /* Environment */,
+				7075EC17236C2E8300327FF9 /* xcconfig */,
+				B52C7C1D28DA83220014ED15 /* NotificationServiceExtension */,
+				C521102B1DAB85BC006CEBCE /* Products */,
+				1EE6FDB9A97FD76044569E18 /* Pods */,
+				B011396D30454A9E62A56B60 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C521102B1DAB85BC006CEBCE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C521102A1DAB85BC006CEBCE /* RetenoExample.app */,
+				B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B52C7C1B28DA83220014ED15 /* NotificationServiceExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B52C7C2428DA83230014ED15 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
+			buildPhases = (
+				C9201E6D5B7E44552C358E29 /* [CP] Check Pods Manifest.lock */,
+				B52C7C1828DA83220014ED15 /* Sources */,
+				B52C7C1928DA83220014ED15 /* Frameworks */,
+				B52C7C1A28DA83220014ED15 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationServiceExtension;
+			productName = NotificationServiceExtension;
+			productReference = B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		C52110291DAB85BC006CEBCE /* RetenoExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C521103C1DAB85BC006CEBCE /* Build configuration list for PBXNativeTarget "RetenoExample" */;
+			buildPhases = (
+				14B083681DD5A9ED74917CC5 /* [CP] Check Pods Manifest.lock */,
+				C521103F1DAB9F45006CEBCE /* SwiftGen */,
+				C52110261DAB85BC006CEBCE /* Sources */,
+				C52110271DAB85BC006CEBCE /* Frameworks */,
+				C52110281DAB85BC006CEBCE /* Resources */,
+				7075EC41236C309900327FF9 /* Copy Config */,
+				C5525E231DABB24D0016156E /* SwiftLint */,
+				E8CBE417202228FD00186010 /* Embed Frameworks */,
+				E8B6D10C247E870300F2CF73 /* [Firebase] Run Crashlytics */,
+				0EF65E9E0D841BFF5924DAD0 /* [CP] Embed Pods Frameworks */,
+				B52C7C2B28DA83230014ED15 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B52C7C2228DA83220014ED15 /* PBXTargetDependency */,
+			);
+			name = RetenoExample;
+			productName = ArchitectureGuideTemplate;
+			productReference = C521102A1DAB85BC006CEBCE /* RetenoExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C52110221DAB85BC006CEBCE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = Yalantis;
+				TargetAttributes = {
+					B52C7C1B28DA83220014ED15 = {
+						CreatedOnToolsVersion = 14.0;
+						DevelopmentTeam = X9JJR3XKX7;
+						ProvisioningStyle = Manual;
+					};
+					C52110291DAB85BC006CEBCE = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = X9JJR3XKX7;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = C52110251DAB85BC006CEBCE /* Build configuration list for PBXProject "RetenoExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C52110211DAB85BC006CEBCE;
+			productRefGroup = C521102B1DAB85BC006CEBCE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C52110291DAB85BC006CEBCE /* RetenoExample */,
+				B52C7C1B28DA83220014ED15 /* NotificationServiceExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B52C7C1A28DA83220014ED15 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C52110281DAB85BC006CEBCE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7071CE18238305C700D34895 /* LaunchScreen.storyboard in Resources */,
+				B52C7C2D28DA92340014ED15 /* GoogleService-Info.plist in Resources */,
+				70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */,
+				7004E8AB236C85060003EBCB /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0EF65E9E0D841BFF5924DAD0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RetenoExample/Pods-RetenoExample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseMessaging/FirebaseMessaging.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/Reteno/Reteno.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCrashlytics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseMessaging.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reteno.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RetenoExample/Pods-RetenoExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		14B083681DD5A9ED74917CC5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RetenoExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7075EC41236C309900327FF9 /* Copy Config */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Config";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/scripts/copy-config.sh\n";
+		};
+		C521103F1DAB9F45006CEBCE /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/scripts/run-swiftgen.sh\n";
+		};
+		C5525E231DABB24D0016156E /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/scripts/run-swiftlint.sh\n";
+		};
+		C9201E6D5B7E44552C358E29 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RetenoExample-NotificationServiceExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E8B6D10C247E870300F2CF73 /* [Firebase] Run Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[Firebase] Run Crashlytics";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B52C7C1828DA83220014ED15 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B52C7C1F28DA83220014ED15 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C52110261DAB85BC006CEBCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */,
+				70BF67CF2045A6AD00803C08 /* ApplicationFlowCoordinator.swift in Sources */,
+				B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */,
+				70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */,
+				B52C7C1728DA818B0014ED15 /* MainViewController.swift in Sources */,
+				B52C7C1528DA80D10014ED15 /* MainViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B52C7C2228DA83220014ED15 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B52C7C1B28DA83220014ED15 /* NotificationServiceExtension */;
+			targetProxy = B52C7C2128DA83220014ED15 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7004E8A9236C85060003EBCB /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7004E8AA236C85060003EBCB /* Base */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7075EC31236C2F3400327FF9 /* Staging-Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7075EC19236C2E8300327FF9 /* Staging-Debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Staging-Debug";
+		};
+		7075EC32236C2F3400327FF9 /* Staging-Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC2062A50BE1033A244940D2 /* Pods-RetenoExample.staging-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app";
+				SKIP_INSTALL = NO;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Staging-Debug";
+		};
+		7075EC35236C2F4900327FF9 /* Production-Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7075EC18236C2E8300327FF9 /* Production-Debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Production-Debug";
+		};
+		7075EC36236C2F4900327FF9 /* Production-Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E9BE80671C7517B9FB230A0 /* Pods-RetenoExample.production-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app";
+				SKIP_INSTALL = NO;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Production-Debug";
+		};
+		7075EC39236C2F5300327FF9 /* Staging-Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7075EC23236C2E8300327FF9 /* Staging-Release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Staging-Release";
+		};
+		7075EC3A236C2F5300327FF9 /* Staging-Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9FE5738CA4935D8981757F35 /* Pods-RetenoExample.staging-release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.reteno.example-app";
+				SKIP_INSTALL = NO;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Staging-Release";
+		};
+		7075EC3D236C2F5C00327FF9 /* Production-Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7075EC1A236C2E8300327FF9 /* Production-Release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Production-Release";
+		};
+		7075EC3E236C2F5C00327FF9 /* Production-Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 93A91372763A2EFF197F2207 /* Pods-RetenoExample.production-release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app";
+				SKIP_INSTALL = NO;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Production-Release";
+		};
+		B52C7C2528DA83230014ED15 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 92FDABC977148E5DCBE89FA4 /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationServiceExtension";
+				SKIP_INSTALL = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B52C7C2628DA83230014ED15 /* Production-Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3ADD3D3531D6027393E59D4B /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationServiceExtension";
+				SKIP_INSTALL = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = "Production-Debug";
+		};
+		B52C7C2728DA83230014ED15 /* Staging-Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76C0DDEB3379C3D6DF04F99A /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationServiceExtension";
+				SKIP_INSTALL = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = "Staging-Debug";
+		};
+		B52C7C2828DA83230014ED15 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACAD44963B4B6D88C0D21B6C /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.reteno.example-app.NotificationServiceExtension";
+				SKIP_INSTALL = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B52C7C2928DA83230014ED15 /* Staging-Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F1F0645A410B4A5147DA1A5 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.reteno.example-app.NotificationServiceExtension";
+				SKIP_INSTALL = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = "Staging-Release";
+		};
+		B52C7C2A28DA83230014ED15 /* Production-Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F826678FCCB36EE09EBD3638 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationServiceExtension";
+				SKIP_INSTALL = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = "Production-Release";
+		};
+		C521103A1DAB85BC006CEBCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7075EC22236C2E8300327FF9 /* Development-Debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C521103B1DAB85BC006CEBCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7075EC24236C2E8300327FF9 /* Development-Release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C521103D1DAB85BC006CEBCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 013CE231394F0A6BDA657303 /* Pods-RetenoExample.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app";
+				SKIP_INSTALL = NO;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		C521103E1DAB85BC006CEBCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FAAE89E81B28BFDDE3A67323 /* Pods-RetenoExample.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.reteno.example-app";
+				SKIP_INSTALL = NO;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B52C7C2428DA83230014ED15 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B52C7C2528DA83230014ED15 /* Debug */,
+				B52C7C2628DA83230014ED15 /* Production-Debug */,
+				B52C7C2728DA83230014ED15 /* Staging-Debug */,
+				B52C7C2828DA83230014ED15 /* Release */,
+				B52C7C2928DA83230014ED15 /* Staging-Release */,
+				B52C7C2A28DA83230014ED15 /* Production-Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C52110251DAB85BC006CEBCE /* Build configuration list for PBXProject "RetenoExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C521103A1DAB85BC006CEBCE /* Debug */,
+				7075EC35236C2F4900327FF9 /* Production-Debug */,
+				7075EC31236C2F3400327FF9 /* Staging-Debug */,
+				C521103B1DAB85BC006CEBCE /* Release */,
+				7075EC39236C2F5300327FF9 /* Staging-Release */,
+				7075EC3D236C2F5C00327FF9 /* Production-Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C521103C1DAB85BC006CEBCE /* Build configuration list for PBXNativeTarget "RetenoExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C521103D1DAB85BC006CEBCE /* Debug */,
+				7075EC36236C2F4900327FF9 /* Production-Debug */,
+				7075EC32236C2F3400327FF9 /* Staging-Debug */,
+				C521103E1DAB85BC006CEBCE /* Release */,
+				7075EC3A236C2F5300327FF9 /* Staging-Release */,
+				7075EC3E236C2F5C00327FF9 /* Production-Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C52110221DAB85BC006CEBCE /* Project object */;
+}

@@ -1,0 +1,11 @@
+// Common conditions for each Release configuration (not to be confused with the App Config)
+
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) $(BUILD_COMPILATION_CONDITIONS)
+
+ONLY_ACTIVE_ARCH = NO
+VALIDATE_PRODUCT = YES
+SWIFT_OPTIMIZATION_LEVEL = -O
+SWIFT_COMPILATION_MODE = wholemodule
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+ENABLE_TESTABILITY = NO
+ENABLE_NS_ASSERTIONS = NO

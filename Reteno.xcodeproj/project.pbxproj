@@ -1,0 +1,539 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		184FC82328D0881B0054FB86 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184FC82128D0881B0054FB86 /* Disposable.swift */; };
+		184FC82428D0881B0054FB86 /* ObserverSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184FC82228D0881B0054FB86 /* ObserverSet.swift */; };
+		18AE28EC28CFA246006F8461 /* RetenoNotificationServiceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE28EA28CFA246006F8461 /* RetenoNotificationServiceExtension.swift */; };
+		18AE28ED28CFA246006F8461 /* RetenoUserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE28EB28CFA246006F8461 /* RetenoUserNotification.swift */; };
+		18AE28EF28CFA258006F8461 /* Reteno.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE28EE28CFA258006F8461 /* Reteno.swift */; };
+		18AE28F128CFA2A5006F8461 /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AE28F028CFA2A5006F8461 /* UserNotificationService.swift */; };
+		18D02BCD28CA2F02008018F1 /* Reteno.docc in Sources */ = {isa = PBXBuildFile; fileRef = 18D02BCC28CA2F02008018F1 /* Reteno.docc */; };
+		18D02BD328CA2F02008018F1 /* Reteno.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D02BC828CA2F02008018F1 /* Reteno.framework */; };
+		18D02BD828CA2F02008018F1 /* RetenoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D02BD728CA2F02008018F1 /* RetenoTests.swift */; };
+		18D02BD928CA2F02008018F1 /* Reteno.h in Headers */ = {isa = PBXBuildFile; fileRef = 18D02BCB28CA2F02008018F1 /* Reteno.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B504128828CF422900524A69 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B504128728CF422900524A69 /* APIRequest.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		18D02BD428CA2F02008018F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18D02BBF28CA2F02008018F1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18D02BC728CA2F02008018F1;
+			remoteInfo = Reteno;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		184FC82128D0881B0054FB86 /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
+		184FC82228D0881B0054FB86 /* ObserverSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverSet.swift; sourceTree = "<group>"; };
+		18AE28EA28CFA246006F8461 /* RetenoNotificationServiceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoNotificationServiceExtension.swift; sourceTree = "<group>"; };
+		18AE28EB28CFA246006F8461 /* RetenoUserNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoUserNotification.swift; sourceTree = "<group>"; };
+		18AE28EE28CFA258006F8461 /* Reteno.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reteno.swift; sourceTree = "<group>"; };
+		18AE28F028CFA2A5006F8461 /* UserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
+		18D02BC828CA2F02008018F1 /* Reteno.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reteno.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		18D02BCB28CA2F02008018F1 /* Reteno.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reteno.h; sourceTree = "<group>"; };
+		18D02BCC28CA2F02008018F1 /* Reteno.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Reteno.docc; sourceTree = "<group>"; };
+		18D02BD228CA2F02008018F1 /* RetenoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RetenoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		18D02BD728CA2F02008018F1 /* RetenoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoTests.swift; sourceTree = "<group>"; };
+		B504128728CF422900524A69 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		18D02BC528CA2F02008018F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18D02BCF28CA2F02008018F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18D02BD328CA2F02008018F1 /* Reteno.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		184FC81F28D086200054FB86 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				184FC82028D0881B0054FB86 /* Observer */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		184FC82028D0881B0054FB86 /* Observer */ = {
+			isa = PBXGroup;
+			children = (
+				184FC82128D0881B0054FB86 /* Disposable.swift */,
+				184FC82228D0881B0054FB86 /* ObserverSet.swift */,
+			);
+			path = Observer;
+			sourceTree = "<group>";
+		};
+		18AE28E828CFA134006F8461 /* UserNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				18AE28EA28CFA246006F8461 /* RetenoNotificationServiceExtension.swift */,
+				18AE28EB28CFA246006F8461 /* RetenoUserNotification.swift */,
+				18AE28F028CFA2A5006F8461 /* UserNotificationService.swift */,
+			);
+			path = UserNotifications;
+			sourceTree = "<group>";
+		};
+		18AE28E928CFA142006F8461 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				18AE28EE28CFA258006F8461 /* Reteno.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		18D02BBE28CA2F02008018F1 = {
+			isa = PBXGroup;
+			children = (
+				18D02BCA28CA2F02008018F1 /* Reteno */,
+				18D02BD628CA2F02008018F1 /* RetenoTests */,
+				18D02BC928CA2F02008018F1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		18D02BC928CA2F02008018F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				18D02BC828CA2F02008018F1 /* Reteno.framework */,
+				18D02BD228CA2F02008018F1 /* RetenoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		18D02BCA28CA2F02008018F1 /* Reteno */ = {
+			isa = PBXGroup;
+			children = (
+				B504128528CF419300524A69 /* Sources */,
+				18D02BCB28CA2F02008018F1 /* Reteno.h */,
+				18D02BCC28CA2F02008018F1 /* Reteno.docc */,
+			);
+			path = Reteno;
+			sourceTree = "<group>";
+		};
+		18D02BD628CA2F02008018F1 /* RetenoTests */ = {
+			isa = PBXGroup;
+			children = (
+				18D02BD728CA2F02008018F1 /* RetenoTests.swift */,
+			);
+			path = RetenoTests;
+			sourceTree = "<group>";
+		};
+		B504128528CF419300524A69 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				184FC81F28D086200054FB86 /* Helpers */,
+				18AE28E928CFA142006F8461 /* Core */,
+				B504128628CF41A300524A69 /* Network */,
+				18AE28E828CFA134006F8461 /* UserNotifications */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		B504128628CF41A300524A69 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B504128728CF422900524A69 /* APIRequest.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		18D02BC328CA2F02008018F1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18D02BD928CA2F02008018F1 /* Reteno.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		18D02BC728CA2F02008018F1 /* Reteno */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18D02BDC28CA2F02008018F1 /* Build configuration list for PBXNativeTarget "Reteno" */;
+			buildPhases = (
+				18D02BC328CA2F02008018F1 /* Headers */,
+				18D02BC428CA2F02008018F1 /* Sources */,
+				18D02BC528CA2F02008018F1 /* Frameworks */,
+				18D02BC628CA2F02008018F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Reteno;
+			productName = Reteno;
+			productReference = 18D02BC828CA2F02008018F1 /* Reteno.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		18D02BD128CA2F02008018F1 /* RetenoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 18D02BDF28CA2F02008018F1 /* Build configuration list for PBXNativeTarget "RetenoTests" */;
+			buildPhases = (
+				18D02BCE28CA2F02008018F1 /* Sources */,
+				18D02BCF28CA2F02008018F1 /* Frameworks */,
+				18D02BD028CA2F02008018F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				18D02BD528CA2F02008018F1 /* PBXTargetDependency */,
+			);
+			name = RetenoTests;
+			productName = RetenoTests;
+			productReference = 18D02BD228CA2F02008018F1 /* RetenoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		18D02BBF28CA2F02008018F1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					18D02BC728CA2F02008018F1 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					18D02BD128CA2F02008018F1 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 18D02BC228CA2F02008018F1 /* Build configuration list for PBXProject "Reteno" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 18D02BBE28CA2F02008018F1;
+			productRefGroup = 18D02BC928CA2F02008018F1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				18D02BC728CA2F02008018F1 /* Reteno */,
+				18D02BD128CA2F02008018F1 /* RetenoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		18D02BC628CA2F02008018F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18D02BD028CA2F02008018F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		18D02BC428CA2F02008018F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				184FC82428D0881B0054FB86 /* ObserverSet.swift in Sources */,
+				18AE28F128CFA2A5006F8461 /* UserNotificationService.swift in Sources */,
+				18AE28ED28CFA246006F8461 /* RetenoUserNotification.swift in Sources */,
+				B504128828CF422900524A69 /* APIRequest.swift in Sources */,
+				18AE28EF28CFA258006F8461 /* Reteno.swift in Sources */,
+				18AE28EC28CFA246006F8461 /* RetenoNotificationServiceExtension.swift in Sources */,
+				184FC82328D0881B0054FB86 /* Disposable.swift in Sources */,
+				18D02BCD28CA2F02008018F1 /* Reteno.docc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		18D02BCE28CA2F02008018F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				18D02BD828CA2F02008018F1 /* RetenoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		18D02BD528CA2F02008018F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18D02BC728CA2F02008018F1 /* Reteno */;
+			targetProxy = 18D02BD428CA2F02008018F1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		18D02BDA28CA2F02008018F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		18D02BDB28CA2F02008018F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		18D02BDD28CA2F02008018F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Yespo.Reteno;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		18D02BDE28CA2F02008018F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Yespo.Reteno;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		18D02BE028CA2F02008018F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Yespo.RetenoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		18D02BE128CA2F02008018F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Yespo.RetenoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		18D02BC228CA2F02008018F1 /* Build configuration list for PBXProject "Reteno" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18D02BDA28CA2F02008018F1 /* Debug */,
+				18D02BDB28CA2F02008018F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18D02BDC28CA2F02008018F1 /* Build configuration list for PBXNativeTarget "Reteno" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18D02BDD28CA2F02008018F1 /* Debug */,
+				18D02BDE28CA2F02008018F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		18D02BDF28CA2F02008018F1 /* Build configuration list for PBXNativeTarget "RetenoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				18D02BE028CA2F02008018F1 /* Debug */,
+				18D02BE128CA2F02008018F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 18D02BBF28CA2F02008018F1 /* Project object */;
+}

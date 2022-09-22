@@ -1,0 +1,36 @@
+platform :ios, '12.0'
+
+# Specify which schemes refer to the debug configuration
+project 'RetenoExample', {
+  'Debug' => :debug,
+  'Staging-Debug' => :debug,
+  'Production-Debug' => :debug
+}
+
+use_frameworks!
+
+target 'RetenoExample' do
+  use_frameworks!
+
+  pod 'Swinject', '~> 2.7.1'
+  pod 'SnapKit', '~> 5.6.0'
+  pod 'Reteno', :path => '../'
+  pod 'FirebaseMessaging'
+  
+  target 'NotificationServiceExtension' do
+    use_frameworks!
+
+    pod 'Reteno', :path => '../'
+
+  end
+
+end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+            config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+        end
+    end
+end

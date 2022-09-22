@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>987851207632-omjfmtk9ot112ii9gbs73irpeqqtahlr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.987851207632-omjfmtk9ot112ii9gbs73irpeqqtahlr</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCCP0ZR6-v1gk8AgftXS9K57mYN39hzOwA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>987851207632</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.reteno.example-app</string>
+	<key>PROJECT_ID</key>
+	<string>reteno-76f34</string>
+	<key>STORAGE_BUCKET</key>
+	<string>reteno-76f34.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:987851207632:ios:cf43500f9d1c12ecbc7fd5</string>
+</dict>
+</plist>

@@ -1,0 +1,30 @@
+// Shared environment values for Development, Staging and Production configs of the app
+
+BUILD_ENV =
+
+// Values used in SWIFT_ACTIVE_COMPILATION_CONDITIONS
+BUILD_COMPILATION_CONDITIONS = BUILD_ENV_$(BUILD_ENV)
+
+// Config.plist name based on the BUILD_ENV lowercase. Thefefore DEVELOPMENT -> Config.development.plist
+ENV_FILE = Environment.${BUILD_ENV:lower}.plist
+
+INFOPLIST_PREPROCESSOR_DEFINITIONS = $(inherited) APP_TRANSPORT_SECURITY_ALLOWS_ARBITRARY_LOADS_KEY=${APP_TRANSPORT_SECURITY_ALLOWS_ARBITRARY_LOADS_KEY}
+
+
+DEVELOPMENT_TEAM = X9JJR3XKX7
+
+// Info.plist files should be automatically generated for each target except executable ones.
+// RetenoExample and Widget targets override with value to use implicit Info.plist.
+GENERATE_INFOPLIST_FILE = YES
+
+// RetenoExample (Main) overrides this value
+SKIP_INSTALL = YES
+
+IPHONEOS_DEPLOYMENT_TARGET = 12.0
+
+DEFINES_MODULE = YES
+CODE_SIGN_STYLE = Manual
+
+// Versioning
+CURRENT_PROJECT_VERSION = 6
+MARKETING_VERSION = 1.0.0

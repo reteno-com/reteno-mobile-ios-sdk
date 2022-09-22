@@ -1,0 +1,119 @@
+require 'openssl'
+
+platform :ios do
+  desc "Add keys to the repository. example: 'key1:value1 key2:value2 key3:' will add key1 and key2 and remove key3"
+  lane :add_cocoapods_keys do |new_keys|
+    branch = ENV['CI_UNIQUE_PROJECT_ID']
+    origin = ENV['KEYS_REPO_URL']
+    
+    sh('rm -rf ./tmp && mkdir -p ./tmp')
+    sh("cd tmp && git clone -b #{branch} #{origin} project-keys", error_callback: -> (result) {
+      sh("cd tmp && git clone #{origin} project-keys && cd ./project-keys && git checkout -b #{branch}")
+    })
+
+    cipher_keys(encrypt: false)
+    drop_keys
+
+    keys = []
+    json = {}    
+
+    File.open('tmp/project-keys/keys.txt', 'a+') do |file|
+
+      string = file.read
+      string = '{}' if string.empty?
+      json = JSON.parse(string)
+      new_keys.each do |key, value|
+        if value.empty?
+          json.delete(key.to_s)
+        else
+          json[key.to_s] = value
+        end
+      end
+      json.each do |key, value|
+        keys << key
+        puts "setting value for key=#{key}"
+        sh("cd #{ENV['PWD']} && bundle exec pod keys set #{key} #{value} --project-directory=#{ENV['PWD']}/", log: false)
+      end
+    end
+    File.open('tmp/project-keys/keys.txt', 'w') do |file|
+      file << json.to_json
+    end
+    cipher_keys(encrypt: true)
+    sh("cd tmp/project-keys && git add keys.txt && git commit -m '[fastlane][update] keys'", error_callback: -> (result) {})
+    sh("cd tmp/project-keys && git push -f #{origin} #{branch}", error_callback: -> (result) {})
+    sh('rm -rf ./tmp')
+    update_project(keys: keys)
+  end
+
+  desc 'Synchronize your keychain with private keys'
+  lane :sync_cocoapods_keys do |options|
+    origin = ENV['KEYS_REPO_URL']
+    branch = ENV['CI_UNIQUE_PROJECT_ID']
+    sh('rm -rf ./tmp && mkdir -p ./tmp')
+    sh("cd tmp && git clone -b #{branch} #{origin} project-keys")
+    cipher_keys(encrypt: false)
+    drop_keys
+    keys = []
+    File.open('tmp/project-keys/keys.txt', 'r') do |file|
+      string = file.read
+      string = '{}' if string.empty?
+      json = JSON.parse(string)
+      json.each do |key, value|
+        puts "setting value for key=#{key}"
+        sh("cd #{ENV['PWD']} && bundle exec pod keys set #{key} #{value} --project-directory=#{ENV['PWD']}/", log: false)
+        keys << key
+      end
+    end
+    sh('rm -rf ./tmp')
+    update_project(keys: keys) unless options[:skip_project_update]
+  end
+
+  private_lane :project_name do
+    xcodeproj = ENV['XC_PROJECT']
+    File.basename(xcodeproj, File.extname(xcodeproj)).gsub(/[^0-9a-z]/i, '-')
+  end
+
+  private_lane :cipher_keys do |options|
+    path = 'tmp/project-keys/keys.txt'
+    next if !File.file?(path) || File.zero?(path)
+    cipher = OpenSSL::Cipher.new('aes-256-cbc')
+    if options[:encrypt]
+      cipher.encrypt
+    else
+      cipher.decrypt
+    end
+    cipher.iv = Base64.encode64(path)[0...16]
+    cipher.key = Base64.encode64(ENV['KEYS_REPO_URL'])[0...32]
+    buf = ''
+    content = ''
+    File.open(path, 'r') do |file|
+      content << cipher.update(buf) while file.read(4096, buf)
+      content << cipher.final
+    end
+    File.open(path, 'w') do |file|
+      file << content
+    end
+  end
+
+  private_lane :update_project do |options|
+    podfile = File.read("#{ENV['PWD']}/Podfile")
+    plugins_string_start = "plugin 'cocoapods-keys', { :project => '#{project_name}'"
+    keys = options[:keys].join("', '")
+    plugins_string = keys.empty? ? '' : "#{plugins_string_start}, :keys => ['#{keys}'] }"
+    reg = /^#{plugins_string_start}.*$/
+    if podfile =~ reg
+      modified_podfile = podfile.gsub(reg, plugins_string)
+    elsif not plugins_string.empty?
+      modified_podfile = "#{podfile}\n#{plugins_string}"
+    end
+    next unless modified_podfile
+    File.open("#{ENV['PWD']}/Podfile", 'w') do |file|
+      file << modified_podfile
+    end
+    cocoapods
+  end
+
+  private_lane :drop_keys do
+    sh("cd #{ENV['PWD']} && bundle exec pod keys rm #{project_name} --all", error_callback: -> (result) {})
+  end
+end

@@ -1,0 +1,6 @@
+// Specialization for the Production
+
+#include "Base.xcconfig"
+
+BUILD_ENV = PRODUCTION
+APP_TRANSPORT_SECURITY_ALLOWS_ARBITRARY_LOADS_KEY = NSNotAllowsArbitraryLoads

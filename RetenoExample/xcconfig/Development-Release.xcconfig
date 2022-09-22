@@ -1,0 +1,5 @@
+// By including different xcconfig we're merging environment-specific flags with configuration-specific
+// To extend environment-specific flags you should edit Development.xccofig
+
+#include "Shared/Development.xcconfig"
+#include "Shared/Release.xcconfig"

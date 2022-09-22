@@ -1,0 +1,4 @@
+# For the Firebase App Distribution plugin
+brew "firebase-cli"
+# For adding a badge to the icon for each build
+brew "librsvg"

@@ -1,0 +1,249 @@
+require_relative 'utils/core_extensions.rb'
+import 'Keysfile'
+
+default_platform(:ios)
+
+before_all do
+  ci_setup(archive_name: ENV['GYM_SCHEME'])
+  # install_brew_dependencies
+  app_store_connect_api_key_set_from_remote
+end
+
+after_all do
+  ci_teardown
+end
+
+error do |lane, exception|
+  ci_teardown
+  cleanup_version_badge_artifacts
+  puts exception
+end
+
+platform :ios do
+  lane :known_flags do
+    flags = {
+      :skip_tests => 'Skip running tests before making a build. Tests are useful for any QA builds since tests failure won\'t send a broken code to the outer world', 
+      
+      :skip_build_bump => 'Skip build version increment. Build bumping helps to distinguish builds by providing a unique build number for each build',
+
+      :skip_tag => "Skip tagging a current release. Valid only when `skip_build_bump` not presented. Derived from the environment, where staging -> stag, production -> prod, etc. Doesn't apply for the appstore builds.
+      Default format includes version and build number: \"1.2.3-4567\". Format with version outputs a following format: \"prod-1.2.3-4567\"",
+
+      :skip_clean => 'Skip derived data cleanup after build export',
+
+      :skip_icon_badge => 'Skip adding a badge with the build version and an environment slug to the App\'s Icon. Ignored for the `appstore` environment',
+    }
+
+    FastlaneCore::PrintTable.print_values(
+      config: flags,
+      title: "Available flags"
+    )
+  end
+
+  desc 'Sync development, adhoc and appstore certificates or the one, provided by MATCH_TYPE environment variable'
+  lane :sync_certs do
+    if ENV.key?('MATCH_TYPE') then
+      match(clone_branch_directly: true, readonly: true)
+    else
+      ['development', 'adhoc', 'appstore'].each do |x|
+        match(type: x, clone_branch_directly: true, readonly: true) 
+      end
+    end
+  end
+
+  desc 'Make development, adhoc and appstore certificates or the one, provided by MATCH_TYPE environment variable'
+  lane :make_certs do
+    # To register new devices whenever needed from the command line instead of messing around with the Developer Portal.
+    # register_devices
+
+    if ENV.key?('MATCH_TYPE') then
+      match(shallow_clone: true, clone_branch_directly: true, force: true)
+    else
+      ['development', 'adhoc', 'appstore'].each do |x|
+        match(type: x, shallow_clone: true, clone_branch_directly: true, force: true)
+      end
+    end
+  end
+
+  desc 'Make a build, export it into an archive and upload to the Crashlytics'
+  lane :deploy do |options|
+    # Uncomment next section to use Keys from repo
+    # if ENV.key?("KEYS_REPO_URL") then
+    #   sync_cocoapods_keys(skip_project_update: true)
+    # end
+
+    cocoapods(try_repo_update_on_error: true)
+
+    # The project's scheme to run tests agains. Make sure it's marked as `Shared`. Default value equal to your build scheme.
+    if ENV['SCAN_PROJECT'] != nil && ENV['SCAN_SCHEME'] != nil && options[:skip_tests] != true then
+      scan
+    end 
+
+    bump_build_number(:include_ci_skip => true) unless options[:skip_build_bump] == true
+
+    add_version_badge unless options[:skip_icon_badge]
+    archive(options)
+    cleanup_version_badge_artifacts unless options[:skip_icon_badge]
+
+    distribute(options)
+
+    if options[:skip_build_bump] != true && options[:skip_tag] != true then
+      full_version = get_full_version
+
+      tag_env = ENV['FL_GIT_TAG_TAG'] || environment_slug(Actions.lane_context[Actions::SharedValues::ENVIRONMENT])
+      if tag_env.nil? || tag_env.empty? || tag_env.include?('appstore')
+        add_git_tag(tag: full_version)
+      else
+        add_git_tag(tag: "#{tag_env}/#{full_version}")
+      end
+    end
+
+    begin
+      push_to_git_remote unless options[:skip_build_bump]
+    rescue => exception
+      UI.error(exception)
+      UI.message("Failed to push changes to a remote. Please, note that you won't find build changes (version/build increment) on a remote")
+    end
+
+    clean_build_artifacts unless options[:skip_clean]
+    notify_slack
+  end
+
+  desc "Bump type to be used to increment version. Available values are: 'major', 'minor', patch. Default is 'patch'"
+  lane :bump_version do |options|    
+    increment_version_number_in_xcodeproj(bump_type: options.fetch(:bump_type, 'patch'))
+
+    commit_version_bump(
+      xcodeproj: ENV["XC_PROJECT"],
+      message: version_bump_commit_message(get_full_version, options.fetch(:include_ci_skip, false)),
+      force: true
+    )
+  end
+
+  desc "Bump build number to current + 1"
+  lane :bump_build_number do |options|
+    build_number = build_number_get_from_xcconfig.to_i + 1
+
+    # Sets new version to xcconfig
+    build_number_set_to_xcconfig(build_number: build_number.to_s)
+
+    # commit changes
+    git_commit(path: ENV["BUILD_NUMBER_XCCONFIG_PATH"], message: "[ci skip] Incremented build version")
+  end
+
+  desc "Make an archive from the current codebase"
+  private_lane :archive do |options|
+    sync_certs
+  
+    # See https://docs.fastlane.tools/codesigning/getting-started/#automatic-manual-signing
+    # disable_automatic_code_signing(path: ENV["XC_PROJECT"])
+    # More at https://docs.fastlane.tools/actions/gym/
+    export_options = {:compileBitcode => ENV.fetch('GYM_EXPORT_COMPILE_BITCODE', 'true').to_b}
+    export_icloud_container_env = ENV['GYM_EXPORT_ICLOUD_CONTAINER_ENV']
+    export_options[:iCloudContainerEnvironment] = export_icloud_container_env unless export_icloud_container_env.nil?
+
+    build_app(export_options: export_options)
+    # enable_automatic_code_signing(path: ENV["XC_PROJECT"])
+  end
+
+  private_lane :notify_slack do |options|
+    if ENV['SLACK_URL'].nil? || ENV['SLACK_URL'].empty? then
+      UI.message("Skipping Slack notification since `SLACK_URL` is empty. Check .env file to fix that")
+    else
+      build_number = build_number_get_from_xcconfig
+      version = get_version_number_from_xcodeproj
+      
+      slack(
+        message: 'New beta build is available. Check build details below or at your emails.',
+        payload: {
+          'Version' => version,
+          'Build number' => build_number,
+          'Branch' => "#{git_branch} (#{number_of_commits} commits)",
+          'Scheme' => ENV['GYM_SCHEME'],
+          'Configuration' => ENV['GYM_CONFIGURATION'],
+          'Download Link' => Actions.lane_context[SharedValues::FIREBASE_DISTRIBUTION_RELEASES_URL]
+        },
+        default_payloads: []
+      )
+    end
+  end
+
+  private_lane :distribute do |options|
+    environment = Actions.lane_context[Actions::SharedValues::ENVIRONMENT]
+    
+    if environment.include? 'appstore' then
+      distribute_to_appstore(options)
+    else 
+      distribute_to_firebase(options)
+    end
+  end
+
+  private_lane :distribute_to_appstore do |options|
+    testflight
+    
+    firebase_distribution_setup
+    upload_symbols_to_crashlytics
+  end
+
+  private_lane :distribute_to_firebase do |options|
+    firebase_distribution_setup
+
+    notes = nil
+    environment = Actions.lane_context[Actions::SharedValues::ENVIRONMENT]
+    unless environment.nil?
+      notes = "Environment - #{environment}\n" + changelog_from_git_commits(pretty: '%h %s', merge_commit_filtering: 'exclude_merges', date_format: 'short')
+    end
+
+    firebase_app_distribution(release_notes: notes)
+    upload_symbols_to_crashlytics
+  end
+
+  private_lane :add_version_badge do
+    environment = Actions.lane_context[Actions::SharedValues::ENVIRONMENT]
+    
+    if !environment.nil? && environment.include?('appstore') then
+      UI.message('Skipping AppIcon badge overlaying for the AppStore build')
+    elsif !environment.nil?
+      shield = "#{environment_slug(environment)}-#{get_full_version.gsub('-', '--')}"
+      
+      UI.message("Setting AppIcon badge to: #{shield}")
+
+      add_badge(shield: "#{shield}-orange", no_badge: true, shield_gravity: 'South')
+    else 
+      UI.message("Skipping AppIcon badge overlaying for the unknown environment. Make sure you've passed --env flag")
+    end
+  end
+
+  private_lane :cleanup_version_badge_artifacts do
+    begin
+      files = sh("git diff --name-only | grep AppIcon.appiconset").split("\n")
+      reset_git_repo(files: files, skip_clean: true, force: true) unless files.empty?
+    rescue => exception
+      UI.message("Didn't find anything to cleanup in AppIcon.appiconset")
+    end
+  end
+
+  desc "Download symbols from the AppStore and upload to the Crashlytics"
+  lane :upload_symbols do
+    dsyms_dir = ENV['DOWNLOAD_DSYMS_OUTPUT_DIRECTORY']
+    if dsyms_dir != nil then
+      sh "mkdir -p #{dsyms_dir}"
+    end
+
+    download_dsyms
+    upload_symbols_to_crashlytics
+  end
+
+  def environment_slug(environment)
+    slug_match = environment.match(/(dev|stag|prod)/).to_s
+    slug_match.empty? ? environment : slug_match
+  end
+
+  def get_full_version
+    "#{get_version_number_from_xcodeproj}-#{build_number_get_from_xcconfig}"
+  end
+
+  def version_bump_commit_message(full_version, include_ci_skip = true) 
+    include_ci_skip ? "[ci skip] Set version to #{full_version}" : "Set version to #{full_version}"
+  end
+end

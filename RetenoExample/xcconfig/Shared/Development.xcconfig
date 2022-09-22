@@ -1,0 +1,6 @@
+// Specialization for the Development
+
+#include "Base.xcconfig"
+
+BUILD_ENV = DEVELOPMENT
+APP_TRANSPORT_SECURITY_ALLOWS_ARBITRARY_LOADS_KEY = NSAllowsArbitraryLoads
