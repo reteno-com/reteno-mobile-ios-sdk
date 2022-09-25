@@ -181,8 +181,8 @@ platform :ios do
   private_lane :distribute_to_appstore do |options|
     testflight
     
-    firebase_distribution_setup
-    upload_symbols_to_crashlytics
+    # firebase_distribution_setup
+    # upload_symbols_to_crashlytics
   end
 
   private_lane :distribute_to_firebase do |options|
