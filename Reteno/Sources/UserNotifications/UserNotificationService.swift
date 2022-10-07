@@ -8,22 +8,26 @@
 import UIKit
 import UserNotifications
 
+@available(iOSApplicationExtension, unavailable)
 public final class UserNotificationService: NSObject {
     
+    // The closure will be called only if the application is in the foreground.
+    // If you provide empty UNNotificationPresentationOptions then the notification will not be presented.
+    // The application can choose to have the notification presented as a sound, badge, alert and/or in the notification list.
+    // This decision should be based on whether the information in the notification is otherwise visible to the user.
     public var willPresentNotificationHandler: ((_ notification: UNNotification) -> UNNotificationPresentationOptions)?
+    
+    // The closure will be called when the user responded to the notification by opening the application, dismissing the notification or choosing a UNNotificationAction.
     public var didReceiveNotificationResponseHandler: ((_ response: UNNotificationResponse) -> Void)?
     
-    var deviceToken: String? {
-        StorageBuilder.build().getValue(forKey: StorageKeys.pushToken.rawValue)
-    }
+    // The closure will be called when notification is going to be presented if the application is in the foreground.
+    // Also the closure will be called when the user responded to the notification by opening the application,
+    // dismissing the notification or choosing a UNNotificationAction.
+    public var didReceiveNotificationUserInfo: ((_ userInfo: [AnyHashable: Any]) -> Void)?
     
     public static let shared = UserNotificationService()
         
     private override init() {}
-    
-    func isRetenoPushNotification(_ content: UNNotificationContent) -> Bool {
-        content.userInfo["es_interaction_id"] != nil
-    }
     
     // MARK: - Notifications register/unregister logic
     
@@ -57,10 +61,12 @@ public final class UserNotificationService: NSObject {
     
     public func processRemoteNotificationsToken(_ deviceToken: String) {
         StorageBuilder.build().set(value: deviceToken, forKey: StorageKeys.pushToken.rawValue)
+        MobileRequestServiceBuilder.build().upsertDevice()
     }
     
 }
 
+@available(iOSApplicationExtension, unavailable)
 extension UserNotificationService: UNUserNotificationCenterDelegate {
     
     public func userNotificationCenter(
@@ -68,6 +74,7 @@ extension UserNotificationService: UNUserNotificationCenterDelegate {
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
+        didReceiveNotificationUserInfo?(notification.request.content.userInfo)
         let options: UNNotificationPresentationOptions = {
             guard let options = willPresentNotificationHandler?(notification) else {
                 if #available(iOS 14.0, *) {
@@ -89,10 +96,18 @@ extension UserNotificationService: UNUserNotificationCenterDelegate {
     ) {
         if response.actionIdentifier == UNNotificationDefaultActionIdentifier,
             let notification = RetenoUserNotification(userInfo: response.notification.request.content.userInfo) {
+            
+            DeepLinksProcessor.process(notification: notification)
+            
             let service = SendingServiceBuilder.build()
-            service.updateInteractionStatus(interactionId: notification.id, token: deviceToken ?? "", status: .opened)
+            service.updateInteractionStatus(
+                interactionId: notification.id,
+                token: RetenoNotificationsHelper.deviceToken() ?? "",
+                status: .opened
+            )
         }
         didReceiveNotificationResponseHandler?(response)
+        didReceiveNotificationUserInfo?(response.notification.request.content.userInfo)
         completionHandler()
     }
     

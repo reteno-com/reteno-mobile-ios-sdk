@@ -30,6 +30,13 @@ final class MainViewController: UIViewController {
         setuplayout()
     }
     
+    // MARK: Actions
+    
+    @objc
+    private func menuButtonAction(_ sender: UIButton) {
+        viewModel.openMenu()
+    }
+    
 }
 
 // MARK: - Layout
@@ -48,6 +55,21 @@ private extension MainViewController {
         label.font = .systemFont(ofSize: 20.0)
         label.textColor = .black
         label.text = NSLocalizedString("main_screen.title", comment: "")
+        
+        let menuButton = UIButton(type: .system)
+        menuButton.backgroundColor = .systemGray
+        menuButton.setTitle(NSLocalizedString("menu_screen.title", comment: ""), for: .normal)
+        menuButton.setTitleColor(.black, for: .normal)
+        menuButton.layer.cornerRadius = 6.0
+        
+        menuButton.addTarget(self, action: #selector(menuButtonAction(_:)), for: .touchUpInside)
+        view.addSubview(menuButton)
+        menuButton.snp.makeConstraints {
+            $0.top.equalTo(label.snp.bottom).offset(80.0)
+            $0.centerX.equalToSuperview()
+            $0.width.equalToSuperview().multipliedBy(0.4)
+            $0.height.equalTo(28.0)
+        }
     }
     
 }

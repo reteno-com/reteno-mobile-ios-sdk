@@ -9,8 +9,10 @@ import Foundation
 
 struct BundleIdHelper {
     
-    static func getMainAppBundleId() -> String {
-        var bundleURL = Bundle.main.bundleURL
+    private init() {}
+    
+    static func getMainAppBundleId(bundle: Bundle = Bundle.main) -> String {
+        var bundleURL = bundle.bundleURL
         
         if bundleURL.pathExtension == "appex" {
             findAppPath(for: &bundleURL)

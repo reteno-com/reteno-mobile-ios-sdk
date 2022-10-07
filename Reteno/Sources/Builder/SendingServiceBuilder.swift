@@ -9,14 +9,10 @@ import Foundation
 
 public struct SendingServiceBuilder {
     
-    public static func build() -> SendingServices {
-        let requestManager = UnauthorizedAuthNetworkBuilder.build()
-        
-        return SendingServices(requestManager: requestManager)
-    }
+    private init() {}
     
-    public static func buildWithApiKey(_ key: String) -> SendingServices {
-        let requestManager = NetworkBuilder.build(apiKey: key)
+    static func build() -> SendingServices {
+        let requestManager = NetworkBuilder.build()
         
         return SendingServices(requestManager: requestManager)
     }

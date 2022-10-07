@@ -9,6 +9,8 @@ import Swinject
 
 final class ApplicationFlowCoordinator {
     
+    private weak var navigationController: UINavigationController?
+    
     private let window: UIWindow
     private let container: Container
         
@@ -29,8 +31,16 @@ final class ApplicationFlowCoordinator {
     // MARK: Modules presentation
     
     private func presentMainFlow() {
-        let controller = container.resolve(MainViewController.self)!
-        setWindowRootViewController(with: controller)
+        let navigationHandler: MainModelNavigationHandler = self
+        let controller = container.resolve(MainViewController.self, argument: navigationHandler)!
+        let navigationController = UINavigationController(rootViewController: controller)
+        self.navigationController = navigationController
+        setWindowRootViewController(with: navigationController)
+    }
+    
+    private func presentMenu() {
+        let controller = container.resolve(MenuViewController.self)!
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: Helpers
@@ -38,6 +48,14 @@ final class ApplicationFlowCoordinator {
     private func setWindowRootViewController(with viewController: UIViewController) {
         window.rootViewController = viewController
         window.makeKeyAndVisible()
+    }
+    
+}
+
+extension ApplicationFlowCoordinator: MainModelNavigationHandler {
+    
+    func openMenu() {
+        presentMenu()
     }
     
 }

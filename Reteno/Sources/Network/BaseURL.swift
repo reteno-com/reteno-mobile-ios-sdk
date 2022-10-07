@@ -1,6 +1,6 @@
 //
 //  BaseURL.swift
-//  Alamofire
+//  Reteno
 //
 //  Created by Serhii Prykhodko on 13.09.2022.
 //
@@ -11,5 +11,6 @@ enum BaseURL: String {
     
     case `default` = "https://api.reteno.com/api/"
     case esputnik = "https://esputnik.com/api/"
+    case retenoMobile = "https://mobile-api.reteno.com/api/"
     
 }

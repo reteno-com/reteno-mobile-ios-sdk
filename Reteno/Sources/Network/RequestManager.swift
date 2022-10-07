@@ -49,7 +49,7 @@ final class RequestManager {
             }
             
             if resonse.response?.statusCode == 200 {
-                dataHandling(Data())
+                dataHandling(resonse.data ?? Data())
                 
                 return
             }

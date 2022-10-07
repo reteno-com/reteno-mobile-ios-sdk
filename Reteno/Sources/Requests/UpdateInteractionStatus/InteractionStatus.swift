@@ -1,6 +1,6 @@
 //
 //  InteractionStatus.swift
-//  Alamofire
+//  Reteno
 //
 //  Created by Serhii Prykhodko on 13.09.2022.
 //

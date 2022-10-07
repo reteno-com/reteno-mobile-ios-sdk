@@ -8,73 +8,83 @@
 
 /* Begin PBXBuildFile section */
 		18D02BCD28CA2F02008018F1 /* Reteno.docc in Sources */ = {isa = PBXBuildFile; fileRef = 18D02BCC28CA2F02008018F1 /* Reteno.docc */; };
-		18D02BD328CA2F02008018F1 /* Reteno.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18D02BC828CA2F02008018F1 /* Reteno.framework */; };
-		18D02BD828CA2F02008018F1 /* RetenoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D02BD728CA2F02008018F1 /* RetenoTests.swift */; };
 		18D02BD928CA2F02008018F1 /* Reteno.h in Headers */ = {isa = PBXBuildFile; fileRef = 18D02BCB28CA2F02008018F1 /* Reteno.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B5D9719228E0E46200795B57 /* CreateContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9716F28E0E46200795B57 /* CreateContactRequest.swift */; };
-		B5D9719328E0E46200795B57 /* UpdateInteractionStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9717128E0E46200795B57 /* UpdateInteractionStatusRequest.swift */; };
-		B5D9719428E0E46200795B57 /* InteractionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9717228E0E46200795B57 /* InteractionStatus.swift */; };
-		B5D9719528E0E46200795B57 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9717428E0E46200795B57 /* EmptyResponse.swift */; };
-		B5D9719628E0E46200795B57 /* Reteno.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9717628E0E46200795B57 /* Reteno.swift */; };
-		B5D9719728E0E46200795B57 /* SendingServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9717828E0E46200795B57 /* SendingServices.swift */; };
-		B5D9719828E0E46200795B57 /* ResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9717B28E0E46200795B57 /* ResponseHandler.swift */; };
-		B5D9719928E0E46200795B57 /* DecodableResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9717C28E0E46200795B57 /* DecodableResponseHandler.swift */; };
-		B5D9719A28E0E46200795B57 /* EmptyResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9717D28E0E46200795B57 /* EmptyResponseHandler.swift */; };
-		B5D9719B28E0E46200795B57 /* BaseBEDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9717F28E0E46200795B57 /* BaseBEDateFormatter.swift */; };
-		B5D9719C28E0E46200795B57 /* BundleIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718128E0E46200795B57 /* BundleIdHelper.swift */; };
-		B5D9719D28E0E46200795B57 /* RetenoUserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718328E0E46200795B57 /* RetenoUserNotification.swift */; };
-		B5D9719E28E0E46200795B57 /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718428E0E46200795B57 /* UserNotificationService.swift */; };
-		B5D9719F28E0E46200795B57 /* RetenoNotificationServiceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718528E0E46200795B57 /* RetenoNotificationServiceExtension.swift */; };
-		B5D971A028E0E46200795B57 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718728E0E46200795B57 /* KeyValueStorage.swift */; };
-		B5D971A128E0E46200795B57 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718928E0E46200795B57 /* RequestManager.swift */; };
-		B5D971A228E0E46200795B57 /* RequestDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718A28E0E46200795B57 /* RequestDecorator.swift */; };
-		B5D971A328E0E46200795B57 /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718B28E0E46200795B57 /* BaseURL.swift */; };
-		B5D971A428E0E46200795B57 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718C28E0E46200795B57 /* APIRequest.swift */; };
-		B5D971A528E0E46200795B57 /* NetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718E28E0E46200795B57 /* NetworkBuilder.swift */; };
-		B5D971A628E0E46200795B57 /* SendingServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9718F28E0E46200795B57 /* SendingServiceBuilder.swift */; };
-		B5D971A728E0E46200795B57 /* UnauthorizedAuthNetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9719028E0E46200795B57 /* UnauthorizedAuthNetworkBuilder.swift */; };
-		B5D971A828E0E46200795B57 /* StorageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D9719128E0E46200795B57 /* StorageBuilder.swift */; };
+		B57EAB5528ECD4BA00EA1260 /* AppVersionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EAB5428ECD4BA00EA1260 /* AppVersionHelper.swift */; };
+		B593CD8628E630A300130C2E /* MobileRequestServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD8528E630A300130C2E /* MobileRequestServiceBuilder.swift */; };
+		B593CD8D28E630C600130C2E /* ExternalUserIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD8728E630C600130C2E /* ExternalUserIdHelper.swift */; };
+		B593CD8E28E630C600130C2E /* ApiKeyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD8828E630C600130C2E /* ApiKeyHelper.swift */; };
+		B593CD8F28E630C600130C2E /* DeviceIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD8A28E630C600130C2E /* DeviceIdHelper.swift */; };
+		B593CD9028E630C600130C2E /* AdvertisingIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD8B28E630C600130C2E /* AdvertisingIdHelper.swift */; };
+		B593CD9128E630C600130C2E /* DeviceCategoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD8C28E630C600130C2E /* DeviceCategoryHelper.swift */; };
+		B593CD9528E630F700130C2E /* DeviceCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD9328E630F700130C2E /* DeviceCategory.swift */; };
+		B593CD9628E630F700130C2E /* DeviceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD9428E630F700130C2E /* DeviceRequest.swift */; };
+		B593CD9828E6310900130C2E /* MobileRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD9728E6310900130C2E /* MobileRequestService.swift */; };
+		B5D971DE28E1DD6C00795B57 /* Reteno.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971B728E1DD6C00795B57 /* Reteno.swift */; };
+		B5D971DF28E1DD6C00795B57 /* DeepLinksProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971B928E1DD6C00795B57 /* DeepLinksProcessor.swift */; };
+		B5D971E028E1DD6C00795B57 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971BB28E1DD6C00795B57 /* RequestManager.swift */; };
+		B5D971E128E1DD6C00795B57 /* RequestDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971BC28E1DD6C00795B57 /* RequestDecorator.swift */; };
+		B5D971E228E1DD6C00795B57 /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971BD28E1DD6C00795B57 /* BaseURL.swift */; };
+		B5D971E328E1DD6C00795B57 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971BE28E1DD6C00795B57 /* APIRequest.swift */; };
+		B5D971E428E1DD6C00795B57 /* RetenoUserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971C028E1DD6C00795B57 /* RetenoUserNotification.swift */; };
+		B5D971E528E1DD6C00795B57 /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971C128E1DD6C00795B57 /* UserNotificationService.swift */; };
+		B5D971E628E1DD6C00795B57 /* RetenoNotificationServiceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971C228E1DD6C00795B57 /* RetenoNotificationServiceExtension.swift */; };
+		B5D971E728E1DD6C00795B57 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971C428E1DD6C00795B57 /* KeyValueStorage.swift */; };
+		B5D971E828E1DD6C00795B57 /* ResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971C728E1DD6C00795B57 /* ResponseHandler.swift */; };
+		B5D971E928E1DD6C00795B57 /* DecodableResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971C828E1DD6C00795B57 /* DecodableResponseHandler.swift */; };
+		B5D971EA28E1DD6C00795B57 /* EmptyResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971C928E1DD6C00795B57 /* EmptyResponseHandler.swift */; };
+		B5D971EB28E1DD6C00795B57 /* BaseBEDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971CB28E1DD6C00795B57 /* BaseBEDateFormatter.swift */; };
+		B5D971EC28E1DD6C00795B57 /* RetenoNotificationsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971CD28E1DD6C00795B57 /* RetenoNotificationsHelper.swift */; };
+		B5D971ED28E1DD6C00795B57 /* BundleIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971CE28E1DD6C00795B57 /* BundleIdHelper.swift */; };
+		B5D971EE28E1DD6C00795B57 /* CreateContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971D128E1DD6C00795B57 /* CreateContactRequest.swift */; };
+		B5D971EF28E1DD6C00795B57 /* UpdateInteractionStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971D328E1DD6C00795B57 /* UpdateInteractionStatusRequest.swift */; };
+		B5D971F028E1DD6C00795B57 /* InteractionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971D428E1DD6C00795B57 /* InteractionStatus.swift */; };
+		B5D971F128E1DD6C00795B57 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971D628E1DD6C00795B57 /* EmptyResponse.swift */; };
+		B5D971F228E1DD6C00795B57 /* SendingServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971D828E1DD6C00795B57 /* SendingServices.swift */; };
+		B5D971F328E1DD6C00795B57 /* NetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971DA28E1DD6C00795B57 /* NetworkBuilder.swift */; };
+		B5D971F428E1DD6C00795B57 /* SendingServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971DB28E1DD6C00795B57 /* SendingServiceBuilder.swift */; };
+		B5D971F528E1DD6C00795B57 /* UnauthorizedAuthNetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971DC28E1DD6C00795B57 /* UnauthorizedAuthNetworkBuilder.swift */; };
+		B5D971F628E1DD6C00795B57 /* StorageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D971DD28E1DD6C00795B57 /* StorageBuilder.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		18D02BD428CA2F02008018F1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 18D02BBF28CA2F02008018F1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 18D02BC728CA2F02008018F1;
-			remoteInfo = Reteno;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		18D02BC828CA2F02008018F1 /* Reteno.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reteno.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D02BCB28CA2F02008018F1 /* Reteno.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reteno.h; sourceTree = "<group>"; };
 		18D02BCC28CA2F02008018F1 /* Reteno.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Reteno.docc; sourceTree = "<group>"; };
-		18D02BD228CA2F02008018F1 /* RetenoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RetenoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		18D02BD728CA2F02008018F1 /* RetenoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoTests.swift; sourceTree = "<group>"; };
-		B5D9716F28E0E46200795B57 /* CreateContactRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateContactRequest.swift; sourceTree = "<group>"; };
-		B5D9717128E0E46200795B57 /* UpdateInteractionStatusRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateInteractionStatusRequest.swift; sourceTree = "<group>"; };
-		B5D9717228E0E46200795B57 /* InteractionStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractionStatus.swift; sourceTree = "<group>"; };
-		B5D9717428E0E46200795B57 /* EmptyResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
-		B5D9717628E0E46200795B57 /* Reteno.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reteno.swift; sourceTree = "<group>"; };
-		B5D9717828E0E46200795B57 /* SendingServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendingServices.swift; sourceTree = "<group>"; };
-		B5D9717B28E0E46200795B57 /* ResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseHandler.swift; sourceTree = "<group>"; };
-		B5D9717C28E0E46200795B57 /* DecodableResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodableResponseHandler.swift; sourceTree = "<group>"; };
-		B5D9717D28E0E46200795B57 /* EmptyResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyResponseHandler.swift; sourceTree = "<group>"; };
-		B5D9717F28E0E46200795B57 /* BaseBEDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseBEDateFormatter.swift; sourceTree = "<group>"; };
-		B5D9718128E0E46200795B57 /* BundleIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleIdHelper.swift; sourceTree = "<group>"; };
-		B5D9718328E0E46200795B57 /* RetenoUserNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoUserNotification.swift; sourceTree = "<group>"; };
-		B5D9718428E0E46200795B57 /* UserNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
-		B5D9718528E0E46200795B57 /* RetenoNotificationServiceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoNotificationServiceExtension.swift; sourceTree = "<group>"; };
-		B5D9718728E0E46200795B57 /* KeyValueStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
-		B5D9718928E0E46200795B57 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
-		B5D9718A28E0E46200795B57 /* RequestDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDecorator.swift; sourceTree = "<group>"; };
-		B5D9718B28E0E46200795B57 /* BaseURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
-		B5D9718C28E0E46200795B57 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
-		B5D9718E28E0E46200795B57 /* NetworkBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkBuilder.swift; sourceTree = "<group>"; };
-		B5D9718F28E0E46200795B57 /* SendingServiceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendingServiceBuilder.swift; sourceTree = "<group>"; };
-		B5D9719028E0E46200795B57 /* UnauthorizedAuthNetworkBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnauthorizedAuthNetworkBuilder.swift; sourceTree = "<group>"; };
-		B5D9719128E0E46200795B57 /* StorageBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageBuilder.swift; sourceTree = "<group>"; };
+		B57EAB5428ECD4BA00EA1260 /* AppVersionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionHelper.swift; sourceTree = "<group>"; };
+		B593CD8528E630A300130C2E /* MobileRequestServiceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileRequestServiceBuilder.swift; sourceTree = "<group>"; };
+		B593CD8728E630C600130C2E /* ExternalUserIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalUserIdHelper.swift; sourceTree = "<group>"; };
+		B593CD8828E630C600130C2E /* ApiKeyHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeyHelper.swift; sourceTree = "<group>"; };
+		B593CD8A28E630C600130C2E /* DeviceIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceIdHelper.swift; sourceTree = "<group>"; };
+		B593CD8B28E630C600130C2E /* AdvertisingIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvertisingIdHelper.swift; sourceTree = "<group>"; };
+		B593CD8C28E630C600130C2E /* DeviceCategoryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCategoryHelper.swift; sourceTree = "<group>"; };
+		B593CD9328E630F700130C2E /* DeviceCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCategory.swift; sourceTree = "<group>"; };
+		B593CD9428E630F700130C2E /* DeviceRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceRequest.swift; sourceTree = "<group>"; };
+		B593CD9728E6310900130C2E /* MobileRequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileRequestService.swift; sourceTree = "<group>"; };
+		B5D971B728E1DD6C00795B57 /* Reteno.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reteno.swift; sourceTree = "<group>"; };
+		B5D971B928E1DD6C00795B57 /* DeepLinksProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinksProcessor.swift; sourceTree = "<group>"; };
+		B5D971BB28E1DD6C00795B57 /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		B5D971BC28E1DD6C00795B57 /* RequestDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDecorator.swift; sourceTree = "<group>"; };
+		B5D971BD28E1DD6C00795B57 /* BaseURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
+		B5D971BE28E1DD6C00795B57 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		B5D971C028E1DD6C00795B57 /* RetenoUserNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoUserNotification.swift; sourceTree = "<group>"; };
+		B5D971C128E1DD6C00795B57 /* UserNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
+		B5D971C228E1DD6C00795B57 /* RetenoNotificationServiceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoNotificationServiceExtension.swift; sourceTree = "<group>"; };
+		B5D971C428E1DD6C00795B57 /* KeyValueStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
+		B5D971C728E1DD6C00795B57 /* ResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseHandler.swift; sourceTree = "<group>"; };
+		B5D971C828E1DD6C00795B57 /* DecodableResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodableResponseHandler.swift; sourceTree = "<group>"; };
+		B5D971C928E1DD6C00795B57 /* EmptyResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyResponseHandler.swift; sourceTree = "<group>"; };
+		B5D971CB28E1DD6C00795B57 /* BaseBEDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseBEDateFormatter.swift; sourceTree = "<group>"; };
+		B5D971CD28E1DD6C00795B57 /* RetenoNotificationsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoNotificationsHelper.swift; sourceTree = "<group>"; };
+		B5D971CE28E1DD6C00795B57 /* BundleIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleIdHelper.swift; sourceTree = "<group>"; };
+		B5D971D128E1DD6C00795B57 /* CreateContactRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateContactRequest.swift; sourceTree = "<group>"; };
+		B5D971D328E1DD6C00795B57 /* UpdateInteractionStatusRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateInteractionStatusRequest.swift; sourceTree = "<group>"; };
+		B5D971D428E1DD6C00795B57 /* InteractionStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractionStatus.swift; sourceTree = "<group>"; };
+		B5D971D628E1DD6C00795B57 /* EmptyResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
+		B5D971D828E1DD6C00795B57 /* SendingServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendingServices.swift; sourceTree = "<group>"; };
+		B5D971DA28E1DD6C00795B57 /* NetworkBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkBuilder.swift; sourceTree = "<group>"; };
+		B5D971DB28E1DD6C00795B57 /* SendingServiceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendingServiceBuilder.swift; sourceTree = "<group>"; };
+		B5D971DC28E1DD6C00795B57 /* UnauthorizedAuthNetworkBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnauthorizedAuthNetworkBuilder.swift; sourceTree = "<group>"; };
+		B5D971DD28E1DD6C00795B57 /* StorageBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,14 +95,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		18D02BCF28CA2F02008018F1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				18D02BD328CA2F02008018F1 /* Reteno.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -100,7 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				18D02BCA28CA2F02008018F1 /* Reteno */,
-				18D02BD628CA2F02008018F1 /* RetenoTests */,
 				18D02BC928CA2F02008018F1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -109,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				18D02BC828CA2F02008018F1 /* Reteno.framework */,
-				18D02BD228CA2F02008018F1 /* RetenoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,152 +124,180 @@
 			path = Reteno;
 			sourceTree = "<group>";
 		};
-		18D02BD628CA2F02008018F1 /* RetenoTests */ = {
-			isa = PBXGroup;
-			children = (
-				18D02BD728CA2F02008018F1 /* RetenoTests.swift */,
-			);
-			path = RetenoTests;
-			sourceTree = "<group>";
-		};
 		B504128528CF419300524A69 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				B5D9718D28E0E46200795B57 /* Builder */,
-				B5D9717928E0E46200795B57 /* Common */,
-				B5D9717528E0E46200795B57 /* Core */,
-				B5D9718828E0E46200795B57 /* Network */,
-				B5D9716D28E0E46200795B57 /* Requests */,
-				B5D9717728E0E46200795B57 /* Services */,
-				B5D9718628E0E46200795B57 /* Storage */,
-				B5D9718228E0E46200795B57 /* UserNotifications */,
+				B5D971D928E1DD6C00795B57 /* Builder */,
+				B5D971C528E1DD6C00795B57 /* Common */,
+				B5D971B628E1DD6C00795B57 /* Core */,
+				B5D971B828E1DD6C00795B57 /* DeepLinks */,
+				B5D971BA28E1DD6C00795B57 /* Network */,
+				B5D971CF28E1DD6C00795B57 /* Requests */,
+				B5D971D728E1DD6C00795B57 /* Services */,
+				B5D971C328E1DD6C00795B57 /* Storage */,
+				B5D971BF28E1DD6C00795B57 /* UserNotifications */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		B5D9716D28E0E46200795B57 /* Requests */ = {
+		B593CD8928E630C600130C2E /* DeviceHelpers */ = {
 			isa = PBXGroup;
 			children = (
-				B5D9716E28E0E46200795B57 /* CreateContact */,
-				B5D9717028E0E46200795B57 /* UpdateInteractionStatus */,
-				B5D9717328E0E46200795B57 /* EmptyResponse */,
+				B57EAB5428ECD4BA00EA1260 /* AppVersionHelper.swift */,
+				B593CD8A28E630C600130C2E /* DeviceIdHelper.swift */,
+				B593CD8B28E630C600130C2E /* AdvertisingIdHelper.swift */,
+				B593CD8C28E630C600130C2E /* DeviceCategoryHelper.swift */,
 			);
-			path = Requests;
+			path = DeviceHelpers;
 			sourceTree = "<group>";
 		};
-		B5D9716E28E0E46200795B57 /* CreateContact */ = {
+		B593CD9228E630F700130C2E /* Device */ = {
 			isa = PBXGroup;
 			children = (
-				B5D9716F28E0E46200795B57 /* CreateContactRequest.swift */,
+				B593CD9328E630F700130C2E /* DeviceCategory.swift */,
+				B593CD9428E630F700130C2E /* DeviceRequest.swift */,
 			);
-			path = CreateContact;
+			path = Device;
 			sourceTree = "<group>";
 		};
-		B5D9717028E0E46200795B57 /* UpdateInteractionStatus */ = {
+		B5D971B628E1DD6C00795B57 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				B5D9717128E0E46200795B57 /* UpdateInteractionStatusRequest.swift */,
-				B5D9717228E0E46200795B57 /* InteractionStatus.swift */,
-			);
-			path = UpdateInteractionStatus;
-			sourceTree = "<group>";
-		};
-		B5D9717328E0E46200795B57 /* EmptyResponse */ = {
-			isa = PBXGroup;
-			children = (
-				B5D9717428E0E46200795B57 /* EmptyResponse.swift */,
-			);
-			path = EmptyResponse;
-			sourceTree = "<group>";
-		};
-		B5D9717528E0E46200795B57 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				B5D9717628E0E46200795B57 /* Reteno.swift */,
+				B5D971B728E1DD6C00795B57 /* Reteno.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
 		};
-		B5D9717728E0E46200795B57 /* Services */ = {
+		B5D971B828E1DD6C00795B57 /* DeepLinks */ = {
 			isa = PBXGroup;
 			children = (
-				B5D9717828E0E46200795B57 /* SendingServices.swift */,
+				B5D971B928E1DD6C00795B57 /* DeepLinksProcessor.swift */,
 			);
-			path = Services;
+			path = DeepLinks;
 			sourceTree = "<group>";
 		};
-		B5D9717928E0E46200795B57 /* Common */ = {
+		B5D971BA28E1DD6C00795B57 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				B5D9717A28E0E46200795B57 /* Response */,
-				B5D9717E28E0E46200795B57 /* DateFormatters */,
-				B5D9718028E0E46200795B57 /* Helpers */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
-		B5D9717A28E0E46200795B57 /* Response */ = {
-			isa = PBXGroup;
-			children = (
-				B5D9717B28E0E46200795B57 /* ResponseHandler.swift */,
-				B5D9717C28E0E46200795B57 /* DecodableResponseHandler.swift */,
-				B5D9717D28E0E46200795B57 /* EmptyResponseHandler.swift */,
-			);
-			path = Response;
-			sourceTree = "<group>";
-		};
-		B5D9717E28E0E46200795B57 /* DateFormatters */ = {
-			isa = PBXGroup;
-			children = (
-				B5D9717F28E0E46200795B57 /* BaseBEDateFormatter.swift */,
-			);
-			path = DateFormatters;
-			sourceTree = "<group>";
-		};
-		B5D9718028E0E46200795B57 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				B5D9718128E0E46200795B57 /* BundleIdHelper.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
-		B5D9718228E0E46200795B57 /* UserNotifications */ = {
-			isa = PBXGroup;
-			children = (
-				B5D9718328E0E46200795B57 /* RetenoUserNotification.swift */,
-				B5D9718428E0E46200795B57 /* UserNotificationService.swift */,
-				B5D9718528E0E46200795B57 /* RetenoNotificationServiceExtension.swift */,
-			);
-			path = UserNotifications;
-			sourceTree = "<group>";
-		};
-		B5D9718628E0E46200795B57 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				B5D9718728E0E46200795B57 /* KeyValueStorage.swift */,
-			);
-			path = Storage;
-			sourceTree = "<group>";
-		};
-		B5D9718828E0E46200795B57 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				B5D9718928E0E46200795B57 /* RequestManager.swift */,
-				B5D9718A28E0E46200795B57 /* RequestDecorator.swift */,
-				B5D9718B28E0E46200795B57 /* BaseURL.swift */,
-				B5D9718C28E0E46200795B57 /* APIRequest.swift */,
+				B5D971BB28E1DD6C00795B57 /* RequestManager.swift */,
+				B5D971BC28E1DD6C00795B57 /* RequestDecorator.swift */,
+				B5D971BD28E1DD6C00795B57 /* BaseURL.swift */,
+				B5D971BE28E1DD6C00795B57 /* APIRequest.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
 		};
-		B5D9718D28E0E46200795B57 /* Builder */ = {
+		B5D971BF28E1DD6C00795B57 /* UserNotifications */ = {
 			isa = PBXGroup;
 			children = (
-				B5D9718E28E0E46200795B57 /* NetworkBuilder.swift */,
-				B5D9718F28E0E46200795B57 /* SendingServiceBuilder.swift */,
-				B5D9719028E0E46200795B57 /* UnauthorizedAuthNetworkBuilder.swift */,
-				B5D9719128E0E46200795B57 /* StorageBuilder.swift */,
+				B5D971C028E1DD6C00795B57 /* RetenoUserNotification.swift */,
+				B5D971C128E1DD6C00795B57 /* UserNotificationService.swift */,
+				B5D971C228E1DD6C00795B57 /* RetenoNotificationServiceExtension.swift */,
+			);
+			path = UserNotifications;
+			sourceTree = "<group>";
+		};
+		B5D971C328E1DD6C00795B57 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				B5D971C428E1DD6C00795B57 /* KeyValueStorage.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		B5D971C528E1DD6C00795B57 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				B5D971C628E1DD6C00795B57 /* Response */,
+				B5D971CA28E1DD6C00795B57 /* DateFormatters */,
+				B5D971CC28E1DD6C00795B57 /* Helpers */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		B5D971C628E1DD6C00795B57 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				B5D971C728E1DD6C00795B57 /* ResponseHandler.swift */,
+				B5D971C828E1DD6C00795B57 /* DecodableResponseHandler.swift */,
+				B5D971C928E1DD6C00795B57 /* EmptyResponseHandler.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		B5D971CA28E1DD6C00795B57 /* DateFormatters */ = {
+			isa = PBXGroup;
+			children = (
+				B5D971CB28E1DD6C00795B57 /* BaseBEDateFormatter.swift */,
+			);
+			path = DateFormatters;
+			sourceTree = "<group>";
+		};
+		B5D971CC28E1DD6C00795B57 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B593CD8828E630C600130C2E /* ApiKeyHelper.swift */,
+				B593CD8928E630C600130C2E /* DeviceHelpers */,
+				B593CD8728E630C600130C2E /* ExternalUserIdHelper.swift */,
+				B5D971CD28E1DD6C00795B57 /* RetenoNotificationsHelper.swift */,
+				B5D971CE28E1DD6C00795B57 /* BundleIdHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B5D971CF28E1DD6C00795B57 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				B593CD9228E630F700130C2E /* Device */,
+				B5D971D028E1DD6C00795B57 /* CreateContact */,
+				B5D971D228E1DD6C00795B57 /* UpdateInteractionStatus */,
+				B5D971D528E1DD6C00795B57 /* EmptyResponse */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		B5D971D028E1DD6C00795B57 /* CreateContact */ = {
+			isa = PBXGroup;
+			children = (
+				B5D971D128E1DD6C00795B57 /* CreateContactRequest.swift */,
+			);
+			path = CreateContact;
+			sourceTree = "<group>";
+		};
+		B5D971D228E1DD6C00795B57 /* UpdateInteractionStatus */ = {
+			isa = PBXGroup;
+			children = (
+				B5D971D328E1DD6C00795B57 /* UpdateInteractionStatusRequest.swift */,
+				B5D971D428E1DD6C00795B57 /* InteractionStatus.swift */,
+			);
+			path = UpdateInteractionStatus;
+			sourceTree = "<group>";
+		};
+		B5D971D528E1DD6C00795B57 /* EmptyResponse */ = {
+			isa = PBXGroup;
+			children = (
+				B5D971D628E1DD6C00795B57 /* EmptyResponse.swift */,
+			);
+			path = EmptyResponse;
+			sourceTree = "<group>";
+		};
+		B5D971D728E1DD6C00795B57 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B593CD9728E6310900130C2E /* MobileRequestService.swift */,
+				B5D971D828E1DD6C00795B57 /* SendingServices.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B5D971D928E1DD6C00795B57 /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+				B593CD8528E630A300130C2E /* MobileRequestServiceBuilder.swift */,
+				B5D971DA28E1DD6C00795B57 /* NetworkBuilder.swift */,
+				B5D971DB28E1DD6C00795B57 /* SendingServiceBuilder.swift */,
+				B5D971DC28E1DD6C00795B57 /* UnauthorizedAuthNetworkBuilder.swift */,
+				B5D971DD28E1DD6C00795B57 /* StorageBuilder.swift */,
 			);
 			path = Builder;
 			sourceTree = "<group>";
@@ -306,24 +334,6 @@
 			productReference = 18D02BC828CA2F02008018F1 /* Reteno.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		18D02BD128CA2F02008018F1 /* RetenoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 18D02BDF28CA2F02008018F1 /* Build configuration list for PBXNativeTarget "RetenoTests" */;
-			buildPhases = (
-				18D02BCE28CA2F02008018F1 /* Sources */,
-				18D02BCF28CA2F02008018F1 /* Frameworks */,
-				18D02BD028CA2F02008018F1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				18D02BD528CA2F02008018F1 /* PBXTargetDependency */,
-			);
-			name = RetenoTests;
-			productName = RetenoTests;
-			productReference = 18D02BD228CA2F02008018F1 /* RetenoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -335,9 +345,6 @@
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					18D02BC728CA2F02008018F1 = {
-						CreatedOnToolsVersion = 13.4.1;
-					};
-					18D02BD128CA2F02008018F1 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
 				};
@@ -356,20 +363,12 @@
 			projectRoot = "";
 			targets = (
 				18D02BC728CA2F02008018F1 /* Reteno */,
-				18D02BD128CA2F02008018F1 /* RetenoTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		18D02BC628CA2F02008018F1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		18D02BD028CA2F02008018F1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -383,50 +382,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5D971A128E0E46200795B57 /* RequestManager.swift in Sources */,
-				B5D971A528E0E46200795B57 /* NetworkBuilder.swift in Sources */,
-				B5D9719228E0E46200795B57 /* CreateContactRequest.swift in Sources */,
-				B5D9719E28E0E46200795B57 /* UserNotificationService.swift in Sources */,
-				B5D971A228E0E46200795B57 /* RequestDecorator.swift in Sources */,
-				B5D9719728E0E46200795B57 /* SendingServices.swift in Sources */,
+				B5D971DE28E1DD6C00795B57 /* Reteno.swift in Sources */,
+				B5D971EC28E1DD6C00795B57 /* RetenoNotificationsHelper.swift in Sources */,
+				B5D971EA28E1DD6C00795B57 /* EmptyResponseHandler.swift in Sources */,
+				B593CD9128E630C600130C2E /* DeviceCategoryHelper.swift in Sources */,
+				B5D971F628E1DD6C00795B57 /* StorageBuilder.swift in Sources */,
+				B5D971E528E1DD6C00795B57 /* UserNotificationService.swift in Sources */,
+				B5D971ED28E1DD6C00795B57 /* BundleIdHelper.swift in Sources */,
+				B5D971E328E1DD6C00795B57 /* APIRequest.swift in Sources */,
+				B5D971EF28E1DD6C00795B57 /* UpdateInteractionStatusRequest.swift in Sources */,
+				B5D971E928E1DD6C00795B57 /* DecodableResponseHandler.swift in Sources */,
+				B5D971E428E1DD6C00795B57 /* RetenoUserNotification.swift in Sources */,
+				B593CD9028E630C600130C2E /* AdvertisingIdHelper.swift in Sources */,
+				B5D971EE28E1DD6C00795B57 /* CreateContactRequest.swift in Sources */,
+				B5D971F228E1DD6C00795B57 /* SendingServices.swift in Sources */,
+				B593CD9828E6310900130C2E /* MobileRequestService.swift in Sources */,
+				B593CD8D28E630C600130C2E /* ExternalUserIdHelper.swift in Sources */,
+				B5D971DF28E1DD6C00795B57 /* DeepLinksProcessor.swift in Sources */,
+				B5D971E828E1DD6C00795B57 /* ResponseHandler.swift in Sources */,
+				B5D971E228E1DD6C00795B57 /* BaseURL.swift in Sources */,
+				B593CD8628E630A300130C2E /* MobileRequestServiceBuilder.swift in Sources */,
+				B5D971EB28E1DD6C00795B57 /* BaseBEDateFormatter.swift in Sources */,
+				B593CD8F28E630C600130C2E /* DeviceIdHelper.swift in Sources */,
+				B593CD9628E630F700130C2E /* DeviceRequest.swift in Sources */,
+				B5D971F028E1DD6C00795B57 /* InteractionStatus.swift in Sources */,
+				B5D971F128E1DD6C00795B57 /* EmptyResponse.swift in Sources */,
 				18D02BCD28CA2F02008018F1 /* Reteno.docc in Sources */,
-				B5D971A728E0E46200795B57 /* UnauthorizedAuthNetworkBuilder.swift in Sources */,
-				B5D9719F28E0E46200795B57 /* RetenoNotificationServiceExtension.swift in Sources */,
-				B5D9719B28E0E46200795B57 /* BaseBEDateFormatter.swift in Sources */,
-				B5D9719628E0E46200795B57 /* Reteno.swift in Sources */,
-				B5D9719428E0E46200795B57 /* InteractionStatus.swift in Sources */,
-				B5D9719828E0E46200795B57 /* ResponseHandler.swift in Sources */,
-				B5D971A328E0E46200795B57 /* BaseURL.swift in Sources */,
-				B5D9719528E0E46200795B57 /* EmptyResponse.swift in Sources */,
-				B5D971A628E0E46200795B57 /* SendingServiceBuilder.swift in Sources */,
-				B5D9719A28E0E46200795B57 /* EmptyResponseHandler.swift in Sources */,
-				B5D971A028E0E46200795B57 /* KeyValueStorage.swift in Sources */,
-				B5D9719328E0E46200795B57 /* UpdateInteractionStatusRequest.swift in Sources */,
-				B5D971A828E0E46200795B57 /* StorageBuilder.swift in Sources */,
-				B5D9719C28E0E46200795B57 /* BundleIdHelper.swift in Sources */,
-				B5D9719928E0E46200795B57 /* DecodableResponseHandler.swift in Sources */,
-				B5D971A428E0E46200795B57 /* APIRequest.swift in Sources */,
-				B5D9719D28E0E46200795B57 /* RetenoUserNotification.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		18D02BCE28CA2F02008018F1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				18D02BD828CA2F02008018F1 /* RetenoTests.swift in Sources */,
+				B5D971E728E1DD6C00795B57 /* KeyValueStorage.swift in Sources */,
+				B5D971F528E1DD6C00795B57 /* UnauthorizedAuthNetworkBuilder.swift in Sources */,
+				B593CD9528E630F700130C2E /* DeviceCategory.swift in Sources */,
+				B593CD8E28E630C600130C2E /* ApiKeyHelper.swift in Sources */,
+				B5D971E028E1DD6C00795B57 /* RequestManager.swift in Sources */,
+				B5D971E128E1DD6C00795B57 /* RequestDecorator.swift in Sources */,
+				B57EAB5528ECD4BA00EA1260 /* AppVersionHelper.swift in Sources */,
+				B5D971E628E1DD6C00795B57 /* RetenoNotificationServiceExtension.swift in Sources */,
+				B5D971F428E1DD6C00795B57 /* SendingServiceBuilder.swift in Sources */,
+				B5D971F328E1DD6C00795B57 /* NetworkBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		18D02BD528CA2F02008018F1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 18D02BC728CA2F02008018F1 /* Reteno */;
-			targetProxy = 18D02BD428CA2F02008018F1 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		18D02BDA28CA2F02008018F1 /* Debug */ = {
@@ -607,38 +602,6 @@
 			};
 			name = Release;
 		};
-		18D02BE028CA2F02008018F1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Yespo.RetenoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		18D02BE128CA2F02008018F1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Yespo.RetenoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -656,15 +619,6 @@
 			buildConfigurations = (
 				18D02BDD28CA2F02008018F1 /* Debug */,
 				18D02BDE28CA2F02008018F1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		18D02BDF28CA2F02008018F1 /* Build configuration list for PBXNativeTarget "RetenoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				18D02BE028CA2F02008018F1 /* Debug */,
-				18D02BE128CA2F02008018F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

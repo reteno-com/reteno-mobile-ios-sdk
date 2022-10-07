@@ -16,4 +16,8 @@ final class MainViewModel {
         self.model = model
     }
     
+    func openMenu() {
+        model.openMenu()
+    }
+    
 }

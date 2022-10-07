@@ -8,4 +8,22 @@
 
 import Foundation
 
-final class MainModel { }
+protocol MainModelNavigationHandler {
+    
+    func openMenu()
+    
+}
+
+final class MainModel {
+    
+    private let navigationHandler: MainModelNavigationHandler
+    
+    init(navigationHandler: MainModelNavigationHandler) {
+        self.navigationHandler = navigationHandler
+    }
+    
+    func openMenu() {
+        navigationHandler.openMenu()
+    }
+    
+}

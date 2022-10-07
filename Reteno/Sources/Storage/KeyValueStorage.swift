@@ -8,6 +8,9 @@
 enum StorageKeys: String {
     
     case pushToken = "com.reteno.push-token.key"
+    case deviceId = "com.reteno.device-id.key"
+    case externalUserId = "com.reteno.external-user-id.key"
+    case apiKey = "com.reteno.api-key.key"
     
 }
 

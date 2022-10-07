@@ -14,7 +14,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
     var bestAttemptContent: UNMutableNotificationContent?
     
     open override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
-        guard Reteno.userNotificationService.isRetenoPushNotification(request.content) else {
+        guard RetenoNotificationsHelper.isRetenoPushNotification(request.content.userInfo) else {
             contentHandler(request.content)
             return
         }
@@ -34,7 +34,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
         let service = SendingServiceBuilder.build()
         service.updateInteractionStatus(
             interactionId: notification?.id ?? "",
-            token: Reteno.userNotificationService.deviceToken ?? "",
+            token: RetenoNotificationsHelper.deviceToken() ?? "",
             status: .delivered
         )
         

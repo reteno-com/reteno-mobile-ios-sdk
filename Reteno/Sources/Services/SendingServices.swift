@@ -7,7 +7,7 @@
 
 import Alamofire
 
-public final class SendingServices {
+final class SendingServices {
     
     private let requestManager: RequestManager
     
@@ -15,7 +15,7 @@ public final class SendingServices {
         self.requestManager = requestManager
     }
     
-    public func updateInteractionStatus(
+    func updateInteractionStatus(
         interactionId: String,
         token: String,
         status: InteractionStatus,
@@ -42,7 +42,7 @@ public final class SendingServices {
         }
     }
     
-    public func createContact(token: String, completionHandler: @escaping (Result<Void, Error>) -> Void = { _ in }) {
+    func createContact(token: String, completionHandler: @escaping (Result<Void, Error>) -> Void = { _ in }) {
         let request = CreateContactRequest(token: token)
         let handler = EmptyResponseHandler()
         

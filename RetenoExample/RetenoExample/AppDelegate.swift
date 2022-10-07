@@ -17,19 +17,28 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     var window: UIWindow?
     private var applicationFlowCoordinator: ApplicationFlowCoordinator!
     
+    private var isRunningTests: Bool {
+      NSClassFromString("XCTestCase") != nil
+    }
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
+        if isRunningTests {
+          window = UIWindow(frame: UIScreen.main.bounds)
+          window?.rootViewController = UIViewController()
+          window?.makeKeyAndVisible()
+          
+          return true
+        }
+        
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         
-        Reteno.start()
+        Reteno.start(apiKey: "630A66AF-C1D3-4F2A-ACC1-0D51C38D2B05")
         Reteno.userNotificationService.registerForRemoteNotifications(with: [.sound, .alert, .badge], application: application)
         Reteno.userNotificationService.willPresentNotificationHandler = { notification in
-            print("\nContent: ", notification.request.content)
-            print("\nUser info: ", notification.request.content.userInfo)
-            
             let authOptions: UNNotificationPresentationOptions
             if #available(iOS 14.0, *) {
                 authOptions = [.badge, .sound, .banner]
@@ -37,6 +46,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 authOptions = [.badge, .sound, .alert]
             }
             return authOptions
+        }
+        Reteno.userNotificationService.didReceiveNotificationUserInfo = { [weak self] userInfo in
+            let alert = InformationAlert(text: "Received user info from push: \n--------\n\(userInfo)")
+            self?.window?.showInformationAlert(alert)
         }
         
         let window = UIWindow()
@@ -53,6 +66,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         Messaging.messaging().setAPNSToken(deviceToken, type: .unknown)
     }
     
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
+        let alert = InformationAlert(text: "open url handled: \(url)")
+        window?.showInformationAlert(alert)
+        
+        return true
+    }
+    
 }
 
 extension AppDelegate: MessagingDelegate {
@@ -62,8 +86,6 @@ extension AppDelegate: MessagingDelegate {
         
         print("Device token: ", fcmToken)
         Reteno.userNotificationService.processRemoteNotificationsToken(fcmToken)
-        let sendingService = SendingServiceBuilder.buildWithApiKey("985CE27D65C43B41B9105A6D4E026241")
-        sendingService.createContact(token: fcmToken)
     }
     
 }
