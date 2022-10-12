@@ -23,15 +23,12 @@ platform :ios do
   lane :known_flags do
     flags = {
       :skip_tests => 'Skip running tests before making a build. Tests are useful for any QA builds since tests failure won\'t send a broken code to the outer world', 
-      
       :skip_build_bump => 'Skip build version increment. Build bumping helps to distinguish builds by providing a unique build number for each build',
-
       :skip_tag => "Skip tagging a current release. Valid only when `skip_build_bump` not presented. Derived from the environment, where staging -> stag, production -> prod, etc. Doesn't apply for the appstore builds.
       Default format includes version and build number: \"1.2.3-4567\". Format with version outputs a following format: \"prod-1.2.3-4567\"",
-
       :skip_clean => 'Skip derived data cleanup after build export',
-
       :skip_icon_badge => 'Skip adding a badge with the build version and an environment slug to the App\'s Icon. Ignored for the `appstore` environment',
+      :spm_connected => 'lib connected via spm'
     }
 
     FastlaneCore::PrintTable.print_values(
@@ -81,7 +78,7 @@ platform :ios do
 
     bump_build_number(:include_ci_skip => true) unless options[:skip_build_bump] == true
 
-    add_version_badge unless options[:skip_icon_badge]
+    add_version_badge(options) unless options[:skip_icon_badge]
     archive(options)
     cleanup_version_badge_artifacts unless options[:skip_icon_badge]
 
@@ -106,7 +103,7 @@ platform :ios do
     end
 
     clean_build_artifacts unless options[:skip_clean]
-    notify_slack
+    notify_slack(options)
   end
 
   desc "Bump type to be used to increment version. Available values are: 'major', 'minor', patch. Default is 'patch'"
@@ -147,11 +144,16 @@ platform :ios do
   end
 
   private_lane :notify_slack do |options|
-    if ENV['SLACK_URL'].nil? || ENV['SLACK_URL'].empty? then
-      UI.message("Skipping Slack notification since `SLACK_URL` is empty. Check .env file to fix that")
+    if ENV['DISTRIBUTION_SLACK_URL'].nil? || ENV['DISTRIBUTION_SLACK_URL'].empty? then
+      UI.message("Skipping Slack notification since `DISTRIBUTION_SLACK_URL` is empty. Check .env file to fix that")
     else
       build_number = build_number_get_from_xcconfig
       version = get_version_number_from_xcodeproj
+      if options[:spm_connected] == true
+        dependency = "SPM"
+      else
+        dependency = "Cocoapods"
+      end
       
       slack(
         message: 'New beta build is available. Check build details below or at your emails.',
@@ -161,21 +163,17 @@ platform :ios do
           'Branch' => "#{git_branch} (#{number_of_commits} commits)",
           'Scheme' => ENV['GYM_SCHEME'],
           'Configuration' => ENV['GYM_CONFIGURATION'],
-          'Download Link' => Actions.lane_context[SharedValues::FIREBASE_DISTRIBUTION_RELEASES_URL]
+          'Dependency manager' => dependency
         },
-        default_payloads: []
+        default_payloads: [],
+        slack_url: ENV["DISTRIBUTION_SLACK_URL"]
       )
     end
   end
 
   private_lane :distribute do |options|
     environment = Actions.lane_context[Actions::SharedValues::ENVIRONMENT]
-    
-    if environment.include? 'appstore' then
-      distribute_to_appstore(options)
-    else 
-      distribute_to_firebase(options)
-    end
+    distribute_to_appstore(options)
   end
 
   private_lane :distribute_to_appstore do |options|
@@ -198,13 +196,18 @@ platform :ios do
     upload_symbols_to_crashlytics
   end
 
-  private_lane :add_version_badge do
+  private_lane :add_version_badge do |options|
     environment = Actions.lane_context[Actions::SharedValues::ENVIRONMENT]
     
     if !environment.nil? && environment.include?('appstore') then
       UI.message('Skipping AppIcon badge overlaying for the AppStore build')
     elsif !environment.nil?
-      shield = "#{environment_slug(environment)}-#{get_full_version.gsub('-', '--')}"
+      shield = "#{environment_slug(environment)}-#{build_number_get_from_xcconfig}"
+      if options[:spm_connected] == true
+        shield += "--spm"
+      else
+        shield += "--cocoapods"
+      end
       
       UI.message("Setting AppIcon badge to: #{shield}")
 

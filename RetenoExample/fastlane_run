@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $1 == "spm" ]
+then 
+	bundle exec fastlane ios deploy --env development skip_tag:true spm_connected:true
+fi
+
+if [ $1 == "cocoapods" ]
+then 
+	bundle exec fastlane ios deploy --env development skip_tag:true
+fi

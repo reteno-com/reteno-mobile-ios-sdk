@@ -13,9 +13,29 @@ The Reteno iOS SDK for Mobile Customer Engagement and Analytics solutions
 
 ##### To get started with the  Reteno SDK:
 
-Download and install **CocoaPods**.
+1. Download and install SDK via **CocoaPods** or **Swift Package Manager**.
 
-Download, install and configure the **Reteno SDK for iOS**. See the [installation guide](https://docs.reteno.com/reference/ios#setting-up-the-sdk).
+### CocoaPods
+
+[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Reteno into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+pod 'Reteno', '0.2.1'
+```
+
+### Swift Package Manager
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler. 
+
+Once you have your Swift package set up, adding Reteno as a dependency is as easy as adding it to the `dependencies` value of your `Package.swift`.
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/reteno-com/reteno-mobile-ios-sdk.git", .upToNextMajor(from: "0.2.1"))
+]
+```
+
+2. Configure the **Reteno SDK for iOS**. See the [installation guide](https://docs.reteno.com/reference/ios#setting-up-the-sdk).
 
 ##### License
 

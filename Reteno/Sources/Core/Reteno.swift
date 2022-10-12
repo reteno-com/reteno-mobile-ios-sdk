@@ -10,7 +10,7 @@ import UserNotifications
 
 public struct Reteno {
     
-    static var version = "0.1.0"
+    static var version = "0.2.1"
     
     @available(iOSApplicationExtension, unavailable)
     public static let userNotificationService = UserNotificationService.shared

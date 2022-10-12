@@ -14,20 +14,20 @@ target 'RetenoExample' do
 
   pod 'Swinject', '~> 2.7.1'
   pod 'SnapKit', '~> 5.6.0'
-  pod 'Reteno', '0.2.0'
+  # pod 'Reteno', :path => '../'
   pod 'FirebaseMessaging'
   
   target 'NotificationServiceExtension' do
     use_frameworks!
 
-    pod 'Reteno', '0.2.0'
+    # pod 'Reteno', :path => '../'
 
   end
   
   target 'RetenoExampleTests' do
     use_frameworks!
 
-    pod 'Reteno', '0.2.0'
+    # pod 'Reteno', :path => '../'
     pod 'OHHTTPStubs/Swift'
 
   end

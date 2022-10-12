@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (5.6.2)
   - FirebaseCore (9.6.0):
     - FirebaseCoreDiagnostics (~> 9.0)
     - FirebaseCoreInternal (~> 9.0)
@@ -66,21 +65,17 @@ PODS:
   - OHHTTPStubs/Swift (9.1.0):
     - OHHTTPStubs/Default
   - PromisesObjC (2.1.1)
-  - Reteno (0.2.0):
-    - Alamofire (= 5.6.2)
   - SnapKit (5.6.0)
   - Swinject (2.7.1)
 
 DEPENDENCIES:
   - FirebaseMessaging
   - OHHTTPStubs/Swift
-  - Reteno (= 0.2.0)
   - SnapKit (~> 5.6.0)
   - Swinject (~> 2.7.1)
 
 SPEC REPOS:
   trunk:
-    - Alamofire
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreInternal
@@ -91,12 +86,10 @@ SPEC REPOS:
     - nanopb
     - OHHTTPStubs
     - PromisesObjC
-    - Reteno
     - SnapKit
     - Swinject
 
 SPEC CHECKSUMS:
-  Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   FirebaseCore: 2082fffcd855f95f883c0a1641133eb9bbe76d40
   FirebaseCoreDiagnostics: 99a495094b10a57eeb3ae8efa1665700ad0bdaa6
   FirebaseCoreInternal: bca76517fe1ed381e989f5e7d8abb0da8d85bed3
@@ -107,10 +100,9 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  Reteno: 2a4fccc2b4f9dcb7cb4f51774a827e9b049e3cb7
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: cc83b408d5c837e69036c7aa4a987953c02bd6ca
+PODFILE CHECKSUM: cfa0029f4b4f8a8aa9c82b6ee31734ad4be2a101
 
 COCOAPODS: 1.11.3

@@ -6,6 +6,7 @@
 //
 
 import Alamofire
+import UIKit
 
 struct DeviceRequest: APIRequest {
     

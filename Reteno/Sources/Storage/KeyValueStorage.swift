@@ -5,6 +5,8 @@
 //  Created by Serhii Prykhodko on 21.09.2022.
 //
 
+import Foundation
+
 enum StorageKeys: String {
     
     case pushToken = "com.reteno.push-token.key"

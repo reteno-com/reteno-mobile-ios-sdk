@@ -5,6 +5,8 @@
 //  Created by Anna Sahaidak on 03.10.2022.
 //
 
+import Foundation
+
 protocol EventsSender {
     
     func sendScreenViewEvent(

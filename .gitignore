@@ -36,7 +36,7 @@ Carthage/Build
 Carthage/Checkouts
 
 # fastlane
-fastlane/report.xml
+RetenoExample/fastlane/report.xml
 
 # development
 
@@ -75,3 +75,7 @@ google-application-credentials/
 # Generated
 *.generated.swift
 # Caches
+
+# Swift Package Manager
+.build/
+*.resolved

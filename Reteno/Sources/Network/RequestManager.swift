@@ -6,7 +6,7 @@
 //
 
 import Alamofire
-import Combine
+import Foundation
 
 final class RequestManager {
     

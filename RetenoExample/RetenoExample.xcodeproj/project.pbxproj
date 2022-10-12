@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		118A153F1BD1BE345E73CA67 /* Pods_RetenoExample_NotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6A63ECAF8D0F08F0024AFD7 /* Pods_RetenoExample_NotificationServiceExtension.framework */; };
 		1856108A28EC757800744967 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1856108928EC757700744967 /* EventTests.swift */; };
 		1875126028EAD44A0068B5F4 /* ScreenViewAnalyticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1875125F28EAD44A0068B5F4 /* ScreenViewAnalyticsServiceTests.swift */; };
 		1875126628EAD74E0068B5F4 /* EventsSenderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1875126528EAD74E0068B5F4 /* EventsSenderMock.swift */; };
@@ -26,13 +27,15 @@
 		70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67552045A6AD00803C08 /* AppDelegate.swift */; };
 		70BF67CF2045A6AD00803C08 /* ApplicationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */; };
 		70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70BF67AF2045A6AD00803C08 /* Assets.xcassets */; };
-		9C39E7455D384D5D0999827F /* Pods_RetenoExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8662760F900C2F9679CE7326 /* Pods_RetenoExample.framework */; };
+		AC4124DF388A3245289150A7 /* Pods_RetenoExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B755B5461F1CDB5C9D4A1D0 /* Pods_RetenoExample.framework */; };
 		B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1228DA808C0014ED15 /* MainModel.swift */; };
 		B52C7C1528DA80D10014ED15 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1428DA80D10014ED15 /* MainViewModel.swift */; };
 		B52C7C1728DA818B0014ED15 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1628DA818B0014ED15 /* MainViewController.swift */; };
 		B52C7C1F28DA83220014ED15 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1E28DA83220014ED15 /* NotificationService.swift */; };
 		B52C7C2328DA83220014ED15 /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B52C7C2D28DA92340014ED15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B52C7C2C28DA92340014ED15 /* GoogleService-Info.plist */; };
+		B54CBA2828F3E030007F190F /* Reteno in Frameworks */ = {isa = PBXBuildFile; productRef = B54CBA2728F3E030007F190F /* Reteno */; };
+		B54CBA2A28F3E03B007F190F /* Reteno in Frameworks */ = {isa = PBXBuildFile; productRef = B54CBA2928F3E03B007F190F /* Reteno */; };
 		B57EAB4B28EC7E2000EA1260 /* MobileRequestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EAB4A28EC7E2000EA1260 /* MobileRequestServiceTests.swift */; };
 		B57EAB4D28EC8BA600EA1260 /* DeviceRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EAB4C28EC8BA600EA1260 /* DeviceRequestTests.swift */; };
 		B57EAB5328ECC9D000EA1260 /* DeviceCategoryHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EAB5228ECC9D000EA1260 /* DeviceCategoryHelperTests.swift */; };
@@ -40,8 +43,7 @@
 		B593CD6E28E38C5100130C2E /* BaseBEDateFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD6D28E38C5100130C2E /* BaseBEDateFormatterTests.swift */; };
 		B5E67AEB28DDEF510093C7FB /* InformationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E67AEA28DDEF510093C7FB /* InformationAlert.swift */; };
 		B5E67AED28DDF07E0093C7FB /* UIWindow+InformationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E67AEC28DDF07E0093C7FB /* UIWindow+InformationAlert.swift */; };
-		DCC40A62E098B54BD4A8E0DF /* Pods_RetenoExample_NotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85EEF17B78557A45F7CED4DE /* Pods_RetenoExample_NotificationServiceExtension.framework */; };
-		F35134FFD5D503459D4233F2 /* Pods_RetenoExample_RetenoExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E365D6EAC6C8AFF1FCC0D476 /* Pods_RetenoExample_RetenoExampleTests.framework */; };
+		D10F78FDDAAE8C9CAB9535E3 /* Pods_RetenoExample_RetenoExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82E5EEB2E5083851EE593C9 /* Pods_RetenoExample_RetenoExampleTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,9 +88,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		063A593FE05D35CB248D3D26 /* Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig"; sourceTree = "<group>"; };
-		0ED76EB162FF07D4D7755546 /* Pods-RetenoExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.debug.xcconfig"; sourceTree = "<group>"; };
-		151EDB288E8D6036780F23D9 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; sourceTree = "<group>"; };
+		00230E203382F989BDEE404C /* Pods-FeatureCommon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.debug.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.debug.xcconfig"; sourceTree = "<group>"; };
+		013CE231394F0A6BDA657303 /* Pods-RetenoExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.debug.xcconfig"; sourceTree = "<group>"; };
+		03A1808A01EF31FB22D3A039 /* Pods-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.debug.xcconfig"; sourceTree = "<group>"; };
+		046BDAD35D280EACCF4300B9 /* Pods-MainMenu.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.production-debug.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.production-debug.xcconfig"; sourceTree = "<group>"; };
+		0AD6BFE5E7F2211A7DD95A35 /* Pods-FeatureCommon.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.staging-release.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.staging-release.xcconfig"; sourceTree = "<group>"; };
 		1856108928EC757700744967 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
 		1875125F28EAD44A0068B5F4 /* ScreenViewAnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenViewAnalyticsServiceTests.swift; sourceTree = "<group>"; };
 		1875126528EAD74E0068B5F4 /* EventsSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSenderMock.swift; sourceTree = "<group>"; };
@@ -103,14 +107,24 @@
 		188DA3AF28E1FEB500AAA6EA /* RetenoNotificationsHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoNotificationsHelperTests.swift; sourceTree = "<group>"; };
 		188DA3B028E1FEB500AAA6EA /* RetenoUserNotificationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoUserNotificationTests.swift; sourceTree = "<group>"; };
 		188DA3B228E1FEB500AAA6EA /* ApiRequestMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiRequestMock.swift; sourceTree = "<group>"; };
-		1EF18355AC4BA59237BC2DA8 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; sourceTree = "<group>"; };
-		2DCCF24BBDAB0F8DEA90659E /* Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig"; sourceTree = "<group>"; };
-		3E1A99F5525B4D57C0C913FD /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		4EDD51234E82A9DEDED9192B /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; sourceTree = "<group>"; };
-		50156B99A887AF309FF9C6E9 /* Pods-RetenoExample.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-debug.xcconfig"; sourceTree = "<group>"; };
+		189E14F0C28C95AA3A13B59F /* Pods-UI.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.staging-debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		2619A193756A64D2D1C3F4FD /* Pods-UI.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.production-release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.production-release.xcconfig"; sourceTree = "<group>"; };
+		2E9BE80671C7517B9FB230A0 /* Pods-RetenoExample.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-debug.xcconfig"; sourceTree = "<group>"; };
+		3685374ED0B7F16718DC2284 /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		3ADD3D3531D6027393E59D4B /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
+		3C86699AF6FDB7FE6EA0625C /* Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig"; sourceTree = "<group>"; };
+		3FB4DA2A38A43DB1256A02E8 /* Pods-MainMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.debug.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.debug.xcconfig"; sourceTree = "<group>"; };
+		484993947A614A40FF1E5921 /* Pods-RetenoExample-RetenoExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4AD9FF1B1C8EF0F74A6B1634 /* Pods-MainMenu.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.staging-release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.staging-release.xcconfig"; sourceTree = "<group>"; };
 		505FCBED2052E6B0006CF982 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		50DD46AA175864D672EF5763 /* Pods-RetenoExample.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		5E5F372996F23C958B6FC870 /* Pods-RetenoExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.release.xcconfig"; sourceTree = "<group>"; };
+		55D9F29E4222053695A8E317 /* Pods-UI.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.staging-release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.staging-release.xcconfig"; sourceTree = "<group>"; };
+		56B2037D1BF4F1B00160641C /* Pods-UI.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.production-debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.production-debug.xcconfig"; sourceTree = "<group>"; };
+		581CB6AC8B9512C71BCF6A1C /* Pods-Core.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.production-debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.production-debug.xcconfig"; sourceTree = "<group>"; };
+		5F1F0645A410B4A5147DA1A5 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
+		634F8430613D0E87E9F4C182 /* Pods-Auth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.release.xcconfig"; sourceTree = "<group>"; };
+		64A9384D18D1BB0F30A8D2C2 /* Pods_Auth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Auth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C251F865E4FD81D3CB6FFA0 /* Pods_MainMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MainMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D436F370ABE6B53FD7AC4E7 /* Pods-UI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.debug.xcconfig"; sourceTree = "<group>"; };
 		7004E8AA236C85060003EBCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		700D24DA236C6D3300918E21 /* MainFlowAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFlowAssembly.swift; sourceTree = "<group>"; };
 		7071CE17238305C700D34895 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -132,11 +146,27 @@
 		70BF67552045A6AD00803C08 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFlowCoordinator.swift; sourceTree = "<group>"; };
 		70BF67AF2045A6AD00803C08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		85EEF17B78557A45F7CED4DE /* Pods_RetenoExample_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8662760F900C2F9679CE7326 /* Pods_RetenoExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		87171012B6B399F081732E9D /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		923BBABED2F3F628CE0AB611 /* Pods-RetenoExample.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-release.xcconfig"; sourceTree = "<group>"; };
-		A8C15598E9A3DA97998B7382 /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
+		76C0DDEB3379C3D6DF04F99A /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		83030DA4C97EF2043137F794 /* Pods-Auth.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.production-debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.production-debug.xcconfig"; sourceTree = "<group>"; };
+		844B1D30B4FE94FE7A771FC6 /* Pods_UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8690A2926A92253B06E013B1 /* Pods-Auth.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.production-release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.production-release.xcconfig"; sourceTree = "<group>"; };
+		884E7374B6C5D8DD5FF453B5 /* Pods-Auth.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.staging-debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		8C74AC4639F918F92C4632AB /* Pods-FeatureCommon.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.staging-debug.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		8DB2450CF4BCF9FEA02DA14F /* Pods-FeatureCommon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.release.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.release.xcconfig"; sourceTree = "<group>"; };
+		91844822949832F3C9B7B368 /* Pods_FeatureCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FeatureCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		92FDABC977148E5DCBE89FA4 /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		93A91372763A2EFF197F2207 /* Pods-RetenoExample.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-release.xcconfig"; sourceTree = "<group>"; };
+		94C6C6049C0D3DC0BBE6DCE4 /* Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig"; sourceTree = "<group>"; };
+		95477E8AC3D7C3335652D540 /* Pods-MainMenu.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.staging-debug.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		96CF0B0293E1BD570F00F58B /* Pods-Core.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.production-release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.production-release.xcconfig"; sourceTree = "<group>"; };
+		994D5CF6D9A7009B547D2F9C /* Pods-FeatureCommon.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.production-release.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.production-release.xcconfig"; sourceTree = "<group>"; };
+		9B755B5461F1CDB5C9D4A1D0 /* Pods_RetenoExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FE5738CA4935D8981757F35 /* Pods-RetenoExample.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-release.xcconfig"; sourceTree = "<group>"; };
+		A681BEF364297BE95883D53B /* Pods-FeatureCommon.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.production-debug.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.production-debug.xcconfig"; sourceTree = "<group>"; };
+		A6FE48775B2C68EBE005019B /* Pods-Auth.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.staging-release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.staging-release.xcconfig"; sourceTree = "<group>"; };
+		ACAD44963B4B6D88C0D21B6C /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
+		AE5ABA8520F93C50BCD45859 /* Pods_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B252167B001A427E41519467 /* Pods-MainMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.release.xcconfig"; sourceTree = "<group>"; };
 		B52C7C1228DA808C0014ED15 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		B52C7C1428DA80D10014ED15 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B52C7C1628DA818B0014ED15 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +176,7 @@
 		B52C7C2C28DA92340014ED15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B52C7C2E28DAE5160014ED15 /* RetenoExample.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = RetenoExample.entitlements; sourceTree = "<group>"; };
 		B52C7C3928DB3B250014ED15 /* NotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		B54CBA2628F3DDE3007F190F /* reteno-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "reteno-ios"; path = ..; sourceTree = "<group>"; };
 		B57EAB4A28EC7E2000EA1260 /* MobileRequestServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileRequestServiceTests.swift; sourceTree = "<group>"; };
 		B57EAB4C28EC8BA600EA1260 /* DeviceRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRequestTests.swift; sourceTree = "<group>"; };
 		B57EAB5228ECC9D000EA1260 /* DeviceCategoryHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCategoryHelperTests.swift; sourceTree = "<group>"; };
@@ -153,13 +184,20 @@
 		B593CD6D28E38C5100130C2E /* BaseBEDateFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseBEDateFormatterTests.swift; sourceTree = "<group>"; };
 		B5E67AEA28DDEF510093C7FB /* InformationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationAlert.swift; sourceTree = "<group>"; };
 		B5E67AEC28DDF07E0093C7FB /* UIWindow+InformationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+InformationAlert.swift"; sourceTree = "<group>"; };
-		C15783D21B69F02D3D5098A2 /* Pods-RetenoExample-RetenoExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B7276B489D51CFF936977A55 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; sourceTree = "<group>"; };
+		BD4EC3C5F65DB5B0C4BADC36 /* Pods-UI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.release.xcconfig"; sourceTree = "<group>"; };
 		C521102A1DAB85BC006CEBCE /* RetenoExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetenoExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9505AA4392FEFF7BAE5C078 /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		CA72C4172615EF6399C72287 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
-		D2534DCE6EDD0FC77A110EBE /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
-		E365D6EAC6C8AFF1FCC0D476 /* Pods_RetenoExample_RetenoExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_RetenoExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E39F4BA3ACDFEB3BDBD86834 /* Pods-RetenoExample.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-release.xcconfig"; sourceTree = "<group>"; };
+		D5B7629666AADFDA356F6DDB /* Pods-Auth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.debug.xcconfig"; sourceTree = "<group>"; };
+		D82E5EEB2E5083851EE593C9 /* Pods_RetenoExample_RetenoExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_RetenoExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8546FDC9A3B00AD8BDBBF54 /* Pods-MainMenu.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.production-release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.production-release.xcconfig"; sourceTree = "<group>"; };
+		DFB719135EFD2259BF5BBDAB /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		E4E9C23CC4DDDD42BD685E33 /* Pods-Core.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.staging-release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.staging-release.xcconfig"; sourceTree = "<group>"; };
+		E6A63ECAF8D0F08F0024AFD7 /* Pods_RetenoExample_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6C663062A1DF3333F7BE745 /* Pods-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.release.xcconfig"; sourceTree = "<group>"; };
+		EC2062A50BE1033A244940D2 /* Pods-RetenoExample.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		F826678FCCB36EE09EBD3638 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; sourceTree = "<group>"; };
+		FAAE89E81B28BFDDE3A67323 /* Pods-RetenoExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.release.xcconfig"; sourceTree = "<group>"; };
+		FCF8F7791E4FCFECDA482150 /* Pods-Core.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.staging-debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.staging-debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,7 +205,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F35134FFD5D503459D4233F2 /* Pods_RetenoExample_RetenoExampleTests.framework in Frameworks */,
+				D10F78FDDAAE8C9CAB9535E3 /* Pods_RetenoExample_RetenoExampleTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,7 +213,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCC40A62E098B54BD4A8E0DF /* Pods_RetenoExample_NotificationServiceExtension.framework in Frameworks */,
+				118A153F1BD1BE345E73CA67 /* Pods_RetenoExample_NotificationServiceExtension.framework in Frameworks */,
+				B54CBA2A28F3E03B007F190F /* Reteno in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,7 +222,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C39E7455D384D5D0999827F /* Pods_RetenoExample.framework in Frameworks */,
+				AC4124DF388A3245289150A7 /* Pods_RetenoExample.framework in Frameworks */,
+				B54CBA2828F3E030007F190F /* Reteno in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,24 +327,54 @@
 		1EE6FDB9A97FD76044569E18 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0ED76EB162FF07D4D7755546 /* Pods-RetenoExample.debug.xcconfig */,
-				50156B99A887AF309FF9C6E9 /* Pods-RetenoExample.production-debug.xcconfig */,
-				50DD46AA175864D672EF5763 /* Pods-RetenoExample.staging-debug.xcconfig */,
-				5E5F372996F23C958B6FC870 /* Pods-RetenoExample.release.xcconfig */,
-				E39F4BA3ACDFEB3BDBD86834 /* Pods-RetenoExample.staging-release.xcconfig */,
-				923BBABED2F3F628CE0AB611 /* Pods-RetenoExample.production-release.xcconfig */,
-				3E1A99F5525B4D57C0C913FD /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */,
-				A8C15598E9A3DA97998B7382 /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */,
-				C9505AA4392FEFF7BAE5C078 /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */,
-				D2534DCE6EDD0FC77A110EBE /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */,
-				CA72C4172615EF6399C72287 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */,
-				151EDB288E8D6036780F23D9 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */,
-				C15783D21B69F02D3D5098A2 /* Pods-RetenoExample-RetenoExampleTests.debug.xcconfig */,
-				2DCCF24BBDAB0F8DEA90659E /* Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig */,
-				87171012B6B399F081732E9D /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */,
-				4EDD51234E82A9DEDED9192B /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */,
-				1EF18355AC4BA59237BC2DA8 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */,
-				063A593FE05D35CB248D3D26 /* Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig */,
+				D5B7629666AADFDA356F6DDB /* Pods-Auth.debug.xcconfig */,
+				83030DA4C97EF2043137F794 /* Pods-Auth.production-debug.xcconfig */,
+				884E7374B6C5D8DD5FF453B5 /* Pods-Auth.staging-debug.xcconfig */,
+				634F8430613D0E87E9F4C182 /* Pods-Auth.release.xcconfig */,
+				A6FE48775B2C68EBE005019B /* Pods-Auth.staging-release.xcconfig */,
+				8690A2926A92253B06E013B1 /* Pods-Auth.production-release.xcconfig */,
+				03A1808A01EF31FB22D3A039 /* Pods-Core.debug.xcconfig */,
+				581CB6AC8B9512C71BCF6A1C /* Pods-Core.production-debug.xcconfig */,
+				FCF8F7791E4FCFECDA482150 /* Pods-Core.staging-debug.xcconfig */,
+				E6C663062A1DF3333F7BE745 /* Pods-Core.release.xcconfig */,
+				E4E9C23CC4DDDD42BD685E33 /* Pods-Core.staging-release.xcconfig */,
+				96CF0B0293E1BD570F00F58B /* Pods-Core.production-release.xcconfig */,
+				00230E203382F989BDEE404C /* Pods-FeatureCommon.debug.xcconfig */,
+				A681BEF364297BE95883D53B /* Pods-FeatureCommon.production-debug.xcconfig */,
+				8C74AC4639F918F92C4632AB /* Pods-FeatureCommon.staging-debug.xcconfig */,
+				8DB2450CF4BCF9FEA02DA14F /* Pods-FeatureCommon.release.xcconfig */,
+				0AD6BFE5E7F2211A7DD95A35 /* Pods-FeatureCommon.staging-release.xcconfig */,
+				994D5CF6D9A7009B547D2F9C /* Pods-FeatureCommon.production-release.xcconfig */,
+				3FB4DA2A38A43DB1256A02E8 /* Pods-MainMenu.debug.xcconfig */,
+				046BDAD35D280EACCF4300B9 /* Pods-MainMenu.production-debug.xcconfig */,
+				95477E8AC3D7C3335652D540 /* Pods-MainMenu.staging-debug.xcconfig */,
+				B252167B001A427E41519467 /* Pods-MainMenu.release.xcconfig */,
+				4AD9FF1B1C8EF0F74A6B1634 /* Pods-MainMenu.staging-release.xcconfig */,
+				D8546FDC9A3B00AD8BDBBF54 /* Pods-MainMenu.production-release.xcconfig */,
+				013CE231394F0A6BDA657303 /* Pods-RetenoExample.debug.xcconfig */,
+				2E9BE80671C7517B9FB230A0 /* Pods-RetenoExample.production-debug.xcconfig */,
+				EC2062A50BE1033A244940D2 /* Pods-RetenoExample.staging-debug.xcconfig */,
+				FAAE89E81B28BFDDE3A67323 /* Pods-RetenoExample.release.xcconfig */,
+				9FE5738CA4935D8981757F35 /* Pods-RetenoExample.staging-release.xcconfig */,
+				93A91372763A2EFF197F2207 /* Pods-RetenoExample.production-release.xcconfig */,
+				6D436F370ABE6B53FD7AC4E7 /* Pods-UI.debug.xcconfig */,
+				56B2037D1BF4F1B00160641C /* Pods-UI.production-debug.xcconfig */,
+				189E14F0C28C95AA3A13B59F /* Pods-UI.staging-debug.xcconfig */,
+				BD4EC3C5F65DB5B0C4BADC36 /* Pods-UI.release.xcconfig */,
+				55D9F29E4222053695A8E317 /* Pods-UI.staging-release.xcconfig */,
+				2619A193756A64D2D1C3F4FD /* Pods-UI.production-release.xcconfig */,
+				92FDABC977148E5DCBE89FA4 /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */,
+				3ADD3D3531D6027393E59D4B /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */,
+				76C0DDEB3379C3D6DF04F99A /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */,
+				ACAD44963B4B6D88C0D21B6C /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */,
+				5F1F0645A410B4A5147DA1A5 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */,
+				F826678FCCB36EE09EBD3638 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */,
+				484993947A614A40FF1E5921 /* Pods-RetenoExample-RetenoExampleTests.debug.xcconfig */,
+				3C86699AF6FDB7FE6EA0625C /* Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig */,
+				3685374ED0B7F16718DC2284 /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */,
+				DFB719135EFD2259BF5BBDAB /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */,
+				B7276B489D51CFF936977A55 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */,
+				94C6C6049C0D3DC0BBE6DCE4 /* Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -407,6 +477,21 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		B011396D30454A9E62A56B60 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				64A9384D18D1BB0F30A8D2C2 /* Pods_Auth.framework */,
+				AE5ABA8520F93C50BCD45859 /* Pods_Core.framework */,
+				91844822949832F3C9B7B368 /* Pods_FeatureCommon.framework */,
+				6C251F865E4FD81D3CB6FFA0 /* Pods_MainMenu.framework */,
+				9B755B5461F1CDB5C9D4A1D0 /* Pods_RetenoExample.framework */,
+				844B1D30B4FE94FE7A771FC6 /* Pods_UI.framework */,
+				E6A63ECAF8D0F08F0024AFD7 /* Pods_RetenoExample_NotificationServiceExtension.framework */,
+				D82E5EEB2E5083851EE593C9 /* Pods_RetenoExample_RetenoExampleTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B52C7C1D28DA83220014ED15 /* NotificationServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -415,6 +500,14 @@
 				B52C7C2028DA83220014ED15 /* Info.plist */,
 			);
 			path = NotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		B54CBA2528F3DDE3007F190F /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				B54CBA2628F3DDE3007F190F /* reteno-ios */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 		B57EAB4928EC7DB300EA1260 /* MobileRequestService */ = {
@@ -463,6 +556,7 @@
 		C52110211DAB85BC006CEBCE = {
 			isa = PBXGroup;
 			children = (
+				B54CBA2528F3DDE3007F190F /* Packages */,
 				70BF67542045A6AD00803C08 /* RetenoExample */,
 				7075EC13236C2E6E00327FF9 /* Environment */,
 				7075EC17236C2E8300327FF9 /* xcconfig */,
@@ -470,7 +564,7 @@
 				188DA39928E1FE9500AAA6EA /* RetenoExampleTests */,
 				C521102B1DAB85BC006CEBCE /* Products */,
 				1EE6FDB9A97FD76044569E18 /* Pods */,
-				F6B02163253E97F21B6F8037 /* Frameworks */,
+				B011396D30454A9E62A56B60 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -484,16 +578,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F6B02163253E97F21B6F8037 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8662760F900C2F9679CE7326 /* Pods_RetenoExample.framework */,
-				85EEF17B78557A45F7CED4DE /* Pods_RetenoExample_NotificationServiceExtension.framework */,
-				E365D6EAC6C8AFF1FCC0D476 /* Pods_RetenoExample_RetenoExampleTests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -501,11 +585,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 188DA39E28E1FE9500AAA6EA /* Build configuration list for PBXNativeTarget "RetenoExampleTests" */;
 			buildPhases = (
-				85754BE8FDBA62491E9E5C89 /* [CP] Check Pods Manifest.lock */,
+				1BA9D5B74B04C44AB8A82EC1 /* [CP] Check Pods Manifest.lock */,
 				188DA39428E1FE9500AAA6EA /* Sources */,
 				188DA39528E1FE9500AAA6EA /* Frameworks */,
 				188DA39628E1FE9500AAA6EA /* Resources */,
-				FC7A58771BBF6621410DF9D0 /* [CP] Embed Pods Frameworks */,
+				A1A2BA239897D35D6ED18F6A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -521,7 +605,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B52C7C2428DA83230014ED15 /* Build configuration list for PBXNativeTarget "NotificationServiceExtension" */;
 			buildPhases = (
-				E948D601B14ACEE2A1E5945C /* [CP] Check Pods Manifest.lock */,
+				C9201E6D5B7E44552C358E29 /* [CP] Check Pods Manifest.lock */,
 				B52C7C1828DA83220014ED15 /* Sources */,
 				B52C7C1928DA83220014ED15 /* Frameworks */,
 				B52C7C1A28DA83220014ED15 /* Resources */,
@@ -531,6 +615,9 @@
 			dependencies = (
 			);
 			name = NotificationServiceExtension;
+			packageProductDependencies = (
+				B54CBA2928F3E03B007F190F /* Reteno */,
+			);
 			productName = NotificationServiceExtension;
 			productReference = B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -539,14 +626,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C521103C1DAB85BC006CEBCE /* Build configuration list for PBXNativeTarget "RetenoExample" */;
 			buildPhases = (
-				298C865F5BAC7B3D875590D0 /* [CP] Check Pods Manifest.lock */,
+				14B083681DD5A9ED74917CC5 /* [CP] Check Pods Manifest.lock */,
 				C52110261DAB85BC006CEBCE /* Sources */,
 				C52110271DAB85BC006CEBCE /* Frameworks */,
 				C52110281DAB85BC006CEBCE /* Resources */,
 				7075EC41236C309900327FF9 /* Copy Config */,
 				E8CBE417202228FD00186010 /* Embed Frameworks */,
+				0EF65E9E0D841BFF5924DAD0 /* [CP] Embed Pods Frameworks */,
 				B52C7C2B28DA83230014ED15 /* Embed Foundation Extensions */,
-				32F30B70728DEBEF1B6773BF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -554,6 +641,9 @@
 				B52C7C2228DA83220014ED15 /* PBXTargetDependency */,
 			);
 			name = RetenoExample;
+			packageProductDependencies = (
+				B54CBA2728F3E030007F190F /* Reteno */,
+			);
 			productName = ArchitectureGuideTemplate;
 			productReference = C521102A1DAB85BC006CEBCE /* RetenoExample.app */;
 			productType = "com.apple.product-type.application";
@@ -636,7 +726,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		298C865F5BAC7B3D875590D0 /* [CP] Check Pods Manifest.lock */ = {
+		0EF65E9E0D841BFF5924DAD0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RetenoExample/Pods-RetenoExample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseMessaging/FirebaseMessaging.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseMessaging.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RetenoExample/Pods-RetenoExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		14B083681DD5A9ED74917CC5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -658,67 +786,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		32F30B70728DEBEF1B6773BF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RetenoExample/Pods-RetenoExample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseMessaging/FirebaseMessaging.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/Reteno/Reteno.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseMessaging.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reteno.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RetenoExample/Pods-RetenoExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7075EC41236C309900327FF9 /* Copy Config */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Config";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${SRCROOT}/scripts/copy-config.sh\n";
-		};
-		85754BE8FDBA62491E9E5C89 /* [CP] Check Pods Manifest.lock */ = {
+		1BA9D5B74B04C44AB8A82EC1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -740,7 +808,65 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E948D601B14ACEE2A1E5945C /* [CP] Check Pods Manifest.lock */ = {
+		7075EC41236C309900327FF9 /* Copy Config */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Config";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/scripts/copy-config.sh\n";
+		};
+		A1A2BA239897D35D6ED18F6A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
+				"${BUILT_PRODUCTS_DIR}/FirebaseMessaging/FirebaseMessaging.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseMessaging.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C9201E6D5B7E44552C358E29 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -760,50 +886,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FC7A58771BBF6621410DF9D0 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseInstallations/FirebaseInstallations.framework",
-				"${BUILT_PRODUCTS_DIR}/FirebaseMessaging/FirebaseMessaging.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/Reteno/Reteno.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-				"${BUILT_PRODUCTS_DIR}/OHHTTPStubs/OHHTTPStubs.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseInstallations.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseMessaging.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reteno.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OHHTTPStubs.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -886,7 +968,7 @@
 /* Begin XCBuildConfiguration section */
 		188DA39F28E1FE9500AAA6EA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C15783D21B69F02D3D5098A2 /* Pods-RetenoExample-RetenoExampleTests.debug.xcconfig */;
+			baseConfigurationReference = 484993947A614A40FF1E5921 /* Pods-RetenoExample-RetenoExampleTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -922,7 +1004,7 @@
 		};
 		188DA3A028E1FE9500AAA6EA /* Production-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2DCCF24BBDAB0F8DEA90659E /* Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig */;
+			baseConfigurationReference = 3C86699AF6FDB7FE6EA0625C /* Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -941,8 +1023,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -952,7 +1035,7 @@
 		};
 		188DA3A128E1FE9500AAA6EA /* Staging-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87171012B6B399F081732E9D /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */;
+			baseConfigurationReference = 3685374ED0B7F16718DC2284 /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -971,8 +1054,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -982,7 +1066,7 @@
 		};
 		188DA3A228E1FE9500AAA6EA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4EDD51234E82A9DEDED9192B /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */;
+			baseConfigurationReference = DFB719135EFD2259BF5BBDAB /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1001,8 +1085,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -1012,7 +1097,7 @@
 		};
 		188DA3A328E1FE9500AAA6EA /* Staging-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1EF18355AC4BA59237BC2DA8 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */;
+			baseConfigurationReference = B7276B489D51CFF936977A55 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1031,8 +1116,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -1042,7 +1128,7 @@
 		};
 		188DA3A428E1FE9500AAA6EA /* Production-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 063A593FE05D35CB248D3D26 /* Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig */;
+			baseConfigurationReference = 94C6C6049C0D3DC0BBE6DCE4 /* Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1061,8 +1147,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -1123,7 +1210,7 @@
 		};
 		7075EC32236C2F3400327FF9 /* Staging-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50DD46AA175864D672EF5763 /* Pods-RetenoExample.staging-debug.xcconfig */;
+			baseConfigurationReference = EC2062A50BE1033A244940D2 /* Pods-RetenoExample.staging-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1132,7 +1219,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1197,7 +1287,7 @@
 		};
 		7075EC36236C2F4900327FF9 /* Production-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50156B99A887AF309FF9C6E9 /* Pods-RetenoExample.production-debug.xcconfig */;
+			baseConfigurationReference = 2E9BE80671C7517B9FB230A0 /* Pods-RetenoExample.production-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1206,7 +1296,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1269,7 +1362,7 @@
 		};
 		7075EC3A236C2F5300327FF9 /* Staging-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E39F4BA3ACDFEB3BDBD86834 /* Pods-RetenoExample.staging-release.xcconfig */;
+			baseConfigurationReference = 9FE5738CA4935D8981757F35 /* Pods-RetenoExample.staging-release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1279,11 +1372,14 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.reteno.example-app";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app";
 				SKIP_INSTALL = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -1342,7 +1438,7 @@
 		};
 		7075EC3E236C2F5C00327FF9 /* Production-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 923BBABED2F3F628CE0AB611 /* Pods-RetenoExample.production-release.xcconfig */;
+			baseConfigurationReference = 93A91372763A2EFF197F2207 /* Pods-RetenoExample.production-release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1352,7 +1448,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1366,7 +1465,7 @@
 		};
 		B52C7C2528DA83230014ED15 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3E1A99F5525B4D57C0C913FD /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */;
+			baseConfigurationReference = 92FDABC977148E5DCBE89FA4 /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1381,7 +1480,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
@@ -1395,7 +1498,7 @@
 		};
 		B52C7C2628DA83230014ED15 /* Production-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A8C15598E9A3DA97998B7382 /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */;
+			baseConfigurationReference = 3ADD3D3531D6027393E59D4B /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1410,7 +1513,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1423,7 +1530,7 @@
 		};
 		B52C7C2728DA83230014ED15 /* Staging-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9505AA4392FEFF7BAE5C078 /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */;
+			baseConfigurationReference = 76C0DDEB3379C3D6DF04F99A /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1438,7 +1545,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1451,7 +1562,7 @@
 		};
 		B52C7C2828DA83230014ED15 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D2534DCE6EDD0FC77A110EBE /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */;
+			baseConfigurationReference = ACAD44963B4B6D88C0D21B6C /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1467,7 +1578,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1480,7 +1595,7 @@
 		};
 		B52C7C2928DA83230014ED15 /* Staging-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA72C4172615EF6399C72287 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */;
+			baseConfigurationReference = 5F1F0645A410B4A5147DA1A5 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1496,7 +1611,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1509,7 +1628,7 @@
 		};
 		B52C7C2A28DA83230014ED15 /* Production-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 151EDB288E8D6036780F23D9 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */;
+			baseConfigurationReference = F826678FCCB36EE09EBD3638 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1525,7 +1644,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1638,7 +1761,7 @@
 		};
 		C521103D1DAB85BC006CEBCE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0ED76EB162FF07D4D7755546 /* Pods-RetenoExample.debug.xcconfig */;
+			baseConfigurationReference = 013CE231394F0A6BDA657303 /* Pods-RetenoExample.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1647,7 +1770,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1661,7 +1787,7 @@
 		};
 		C521103E1DAB85BC006CEBCE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5E5F372996F23C958B6FC870 /* Pods-RetenoExample.release.xcconfig */;
+			baseConfigurationReference = FAAE89E81B28BFDDE3A67323 /* Pods-RetenoExample.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1671,11 +1797,14 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.reteno.example-app";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app";
 				SKIP_INSTALL = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -1739,6 +1868,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B54CBA2728F3E030007F190F /* Reteno */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Reteno;
+		};
+		B54CBA2928F3E03B007F190F /* Reteno */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Reteno;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C52110221DAB85BC006CEBCE /* Project object */;
 }
