@@ -29,9 +29,8 @@ struct SentryHelper {
     static private func prepareHub() -> SentryHub? {
         do {
             let options = try Sentry.Options(
-                dict: ["dsn": "https://4d9bf85beb7443069b6882ba8ffdee24@sentry.reteno.com/4503999620841472"]
+                dict: ["dsn": "https://699db07fec57455e964892ba10da106f@sentry.reteno.com/4504043420450816"]
             )
-            options.debug = true
             
             // Features turned off by default, but worth checking out
             options.enableAppHangTracking = true
