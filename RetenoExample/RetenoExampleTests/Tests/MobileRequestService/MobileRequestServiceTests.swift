@@ -68,4 +68,50 @@ final class MobileRequestServiceTests: XCTestCase {
         }
     }
     
+    func test_logEventsRequest_withPositiveResult() throws {
+        stub(condition: pathEndsWith("v1/events")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 200, headers: nil)
+        }
+        var expectedSuccess: Bool?
+        let expectation = expectation(description: "Request")
+        sut.sendEvents([Event(eventTypeKey: "event_key", date: Date(), parameters: [.init(name: "param_name", value: "param_value")])]) { result in
+            switch result {
+            case .success:
+                expectedSuccess = true
+                
+            case .failure:
+                expectedSuccess = false
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertTrue(expectedSuccess ?? false, "expectedSuccess should be true")
+        }
+    }
+    
+    func test_logEventsRequest_withNegativeResult() throws {
+        stub(condition: pathEndsWith("v1/events")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
+        }
+        var expectedSuccess: Bool?
+        let expectation = expectation(description: "Request")
+        sut.sendEvents([Event(eventTypeKey: "event_key", date: Date(), parameters: [.init(name: "param_name", value: "param_value")])]) { result in
+            switch result {
+            case .success:
+                expectedSuccess = true
+                
+            case .failure:
+                expectedSuccess = false
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertFalse(expectedSuccess ?? true, "expectedSuccess should be false")
+        }
+    }
+    
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum InteractionStatus: String {
+public enum InteractionStatus: String, Codable {
     
     case delivered = "DELIVERED"
     case opened = "OPENED"

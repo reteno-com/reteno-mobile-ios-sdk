@@ -44,6 +44,7 @@ final class RequestManager {
                     let resultValue = try responseHandler.handleResponse(data)
                     completionHandler(.success(resultValue))
                 } catch {
+                    SentryHelper.capture(error: error)
                     completionHandler(.failure(error))
                 }
             }
@@ -62,6 +63,10 @@ final class RequestManager {
                 completionHandler(.failure(error))
             }
         }
+    }
+    
+    func cancelExecution() {
+        AF.session.invalidateAndCancel()
     }
     
 }

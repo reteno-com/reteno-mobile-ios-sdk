@@ -9,11 +9,7 @@ import Foundation
 
 protocol EventsSender {
     
-    func sendScreenViewEvent(
-        eventTypeKey: String,
-        date: Date,
-        params: [Event.Parameter],
-        completionHandler: @escaping (Result<Void, Error>) -> Void
-    )
+    func sendEvents(_ events: [Event], completionHandler: @escaping (Result<Void, Error>) -> Void)
+    func cancelExecution()
     
 }

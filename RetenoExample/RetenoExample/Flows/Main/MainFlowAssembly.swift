@@ -16,6 +16,13 @@ final class MainFlowAssembly: Assembly {
             
             return MenuViewController(viewModel: viewModel)
         }.inObjectScope(.transient)
+        
+        container.register(ProfileViewController.self) { (_, navigationHandler: ProfileModelNavigationHandler) in
+            let model = ProfileModel(navigationHandler: navigationHandler)
+            let viewModel = ProfileViewModel(model: model)
+            
+            return ProfileViewController(viewModel: viewModel)
+        }.inObjectScope(.transient)
     }
     
 }

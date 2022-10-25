@@ -11,17 +11,12 @@ import XCTest
 
 final class EventsSenderMock: EventsSender {
     
-    private(set) var eventTypeKey: String = ""
-    private(set) var params: [Event.Parameter] = []
+    private(set) var events: [Event] = []
     
-    func sendScreenViewEvent(
-        eventTypeKey: String,
-        date: Date,
-        params: [Event.Parameter],
-        completionHandler: @escaping (Result<Void, Error>) -> Void
-    ) {
-        self.eventTypeKey = eventTypeKey
-        self.params = params
+    func sendEvents(_ events: [Event], completionHandler: @escaping (Result<Void, Error>) -> Void) {
+        self.events = events
     }
+    
+    func cancelExecution() {}
     
 }

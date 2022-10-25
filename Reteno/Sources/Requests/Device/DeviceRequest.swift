@@ -18,7 +18,7 @@ struct DeviceRequest: APIRequest {
     let encoding: ParameterEncoding? = JSONEncoding.default
     
     init(
-        category: DeviceCategory = DeviceCategoryHelper.deviceType(from: UIDevice.current.userInterfaceIdiom),
+        category: DeviceCategory,
         osType: String = "IOS",
         osVersion: String = UIDevice.current.systemVersion,
         deviceModel: String = UIDevice.current.model,
@@ -26,7 +26,8 @@ struct DeviceRequest: APIRequest {
         advertisingId: String? = AdvertisingIdHelper.getAdvertisingId(),
         timeZone: String = TimeZone.current.identifier,
         pushToken: String,
-        appVersion: String? = nil
+        appVersion: String? = AppVersionHelper.appVersion(),
+        externalUserId: String? = nil
     ) {
         path = "v1/device"
         
@@ -41,6 +42,7 @@ struct DeviceRequest: APIRequest {
         tempParameters["languageCode"] = languageCode
         tempParameters["advertisingId"] = advertisingId
         tempParameters["appVersion"] = appVersion
+        tempParameters["externalUserId"] = externalUserId
                 
         parameters = tempParameters
     }

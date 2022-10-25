@@ -20,4 +20,12 @@ final class MainViewModel {
         model.openMenu()
     }
     
+    func logCustomEvent() {
+        model.logCustomEvent()
+	}
+	
+    func openProfile() {
+        model.openProfile()
+    }
+    
 }

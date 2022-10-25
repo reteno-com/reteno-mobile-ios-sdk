@@ -15,4 +15,8 @@ struct MobileRequestServiceBuilder {
         MobileRequestService()
     }
     
+    static func buildForDeviceRequest() -> MobileRequestService {
+        MobileRequestService(requestManager: NetworkBuilder.buildApiManagerForDeviceProviding())
+    }
+    
 }

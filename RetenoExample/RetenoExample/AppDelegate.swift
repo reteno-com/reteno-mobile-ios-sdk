@@ -10,6 +10,7 @@ import UserNotifications
 import FirebaseCore
 import FirebaseMessaging
 import Reteno
+import Sentry
 
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -50,6 +51,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         Reteno.userNotificationService.didReceiveNotificationUserInfo = { [weak self] userInfo in
             let alert = InformationAlert(text: "Received user info from push: \n--------\n\(userInfo)")
             self?.window?.showInformationAlert(alert)
+        }
+        
+        SentrySDK.start { options in
+            options.dsn = "https://edea59c8151742428e1bf725e2f98954@sentry.reteno.com/4503999611666432"
+            options.debug = true
+            
+            // Features turned off by default, but worth checking out
+            options.enableAppHangTracking = true
+            options.enableFileIOTracking = true
+            options.enableCoreDataTracking = true
         }
         
         let window = UIWindow()

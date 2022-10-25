@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SendingServiceBuilder {
+struct SendingServiceBuilder {
     
     private init() {}
     

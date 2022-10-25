@@ -5,4 +5,16 @@
 */
 
 "main_screen.title" = "Reteno Example App";
+"main_screen.log_event_button.title" = "Log event";
 "menu_screen.title" = "Menu";
+
+// MARK: - Create profile
+
+"createProfile_screen.title" = "Create Profile";
+"createProfile_screen.fields.firstName" = "First name (optional)";
+"createProfile_screen.fields.lastName" = "Last name (optional)";
+"createProfile_screen.fields.phone" = "Phone (optional)";
+"createProfile_screen.fields.email" = "Email (optional)";
+"createProfile_screen.saveButton" = "Save";
+
+"createProfile_screen.doneButton" = "Done";

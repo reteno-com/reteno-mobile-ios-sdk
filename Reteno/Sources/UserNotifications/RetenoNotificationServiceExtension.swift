@@ -31,12 +31,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
 
         let notification = RetenoUserNotification(userInfo: request.content.userInfo)
         
-        let service = SendingServiceBuilder.build()
-        service.updateInteractionStatus(
-            interactionId: notification?.id ?? "",
-            token: RetenoNotificationsHelper.deviceToken() ?? "",
-            status: .delivered
-        )
+        Reteno.updateNotificationInteractionStatus(interactionId: notification?.id ?? "", status: .delivered, date: Date())
         
         if let mediaURLString = notification?.imageURLString {
             buildAttachments(by: mediaURLString) { attachments in
@@ -88,6 +83,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
             do {
                 try fileManager.moveItem(at: fileURL, to: localURL)
             } catch let moveError {
+                SentryHelper.capture(error: moveError)
                 print("Failed to move file: ", moveError.localizedDescription)
                 completionHandler(nil)
                 return
@@ -99,6 +95,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
                 attachment = try UNNotificationAttachment(identifier: "image", url: localURL, options: nil)
                 completionHandler(attachment)
             } catch let attachmentError {
+                SentryHelper.capture(error: attachmentError)
                 print("Unable to add attachment: ", attachmentError.localizedDescription)
                 completionHandler(nil)
             }

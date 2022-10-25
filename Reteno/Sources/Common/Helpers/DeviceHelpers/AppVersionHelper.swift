@@ -11,7 +11,7 @@ struct AppVersionHelper {
     
     private init() {}
     
-    static func appVersion(from bundle: Bundle) -> String? {
+    static func appVersion(from bundle: Bundle = .main) -> String? {
         bundle.infoDictionary?["CFBundleShortVersionString"] as? String
     }
     

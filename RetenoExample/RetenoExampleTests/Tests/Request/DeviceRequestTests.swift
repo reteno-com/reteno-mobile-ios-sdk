@@ -99,7 +99,6 @@ final class DeviceRequestTests: XCTestCase {
         XCTAssertNil(parameters["advertisingId"], "advertisingId should be nill")
         let timeZoneString = try XCTUnwrap(parameters["timeZone"] as? String, "timeZoneString shouldn't be nill")
         XCTAssertEqual(timeZoneString, timeZone, "timeZoneString shoud be equal to \(timeZone)")
-        XCTAssertNil(parameters["appVersion"], "appVersion should be nill")
         let pushTokenString = try XCTUnwrap(parameters["pushToken"] as? String, "pushTokenString shouldn't be nill")
         XCTAssertEqual(pushTokenString, pushToken, "pushTokenString should be equal to \(pushToken)")
     }

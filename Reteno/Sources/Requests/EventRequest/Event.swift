@@ -7,9 +7,9 @@
 
 import Foundation
 
-public struct Event {
+public struct Event: Codable {
     
-    public struct Parameter {
+    public struct Parameter: Codable {
         
         let name: String
         let value: String
@@ -24,6 +24,14 @@ public struct Event {
     let eventTypeKey: String
     let date: Date
     let parameters: [Parameter]
+    let id: String
+    
+    init(eventTypeKey: String, date: Date, parameters: [Event.Parameter]) {
+        self.eventTypeKey = eventTypeKey
+        self.date = date
+        self.parameters = parameters
+        self.id = UUID().uuidString
+    }
     
     func toJSON() -> [String: Any] {
         var json: [String: Any] = [:]
@@ -35,5 +43,13 @@ public struct Event {
         
         return json
     }
+    
+}
+
+// MARK - ExpirableData
+
+extension Event: ExpirableData {
+    
+    static var logTitle: String { "Events" }
     
 }

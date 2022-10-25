@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import Reteno
 
 protocol MainModelNavigationHandler {
     
     func openMenu()
+    func createProfile()
     
 }
 
@@ -24,6 +26,18 @@ final class MainModel {
     
     func openMenu() {
         navigationHandler.openMenu()
+    }
+    
+    func logCustomEvent() {
+        Reteno.logEvent(
+            eventTypeKey: "test_event_type",
+            parameters: [Event.Parameter(name: "Parameter name", value: "some parameter value")],
+            forcePush: true
+        )
+	}
+	
+    func openProfile() {
+        navigationHandler.createProfile()
     }
     
 }

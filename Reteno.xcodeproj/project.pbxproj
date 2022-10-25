@@ -9,6 +9,18 @@
 /* Begin PBXBuildFile section */
 		18D02BCD28CA2F02008018F1 /* Reteno.docc in Sources */ = {isa = PBXBuildFile; fileRef = 18D02BCC28CA2F02008018F1 /* Reteno.docc */; };
 		18D02BD928CA2F02008018F1 /* Reteno.h in Headers */ = {isa = PBXBuildFile; fileRef = 18D02BCB28CA2F02008018F1 /* Reteno.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B54CBA2F28F5C9FB007F190F /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA2E28F5C9FB007F190F /* Optional+Extensions.swift */; };
+		B54CBA3128F5CA44007F190F /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA3028F5CA44007F190F /* NetworkError.swift */; };
+		B54CBA3A28F5CAA2007F190F /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA3328F5CAA2007F190F /* Address.swift */; };
+		B54CBA3B28F5CAA2007F190F /* UserAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA3428F5CAA2007F190F /* UserAttributes.swift */; };
+		B54CBA3C28F5CAA2007F190F /* UpdateUserAttributesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA3528F5CAA2007F190F /* UpdateUserAttributesRequest.swift */; };
+		B54CBA3D28F5CAA2007F190F /* UserCustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA3628F5CAA2007F190F /* UserCustomField.swift */; };
+		B54CBA3E28F5CAA2007F190F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA3828F5CAA2007F190F /* Event.swift */; };
+		B54CBA3F28F5CAA2007F190F /* EventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA3928F5CAA2007F190F /* EventRequest.swift */; };
+		B54CBA4628F5CABC007F190F /* EventsSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA4128F5CABC007F190F /* EventsSender.swift */; };
+		B54CBA4728F5CABC007F190F /* ScreenViewAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA4328F5CABC007F190F /* ScreenViewAnalyticsService.swift */; };
+		B54CBA4828F5CABC007F190F /* ScreenViewAnalytics+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA4428F5CABC007F190F /* ScreenViewAnalytics+UIViewController.swift */; };
+		B54CBA4928F5CABC007F190F /* ScreenViewAnalytics+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CBA4528F5CABC007F190F /* ScreenViewAnalytics+SwiftUI.swift */; };
 		B57EAB5528ECD4BA00EA1260 /* AppVersionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EAB5428ECD4BA00EA1260 /* AppVersionHelper.swift */; };
 		B593CD8628E630A300130C2E /* MobileRequestServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD8528E630A300130C2E /* MobileRequestServiceBuilder.swift */; };
 		B593CD8D28E630C600130C2E /* ExternalUserIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593CD8728E630C600130C2E /* ExternalUserIdHelper.swift */; };
@@ -50,6 +62,18 @@
 		18D02BC828CA2F02008018F1 /* Reteno.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reteno.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D02BCB28CA2F02008018F1 /* Reteno.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reteno.h; sourceTree = "<group>"; };
 		18D02BCC28CA2F02008018F1 /* Reteno.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Reteno.docc; sourceTree = "<group>"; };
+		B54CBA2E28F5C9FB007F190F /* Optional+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+Extensions.swift"; sourceTree = "<group>"; };
+		B54CBA3028F5CA44007F190F /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		B54CBA3328F5CAA2007F190F /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		B54CBA3428F5CAA2007F190F /* UserAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributes.swift; sourceTree = "<group>"; };
+		B54CBA3528F5CAA2007F190F /* UpdateUserAttributesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserAttributesRequest.swift; sourceTree = "<group>"; };
+		B54CBA3628F5CAA2007F190F /* UserCustomField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCustomField.swift; sourceTree = "<group>"; };
+		B54CBA3828F5CAA2007F190F /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		B54CBA3928F5CAA2007F190F /* EventRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRequest.swift; sourceTree = "<group>"; };
+		B54CBA4128F5CABC007F190F /* EventsSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsSender.swift; sourceTree = "<group>"; };
+		B54CBA4328F5CABC007F190F /* ScreenViewAnalyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenViewAnalyticsService.swift; sourceTree = "<group>"; };
+		B54CBA4428F5CABC007F190F /* ScreenViewAnalytics+UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScreenViewAnalytics+UIViewController.swift"; sourceTree = "<group>"; };
+		B54CBA4528F5CABC007F190F /* ScreenViewAnalytics+SwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScreenViewAnalytics+SwiftUI.swift"; sourceTree = "<group>"; };
 		B57EAB5428ECD4BA00EA1260 /* AppVersionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionHelper.swift; sourceTree = "<group>"; };
 		B593CD8528E630A300130C2E /* MobileRequestServiceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileRequestServiceBuilder.swift; sourceTree = "<group>"; };
 		B593CD8728E630C600130C2E /* ExternalUserIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalUserIdHelper.swift; sourceTree = "<group>"; };
@@ -140,6 +164,52 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		B54CBA2D28F5C9FB007F190F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B54CBA2E28F5C9FB007F190F /* Optional+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B54CBA3228F5CAA2007F190F /* UpdateUserAttributes */ = {
+			isa = PBXGroup;
+			children = (
+				B54CBA3328F5CAA2007F190F /* Address.swift */,
+				B54CBA3428F5CAA2007F190F /* UserAttributes.swift */,
+				B54CBA3528F5CAA2007F190F /* UpdateUserAttributesRequest.swift */,
+				B54CBA3628F5CAA2007F190F /* UserCustomField.swift */,
+			);
+			path = UpdateUserAttributes;
+			sourceTree = "<group>";
+		};
+		B54CBA3728F5CAA2007F190F /* EventRequest */ = {
+			isa = PBXGroup;
+			children = (
+				B54CBA3828F5CAA2007F190F /* Event.swift */,
+				B54CBA3928F5CAA2007F190F /* EventRequest.swift */,
+			);
+			path = EventRequest;
+			sourceTree = "<group>";
+		};
+		B54CBA4028F5CABC007F190F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B54CBA4128F5CABC007F190F /* EventsSender.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		B54CBA4228F5CABC007F190F /* ScreenViewAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				B54CBA4328F5CABC007F190F /* ScreenViewAnalyticsService.swift */,
+				B54CBA4428F5CABC007F190F /* ScreenViewAnalytics+UIViewController.swift */,
+				B54CBA4528F5CABC007F190F /* ScreenViewAnalytics+SwiftUI.swift */,
+			);
+			path = ScreenViewAnalytics;
+			sourceTree = "<group>";
+		};
 		B593CD8928E630C600130C2E /* DeviceHelpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +249,7 @@
 		B5D971BA28E1DD6C00795B57 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				B54CBA3028F5CA44007F190F /* NetworkError.swift */,
 				B5D971BB28E1DD6C00795B57 /* RequestManager.swift */,
 				B5D971BC28E1DD6C00795B57 /* RequestDecorator.swift */,
 				B5D971BD28E1DD6C00795B57 /* BaseURL.swift */,
@@ -208,6 +279,7 @@
 		B5D971C528E1DD6C00795B57 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				B54CBA2D28F5C9FB007F190F /* Extensions */,
 				B5D971C628E1DD6C00795B57 /* Response */,
 				B5D971CA28E1DD6C00795B57 /* DateFormatters */,
 				B5D971CC28E1DD6C00795B57 /* Helpers */,
@@ -248,6 +320,8 @@
 		B5D971CF28E1DD6C00795B57 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				B54CBA3728F5CAA2007F190F /* EventRequest */,
+				B54CBA3228F5CAA2007F190F /* UpdateUserAttributes */,
 				B593CD9228E630F700130C2E /* Device */,
 				B5D971D028E1DD6C00795B57 /* CreateContact */,
 				B5D971D228E1DD6C00795B57 /* UpdateInteractionStatus */,
@@ -284,6 +358,8 @@
 		B5D971D728E1DD6C00795B57 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				B54CBA4028F5CABC007F190F /* Protocols */,
+				B54CBA4228F5CABC007F190F /* ScreenViewAnalytics */,
 				B593CD9728E6310900130C2E /* MobileRequestService.swift */,
 				B5D971D828E1DD6C00795B57 /* SendingServices.swift */,
 			);
@@ -383,29 +459,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D971DE28E1DD6C00795B57 /* Reteno.swift in Sources */,
+				B54CBA3E28F5CAA2007F190F /* Event.swift in Sources */,
+				B54CBA4728F5CABC007F190F /* ScreenViewAnalyticsService.swift in Sources */,
 				B5D971EC28E1DD6C00795B57 /* RetenoNotificationsHelper.swift in Sources */,
 				B5D971EA28E1DD6C00795B57 /* EmptyResponseHandler.swift in Sources */,
 				B593CD9128E630C600130C2E /* DeviceCategoryHelper.swift in Sources */,
 				B5D971F628E1DD6C00795B57 /* StorageBuilder.swift in Sources */,
 				B5D971E528E1DD6C00795B57 /* UserNotificationService.swift in Sources */,
+				B54CBA4828F5CABC007F190F /* ScreenViewAnalytics+UIViewController.swift in Sources */,
 				B5D971ED28E1DD6C00795B57 /* BundleIdHelper.swift in Sources */,
 				B5D971E328E1DD6C00795B57 /* APIRequest.swift in Sources */,
 				B5D971EF28E1DD6C00795B57 /* UpdateInteractionStatusRequest.swift in Sources */,
+				B54CBA3C28F5CAA2007F190F /* UpdateUserAttributesRequest.swift in Sources */,
 				B5D971E928E1DD6C00795B57 /* DecodableResponseHandler.swift in Sources */,
 				B5D971E428E1DD6C00795B57 /* RetenoUserNotification.swift in Sources */,
 				B593CD9028E630C600130C2E /* AdvertisingIdHelper.swift in Sources */,
 				B5D971EE28E1DD6C00795B57 /* CreateContactRequest.swift in Sources */,
 				B5D971F228E1DD6C00795B57 /* SendingServices.swift in Sources */,
+				B54CBA3F28F5CAA2007F190F /* EventRequest.swift in Sources */,
 				B593CD9828E6310900130C2E /* MobileRequestService.swift in Sources */,
+				B54CBA3A28F5CAA2007F190F /* Address.swift in Sources */,
 				B593CD8D28E630C600130C2E /* ExternalUserIdHelper.swift in Sources */,
 				B5D971DF28E1DD6C00795B57 /* DeepLinksProcessor.swift in Sources */,
 				B5D971E828E1DD6C00795B57 /* ResponseHandler.swift in Sources */,
+				B54CBA3D28F5CAA2007F190F /* UserCustomField.swift in Sources */,
 				B5D971E228E1DD6C00795B57 /* BaseURL.swift in Sources */,
 				B593CD8628E630A300130C2E /* MobileRequestServiceBuilder.swift in Sources */,
 				B5D971EB28E1DD6C00795B57 /* BaseBEDateFormatter.swift in Sources */,
 				B593CD8F28E630C600130C2E /* DeviceIdHelper.swift in Sources */,
 				B593CD9628E630F700130C2E /* DeviceRequest.swift in Sources */,
 				B5D971F028E1DD6C00795B57 /* InteractionStatus.swift in Sources */,
+				B54CBA4928F5CABC007F190F /* ScreenViewAnalytics+SwiftUI.swift in Sources */,
+				B54CBA4628F5CABC007F190F /* EventsSender.swift in Sources */,
+				B54CBA2F28F5C9FB007F190F /* Optional+Extensions.swift in Sources */,
 				B5D971F128E1DD6C00795B57 /* EmptyResponse.swift in Sources */,
 				18D02BCD28CA2F02008018F1 /* Reteno.docc in Sources */,
 				B5D971E728E1DD6C00795B57 /* KeyValueStorage.swift in Sources */,
@@ -417,7 +503,9 @@
 				B57EAB5528ECD4BA00EA1260 /* AppVersionHelper.swift in Sources */,
 				B5D971E628E1DD6C00795B57 /* RetenoNotificationServiceExtension.swift in Sources */,
 				B5D971F428E1DD6C00795B57 /* SendingServiceBuilder.swift in Sources */,
+				B54CBA3B28F5CAA2007F190F /* UserAttributes.swift in Sources */,
 				B5D971F328E1DD6C00795B57 /* NetworkBuilder.swift in Sources */,
+				B54CBA3128F5CA44007F190F /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

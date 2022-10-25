@@ -11,18 +11,18 @@ import UserNotifications
 @available(iOSApplicationExtension, unavailable)
 public final class UserNotificationService: NSObject {
     
-    // The closure will be called only if the application is in the foreground.
-    // If you provide empty UNNotificationPresentationOptions then the notification will not be presented.
-    // The application can choose to have the notification presented as a sound, badge, alert and/or in the notification list.
-    // This decision should be based on whether the information in the notification is otherwise visible to the user.
+    /// The closure will be called only if the application is in the foreground.
+    /// If you provide empty UNNotificationPresentationOptions then the notification will not be presented.
+    /// The application can choose to have the notification presented as a sound, badge, alert and/or in the notification list.
+    /// This decision should be based on whether the information in the notification is otherwise visible to the user.
     public var willPresentNotificationHandler: ((_ notification: UNNotification) -> UNNotificationPresentationOptions)?
     
-    // The closure will be called when the user responded to the notification by opening the application, dismissing the notification or choosing a UNNotificationAction.
+    /// The closure will be called when the user responded to the notification by opening the application, dismissing the notification or choosing a UNNotificationAction.
     public var didReceiveNotificationResponseHandler: ((_ response: UNNotificationResponse) -> Void)?
     
-    // The closure will be called when notification is going to be presented if the application is in the foreground.
-    // Also the closure will be called when the user responded to the notification by opening the application,
-    // dismissing the notification or choosing a UNNotificationAction.
+    /// The closure will be called when notification is going to be presented if the application is in the foreground.
+    /// Also the closure will be called when the user responded to the notification by opening the application,
+    /// dismissing the notification or choosing a UNNotificationAction.
     public var didReceiveNotificationUserInfo: ((_ userInfo: [AnyHashable: Any]) -> Void)?
     
     public static let shared = UserNotificationService()
@@ -31,6 +31,9 @@ public final class UserNotificationService: NSObject {
     
     // MARK: - Notifications register/unregister logic
     
+    /// Rgistering application for receiving `Remote notifications`
+    /// - Parameter options: Options that determine the authorized features of local and remote notifications.
+    /// - Parameter application: Current `UIApplication`. The centralized point of control and coordination for apps running in iOS.
     public func registerForRemoteNotifications(
         with options: UNAuthorizationOptions = [.sound, .alert, .badge],
         application: UIApplication
@@ -52,6 +55,8 @@ public final class UserNotificationService: NSObject {
         }
     }
     
+    /// Unregistering from receiving `Remote notifications`
+    /// - Parameter application: Current `UIApplication`. The centralized point of control and coordination for apps running in iOS.
     public func unregisterFromRemoteNotifications(application: UIApplication) {
         if application.isRegisteredForRemoteNotifications {
             application.unregisterForRemoteNotifications()
@@ -59,6 +64,8 @@ public final class UserNotificationService: NSObject {
         }
     }
     
+    /// Processing device token for receiving `Remote notifications`
+    /// - Parameter deviceToken: Registered for device token.
     public func processRemoteNotificationsToken(_ deviceToken: String) {
         StorageBuilder.build().set(value: deviceToken, forKey: StorageKeys.pushToken.rawValue)
         MobileRequestServiceBuilder.build().upsertDevice()
@@ -98,13 +105,7 @@ extension UserNotificationService: UNUserNotificationCenterDelegate {
             let notification = RetenoUserNotification(userInfo: response.notification.request.content.userInfo) {
             
             DeepLinksProcessor.process(notification: notification)
-            
-            let service = SendingServiceBuilder.build()
-            service.updateInteractionStatus(
-                interactionId: notification.id,
-                token: RetenoNotificationsHelper.deviceToken() ?? "",
-                status: .opened
-            )
+            Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .opened, date: Date())
         }
         didReceiveNotificationResponseHandler?(response)
         didReceiveNotificationUserInfo?(response.notification.request.content.userInfo)

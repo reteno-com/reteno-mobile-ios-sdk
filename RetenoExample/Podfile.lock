@@ -65,12 +65,16 @@ PODS:
   - OHHTTPStubs/Swift (9.1.0):
     - OHHTTPStubs/Default
   - PromisesObjC (2.1.1)
+  - Sentry (7.28.0):
+    - Sentry/Core (= 7.28.0)
+  - Sentry/Core (7.28.0)
   - SnapKit (5.6.0)
   - Swinject (2.7.1)
 
 DEPENDENCIES:
   - FirebaseMessaging
   - OHHTTPStubs/Swift
+  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `7.28.0`)
   - SnapKit (~> 5.6.0)
   - Swinject (~> 2.7.1)
 
@@ -89,6 +93,16 @@ SPEC REPOS:
     - SnapKit
     - Swinject
 
+EXTERNAL SOURCES:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 7.28.0
+
+CHECKOUT OPTIONS:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 7.28.0
+
 SPEC CHECKSUMS:
   FirebaseCore: 2082fffcd855f95f883c0a1641133eb9bbe76d40
   FirebaseCoreDiagnostics: 99a495094b10a57eeb3ae8efa1665700ad0bdaa6
@@ -100,9 +114,10 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
+  Sentry: 2c6053e4cfe6dea6608135dea1928ffbb4ecfba5
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: cfa0029f4b4f8a8aa9c82b6ee31734ad4be2a101
+PODFILE CHECKSUM: af19006103f143a0e8a8c14cff9744f1675a234a
 
 COCOAPODS: 1.11.3

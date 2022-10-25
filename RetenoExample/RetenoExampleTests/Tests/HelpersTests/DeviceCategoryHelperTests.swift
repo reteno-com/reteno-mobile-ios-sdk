@@ -11,14 +11,14 @@ import Foundation
 
 final class DeviceCategoryHelperTests: XCTestCase {
     
-    func test_getDeviceCategory_withPhoneIdiom() {
-        let type = DeviceCategoryHelper.deviceType(from: .phone)
+    func test_getDeviceCategory_withPhoneIdiom() throws {
+        let type = try DeviceCategoryHelper.deviceType(from: .phone)
         
         XCTAssertEqual(type, DeviceCategory.mobile, "result type should be equal to \(DeviceCategory.mobile)")
     }
     
-    func test_getDeviceCategory_withPadIdiom() {
-        let type = DeviceCategoryHelper.deviceType(from: .pad)
+    func test_getDeviceCategory_withPadIdiom() throws {
+        let type = try DeviceCategoryHelper.deviceType(from: .pad)
         
         XCTAssertEqual(type, DeviceCategory.tablet, "result type should be equal to \(DeviceCategory.tablet)")
     }

@@ -9,19 +9,14 @@
 import UIKit
 import SnapKit
 
-final class MenuViewController: UIViewController {
+final class MenuViewController: NiblessViewController {
     
     private let viewModel: MenuViewModel
     
     init(viewModel: MenuViewModel) {
         self.viewModel = viewModel
         
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    @available(*, unavailable)
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("Init is not implemented")
+        super.init()
     }
     
     override func viewDidLoad() {

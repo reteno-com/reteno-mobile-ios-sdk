@@ -43,19 +43,8 @@ final class SendingServices {
         }
     }
     
-    func createContact(token: String, completionHandler: @escaping (Result<Void, Error>) -> Void = { _ in }) {
-        let request = CreateContactRequest(token: token)
-        let handler = EmptyResponseHandler()
-        
-        requestManager.execute(request: request, responseHandler: handler) { result in
-            switch result {
-            case .success:
-                completionHandler(.success(()))
-                
-            case .failure(let failure):
-                completionHandler(.failure(failure))
-            }
-        }
+    func cancelExecution() {
+        requestManager.cancelExecution()
     }
     
 }

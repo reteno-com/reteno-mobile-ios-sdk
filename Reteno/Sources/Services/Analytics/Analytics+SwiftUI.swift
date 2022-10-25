@@ -1,5 +1,5 @@
 //
-//  ScreenViewAnalytics+SwiftUI.swift
+//  Analytics+SwiftUI.swift
 //  Reteno
 //
 //  Created by Anna Sahaidak on 01.10.2022.

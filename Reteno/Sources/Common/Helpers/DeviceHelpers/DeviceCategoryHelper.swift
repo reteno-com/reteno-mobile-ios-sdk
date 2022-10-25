@@ -12,7 +12,7 @@ struct DeviceCategoryHelper {
     
     private init() {}
     
-    static func deviceType(from idiom: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom) -> DeviceCategory {
+    static func deviceType(from idiom: UIUserInterfaceIdiom = UIDevice.current.userInterfaceIdiom) throws -> DeviceCategory {
         switch idiom {
         case .phone:
             return .mobile
@@ -21,8 +21,23 @@ struct DeviceCategoryHelper {
             return .tablet
             
         default:
-            preconditionFailure("Reteno Error: unsupported device category")
+            let error = DeviceCategoryError()
+            SentryHelper.capture(error: error)
+            
+            throw error
         }
+    }
+    
+}
+
+// MARK: - DeviceCategoryError
+
+struct DeviceCategoryError: Error {}
+
+extension DeviceCategoryError: LocalizedError {
+    
+    var errorDescription: String? {
+        "Unsupported interface idiom: \(UIDevice.current.userInterfaceIdiom.rawValue)"
     }
     
 }

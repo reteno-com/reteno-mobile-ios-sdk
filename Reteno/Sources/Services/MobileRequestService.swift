@@ -16,10 +16,19 @@ final class MobileRequestService {
         self.requestManager = requestManager
     }
     
-    func upsertDevice(completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }) {
+    func upsertDevice(
+        externalUserId: String? = nil,
+        completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
+    ) {
         let languageCode = Locale.current.languageCode
         let pushToken = RetenoNotificationsHelper.deviceToken() ?? ""
-        let request = DeviceRequest(languageCode: languageCode, pushToken: pushToken)
+        let category = try? DeviceCategoryHelper.deviceType()
+        let request = DeviceRequest(
+            category: category ?? .mobile,
+            languageCode: languageCode,
+            pushToken: pushToken,
+            externalUserId: externalUserId
+        )
         let handler = EmptyResponseHandler()
         
         requestManager.execute(request: request, responseHandler: handler) { result in
@@ -32,18 +41,40 @@ final class MobileRequestService {
             completionHandler(result)
         }
     }
+    
+    func updateUserAttributes(
+        user: User,
+        completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
+    ) {
+        let externalUserId = user.externalUserId ?? ExternalUserIdHelper.getId() ?? ""
+        let request = UpdateUserAttributesRequest(
+            externalUserId: externalUserId,
+            userAttributes: user.userAttributes,
+            subscriptionKeys: user.subscriptionKeys,
+            groupNamesInclude: user.groupNamesInclude,
+            groupNamesExclude: user.groupNamesExclude
+        )
+        let handler = EmptyResponseHandler()
         
+        requestManager.execute(request: request, responseHandler: handler) { result in
+            switch result {
+            case .success(let success):
+                print("request result: \(success)")
+            case .failure(let failure):
+                print("request failure: \(failure)")
+            }
+            completionHandler(result)
+        }
+    }
+    
 }
+
+// MARK: - EventsSender
 
 extension MobileRequestService: EventsSender {
     
-    func sendScreenViewEvent(
-        eventTypeKey: String,
-        date: Date,
-        params: [Event.Parameter],
-        completionHandler: @escaping (Result<Void, Error>) -> Void = { _ in }
-    ) {
-        let request = EventRequest(events: [Event(eventTypeKey: eventTypeKey, date: date, parameters: params)])
+    func sendEvents(_ events: [Event], completionHandler: @escaping (Result<Void, Error>) -> Void = { _ in }) {
+        let request = EventRequest(events: events)
         let handler = EmptyResponseHandler()
         
         requestManager.execute(request: request, responseHandler: handler) { result in
@@ -55,6 +86,10 @@ extension MobileRequestService: EventsSender {
                 completionHandler(.failure(failure))
             }
         }
+    }
+    
+    func cancelExecution() {
+        requestManager.cancelExecution()
     }
     
 }

@@ -42,7 +42,7 @@ final class ApplicationFlowCoordinator {
         let controller = container.resolve(MenuViewController.self)!
         navigationController?.pushViewController(controller, animated: true)
     }
-    
+        
     // MARK: Helpers
     
     private func setWindowRootViewController(with viewController: UIViewController) {
@@ -52,10 +52,28 @@ final class ApplicationFlowCoordinator {
     
 }
 
+// MARK: - MainModelNavigationHandler
+
 extension ApplicationFlowCoordinator: MainModelNavigationHandler {
     
     func openMenu() {
         presentMenu()
+    }
+    
+    func createProfile() {
+        let navigationHandler: ProfileModelNavigationHandler = self
+        let controller = container.resolve(ProfileViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+}
+
+// MARK: - ProfileModelNavigationHandler
+
+extension ApplicationFlowCoordinator: ProfileModelNavigationHandler {
+    
+    func backToMain() {
+        navigationController?.popToRootViewController(animated: true)
     }
     
 }
