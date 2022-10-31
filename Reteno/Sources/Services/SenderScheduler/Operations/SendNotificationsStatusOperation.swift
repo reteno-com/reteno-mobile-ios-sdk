@@ -24,6 +24,12 @@ final class SendNotificationsStatusOperation: DateOperation {
     override func main() {
         super.main()
         
+        guard !isCancelled else {
+            finish()
+            
+            return
+        }
+        
         sendingService.updateInteractionStatus(
             interactionId: notificationStatus.interactionId,
             token: RetenoNotificationsHelper.deviceToken() ?? "",

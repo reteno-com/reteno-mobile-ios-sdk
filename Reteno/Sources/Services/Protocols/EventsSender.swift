@@ -10,6 +10,5 @@ import Foundation
 protocol EventsSender {
     
     func sendEvents(_ events: [Event], completionHandler: @escaping (Result<Void, Error>) -> Void)
-    func cancelExecution()
     
 }

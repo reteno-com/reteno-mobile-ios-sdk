@@ -43,8 +43,4 @@ final class SendingServices {
         }
     }
     
-    func cancelExecution() {
-        requestManager.cancelExecution()
-    }
-    
 }

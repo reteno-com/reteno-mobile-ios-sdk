@@ -24,6 +24,12 @@ final class SendEventsOperation: DateOperation {
     override func main() {
         super.main()
         
+        guard !isCancelled else {
+            finish()
+            
+            return
+        }
+        
         requestService.sendEvents(events) { [unowned self, events] result in
             guard !self.isCancelled else {
                 self.finish()

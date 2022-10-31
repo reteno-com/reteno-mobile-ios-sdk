@@ -88,8 +88,4 @@ extension MobileRequestService: EventsSender {
         }
     }
     
-    func cancelExecution() {
-        requestManager.cancelExecution()
-    }
-    
 }

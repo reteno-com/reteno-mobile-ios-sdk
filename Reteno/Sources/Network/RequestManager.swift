@@ -65,9 +65,5 @@ final class RequestManager {
         }
     }
     
-    func cancelExecution() {
-        AF.session.invalidateAndCancel()
-    }
-    
 }
 

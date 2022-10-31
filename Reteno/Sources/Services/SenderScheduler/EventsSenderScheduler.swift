@@ -129,8 +129,6 @@ final class EventsSenderScheduler {
         backgroundTaskIdentifier = application?.beginBackgroundTask(expirationHandler: { [weak self] in
             guard let self = self else { return }
             
-            self.mobileRequestService.cancelExecution()
-            self.sendingService.cancelExecution()
             self.operationQueue.cancelAllOperations()
             self.endTask()
         }) ?? .invalid

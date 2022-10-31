@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'Reteno'
-  s.version      = '1.0.0'
+  s.version      = '1.0.1'
   s.summary      = 'The Reteno iOS SDK for App Analytics and Engagement.'
   s.homepage     = 'https://github.com/reteno-com/reteno-mobile-ios-sdk'
   s.license      = { type: 'MIT', file: 'License' }
