@@ -4,6 +4,13 @@
   Copyright © 2016 Yalantis. All rights reserved.
 */
 
+// MARK: - Common
+
+"common.error.title" = "Error";
+"common.ok" = "Ok";
+
+// MARK: - Main
+
 "main_screen.title" = "Reteno Example App";
 "main_screen.log_event_button.title" = "Log event";
 "menu_screen.title" = "Menu";
@@ -18,3 +25,8 @@
 "createProfile_screen.saveButton" = "Save";
 
 "createProfile_screen.doneButton" = "Done";
+
+// MARK: - App inbox
+
+"inbox_screen.title" = "App inbox";
+"inbox_screen.mark_button.title" = "MARK AS OPENED";

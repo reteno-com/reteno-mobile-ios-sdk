@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,12 +32,15 @@
 		70BF67CF2045A6AD00803C08 /* ApplicationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */; };
 		70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70BF67AF2045A6AD00803C08 /* Assets.xcassets */; };
 		AC4124DF388A3245289150A7 /* Pods_RetenoExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B755B5461F1CDB5C9D4A1D0 /* Pods_RetenoExample.framework */; };
+		B51AF01D290E924100D723CD /* MessageCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AF01C290E924100D723CD /* MessageCountTests.swift */; };
 		B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1228DA808C0014ED15 /* MainModel.swift */; };
 		B52C7C1528DA80D10014ED15 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1428DA80D10014ED15 /* MainViewModel.swift */; };
 		B52C7C1728DA818B0014ED15 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1628DA818B0014ED15 /* MainViewController.swift */; };
 		B52C7C1F28DA83220014ED15 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1E28DA83220014ED15 /* NotificationService.swift */; };
 		B52C7C2328DA83220014ED15 /* NotificationServiceExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B52C7C2D28DA92340014ED15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B52C7C2C28DA92340014ED15 /* GoogleService-Info.plist */; };
+		B54CBA2828F3E030007F190F /* Reteno in Frameworks */ = {isa = PBXBuildFile; productRef = B54CBA2728F3E030007F190F /* Reteno */; };
+		B54CBA2A28F3E03B007F190F /* Reteno in Frameworks */ = {isa = PBXBuildFile; productRef = B54CBA2928F3E03B007F190F /* Reteno */; };
 		B54F2FFD28FECB9400D6AE73 /* DoneBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54F2FFC28FECB9400D6AE73 /* DoneBar.swift */; };
 		B57EAB4B28EC7E2000EA1260 /* MobileRequestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EAB4A28EC7E2000EA1260 /* MobileRequestServiceTests.swift */; };
 		B57EAB4D28EC8BA600EA1260 /* DeviceRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EAB4C28EC8BA600EA1260 /* DeviceRequestTests.swift */; };
@@ -59,6 +62,12 @@
 		B5EEC30F28EF2136005D0314 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEC30E28EF2136005D0314 /* ProfileViewModel.swift */; };
 		B5EEC31128EF2321005D0314 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEC31028EF2321005D0314 /* ProfileViewController.swift */; };
 		D10F78FDDAAE8C9CAB9535E3 /* Pods_RetenoExample_RetenoExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82E5EEB2E5083851EE593C9 /* Pods_RetenoExample_RetenoExampleTests.framework */; };
+		D5F91E2D29080C5500EA5FBA /* AppInboxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E2C29080C5500EA5FBA /* AppInboxModel.swift */; };
+		D5F91E2F29080C6000EA5FBA /* AppInboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E2E29080C6000EA5FBA /* AppInboxViewModel.swift */; };
+		D5F91E3129080C6D00EA5FBA /* AppInboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */; };
+		D5F91E342908138F00EA5FBA /* AppInboxMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E332908138E00EA5FBA /* AppInboxMessageCell.swift */; };
+		D5F91E3929096BF800EA5FBA /* BaseDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E3829096BF800EA5FBA /* BaseDateFormatter.swift */; };
+		D5F91E3C290972AE00EA5FBA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D5F91E3B290972AE00EA5FBA /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +195,7 @@
 		ACAD44963B4B6D88C0D21B6C /* Pods-RetenoExample-NotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		AE5ABA8520F93C50BCD45859 /* Pods_Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B252167B001A427E41519467 /* Pods-MainMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.release.xcconfig"; sourceTree = "<group>"; };
+		B51AF01C290E924100D723CD /* MessageCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountTests.swift; sourceTree = "<group>"; };
 		B52C7C1228DA808C0014ED15 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		B52C7C1428DA80D10014ED15 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B52C7C1628DA818B0014ED15 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +230,11 @@
 		BD4EC3C5F65DB5B0C4BADC36 /* Pods-UI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.release.xcconfig"; sourceTree = "<group>"; };
 		C521102A1DAB85BC006CEBCE /* RetenoExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetenoExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B7629666AADFDA356F6DDB /* Pods-Auth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.debug.xcconfig"; sourceTree = "<group>"; };
+		D5F91E2C29080C5500EA5FBA /* AppInboxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxModel.swift; sourceTree = "<group>"; };
+		D5F91E2E29080C6000EA5FBA /* AppInboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxViewModel.swift; sourceTree = "<group>"; };
+		D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxViewController.swift; sourceTree = "<group>"; };
+		D5F91E332908138E00EA5FBA /* AppInboxMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessageCell.swift; sourceTree = "<group>"; };
+		D5F91E3829096BF800EA5FBA /* BaseDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDateFormatter.swift; sourceTree = "<group>"; };
 		D82E5EEB2E5083851EE593C9 /* Pods_RetenoExample_RetenoExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_RetenoExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8546FDC9A3B00AD8BDBBF54 /* Pods-MainMenu.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.production-release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.production-release.xcconfig"; sourceTree = "<group>"; };
 		DFB719135EFD2259BF5BBDAB /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -246,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				118A153F1BD1BE345E73CA67 /* Pods_RetenoExample_NotificationServiceExtension.framework in Frameworks */,
+				B54CBA2A28F3E03B007F190F /* Reteno in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,7 +269,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5F91E3C290972AE00EA5FBA /* Kingfisher in Frameworks */,
 				AC4124DF388A3245289150A7 /* Pods_RetenoExample.framework in Frameworks */,
+				B54CBA2828F3E030007F190F /* Reteno in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,13 +325,14 @@
 		188DA3A728E1FEB500AAA6EA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				B5A97DB32902E7860017B2A1 /* Operations */,
+				B51AF01B290E920100D723CD /* AppInbox */,
 				1875125E28EAD3EA0068B5F4 /* Analytics */,
 				188DA3AA28E1FEB500AAA6EA /* Common */,
 				184D994328FEF4B200ABCA8C /* EventsSenderScheduler */,
 				B57EAB4F28EC8C4D00EA1260 /* HelpersTests */,
 				B57EAB4928EC7DB300EA1260 /* MobileRequestService */,
 				188DA3A828E1FEB500AAA6EA /* Network */,
+				B5A97DB32902E7860017B2A1 /* Operations */,
 				B593CD6928E33FD600130C2E /* Request */,
 				188DA3AC28E1FEB500AAA6EA /* SendingServices */,
 				188DA3AE28E1FEB500AAA6EA /* UserNotifications */,
@@ -484,9 +503,10 @@
 		70BF677D2045A6AD00803C08 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
-				B57EAB6428EE0CDC00EA1260 /* Profile */,
 				70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */,
+				D5F91E2B29080C2700EA5FBA /* AppInbox */,
 				70BF67952045A6AD00803C08 /* Main */,
+				B57EAB6428EE0CDC00EA1260 /* Profile */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -534,6 +554,14 @@
 				D82E5EEB2E5083851EE593C9 /* Pods_RetenoExample_RetenoExampleTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B51AF01B290E920100D723CD /* AppInbox */ = {
+			isa = PBXGroup;
+			children = (
+				B51AF01C290E924100D723CD /* MessageCountTests.swift */,
+			);
+			path = AppInbox;
 			sourceTree = "<group>";
 		};
 		B52C7C1D28DA83220014ED15 /* NotificationServiceExtension */ = {
@@ -633,6 +661,7 @@
 		B5E67AE828DDEECD0093C7FB /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D5F91E3729096BC900EA5FBA /* DateFormatters */,
 				B5E67AE928DDEF0D0093C7FB /* InformationAlert */,
 				B5EEC30C28EEF916005D0314 /* NiblessViewController.swift */,
 			);
@@ -673,6 +702,33 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D5F91E2B29080C2700EA5FBA /* AppInbox */ = {
+			isa = PBXGroup;
+			children = (
+				D5F91E322908136F00EA5FBA /* Cells */,
+				D5F91E2C29080C5500EA5FBA /* AppInboxModel.swift */,
+				D5F91E2E29080C6000EA5FBA /* AppInboxViewModel.swift */,
+				D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */,
+			);
+			path = AppInbox;
+			sourceTree = "<group>";
+		};
+		D5F91E322908136F00EA5FBA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D5F91E332908138E00EA5FBA /* AppInboxMessageCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		D5F91E3729096BC900EA5FBA /* DateFormatters */ = {
+			isa = PBXGroup;
+			children = (
+				D5F91E3829096BF800EA5FBA /* BaseDateFormatter.swift */,
+			);
+			path = DateFormatters;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -710,6 +766,9 @@
 			dependencies = (
 			);
 			name = NotificationServiceExtension;
+			packageProductDependencies = (
+				B54CBA2928F3E03B007F190F /* Reteno */,
+			);
 			productName = NotificationServiceExtension;
 			productReference = B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -733,6 +792,10 @@
 				B52C7C2228DA83220014ED15 /* PBXTargetDependency */,
 			);
 			name = RetenoExample;
+			packageProductDependencies = (
+				B54CBA2728F3E030007F190F /* Reteno */,
+				D5F91E3B290972AE00EA5FBA /* Kingfisher */,
+			);
 			productName = ArchitectureGuideTemplate;
 			productReference = C521102A1DAB85BC006CEBCE /* RetenoExample.app */;
 			productType = "com.apple.product-type.application";
@@ -775,6 +838,9 @@
 				Base,
 			);
 			mainGroup = C52110211DAB85BC006CEBCE;
+			packageReferences = (
+				D5F91E3A290972AE00EA5FBA /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = C521102B1DAB85BC006CEBCE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -822,7 +888,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RetenoExample/Pods-RetenoExample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
@@ -831,7 +896,6 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/Reteno/Reteno.framework",
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
@@ -839,7 +903,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
@@ -848,7 +911,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reteno.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
@@ -928,7 +990,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCore/FirebaseCore.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework",
 				"${BUILT_PRODUCTS_DIR}/FirebaseCoreInternal/FirebaseCoreInternal.framework",
@@ -937,7 +998,6 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleDataTransport/GoogleDataTransport.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/Reteno/Reteno.framework",
 				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Swinject/Swinject.framework",
@@ -946,7 +1006,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreDiagnostics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FirebaseCoreInternal.framework",
@@ -955,7 +1014,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleDataTransport.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reteno.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Swinject.framework",
@@ -1017,6 +1075,7 @@
 				B5B2191828F96AF8000DB212 /* UserAttributesTests.swift in Sources */,
 				B5A97DB7290453BE0017B2A1 /* SendEventsOperationTests.swift in Sources */,
 				181BFDB6290073E0007C5422 /* OptionalExtensionsTests.swift in Sources */,
+				B51AF01D290E924100D723CD /* MessageCountTests.swift in Sources */,
 				B57EAB4B28EC7E2000EA1260 /* MobileRequestServiceTests.swift in Sources */,
 				B5A97DB52902E8D30017B2A1 /* SendUserOperationTests.swift in Sources */,
 				188DA3B428E1FEB600AAA6EA /* RequestDecoratorTests.swift in Sources */,
@@ -1037,16 +1096,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5F91E2D29080C5500EA5FBA /* AppInboxModel.swift in Sources */,
 				B57EAB6928EE0E0E00EA1260 /* ProfileModel.swift in Sources */,
 				700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */,
 				B5E67AED28DDF07E0093C7FB /* UIWindow+InformationAlert.swift in Sources */,
 				187BD95428E5F2F800699C42 /* MenuModel.swift in Sources */,
 				187BD95628E5F30100699C42 /* MenuViewModel.swift in Sources */,
+				D5F91E2F29080C6000EA5FBA /* AppInboxViewModel.swift in Sources */,
 				187BD95828E5F31200699C42 /* MenuViewController.swift in Sources */,
 				B5EEC31128EF2321005D0314 /* ProfileViewController.swift in Sources */,
 				70BF67CF2045A6AD00803C08 /* ApplicationFlowCoordinator.swift in Sources */,
+				D5F91E342908138F00EA5FBA /* AppInboxMessageCell.swift in Sources */,
 				B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */,
 				70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */,
+				D5F91E3929096BF800EA5FBA /* BaseDateFormatter.swift in Sources */,
 				B5EEC30F28EF2136005D0314 /* ProfileViewModel.swift in Sources */,
 				B54F2FFD28FECB9400D6AE73 /* DoneBar.swift in Sources */,
 				B57EAB6728EE0D0000EA1260 /* User.swift in Sources */,
@@ -1054,6 +1117,7 @@
 				B52C7C1728DA818B0014ED15 /* MainViewController.swift in Sources */,
 				B52C7C1528DA80D10014ED15 /* MainViewModel.swift in Sources */,
 				B5EEC30D28EEF916005D0314 /* NiblessViewController.swift in Sources */,
+				D5F91E3129080C6D00EA5FBA /* AppInboxViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1141,8 +1205,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -1171,8 +1236,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -1201,8 +1267,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -1231,8 +1298,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -1261,8 +1329,9 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = Reteno.RetenoExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RetenoExample.app/RetenoExample";
@@ -1332,7 +1401,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1406,7 +1478,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1479,7 +1554,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1552,7 +1630,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1581,7 +1662,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
@@ -1610,7 +1695,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1638,7 +1727,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1667,7 +1760,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1696,7 +1793,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1725,7 +1826,11 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationServiceExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 Yalantis. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1847,7 +1952,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1871,7 +1979,10 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1939,6 +2050,33 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D5F91E3A290972AE00EA5FBA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B54CBA2728F3E030007F190F /* Reteno */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Reteno;
+		};
+		B54CBA2928F3E03B007F190F /* Reteno */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Reteno;
+		};
+		D5F91E3B290972AE00EA5FBA /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D5F91E3A290972AE00EA5FBA /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C52110221DAB85BC006CEBCE /* Project object */;
 }

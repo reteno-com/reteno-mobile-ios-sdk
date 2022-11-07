@@ -89,3 +89,34 @@ extension MobileRequestService: EventsSender {
     }
     
 }
+
+// MARK: - Inbox Messages
+
+extension MobileRequestService {
+    
+    func getInboxMessages(
+        page: Int?,
+        pageSize: Int?,
+        completion: @escaping (Result<AppInboxMessagesResponse, Error>) -> Void
+    ) {
+        let request = AppInboxMessagesRequest(page: page, pageSize: pageSize)
+        let handler = DecodableResponseHandler<AppInboxMessagesResponse>()
+        
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completion)
+    }
+    
+    func markInboxMessagesAsOpened(ids: [String], completion: @escaping (Result<Bool, Error>) -> Void) {
+        let request = AppInboxMarkAsOpenedRequest(ids: ids)
+        let handler = EmptyResponseHandler()
+        
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completion)
+    }
+    
+    func getInboxMessagesCount(completion: @escaping (Result<AppInboxMessagesCountResponse, Error>) -> Void) {
+        let request = AppInboxMessagesCountRequest()
+        let handler = DecodableResponseHandler<AppInboxMessagesCountResponse>()
+        
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completion)
+    }
+    
+}

@@ -11,7 +11,7 @@ extension DateFormatter {
 
     static let baseBEDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-dd'T'hh:mm:ss'Z'"
+        formatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss'Z'"
         formatter.timeZone = TimeZone(abbreviation: "UTC")
         
         return formatter

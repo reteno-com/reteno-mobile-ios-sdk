@@ -69,12 +69,40 @@ final class SendNotificationsStatusOperationTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
     
-    func test_sendNotificationsStatusOperation_withNegativeResult() {
+    func test_sendNotificationsStatusOperation_withNegativeResult_and4xxStatusCode() {
         let interactionId = "klsdalksdnvksndjksd"
         stub(condition: pathEndsWith("v1/interactions/\(interactionId)/status")) { _ in
             let stubData = "OK".data(using: .utf8)
             
             return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
+        }
+        
+        let expectation = expectation(description: "Operation")
+        let notificationStatus = NotificationStatus(interactionId: interactionId, status: .delivered, date: Date())
+        storage.addNotificationStatus(notificationStatus)
+        
+        let operation = SendNotificationsStatusOperation(
+            sendingService: sendingService,
+            storage: storage,
+            notificationStatus: notificationStatus
+        )
+        operation.completionBlock = { [unowned storage] in
+            XCTAssertTrue(operation.isFinished, "operation should be finished")
+            XCTAssertTrue(storage!.getNotificationStatuses().isEmpty, "array of notification statuses from storage should be empty")
+            
+            expectation.fulfill()
+        }
+        operationQueue.addOperation(operation)
+        
+        waitForExpectations(timeout: 1.0)
+    }
+    
+    func test_sendNotificationsStatusOperation_withNegativeResult_and5xxStatusCode() {
+        let interactionId = "klsdalksdnvksndjksd"
+        stub(condition: pathEndsWith("v1/interactions/\(interactionId)/status")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 500, headers: nil)
         }
         
         let expectation = expectation(description: "Operation")

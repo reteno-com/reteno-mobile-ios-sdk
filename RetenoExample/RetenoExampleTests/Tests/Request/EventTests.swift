@@ -19,7 +19,7 @@ final class EventTests: XCTestCase {
         )
         let result = event.toJSON()
         XCTAssertEqual(result["eventTypeKey"] as? String, "type_key", "should have valid `eventTypeKey` parameter")
-        XCTAssertEqual(result["occurred"] as? String, "2022-10-04T02:09:43Z", "should have valid `occurred` parameter")
+        XCTAssertEqual(result["occurred"] as? String, "2022-10-04T14:09:43Z", "should have valid `occurred` parameter")
         XCTAssertEqual(
             result["params"] as? [[String: String]],
             [["name": "parameter_name", "value": "parameter_value"]],

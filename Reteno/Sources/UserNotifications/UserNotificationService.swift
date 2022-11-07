@@ -71,6 +71,18 @@ public final class UserNotificationService: NSObject {
         MobileRequestServiceBuilder.build().upsertDevice()
     }
     
+    /// Processing opened remote notification
+    ///
+    /// If there is a link in the notification, it will be handled. Also the notification `OPENED` status will be tracked.
+    ///
+    /// - Parameter notification: The notification to which the user responded.
+    public func processOpenedRemoteNotification(_ notification: UNNotification) {
+        if let notification = RetenoUserNotification(userInfo: notification.request.content.userInfo) {
+            Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .opened, date: Date())
+            DeepLinksProcessor.process(notification: notification)
+        }
+    }
+    
 }
 
 @available(iOSApplicationExtension, unavailable)
@@ -101,11 +113,8 @@ extension UserNotificationService: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        if response.actionIdentifier == UNNotificationDefaultActionIdentifier,
-            let notification = RetenoUserNotification(userInfo: response.notification.request.content.userInfo) {
-            
-            DeepLinksProcessor.process(notification: notification)
-            Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .opened, date: Date())
+        if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
+            processOpenedRemoteNotification(response.notification)
         }
         didReceiveNotificationResponseHandler?(response)
         didReceiveNotificationUserInfo?(response.notification.request.content.userInfo)

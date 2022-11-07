@@ -124,11 +124,11 @@ final class SendUserOperationTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
     
-    func test_sendUserOperation_withExternalUserIdAndFailedDeviceResult() {
+    func test_sendUserOperation_withExternalUserIdAndFailedDeviceResult_with5xxStatusCode() {
         stub(condition: pathEndsWith("v1/device")) { _ in
             let stubData = "OK".data(using: .utf8)
             
-            return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
+            return HTTPStubsResponse(data: stubData!, statusCode: 500, headers: nil)
         }
         stub(condition: pathEndsWith("v1/user")) { _ in
             let stubData = "OK".data(using: .utf8)
@@ -169,7 +169,97 @@ final class SendUserOperationTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
     
-    func test_sendUserOperation_withExternalUserIdAndFailedUserResult() {
+    func test_sendUserOperation_withExternalUserIdAndFailedDeviceResult_with4xxStatusCode() {
+        stub(condition: pathEndsWith("v1/device")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
+        }
+        stub(condition: pathEndsWith("v1/user")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 200, headers: nil)
+        }
+        
+        let expectation = expectation(description: "Operation")
+        let user = User(
+            externalUserId: "kldsakldsaklas",
+            userAttributes: UserAttributes(
+                phone: "999999",
+                email: "sssss.test@gmail.com",
+                firstName: "first",
+                lastName: "last",
+                fields: [UserCustomField(key: "key1", value: "value1")]
+            ),
+            subscriptionKeys: ["key2, key3"],
+            groupNamesInclude: ["group1"],
+            groupNamesExclude: ["group2"],
+            date: Date()
+        )
+        storage.addUser(user)
+        let operation = SendUserOperation(
+            requestService: requestService,
+            storage: storage,
+            user: user
+        )
+        
+        operation.completionBlock = { [unowned storage] in
+            XCTAssertTrue(operation.isCancelled, "operation should be canceled")
+            XCTAssertTrue(storage!.getUsers().isEmpty, "array of users from storage should be empty")
+            
+            expectation.fulfill()
+        }
+        operationQueue.addOperation(operation)
+        
+        waitForExpectations(timeout: 1.0)
+    }
+    
+    func test_sendUserOperation_withExternalUserIdAndFailedUserResult_with5xxStatusCode() {
+        stub(condition: pathEndsWith("v1/device")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 200, headers: nil)
+        }
+        stub(condition: pathEndsWith("v1/user")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 500, headers: nil)
+        }
+        
+        let expectation = expectation(description: "Operation")
+        let user = User(
+            externalUserId: "kldsakldsaklas",
+            userAttributes: UserAttributes(
+                phone: "999999",
+                email: "sssss.test@gmail.com",
+                firstName: "first",
+                lastName: "last",
+                fields: [UserCustomField(key: "key1", value: "value1")]
+            ),
+            subscriptionKeys: ["key2, key3"],
+            groupNamesInclude: ["group1"],
+            groupNamesExclude: ["group2"],
+            date: Date()
+        )
+        storage.addUser(user)
+        let operation = SendUserOperation(
+            requestService: requestService,
+            storage: storage,
+            user: user
+        )
+        
+        operation.completionBlock = { [unowned storage] in
+            XCTAssertTrue(operation.isCancelled, "operation should be canceled")
+            XCTAssertTrue(storage!.getUsers().isNotEmpty, "array of users from storage shouldn't be empty")
+            
+            expectation.fulfill()
+        }
+        operationQueue.addOperation(operation)
+        
+        waitForExpectations(timeout: 1.0)
+    }
+    
+    func test_sendUserOperation_withExternalUserIdAndFailedUserResult_with4xxStatusCode() {
         stub(condition: pathEndsWith("v1/device")) { _ in
             let stubData = "OK".data(using: .utf8)
             
@@ -205,7 +295,7 @@ final class SendUserOperationTests: XCTestCase {
         
         operation.completionBlock = { [unowned storage] in
             XCTAssertTrue(operation.isCancelled, "operation should be canceled")
-            XCTAssertTrue(storage!.getUsers().isNotEmpty, "array of users from storage shouldn't be empty")
+            XCTAssertTrue(storage!.getUsers().isEmpty, "array of users from storage should be empty")
             
             expectation.fulfill()
         }

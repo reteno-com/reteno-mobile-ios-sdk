@@ -12,6 +12,7 @@ import SnapKit
 final class MainViewController: NiblessViewController {
     
     private let viewModel: MainViewModel
+    private let countLabel = UILabel()
     
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
@@ -23,6 +24,12 @@ final class MainViewController: NiblessViewController {
         super.viewDidLoad()
         
         setuplayout()
+        viewModel.updateCountHandler = { [weak countLabel] count in
+            guard let countLabel = countLabel else { return }
+            
+            countLabel.text = "\(count)"
+            countLabel.backgroundColor = count > 0 ? .systemOrange : .gray
+        }
     }
     
     // MARK: Actions
@@ -40,6 +47,11 @@ final class MainViewController: NiblessViewController {
 	@objc
     private func profileButtonAction(_ sender: UIButton) {
         viewModel.openProfile()
+    }
+    
+    @objc
+    private func inboxButtonAction(_ sender: UIButton) {
+        viewModel.openAppInbox()
     }
     
 }
@@ -89,6 +101,13 @@ private extension MainViewController {
         stack.addArrangedSubview(logEventButton)
         baseSetup(for: logEventButton)
         logEventButton.backgroundColor = .systemOrange
+        
+        let inboxButton = UIButton(type: .system)
+        inboxButton.setTitle(NSLocalizedString("inbox_screen.title", comment: ""), for: .normal)
+        inboxButton.addTarget(self, action: #selector(inboxButtonAction(_:)), for: .touchUpInside)
+        stack.addArrangedSubview(inboxButton)
+        baseSetup(for: inboxButton)
+        setupCountLabel(onView: inboxButton)
     }
     
     func baseSetup(for button: UIButton) {
@@ -99,6 +118,25 @@ private extension MainViewController {
         button.backgroundColor = .systemGray
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 6.0
+    }
+    
+    func setupCountLabel(onView view: UIView) {
+        let containerView = UIView()
+        view.addSubview(containerView)
+        containerView.snp.makeConstraints {
+            $0.height.equalTo(30.0)
+            $0.width.greaterThanOrEqualTo(30.0)
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20.0)
+        }
+        containerView.layer.cornerRadius = 8.0
+        containerView.clipsToBounds = true
+        containerView.addSubview(countLabel)
+        countLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        countLabel.textColor = .black
+        countLabel.textAlignment = .center
     }
     
 }

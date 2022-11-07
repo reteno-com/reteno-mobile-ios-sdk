@@ -51,4 +51,27 @@ struct NetworkBuilder {
         buildMobileApiManager(isExternalIdRequired: false)
     }
     
+    static func buildApiManagerForAppInbox(apiKey: String = ApiKeyHelper.getApiKey()) -> RequestManager {
+        let headersDecorator = RequestDecorator { request in
+            request.headers?.add(name: "Content-Type", value: "application/json")
+            request.headers?.add(name: "X-Reteno-Access-Key", value: apiKey)
+            request.headers?.add(name: "X-Reteno-SDK-Version", value: Reteno.version)
+            if let deviceId = DeviceIdHelper.deviceId() {
+                request.headers?.add(name: "X-Reteno-Device-ID", value: deviceId)
+            }
+            if DebugModeHelper.isDebugModeOn() {
+                request.headers?.add(name: "X-Reteno-Debug", value: "true")
+            }
+        }
+        
+        return RequestManager(
+            decorators: [headersDecorator],
+            baseURLComponent: BaseURL.retenoMobile.rawValue
+        )
+    }
+    
+    static func buildApiManagerWithEmptyBaseURL() -> RequestManager {
+        RequestManager(decorators: [], baseURLComponent: "")
+    }
+    
 }

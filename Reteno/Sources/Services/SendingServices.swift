@@ -43,4 +43,11 @@ final class SendingServices {
         }
     }
     
+    func registerLinkClick(_ link: String, completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }) {
+        let request = RegisterLinkClickRequest(link: link)
+        let handler = EmptyResponseHandler()
+        
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
+    }
+    
 }

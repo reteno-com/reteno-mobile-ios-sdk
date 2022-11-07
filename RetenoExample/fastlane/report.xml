@@ -5,164 +5,37 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.000317">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000957">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: ci_setup" time="0.001433">
+      <testcase classname="fastlane.lanes" name="1: ci_setup" time="0.002193">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="02: app_store_connect_api_key_set_from_remote" time="0.74086">
+      <testcase classname="fastlane.lanes" name="2: app_store_connect_api_key_set_from_remote" time="0.92683">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="03: cocoapods" time="2.358928">
+      <testcase classname="fastlane.lanes" name="3: match" time="1.765924">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="04: Switch to ios bump_build_number lane" time="0.00031">
+      <testcase classname="fastlane.lanes" name="4: match" time="1.627724">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="05: build_number_get_from_xcconfig" time="0.00063">
+      <testcase classname="fastlane.lanes" name="5: match" time="2.034223">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="06: build_number_set_to_xcconfig" time="0.000774">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="07: git_commit" time="0.066027">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="08: Switch to ios add_version_badge lane" time="0.00025">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="09: build_number_get_from_xcconfig" time="0.000561">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="10: add_badge" time="7.867271">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="11: Switch to ios archive lane" time="0.00028">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="12: Switch to ios sync_certs lane" time="0.000206">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="13: match" time="1.311314">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="14: match" time="1.322914">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="15: match" time="1.358518">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="16: build_app" time="97.123441">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="17: Switch to ios cleanup_version_badge_artifacts lane" time="0.000261">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="18: git diff --name-only | grep AppIcon.appiconset" time="0.071215">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="19: reset_git_repo" time="0.030095">
-        
-          <failure message="/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/runner.rb:229:in `chdir'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/runner.rb:229:in `execute_action'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing'&#10;Fastfile:223:in `block (2 levels) in parsing_binding'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/lane.rb:33:in `call'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/runner.rb:204:in `try_switch_to_lane'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/runner.rb:146:in `trigger_action_by_name'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing'&#10;Fastfile:83:in `block (2 levels) in parsing_binding'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/lane.rb:33:in `call'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/runner.rb:49:in `block in execute'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/runner.rb:45:in `chdir'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/runner.rb:45:in `execute'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/lane_manager.rb:47:in `cruise_lane'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/command_line_handler.rb:36:in `handle'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:187:in `call'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:157:in `run'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/commands_generator.rb:354:in `run'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/commands_generator.rb:43:in `start'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/gems/fastlane-2.210.0/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/bin/fastlane:23:in `load'&#10;/Users/sergey.prikhodko/Documents/Work/Yalantis/reteno-ios/RetenoExample/vendor/bundle/ruby/2.6.0/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/cli/exec.rb:63:in `load'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/cli/exec.rb:63:in `kernel_load'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/cli/exec.rb:28:in `run'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/cli.rb:494:in `exec'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in `invoke_command'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/vendor/thor/lib/thor.rb:392:in `dispatch'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/cli.rb:30:in `dispatch'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/vendor/thor/lib/thor/base.rb:485:in `start'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/cli.rb:24:in `start'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/exe/bundle:49:in `block in &lt;top (required)&gt;'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/lib/bundler/friendly_errors.rb:130:in `with_friendly_errors'&#10;/Users/sergey.prikhodko/.gem/ruby/2.6.0/gems/bundler-2.2.17/exe/bundle:37:in `&lt;top (required)&gt;'&#10;/usr/bin/bundle:23:in `load'&#10;/usr/bin/bundle:23:in `&lt;main&gt;'&#10;&#10;Exit status of command 'git checkout -- 'RetenoExample/RetenoExample/Resources/Assets.xcassets/AppIcon.appiconset/100.png'' was 1 instead of 0.&#10;error: pathspec 'RetenoExample/RetenoExample/Resources/Assets.xcassets/AppIcon.appiconset/100.png' did not match any file(s) known to git&#10;" />
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="20: Switch to ios distribute lane" time="0.00174">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="21: Switch to ios distribute_to_appstore lane" time="0.000378">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="22: testflight" time="353.001502">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="23: push_to_git_remote" time="0.968123">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="24: clean_build_artifacts" time="0.003187">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="25: Switch to ios notify_slack lane" time="0.000325">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="26: build_number_get_from_xcconfig" time="0.001021">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="27: get_version_number_from_xcodeproj" time="0.060592">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="28: git_branch" time="0.022589">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="29: number_of_commits" time="0.07798">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="30: slack" time="0.471192">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="31: ci_teardown" time="0.000531">
+      <testcase classname="fastlane.lanes" name="6: ci_teardown" time="0.001171">
         
       </testcase>
     

@@ -13,12 +13,20 @@ protocol MainModelNavigationHandler {
     
     func openMenu()
     func createProfile()
+    func openAppInbox()
     
 }
 
 final class MainModel {
     
+    var updateCountHandler: ((Int) -> Void)? {
+        didSet {
+            inbox.onUnreadMessagesCountChanged = updateCountHandler
+        }
+    }
+    
     private let navigationHandler: MainModelNavigationHandler
+    private let inbox = Reteno.inbox()
     
     init(navigationHandler: MainModelNavigationHandler) {
         self.navigationHandler = navigationHandler
@@ -38,6 +46,10 @@ final class MainModel {
 	
     func openProfile() {
         navigationHandler.createProfile()
+    }
+    
+    func openAppInbox() {
+        navigationHandler.openAppInbox()
     }
     
 }

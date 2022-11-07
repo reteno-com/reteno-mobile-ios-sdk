@@ -23,6 +23,13 @@ final class MainFlowAssembly: Assembly {
             
             return ProfileViewController(viewModel: viewModel)
         }.inObjectScope(.transient)
+        
+        container.register(AppInboxViewController.self) { _ in
+            let model = AppInboxModel()
+            let viewModel = AppInboxViewModel(model: model)
+            
+            return AppInboxViewController(viewModel: viewModel)
+        }.inObjectScope(.transient)
     }
     
 }

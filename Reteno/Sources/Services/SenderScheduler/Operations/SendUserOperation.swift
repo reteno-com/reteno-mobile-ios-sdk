@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 final class SendUserOperation: DateOperation {
     
@@ -50,6 +51,15 @@ final class SendUserOperation: DateOperation {
                 self.finish()
                 
             case .failure(let failure):
+                if let responseCode = (failure as? AFError)?.responseCode {
+                    switch responseCode {
+                    case 400...499:
+                        self.storage.clearUser(user)
+                        
+                    default:
+                        break
+                    }
+                }
                 print(failure.localizedDescription)
                 self.cancel()
             }
@@ -68,6 +78,15 @@ final class SendUserOperation: DateOperation {
                     self.requestService.updateUserAttributes(user: user, completionHandler: updateAttributesResult)
                     
                 case .failure(let failure):
+                    if let responseCode = (failure as? AFError)?.responseCode {
+                        switch responseCode {
+                        case 400...499:
+                            self.storage.clearUser(user)
+                            
+                        default:
+                            break
+                        }
+                    }
                     print(failure.localizedDescription)
                     cancel()
                 }

@@ -20,7 +20,7 @@ final class BaseBEDateFormatterTests: XCTestCase {
     func test_formatter_inTimezone3() {
         sut.timeZone = .init(secondsFromGMT: 10800)
         
-        let predictedTimeString = "2022-09-27T11:15:51Z"
+        let predictedTimeString = "2022-09-27T23:15:51Z"
         XCTAssertEqual(
             predictedTimeString,
             sut.string(from: fixedDate),
@@ -31,7 +31,7 @@ final class BaseBEDateFormatterTests: XCTestCase {
     func test_formatter_inTimezone0() {
         sut.timeZone = .init(secondsFromGMT: 0)
         
-        let predictedTimeString = "2022-09-27T08:15:51Z"
+        let predictedTimeString = "2022-09-27T20:15:51Z"
         XCTAssertEqual(
             predictedTimeString,
             sut.string(from: fixedDate),

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 final class SendNotificationsStatusOperation: DateOperation {
     
@@ -36,8 +37,20 @@ final class SendNotificationsStatusOperation: DateOperation {
             status: notificationStatus.status,
             date: notificationStatus.date
         ) { [unowned self, notificationStatus] result in
-            if case .success = result {
+            switch result {
+            case .success:
                 self.storage.clearNotificationStatus(notificationStatus)
+                
+            case .failure(let error):
+                if let responseCode = (error as? AFError)?.responseCode {
+                    switch responseCode {
+                    case 400...499:
+                        self.storage.clearNotificationStatus(notificationStatus)
+                        
+                    default:
+                        break
+                    }
+                }
             }
             self.finish()
         }

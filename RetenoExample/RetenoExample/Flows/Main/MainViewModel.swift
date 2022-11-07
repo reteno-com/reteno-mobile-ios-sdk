@@ -10,6 +10,12 @@ import Foundation
 
 final class MainViewModel {
     
+    var updateCountHandler: ((Int) -> Void)? {
+        didSet {
+            model.updateCountHandler = updateCountHandler
+        }
+    }
+    
     private let model: MainModel
     
     init(model: MainModel) {
@@ -26,6 +32,10 @@ final class MainViewModel {
 	
     func openProfile() {
         model.openProfile()
+    }
+    
+    func openAppInbox() {
+        model.openAppInbox()
     }
     
 }

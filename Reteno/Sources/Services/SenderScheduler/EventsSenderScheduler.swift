@@ -10,6 +10,14 @@ import UIKit
 
 final class EventsSenderScheduler {
     
+    weak var messagesCountInbox: AppInbox? {
+        didSet {
+            if messagesCountInbox.isSome {
+                forceFetchMessagesCount()
+            }
+        }
+    }
+    
     /// Mobile request service
     private let mobileRequestService: MobileRequestService
     /// Notification interaction status updater
@@ -33,6 +41,10 @@ final class EventsSenderScheduler {
     
     private var lastForcePushTimestamp: Date?
     
+    /// time interval resolvers
+    private var timeIntervalResolver: () -> TimeInterval
+    private var randomOffsetResolver: () -> TimeInterval
+    
     // MARK: Lifecycle
     
     deinit {
@@ -44,11 +56,15 @@ final class EventsSenderScheduler {
     init(
         mobileRequestService: MobileRequestService,
         storage: KeyValueStorage = StorageBuilder.build(),
-        sendingService: SendingServices = SendingServiceBuilder.build()
+        sendingService: SendingServices = SendingServiceBuilder.build(),
+        timeIntervalResolver: @escaping () -> TimeInterval = { Reteno.eventsSendingTimeInterval },
+        randomOffsetResolver: @escaping () -> TimeInterval = { TimeInterval((0...10).randomElement() ?? 1) }
     ) {
         self.mobileRequestService = mobileRequestService
         self.storage = storage
         self.sendingService = sendingService
+        self.timeIntervalResolver = timeIntervalResolver
+        self.randomOffsetResolver = randomOffsetResolver
         
         subscribeOnNotifications()
     }
@@ -112,12 +128,11 @@ final class EventsSenderScheduler {
     
     // MARK: Task scheduling
     
-    private func scheduleTask() {
+    func scheduleTask() {
         sendingTimer?.invalidate()
         sendingTimer = nil
-        let randomTimeOffset = TimeInterval((0...10).randomElement() ?? 1)
         sendingTimer = Timer.scheduledTimer(
-            withTimeInterval: Reteno.eventsSendingTimeInterval + randomTimeOffset,
+            withTimeInterval: timeIntervalResolver() + randomOffsetResolver(),
             repeats: true,
             block: { [weak self] _ in
                 self?.sendCollectedData()
@@ -133,13 +148,7 @@ final class EventsSenderScheduler {
             self.endTask()
         }) ?? .invalid
         
-        var operations = sendNotificationsStatusOperations() + sendUsersOperations()
-        if let sendEventOperation = sendEventsOperation() {
-            operations.append(sendEventOperation)
-        }
-        operations.sort(by: { $0.date < $1.date })
-        Operation.makeDependencies(forOperations: operations)
-        
+        let operations = prepareOperationSequence()
         let completionOperation = Operation()
         for operation in operations {
             completionOperation.addDependency(operation)
@@ -159,9 +168,36 @@ final class EventsSenderScheduler {
         operationQueue.addOperations(operations, waitUntilFinished: false)
     }
     
+    private func prepareOperationSequence() -> [Operation] {
+        var operations = sendNotificationsStatusOperations() + sendUsersOperations()
+        if let sendEventOperation = sendEventsOperation() {
+            operations.append(sendEventOperation)
+        }
+        operations.sort(by: { $0.date < $1.date })
+        Operation.makeDependencies(forOperations: operations)
+        let serviceOperations = prepareServiceOperations()
+        
+        return operations + serviceOperations
+    }
+    
+    private func prepareServiceOperations() -> [Operation] {
+        var operations: [Operation] = []
+        if let messageCountOperation = messagesCountOperation() {
+            operations.append(messageCountOperation)
+        }
+        
+        return operations
+    }
+    
     private func endTask() {
         application?.endBackgroundTask(self.backgroundTaskIdentifier)
         backgroundTaskIdentifier = .invalid
+    }
+    
+    func forceFetchMessagesCount() {
+        guard let messagesOperation = messagesCountOperation() else { return }
+        
+        operationQueue.addOperation(messagesOperation)
     }
     
     // MARK: Sending logic
@@ -187,8 +223,10 @@ final class EventsSenderScheduler {
     
     private func sendEventsOperation() -> DateOperation? {
         let oldEvents = storage.getEvents().filter { !$0.isValid }
-        SentryHelper.captureLog(title: Event.logTitle, count: oldEvents.count)
-        storage.clearEvents(oldEvents)
+        if oldEvents.isNotEmpty {
+            SentryHelper.captureLog(title: Event.logTitle, count: oldEvents.count)
+            storage.clearEvents(oldEvents)
+        }
         
         let events = storage.getEvents()
         let validEvents = events.filter { $0.isValid }
@@ -196,6 +234,12 @@ final class EventsSenderScheduler {
         guard !validEvents.isEmpty else { return nil }
         
         return SendEventsOperation(requestService: mobileRequestService, storage: storage, events: validEvents)
+    }
+    
+    func messagesCountOperation() -> Operation? {
+        guard let inbox = messagesCountInbox else { return nil }
+        
+        return MessagesCountOperation(requestService: MobileRequestServiceBuilder.buildForAppInbox(), inbox: inbox)
     }
     
     // MARK: Handle notifications

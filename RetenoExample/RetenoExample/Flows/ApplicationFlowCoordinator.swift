@@ -66,6 +66,11 @@ extension ApplicationFlowCoordinator: MainModelNavigationHandler {
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    func openAppInbox() {
+        let controller = container.resolve(AppInboxViewController.self)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
 }
 
 // MARK: - ProfileModelNavigationHandler

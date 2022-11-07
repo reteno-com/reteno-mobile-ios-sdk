@@ -17,4 +17,10 @@ struct SendingServiceBuilder {
         return SendingServices(requestManager: requestManager)
     }
     
+    static func buildServiceWithEmptyURL() -> SendingServices {
+        let requestManager = NetworkBuilder.buildApiManagerWithEmptyBaseURL()
+        
+        return SendingServices(requestManager: requestManager)
+    }
+    
 }

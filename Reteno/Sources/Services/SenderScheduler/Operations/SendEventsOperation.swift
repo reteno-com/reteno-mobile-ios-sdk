@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 final class SendEventsOperation: DateOperation {
     
@@ -37,8 +38,20 @@ final class SendEventsOperation: DateOperation {
                 return
             }
             
-            if case .success = result {
+            switch result {
+            case .success:
                 self.storage.clearEvents(events)
+                
+            case .failure(let error):
+                if let responseCode = (error as? AFError)?.responseCode {
+                    switch responseCode {
+                    case 400...499:
+                        self.storage.clearEvents(events)
+                        
+                    default:
+                        break
+                    }
+                }
             }
             self.finish()
         }

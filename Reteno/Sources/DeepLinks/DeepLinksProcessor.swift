@@ -11,8 +11,12 @@ struct DeepLinksProcessor {
     
     @available(iOSApplicationExtension, unavailable)
     static func process(notification: RetenoUserNotification) {
-        guard let url = notification.link else { return }
+        guard let url = notification.rawLink else { return }
         
+        if let wrappedUrl = notification.link {
+            let service = SendingServiceBuilder.buildServiceWithEmptyURL()
+            service.registerLinkClick(wrappedUrl.absoluteString)
+        }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     

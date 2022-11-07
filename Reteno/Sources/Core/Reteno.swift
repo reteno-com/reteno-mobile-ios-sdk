@@ -11,7 +11,7 @@ import UserNotifications
 public struct Reteno {
     
     /// SDK version
-    static var version = "1.0.1"
+    static var version = "1.2.0"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -91,6 +91,11 @@ public struct Reteno {
     /// - Parameter deviceId: Custom identifier for device
     public static func setCustomDeviceId(_ deviceId: String) {
         DeviceIdHelper.actualizeDeviceId(customDeviceId: deviceId)
+    }
+    
+    /// Get instance of `AppInbox`
+    public static func inbox() -> AppInbox {
+        AppInbox(requestService: MobileRequestServiceBuilder.buildForAppInbox())
     }
     
 }
