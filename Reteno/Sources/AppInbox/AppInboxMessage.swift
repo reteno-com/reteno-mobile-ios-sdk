@@ -13,7 +13,7 @@ public struct AppInboxMessage: Codable {
     
     public let id: String
     public let title: String
-    public let content: String
+    public let content: String?
     public let imageURL: URL?
     public let linkURL: URL?
     public let isNew: Bool

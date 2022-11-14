@@ -115,7 +115,7 @@ extension AppInboxViewController: UITableViewDataSource, UITableViewDelegate {
         (cell as? AppInboxMessageCell)?.apply(
             messageInfo: AppInboxMessageCell.MessageInfo(
                 title: message.title,
-                content: message.content,
+                content: message.content ?? "",
                 date: message.createdDate,
                 imageURL: message.imageURL,
                 linkURL: message.linkURL,
