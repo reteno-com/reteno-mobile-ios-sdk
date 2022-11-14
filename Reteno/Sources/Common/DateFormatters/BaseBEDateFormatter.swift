@@ -9,12 +9,6 @@ import Foundation
 
 extension DateFormatter {
 
-    static let baseBEDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY-MM-dd'T'HH:mm:ss'Z'"
-        formatter.timeZone = TimeZone(abbreviation: "UTC")
-        
-        return formatter
-    }()
+    static let baseBEDateFormatter = ISO8601DateFormatter()
 
 }

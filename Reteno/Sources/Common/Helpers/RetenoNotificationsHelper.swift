@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 struct RetenoNotificationsHelper {
     
@@ -17,6 +18,43 @@ struct RetenoNotificationsHelper {
     
     static func deviceToken() -> String? {
         StorageBuilder.build().getValue(forKey: StorageKeys.pushToken.rawValue)
+    }
+    
+    static func isSubscribedOnNotifications(completion: @escaping (Bool) -> Void) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .authorized, .provisional:
+                completion(true)
+                
+            case .notDetermined, .denied, .ephemeral:
+                completion(false)
+                
+            @unknown default:
+                SentryHelper.capture(
+                    error: NotificationAuthorizationStatusError(unsupportedStatus: settings.authorizationStatus)
+                )
+            }
+        }
+    }
+    
+}
+
+// MARK: - NotificationAuthorizationStatusError
+
+struct NotificationAuthorizationStatusError: Error {
+    
+    private let unsupportedStatus: UNAuthorizationStatus
+    
+    init(unsupportedStatus: UNAuthorizationStatus) {
+        self.unsupportedStatus = unsupportedStatus
+    }
+    
+}
+
+extension NotificationAuthorizationStatusError: LocalizedError {
+    
+    var errorDescription: String? {
+        "Unsupported notification authorization status: \(unsupportedStatus.rawValue)"
     }
     
 }

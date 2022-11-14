@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-public let ScreenViewEvent = "screen_view"
-public let ScreenClass = "screen_class"
+public let ScreenViewEvent = "screenView"
+public let ScreenClass = "screenClass"
 
 struct AnalyticsService {
     

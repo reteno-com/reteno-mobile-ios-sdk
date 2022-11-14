@@ -11,25 +11,14 @@ import XCTest
 final class BaseBEDateFormatterTests: XCTestCase {
     
     private let fixedDate = Date(timeIntervalSince1970: 1664309751)
-    private var sut: DateFormatter = .baseBEDateFormatter
+    private var sut: ISO8601DateFormatter!
     
     override func tearDown() {
-        sut.timeZone = TimeZone(abbreviation: "UTC")
+        sut = nil
     }
     
-    func test_formatter_inTimezone3() {
-        sut.timeZone = .init(secondsFromGMT: 10800)
-        
-        let predictedTimeString = "2022-09-27T23:15:51Z"
-        XCTAssertEqual(
-            predictedTimeString,
-            sut.string(from: fixedDate),
-            "string from sut should be equal to \(predictedTimeString)"
-        )
-    }
-    
-    func test_formatter_inTimezone0() {
-        sut.timeZone = .init(secondsFromGMT: 0)
+    func test_formatter() {
+        sut = DateFormatter.baseBEDateFormatter
         
         let predictedTimeString = "2022-09-27T20:15:51Z"
         XCTAssertEqual(

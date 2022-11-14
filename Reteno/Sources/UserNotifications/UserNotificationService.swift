@@ -68,7 +68,9 @@ public final class UserNotificationService: NSObject {
     /// - Parameter deviceToken: Registered for device token.
     public func processRemoteNotificationsToken(_ deviceToken: String) {
         StorageBuilder.build().set(value: deviceToken, forKey: StorageKeys.pushToken.rawValue)
-        MobileRequestServiceBuilder.build().upsertDevice()
+        RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
+            MobileRequestServiceBuilder.build().upsertDevice(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed)
+        }
     }
     
     /// Processing opened remote notification

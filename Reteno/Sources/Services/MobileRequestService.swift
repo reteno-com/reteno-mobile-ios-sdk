@@ -18,6 +18,7 @@ final class MobileRequestService {
     
     func upsertDevice(
         externalUserId: String? = nil,
+        isSubscribedOnPush: Bool,
         completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
     ) {
         let languageCode = Locale.current.languageCode
@@ -27,6 +28,7 @@ final class MobileRequestService {
             category: category ?? .mobile,
             languageCode: languageCode,
             pushToken: pushToken,
+            isSubscribedOnPush: isSubscribedOnPush,
             externalUserId: externalUserId
         )
         let handler = EmptyResponseHandler()

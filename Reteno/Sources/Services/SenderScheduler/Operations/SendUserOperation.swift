@@ -66,29 +66,40 @@ final class SendUserOperation: DateOperation {
         }
         
         if let externalUserId = user.externalUserId {
-            requestService.upsertDevice(externalUserId: externalUserId) { [user, unowned self] result in
+            RetenoNotificationsHelper.isSubscribedOnNotifications { [unowned self] isSubscribed in
                 guard !self.isCancelled else {
                     self.finish()
                     
                     return
                 }
                 
-                switch result {
-                case .success:
-                    self.requestService.updateUserAttributes(user: user, completionHandler: updateAttributesResult)
-                    
-                case .failure(let failure):
-                    if let responseCode = (failure as? AFError)?.responseCode {
-                        switch responseCode {
-                        case 400...499:
-                            self.storage.clearUser(user)
-                            
-                        default:
-                            break
-                        }
+                self.requestService.upsertDevice(
+                    externalUserId: externalUserId,
+                    isSubscribedOnPush: isSubscribed
+                ) { [user, unowned self] result in
+                    guard !self.isCancelled else {
+                        self.finish()
+                        
+                        return
                     }
-                    print(failure.localizedDescription)
-                    cancel()
+                    
+                    switch result {
+                    case .success:
+                        self.requestService.updateUserAttributes(user: user, completionHandler: updateAttributesResult)
+                        
+                    case .failure(let failure):
+                        if let responseCode = (failure as? AFError)?.responseCode {
+                            switch responseCode {
+                            case 400...499:
+                                self.storage.clearUser(user)
+                                
+                            default:
+                                break
+                            }
+                        }
+                        print(failure.localizedDescription)
+                        cancel()
+                    }
                 }
             }
         } else {

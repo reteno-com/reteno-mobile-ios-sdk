@@ -32,7 +32,7 @@ final class MobileRequestServiceTests: XCTestCase {
         }
         var expectedSuccess: Bool?
         let expectation = expectation(description: "Request")
-        sut.upsertDevice { result in
+        sut.upsertDevice(isSubscribedOnPush: true) { result in
             switch result {
             case .success:
                 expectedSuccess = true
@@ -55,7 +55,7 @@ final class MobileRequestServiceTests: XCTestCase {
         }
         var expectedSuccess: Bool?
         let expectation = expectation(description: "Request")
-        sut.upsertDevice { result in
+        sut.upsertDevice(isSubscribedOnPush: true) { result in
             switch result {
             case .success:
                 expectedSuccess = true

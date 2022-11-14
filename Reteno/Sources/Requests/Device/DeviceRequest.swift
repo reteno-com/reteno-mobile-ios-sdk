@@ -26,6 +26,7 @@ struct DeviceRequest: APIRequest {
         advertisingId: String? = AdvertisingIdHelper.getAdvertisingId(),
         timeZone: String = TimeZone.current.identifier,
         pushToken: String,
+        isSubscribedOnPush: Bool,
         appVersion: String? = AppVersionHelper.appVersion(),
         externalUserId: String? = nil
     ) {
@@ -37,7 +38,8 @@ struct DeviceRequest: APIRequest {
             "osVersion": osVersion,
             "deviceModel": deviceModel,
             "timeZone": timeZone,
-            "pushToken": pushToken
+            "pushToken": pushToken,
+            "pushSubscribed": isSubscribedOnPush
         ]
         tempParameters["languageCode"] = languageCode
         tempParameters["advertisingId"] = advertisingId
