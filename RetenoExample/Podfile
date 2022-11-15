@@ -14,21 +14,21 @@ target 'RetenoExample' do
 
   pod 'Swinject', '~> 2.7.1'
   pod 'SnapKit', '~> 5.6.0'
-#  pod 'Reteno', :path => '../'
+  pod 'Reteno', '1.2.1'
   pod 'FirebaseMessaging'
   pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '7.28.0'
   
   target 'NotificationServiceExtension' do
     use_frameworks!
 
-#    pod 'Reteno', :path => '../'
+    pod 'Reteno', '1.2.1'
 
   end
   
   target 'RetenoExampleTests' do
     use_frameworks!
 
-#    pod 'Reteno', :path => '../'
+    pod 'Reteno', '1.2.1'
     pod 'OHHTTPStubs/Swift'
 
   end
