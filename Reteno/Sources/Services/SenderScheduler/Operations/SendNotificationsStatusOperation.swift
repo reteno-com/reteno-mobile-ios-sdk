@@ -36,7 +36,9 @@ final class SendNotificationsStatusOperation: DateOperation {
             token: RetenoNotificationsHelper.deviceToken() ?? "",
             status: notificationStatus.status,
             date: notificationStatus.date
-        ) { [unowned self, notificationStatus] result in
+        ) { [weak self, notificationStatus] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success:
                 self.storage.clearNotificationStatus(notificationStatus)

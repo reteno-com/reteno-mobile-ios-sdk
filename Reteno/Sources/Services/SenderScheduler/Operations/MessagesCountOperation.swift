@@ -21,7 +21,9 @@ final class MessagesCountOperation: NetworkOperation {
     override func main() {
         super.main()
         
-        requestService.getInboxMessagesCount { [unowned self] result in
+        requestService.getInboxMessagesCount { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let response):
                 self.inbox.messagesCount = response.unreadCount

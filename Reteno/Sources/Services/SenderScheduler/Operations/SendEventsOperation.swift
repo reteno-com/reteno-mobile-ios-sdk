@@ -31,12 +31,8 @@ final class SendEventsOperation: DateOperation {
             return
         }
         
-        requestService.sendEvents(events) { [unowned self, events] result in
-            guard !self.isCancelled else {
-                self.finish()
-                
-                return
-            }
+        requestService.sendEvents(events) { [weak self, events] result in
+            guard let self = self else { return }
             
             switch result {
             case .success:

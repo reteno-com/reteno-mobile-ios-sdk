@@ -35,12 +35,8 @@ final class SendUserOperation: DateOperation {
             return
         }
         
-        let updateAttributesResult: (Result<Bool, Error>) -> Void = { [user, unowned self] result in
-            guard !self.isCancelled else {
-                self.finish()
-                
-                return
-            }
+        let updateAttributesResult: (Result<Bool, Error>) -> Void = { [user, weak self] result in
+            guard let self = self else { return }
             
             switch result {
             case .success:
@@ -66,39 +62,29 @@ final class SendUserOperation: DateOperation {
         }
         
         if let externalUserId = user.externalUserId {
-            RetenoNotificationsHelper.isSubscribedOnNotifications { [unowned self] isSubscribed in
-                guard !self.isCancelled else {
-                    self.finish()
-                    
-                    return
-                }
-                
-                self.requestService.upsertDevice(
+            RetenoNotificationsHelper.isSubscribedOnNotifications { [weak self] isSubscribed in
+                self?.requestService.upsertDevice(
                     externalUserId: externalUserId,
                     isSubscribedOnPush: isSubscribed
-                ) { [user, unowned self] result in
-                    guard !self.isCancelled else {
-                        self.finish()
-                        
-                        return
-                    }
+                ) { [weak self] result in
+                    guard let self = self else { return }
                     
                     switch result {
                     case .success:
-                        self.requestService.updateUserAttributes(user: user, completionHandler: updateAttributesResult)
+                        self.requestService.updateUserAttributes(user: self.user, completionHandler: updateAttributesResult)
                         
                     case .failure(let failure):
                         if let responseCode = (failure as? AFError)?.responseCode {
                             switch responseCode {
                             case 400...499:
-                                self.storage.clearUser(user)
+                                self.storage.clearUser(self.user)
                                 
                             default:
                                 break
                             }
                         }
                         print(failure.localizedDescription)
-                        cancel()
+                        self.cancel()
                     }
                 }
             }
