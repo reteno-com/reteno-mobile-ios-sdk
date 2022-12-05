@@ -9,14 +9,14 @@ import Foundation
 
 struct User {
     
+    var id: String
     var firstName: String
     var lastName: String
     var phone: String
     var email: String
     
-    let id = UUID().uuidString
-    
-    init(firstName: String = "", lastName: String = "", phone: String = "", email: String = "") {
+    init(id: String = UUID().uuidString, firstName: String = "", lastName: String = "", phone: String = "", email: String = "") {
+        self.id = id
         self.firstName = firstName
         self.lastName = lastName
         self.phone = phone

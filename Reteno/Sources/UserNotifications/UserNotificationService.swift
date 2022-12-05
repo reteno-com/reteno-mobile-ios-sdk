@@ -29,7 +29,7 @@ public final class UserNotificationService: NSObject {
         
     private override init() {}
     
-    // MARK: - Notifications register/unregister logic
+    // MARK: Notifications register/unregister logic
     
     /// Rgistering application for receiving `Remote notifications`
     /// - Parameter options: Options that determine the authorized features of local and remote notifications.

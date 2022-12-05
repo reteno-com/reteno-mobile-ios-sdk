@@ -88,6 +88,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
     
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        application.applicationIconBadgeNumber = 0
+    }
+    
 }
 
 extension AppDelegate: MessagingDelegate {

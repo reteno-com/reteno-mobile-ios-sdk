@@ -9,7 +9,7 @@
 import UIKit
 import Kingfisher
 
-protocol AppInboxMessageCellDelegate {
+protocol AppInboxMessageCellDelegate: AnyObject {
     
     func markAsOpened(cell: AppInboxMessageCell)
     
@@ -28,7 +28,7 @@ final class AppInboxMessageCell: UITableViewCell {
         
     }
     
-    var delegate: AppInboxMessageCellDelegate?
+    weak var delegate: AppInboxMessageCellDelegate?
     
     private let messageImageView = UIImageView()
     private let titleLabel = UILabel()

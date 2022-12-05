@@ -14,6 +14,7 @@ protocol MainModelNavigationHandler {
     func openMenu()
     func createProfile()
     func openAppInbox()
+    func openRecoms()
     
 }
 
@@ -50,6 +51,10 @@ final class MainModel {
     
     func openAppInbox() {
         navigationHandler.openAppInbox()
+    }
+    
+    func openRecoms() {
+        navigationHandler.openRecoms()
     }
     
 }

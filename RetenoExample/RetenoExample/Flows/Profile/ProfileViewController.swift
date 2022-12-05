@@ -10,6 +10,7 @@ import SnapKit
 
 final class ProfileViewController: NiblessViewController {
     
+    private let externalIdTextField = UITextField()
     private let firstNameTextField = UITextField()
     private let lastNameTextField = UITextField()
     private let phoneTextField = UITextField()
@@ -32,11 +33,17 @@ final class ProfileViewController: NiblessViewController {
     }
     
     private func setupHandlers() {
+        externalIdTextField.addTarget(self, action: #selector(externalIdHandler), for: .editingChanged)
         firstNameTextField.addTarget(self, action: #selector(firstNameHandler), for: .editingChanged)
         lastNameTextField.addTarget(self, action: #selector(lastNameHandler), for: .editingChanged)
         phoneTextField.addTarget(self, action: #selector(phoneHandler), for: .editingChanged)
         emailTextField.addTarget(self, action: #selector(emailHandler), for: .editingChanged)
         saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
+    }
+    
+    @objc
+    func externalIdHandler(_ textField: UITextField) {
+        viewModel.updateExternalId(textField.text)
     }
     
     @objc
@@ -82,6 +89,10 @@ private extension ProfileViewController {
         }
         stack.axis = .vertical
         stack.spacing = 10.0
+        
+        stack.addArrangedSubview(externalIdTextField)
+        baseSetup(for: externalIdTextField)
+        externalIdTextField.placeholder = NSLocalizedString("createProfile_screen.fields.externalId", comment: "")
         
         stack.addArrangedSubview(firstNameTextField)
         baseSetup(for: firstNameTextField)

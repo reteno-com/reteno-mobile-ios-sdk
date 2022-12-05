@@ -39,7 +39,7 @@ struct RetenoNotificationsHelper {
     
 }
 
-// MARK: - NotificationAuthorizationStatusError
+// MARK: NotificationAuthorizationStatusError
 
 struct NotificationAuthorizationStatusError: Error {
     

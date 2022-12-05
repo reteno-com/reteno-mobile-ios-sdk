@@ -173,6 +173,12 @@ final class EventsSenderScheduler {
         if let sendEventOperation = sendEventsOperation() {
             operations.append(sendEventOperation)
         }
+        if let sendRecomEventsOperation = sendRecomEventsOperation() {
+            operations.append(sendRecomEventsOperation)
+        }
+        if let sendAppInboxMessagesIdsOperation = sendAppInboxMessagesIdsOperation() {
+            operations.append(sendAppInboxMessagesIdsOperation)
+        }
         operations.sort(by: { $0.date < $1.date })
         Operation.makeDependencies(forOperations: operations)
         let serviceOperations = prepareServiceOperations()
@@ -239,7 +245,43 @@ final class EventsSenderScheduler {
     func messagesCountOperation() -> Operation? {
         guard let inbox = messagesCountInbox else { return nil }
         
-        return MessagesCountOperation(requestService: MobileRequestServiceBuilder.buildForAppInbox(), inbox: inbox)
+        return MessagesCountOperation(requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(), inbox: inbox)
+    }
+    
+    private func sendRecomEventsOperation() -> DateOperation? {
+        let oldEvents = storage.getRecomEvents().filter { !$0.isValid }
+        if oldEvents.isNotEmpty {
+            SentryHelper.captureLog(title: RecomEvents.logTitle, count: oldEvents.count)
+            storage.clearRecomEvents(oldEvents)
+        }
+        
+        let validEvents = storage.getRecomEvents().filter { $0.isValid }
+        
+        guard validEvents.isNotEmpty else { return nil }
+        
+        return SendRecomEventsOperation(
+            requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(),
+            storage: storage,
+            events: validEvents
+        )
+    }
+    
+    private func sendAppInboxMessagesIdsOperation() -> DateOperation? {
+        let oldIds = storage.getInboxOpenedMessagesIds().filter { !$0.isValid }
+        if oldIds.isNotEmpty {
+            SentryHelper.captureLog(title: AppInboxMessageStorableId.logTitle, count: oldIds.count)
+            storage.clearInboxOpenedMessagesIds(oldIds)
+        }
+        
+        let validIds = storage.getInboxOpenedMessagesIds().filter { $0.isValid }
+        
+        guard validIds.isNotEmpty else { return nil }
+        
+        return SendAppInboxMessagesIdsOperation(
+            requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(),
+            storage: storage,
+            ids: validIds
+        )
     }
     
     // MARK: Handle notifications

@@ -51,7 +51,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
         }
     }
     
-    // MARK: - Helpers
+    // MARK: Helpers
     
     private func buildAttachments(by urlString: String, completionHandler: @escaping ([UNNotificationAttachment]?) -> Void) {
         let fileType = URL(fileURLWithPath: urlString).pathExtension

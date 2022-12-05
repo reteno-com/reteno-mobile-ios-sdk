@@ -15,6 +15,7 @@ final class MessageCountTests: XCTestCase {
     
     private var userDefaults: UserDefaults!
     private var scheduler: EventsSenderScheduler!
+    private var storage: KeyValueStorage!
     
     private var sut: AppInbox!
     
@@ -22,8 +23,9 @@ final class MessageCountTests: XCTestCase {
         super.setUp()
         
         requestService = MobileRequestService(requestManager: .stub)
+        storage = KeyValueStorage(storage: userDefaults)
         buildScheduler()
-        sut = AppInbox(requestService: requestService, scheduler: scheduler)
+        sut = AppInbox(requestService: requestService, scheduler: scheduler, storage: storage)
     }
     
     override func tearDown() {

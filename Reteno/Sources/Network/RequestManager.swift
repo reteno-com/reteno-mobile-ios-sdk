@@ -38,7 +38,7 @@ final class RequestManager {
             headers: request.headers
         )
         .validate()
-        .responseData { resonse in
+        .responseData { response in
             let dataHandling: (Data) -> Void = { data in
                 do {
                     let resultValue = try responseHandler.handleResponse(data)
@@ -49,18 +49,21 @@ final class RequestManager {
                 }
             }
             
-            if resonse.response?.statusCode == 200 {
-                dataHandling(resonse.data ?? Data())
+            if response.response?.statusCode == 200 {
+                dataHandling(response.data ?? Data())
                 
                 return
             }
             
-            switch resonse.result {
+            switch response.result {
             case let .success(data):
                 dataHandling(data)
                 
             case let .failure(error):
-                completionHandler(.failure(error))
+                let errorHandler = DecodableResponseHandler<NetworkError>()
+                var networkError = try? errorHandler.handleResponse(response.data ?? Data())
+                networkError?.statusCode = response.error?.asAFError?.responseCode
+                completionHandler(.failure(networkError ?? error))
             }
         }
     }

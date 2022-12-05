@@ -17,6 +17,10 @@ final class AppInboxModel {
         messages.count
     }
     
+    func newMessagesCount() -> Int {
+        messages.filter { $0.isNew }.count
+    }
+    
     func message(at index: Int) -> AppInboxMessage {
         messages[index]
     }
@@ -45,6 +49,10 @@ final class AppInboxModel {
                 completion(.failure(error))
             }
         }
+    }
+    
+    func makrAllAsOpened(completion: @escaping (Result<Void, Error>) -> Void) {
+        Reteno.inbox().markAllAsOpened(completion: completion)
     }
     
 }

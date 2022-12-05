@@ -54,6 +54,11 @@ final class MainViewController: NiblessViewController {
         viewModel.openAppInbox()
     }
     
+    @objc
+    private func recomsButtonAction(_ sender: UIButton) {
+        viewModel.openRecoms()
+    }
+    
 }
 
 // MARK: - Layout
@@ -108,6 +113,12 @@ private extension MainViewController {
         stack.addArrangedSubview(inboxButton)
         baseSetup(for: inboxButton)
         setupCountLabel(onView: inboxButton)
+        
+        let recomsButton = UIButton(type: .system)
+        recomsButton.setTitle(NSLocalizedString("recoms_screen.title", comment: ""), for: .normal)
+        recomsButton.addTarget(self, action: #selector(recomsButtonAction(_:)), for: .touchUpInside)
+        stack.addArrangedSubview(recomsButton)
+        baseSetup(for: recomsButton)
     }
     
     func baseSetup(for button: UIButton) {

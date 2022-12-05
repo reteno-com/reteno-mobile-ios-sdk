@@ -38,4 +38,8 @@ final class MainViewModel {
         model.openAppInbox()
     }
     
+    func openRecoms() {
+        model.openRecoms()
+    }
+    
 }

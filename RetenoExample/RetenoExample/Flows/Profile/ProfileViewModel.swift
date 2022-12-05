@@ -15,6 +15,10 @@ final class ProfileViewModel {
         self.model = model
     }
     
+    func updateExternalId(_ externalId: String?) {
+        model.updateExternalId(externalId)
+    }
+    
     func updateFirstName(_ firstName: String) {
         model.updateFirstName(firstName)
     }

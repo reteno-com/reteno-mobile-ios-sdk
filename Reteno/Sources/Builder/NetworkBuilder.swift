@@ -51,7 +51,7 @@ struct NetworkBuilder {
         buildMobileApiManager(isExternalIdRequired: false)
     }
     
-    static func buildApiManagerForAppInbox(apiKey: String = ApiKeyHelper.getApiKey()) -> RequestManager {
+    static func buildApiManagerWithDeviceIdInHeaders(apiKey: String = ApiKeyHelper.getApiKey()) -> RequestManager {
         let headersDecorator = RequestDecorator { request in
             request.headers?.add(name: "Content-Type", value: "application/json")
             request.headers?.add(name: "X-Reteno-Access-Key", value: apiKey)

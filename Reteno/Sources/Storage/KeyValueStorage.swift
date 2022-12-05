@@ -11,13 +11,14 @@ enum StorageKeys: String, CaseIterable {
     
     case pushToken = "com.reteno.push-token.key"
     case deviceId = "com.reteno.device-id.key"
-    case customDeviceId = "com.reteno.custom-device-id.key"
     case externalUserId = "com.reteno.external-user-id.key"
     case apiKey = "com.reteno.api-key.key"
     case events = "com.reteno.events.key"
     case notificationStatuses = "com.reteno.notification-statuses.key"
     case users = "com.reteno.users.key"
     case debugModeFlag = "com.reteno.debug-mode-flag.key"
+    case recomEvents = "com.reteno.recom_events.key"
+    case inboxOpenedMessagesIds = "com.reteno.inbox_opened_messages_ids.key"
     
 }
 
@@ -215,9 +216,114 @@ final class KeyValueStorage {
         return storage
     }
     
+    // MARK: Recom events logic
+    
+    func addRecomEvent(_ event: RecomEvents) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            var existingEvents = getRecomEvents()
+            existingEvents.append(event)
+            let encodedEvents = try JSONEncoder().encode(existingEvents)
+            storage.set(encodedEvents, forKey: StorageKeys.recomEvents.rawValue)
+        } catch {
+            SentryHelper.capture(error: error)
+        }
+    }
+    
+    func getRecomEvents() -> [RecomEvents] {
+        guard let storage = storageUnwrapper() else { return [] }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.recomEvents.rawValue) else { return [] }
+            
+            let decodedEvents = try JSONDecoder().decode([RecomEvents].self, from: data)
+            
+            return decodedEvents
+        } catch {
+            SentryHelper.capture(error: error)
+            
+            return []
+        }
+    }
+    
+    func clearRecomEventsCache() {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.set([], forKey: StorageKeys.recomEvents.rawValue)
+    }
+    
+    func clearRecomEvents(_ events: [RecomEvents]) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        let idForRemove = events.map { $0.id }
+        let resultEvents = getRecomEvents().filter { !idForRemove.contains($0.id) }
+        
+        do {
+            let encodedEvents = try JSONEncoder().encode(resultEvents)
+            storage.set(encodedEvents, forKey: StorageKeys.recomEvents.rawValue)
+        } catch {
+            SentryHelper.capture(error: error)
+        }
+    }
+    
+    // MARK: App inbox messages ids logic
+    
+    func addInboxOpenedMessagesIds(_ ids: [AppInboxMessageStorableId]) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            var existingIds = getInboxOpenedMessagesIds()
+            let idsToAdd = ids.filter { item in
+                !existingIds.contains {  $0.id == item.id }
+            }
+            existingIds.append(contentsOf: idsToAdd)
+            let encodedIds = try JSONEncoder().encode(existingIds)
+            storage.set(encodedIds, forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
+        } catch {
+            SentryHelper.capture(error: error)
+        }
+    }
+
+    func getInboxOpenedMessagesIds() -> [AppInboxMessageStorableId] {
+        guard let storage = storageUnwrapper() else { return [] }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.inboxOpenedMessagesIds.rawValue) else { return [] }
+            
+            let decodedIds = try JSONDecoder().decode([AppInboxMessageStorableId].self, from: data)
+            
+            return decodedIds
+        } catch {
+            SentryHelper.capture(error: error)
+            
+            return []
+        }
+    }
+
+    func clearInboxOpenedMessagesIds(_ ids: [AppInboxMessageStorableId]) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        let idForRemove = ids.map { $0.id }
+        let resultIds = getInboxOpenedMessagesIds().filter { !idForRemove.contains($0.id) }
+        
+        do {
+            let encodedIds = try JSONEncoder().encode(resultIds)
+            storage.set(encodedIds, forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
+        } catch {
+            SentryHelper.capture(error: error)
+        }
+    }
+
+    func clearInboxOpenedMessagesIdsCache() {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.set([], forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
+    }
+    
 }
 
-// MARK: - StorageDoesNotExistError
+// MARK: StorageDoesNotExistError
 
 struct StorageDoesNotExistError: Error {}
 

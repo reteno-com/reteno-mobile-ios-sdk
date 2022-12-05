@@ -1,20 +1,20 @@
 //
-//  SendEventsOperation.swift
+//  SendRecomEventsOperation.swift
 //  
 //
-//  Created by Serhii Prykhodko on 20.10.2022.
+//  Created by Anna Sahaidak on 09.11.2022.
 //
 
 import Foundation
 import Alamofire
 
-final class SendEventsOperation: DateOperation {
+final class SendRecomEventsOperation: DateOperation {
     
     private let requestService: MobileRequestService
     private let storage: KeyValueStorage
-    private let events: [Event]
+    private let events: [RecomEvents]
     
-    init(requestService: MobileRequestService, storage: KeyValueStorage, events: [Event]) {
+    init(requestService: MobileRequestService, storage: KeyValueStorage, events: [RecomEvents]) {
         self.requestService = requestService
         self.storage = storage
         self.events = events
@@ -31,19 +31,19 @@ final class SendEventsOperation: DateOperation {
             return
         }
         
-        requestService.sendEvents(events) { [weak self, events] result in
+        requestService.sendRecomEvents(events) { [weak self, events] result in
             guard let self = self else { return }
-            
+
             switch result {
             case .success:
-                self.storage.clearEvents(events)
-                
+                self.storage.clearRecomEvents(events)
+
             case .failure(let error):
-                if let responseCode = (error as? AFError)?.responseCode {
+                if let responseCode = (error as? NetworkError)?.statusCode ?? (error as? AFError)?.responseCode {
                     switch responseCode {
                     case 400...499:
-                        self.storage.clearEvents(events)
-                        
+                        self.storage.clearRecomEvents(events)
+
                     default:
                         break
                     }
@@ -52,5 +52,5 @@ final class SendEventsOperation: DateOperation {
             self.finish()
         }
     }
-    
+
 }

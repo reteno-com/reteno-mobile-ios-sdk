@@ -11,6 +11,8 @@ final class ApplicationFlowCoordinator {
     
     private weak var navigationController: UINavigationController?
     
+    private weak var recomsViewComtroller: RecomsViewController?
+    
     private let window: UIWindow
     private let container: Container
         
@@ -52,7 +54,7 @@ final class ApplicationFlowCoordinator {
     
 }
 
-// MARK: - MainModelNavigationHandler
+// MARK: MainModelNavigationHandler
 
 extension ApplicationFlowCoordinator: MainModelNavigationHandler {
     
@@ -71,14 +73,44 @@ extension ApplicationFlowCoordinator: MainModelNavigationHandler {
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    func openRecoms() {
+        let navigationHandler: RecomsModelNavigationHandler = self
+        let controller = container.resolve(RecomsViewController.self, argument: navigationHandler)!
+        recomsViewComtroller = controller
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
 }
 
-// MARK: - ProfileModelNavigationHandler
+// MARK: ProfileModelNavigationHandler
 
 extension ApplicationFlowCoordinator: ProfileModelNavigationHandler {
     
     func backToMain() {
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+}
+
+// MARK: RecomsModelNavigationHandler
+
+extension ApplicationFlowCoordinator: RecomsModelNavigationHandler {
+    
+    func openRecomsSettings(_ settings: RecommendationsSettings) {
+        let navigationHandler: RecomsSettingsModelNavigationHandler = self
+        let controller = container.resolve(RecomsSettingsViewController.self, arguments: settings, navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+}
+
+// MARK: RecomsSettingsModelNavigationHandler
+
+extension ApplicationFlowCoordinator: RecomsSettingsModelNavigationHandler {
+    
+    func backToRecoms(settings: RecommendationsSettings) {
+        recomsViewComtroller?.loadRecoms(with: settings)
+        navigationController?.popViewController(animated: true)
     }
     
 }

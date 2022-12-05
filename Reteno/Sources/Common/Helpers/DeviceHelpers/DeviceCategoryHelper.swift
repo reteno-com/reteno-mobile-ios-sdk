@@ -30,7 +30,7 @@ struct DeviceCategoryHelper {
     
 }
 
-// MARK: - DeviceCategoryError
+// MARK: DeviceCategoryError
 
 struct DeviceCategoryError: Error {}
 

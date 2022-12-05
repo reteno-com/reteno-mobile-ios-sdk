@@ -47,7 +47,7 @@ final class SendUserOperation: DateOperation {
                 self.finish()
                 
             case .failure(let failure):
-                if let responseCode = (failure as? AFError)?.responseCode {
+                if let responseCode = (failure as? NetworkError)?.statusCode ?? (failure as? AFError)?.responseCode {
                     switch responseCode {
                     case 400...499:
                         self.storage.clearUser(user)
@@ -74,7 +74,7 @@ final class SendUserOperation: DateOperation {
                         self.requestService.updateUserAttributes(user: self.user, completionHandler: updateAttributesResult)
                         
                     case .failure(let failure):
-                        if let responseCode = (failure as? AFError)?.responseCode {
+                        if let responseCode = (failure as? NetworkError)?.statusCode ?? (failure as? AFError)?.responseCode {
                             switch responseCode {
                             case 400...499:
                                 self.storage.clearUser(self.user)

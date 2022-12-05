@@ -21,6 +21,10 @@ final class AppInboxViewModel {
         model.messagesCount()
     }
     
+    func newMessagesCount() -> Int {
+        model.newMessagesCount()
+    }
+    
     func message(at index: Int) -> AppInboxMessage {
         model.message(at: index)
     }
@@ -31,6 +35,10 @@ final class AppInboxViewModel {
     
     func markMessageAsOpened(at index: Int, completion: @escaping (Result<Void, Error>) -> Void) {
         model.markMessageAsOpened(at: index, completion: completion)
+    }
+    
+    func markAllAsOpened(completion: @escaping (Result<Void, Error>) -> Void) {
+        model.makrAllAsOpened(completion: completion)
     }
     
 }

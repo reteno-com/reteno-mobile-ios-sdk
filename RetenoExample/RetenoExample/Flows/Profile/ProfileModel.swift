@@ -25,6 +25,12 @@ final class ProfileModel {
         self.navigationHandler = navigationHandler
     }
     
+    func updateExternalId(_ externalId: String?) {
+        guard let externalId = externalId else { return }
+        
+        user.id = externalId
+    }
+    
     func updateFirstName(_ firstName: String) {
         user.firstName = firstName
     }

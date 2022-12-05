@@ -71,7 +71,7 @@ final class MobileRequestService {
     
 }
 
-// MARK: - EventsSender
+// MARK: EventsSender
 
 extension MobileRequestService: EventsSender {
     
@@ -92,7 +92,7 @@ extension MobileRequestService: EventsSender {
     
 }
 
-// MARK: - Inbox Messages
+// MARK: Inbox Messages
 
 extension MobileRequestService {
     
@@ -107,7 +107,7 @@ extension MobileRequestService {
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completion)
     }
     
-    func markInboxMessagesAsOpened(ids: [String], completion: @escaping (Result<Bool, Error>) -> Void) {
+    func markInboxMessagesAsOpened(ids: [String]? = nil, completion: @escaping (Result<Bool, Error>) -> Void) {
         let request = AppInboxMarkAsOpenedRequest(ids: ids)
         let handler = EmptyResponseHandler()
         
@@ -119,6 +119,39 @@ extension MobileRequestService {
         let handler = DecodableResponseHandler<AppInboxMessagesCountResponse>()
         
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completion)
+    }
+    
+}
+
+// MARK: Recommendations
+
+extension MobileRequestService {
+    
+    func getRecoms<T: RecommendableProduct>(
+        recomVariantId: String,
+        productIds: [String],
+        categoryId: String,
+        filters: [RecomFilter]?,
+        fields: [String]?,
+        completionHandler: @escaping (Result<[T], Error>) -> Void
+    ) {
+        let request = RecomsRequest(
+            recomVariantId: recomVariantId,
+            productIds: productIds,
+            categoryId: categoryId,
+            filters: filters,
+            fields: fields
+        )
+        let handler = RecomsResponseHandler<T>()
+        
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
+    }
+    
+    func sendRecomEvents(_ events: [RecomEvents], completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }) {
+        let request = RecomEventsRequest(events: events)
+        let handler = EmptyResponseHandler()
+        
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
     
 }

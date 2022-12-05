@@ -9,7 +9,16 @@
 import UIKit
 import SnapKit
 
-final class AppInboxViewController: NiblessViewController {
+final class AppInboxViewController: NiblessViewController, AlertPresentable {
+    
+    private lazy var openAllItem: UIBarButtonItem = {
+        let openAllButton = UIButton()
+        openAllButton.setTitle(NSLocalizedString("inbox_screen.mark_all_button.title", comment: ""), for: .normal)
+        openAllButton.setTitleColor(.systemBlue, for: .normal)
+        openAllButton.addTarget(self, action: #selector(openAllAction), for: .touchUpInside)
+        
+        return UIBarButtonItem(customView: openAllButton)
+    }()
     
     private let viewModel: AppInboxViewModel
     private let tableView = UITableView()
@@ -40,6 +49,7 @@ final class AppInboxViewController: NiblessViewController {
             switch result {
             case .success:
                 self.setPlaceholderHidden(isHidden: self.viewModel.messagesCount() > 0)
+                self.navigationItem.rightBarButtonItem = self.viewModel.newMessagesCount() > 0 ? self.openAllItem : nil
                 self.tableView.reloadData()
                 
             case .failure(let error):
@@ -64,21 +74,24 @@ final class AppInboxViewController: NiblessViewController {
         }
     }
     
-    private func presentAlert(with error: Error) {
-        let alert = UIAlertController(
-            title: NSLocalizedString("common.error.title", comment: ""),
-            message: error.localizedDescription,
-            preferredStyle: .alert
-        )
-        alert.addAction(UIAlertAction(title: NSLocalizedString("common.ok", comment: ""), style: .default))
-        present(alert, animated: true)
-    }
-    
     // MARK: Actions
     
     @objc
     private func handleRefreshAction(_ sender: Any) {
         loadMessages()
+    }
+    
+    @objc
+    private func openAllAction(_ sender: UIButton) {
+        viewModel.markAllAsOpened { [weak self] result in
+            switch result {
+            case .success:
+                self?.loadMessages()
+                
+            case .failure(let error):
+                self?.presentAlert(with: error)
+            }
+        }
     }
     
 }

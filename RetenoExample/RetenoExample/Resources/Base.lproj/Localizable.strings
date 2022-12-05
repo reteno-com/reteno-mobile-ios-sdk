@@ -18,6 +18,7 @@
 // MARK: - Create profile
 
 "createProfile_screen.title" = "Create Profile";
+"createProfile_screen.fields.externalId" = "External user id (optional)";
 "createProfile_screen.fields.firstName" = "First name (optional)";
 "createProfile_screen.fields.lastName" = "Last name (optional)";
 "createProfile_screen.fields.phone" = "Phone (optional)";
@@ -30,3 +31,21 @@
 
 "inbox_screen.title" = "App inbox";
 "inbox_screen.mark_button.title" = "MARK AS OPENED";
+"inbox_screen.mark_all_button.title" = "Open all";
+
+// MARK: - Recommendations
+
+"recoms_screen.title" = "Recommendations";
+"recoms_screen.price_title" = "Price";
+"recoms_screen.setting_button.title" = "Settings";
+"recoms_screen.view_button.title" = "View product";
+"recoms_settings_screen.title" = "Settings";
+"recoms_settings_screen.fields.variant_id" = "Variant id";
+"recoms_settings_screen.fields.category" = "Category key";
+"recoms_settings_screen.fields.products_ids" = "Products ids separated by `,`";
+"recoms_settings_screen.fields.filter_name" = "Filter name";
+"recoms_settings_screen.fields.filter_values" = "Filter values separated by `,`";
+"recoms_settings_screen.add_filter_button.title" = "Add filter";
+"recoms_settings_screen.clear_filters_button.title" = "Clear filters";
+"recoms_settings_screen.filters_info" = "Enter field key you want to filter recoms by in the name field (possible values productId/name/descr/imageUrl/price) and attribute values separated with ,\n\nExample:\nField name - name\nFiled values - Luma Yoga For Life,Beginner's Yoga";
+"recoms_settings_screen.get_recoms_button.title" = "Get recommendations";

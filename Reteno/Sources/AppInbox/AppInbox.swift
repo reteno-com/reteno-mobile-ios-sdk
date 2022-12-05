@@ -28,10 +28,16 @@ public final class AppInbox {
     
     private let requestService: MobileRequestService
     private let scheduler: EventsSenderScheduler
+    private let storage: KeyValueStorage
     
-    init(requestService: MobileRequestService, scheduler: EventsSenderScheduler = Reteno.senderScheduler) {
+    init(
+        requestService: MobileRequestService,
+        scheduler: EventsSenderScheduler = Reteno.senderScheduler,
+        storage: KeyValueStorage
+    ) {
         self.requestService = requestService
         self.scheduler = scheduler
+        self.storage = storage
     }
     
     /// Download inbox messages
@@ -60,7 +66,24 @@ public final class AppInbox {
     /// - Parameter messageIds: Array of message identificators, which statuses should be changes
     /// - Parameter completion: Optional completion handler `((Result<Void, Error>) -> Void)?`
     public func markAsOpened(messageIds: [String], completion: ((Result<Void, Error>) -> Void)? = nil) {
-        requestService.markInboxMessagesAsOpened(ids: messageIds) { result in
+        let ids = messageIds.map { AppInboxMessageStorableId(id: $0, date: Date()) }
+        storage.addInboxOpenedMessagesIds(ids)
+        requestService.markInboxMessagesAsOpened(ids: messageIds) { [weak self] result in
+            switch result {
+            case .success:
+                self?.storage.clearInboxOpenedMessagesIds(ids)
+                Reteno.senderScheduler.forceFetchMessagesCount()
+                completion?(.success(()))
+                
+            case .failure(let error):
+                completion?(.failure(error))
+            }
+        }
+    }
+    
+    /// Change all inbox messages status on `OPENED`
+    public func markAllAsOpened(completion: ((Result<Void, Error>) -> Void)? = nil) {
+        requestService.markInboxMessagesAsOpened { result in
             switch result {
             case .success:
                 Reteno.senderScheduler.forceFetchMessagesCount()

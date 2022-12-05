@@ -30,6 +30,22 @@ final class MainFlowAssembly: Assembly {
             
             return AppInboxViewController(viewModel: viewModel)
         }.inObjectScope(.transient)
+        
+        container.register(RecomsViewController.self) { (_, navigationHandler: RecomsModelNavigationHandler) in
+            let model = RecomsModel(navigationHandler: navigationHandler)
+            let viewModel = RecomsViewModel(model: model)
+            
+            return RecomsViewController(viewModel: viewModel)
+        }.inObjectScope(.transient)
+        
+        container.register(
+            RecomsSettingsViewController.self
+        ) { (_, settings: RecommendationsSettings, navigationHandler: RecomsSettingsModelNavigationHandler) in
+            let model = RecomsSettingsModel(settings: settings, navigationHandler: navigationHandler)
+            let viewModel = RecomsSettingsViewModel(model: model)
+            
+            return RecomsSettingsViewController(viewModel: viewModel)
+        }.inObjectScope(.transient)
     }
     
 }

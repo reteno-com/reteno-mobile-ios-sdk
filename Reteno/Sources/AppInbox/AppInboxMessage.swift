@@ -17,10 +17,12 @@ public struct AppInboxMessage: Codable {
     public let imageURL: URL?
     public let linkURL: URL?
     public let isNew: Bool
+    public let category: String?
     private let createdDateRawValue: String
     
     enum CodingKeys: String, CodingKey {
-        case id, createdDateRawValue = "createDate", title, content, imageURL = "image", linkURL = "link", isNew = "newMessage"
+        case id, createdDateRawValue = "createDate", title, content, imageURL = "image", linkURL = "link",
+             isNew = "newMessage", category
     }
     
 }

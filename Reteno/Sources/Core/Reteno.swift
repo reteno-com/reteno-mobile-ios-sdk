@@ -11,7 +11,7 @@ import UserNotifications
 public struct Reteno {
     
     /// SDK version
-    static var version = "1.2.2"
+    static var version = "1.3.0"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -19,7 +19,7 @@ public struct Reteno {
     
     @available(iOSApplicationExtension, unavailable)
     public static let userNotificationService = UserNotificationService.shared
-    
+        
     static let senderScheduler = EventsSenderSchedulerBuilder.build()
     static var analyticsService: AnalyticsService!
     
@@ -87,15 +87,28 @@ public struct Reteno {
         )
     }
     
-    /// Set custom device id
-    /// - Parameter deviceId: Custom identifier for device
-    public static func setCustomDeviceId(_ deviceId: String) {
-        DeviceIdHelper.actualizeDeviceId(customDeviceId: deviceId)
-    }
+    // MARK: App Inbox
+    
+    private static var appInbox: AppInbox = {
+        AppInbox(
+            requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(),
+            storage: StorageBuilder.build()
+        )
+    }()
     
     /// Get instance of `AppInbox`
-    public static func inbox() -> AppInbox {
-        AppInbox(requestService: MobileRequestServiceBuilder.buildForAppInbox())
-    }
+    public static func inbox() -> AppInbox { appInbox }
+    
+    // MARK: Recommendations
+    
+    private static var recoms: Recommendations = {
+        Recommendations(
+            requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(),
+            storage: StorageBuilder.build()
+        )
+    }()
+    
+    /// Get instance of `Recommendations`
+    public static func recommendations() -> Recommendations { recoms }
     
 }

@@ -13,6 +13,6 @@ struct AppInboxMessagesCountResponse {
     
 }
 
-// MARK: - Decodable
+// MARK: Decodable
 
 extension AppInboxMessagesCountResponse: Decodable {}

@@ -9,6 +9,7 @@ import Foundation
 
 struct NetworkError {
     
+    var statusCode: Int?
     let title: String
     let detail: String?
     let invalidParams: [ValidationError]?
@@ -23,7 +24,7 @@ struct NetworkError {
     
 }
 
-// MARK: - ValidationError
+// MARK: ValidationError
 
 extension NetworkError {
     
@@ -36,13 +37,13 @@ extension NetworkError {
     
 }
 
-// MARK: - Decodable
+// MARK: Decodable
 
 extension NetworkError.ValidationError: Decodable {}
 
 extension NetworkError: Decodable {}
 
-// MARK: - Error
+// MARK: Error
 
 extension NetworkError: Error, LocalizedError {
     

@@ -17,8 +17,11 @@ struct AppInboxMarkAsOpenedRequest: APIRequest {
     let method = HTTPMethod.post
     let encoding: ParameterEncoding? = JSONEncoding.default
     
-    init(ids: [String]) {
-        parameters = ["status": "OPENED", "ids": ids]
+    init(ids: [String]?) {
+        parameters = ["status": "OPENED"]
+        if let ids = ids, ids.isNotEmpty {
+            parameters?["ids"] = ids
+        }
     }
     
 }

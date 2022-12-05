@@ -21,7 +21,7 @@ extension ExpirableData {
         // Collected data lifetime in hours
         let lifetime = DebugModeHelper.isDebugModeOn() ? 1 : 24
         
-        return date <= Date() && Date().hours(from: date) <= lifetime
+        return date <= Date() && Date().hours(from: date) < lifetime
     }
     
 }
