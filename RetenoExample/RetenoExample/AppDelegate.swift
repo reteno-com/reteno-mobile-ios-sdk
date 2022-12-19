@@ -48,8 +48,21 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             }
             return authOptions
         }
-        Reteno.userNotificationService.didReceiveNotificationUserInfo = { [weak self] userInfo in
-            let alert = InformationAlert(text: "Received user info from push: \n--------\n\(userInfo)")
+        Reteno.userNotificationService.didReceiveNotificationResponseHandler = { response in
+            switch response.actionIdentifier {
+            case UNNotificationDefaultActionIdentifier:
+                print("Default action")
+                
+            case UNNotificationDismissActionIdentifier:
+                print("Dismiss action")
+                
+            default:
+                print(response.actionIdentifier)
+            }
+        }
+        Reteno.userNotificationService.notificationActionHandler = { [weak self] userInfo, action in
+            let customDataText = action.customData.flatMap { "\nWith custom data: - \($0)" } ?? ""
+            let alert = InformationAlert(text: "Received action - \(action.actionId)\(customDataText)")
             self?.window?.showInformationAlert(alert)
         }
         
@@ -82,8 +95,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey : Any] = [:]
     ) -> Bool {
-        let alert = InformationAlert(text: "open url handled: \(url)")
-        window?.showInformationAlert(alert)
+        applicationFlowCoordinator.handleDeeplink(url)
         
         return true
     }

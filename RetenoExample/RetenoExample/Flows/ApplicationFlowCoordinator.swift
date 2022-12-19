@@ -30,6 +30,26 @@ final class ApplicationFlowCoordinator {
         presentMainFlow()
     }
     
+    // MARK: Deeplinks handling
+    
+    func handleDeeplink(_ url: URL) {
+        guard url.absoluteString.hasPrefix("com.reteno.example-app") else { return }
+        
+        switch url.absoluteString {
+        case "com.reteno.example-app://app_inbox":
+            openAppInbox()
+            
+        case "com.reteno.example-app://recom":
+            openRecoms()
+            
+        case "com.reteno.example-app://profile":
+            createProfile()
+            
+        default:
+            break
+        }
+    }
+    
     // MARK: Modules presentation
     
     private func presentMainFlow() {

@@ -29,11 +29,16 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
         self.contentHandler = contentHandler
         self.bestAttemptContent = bestAttemptContent
 
-        let notification = RetenoUserNotification(userInfo: request.content.userInfo)
+        guard let notification = RetenoUserNotification(userInfo: request.content.userInfo) else {
+            contentHandler(bestAttemptContent)
+            return
+        }
         
-        Reteno.updateNotificationInteractionStatus(interactionId: notification?.id ?? "", status: .delivered, date: Date())
+        Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .delivered, date: Date())
+
+        addActionButtons(from: notification, to: bestAttemptContent)
         
-        if let mediaURLString = notification?.imageURLString {
+        if let mediaURLString = notification.imageURLString {
             buildAttachments(by: mediaURLString) { attachments in
                 attachments.flatMap { bestAttemptContent.attachments = $0 }
                 contentHandler(bestAttemptContent)
@@ -100,6 +105,51 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
                 completionHandler(nil)
             }
         }
+    }
+    
+    private func addActionButtons(from notification: RetenoUserNotification, to content: UNMutableNotificationContent) {
+        guard let actionButtons = notification.actionButtons,
+              actionButtons.isNotEmpty,
+              content.categoryIdentifier.isEmpty
+        else { return }
+        
+        let actions: [UNNotificationAction] = actionButtons.map {
+            if #available(iOS 15.0, *) {
+                return UNNotificationAction(
+                    identifier: $0.actionId,
+                    title: $0.title,
+                    options: .foreground,
+                    icon: $0.iconPath.flatMap { UNNotificationActionIcon(templateImageName: $0) }
+                )
+            } else {
+                return UNNotificationAction(identifier: $0.actionId, title: $0.title, options: .foreground)
+            }
+        }
+        var existingCategories = getAllNotificationCategories()
+        let categoryIdentifier = "__reteno__\(notification.id)"
+        let category = UNNotificationCategory(
+            identifier: categoryIdentifier,
+            actions: actions,
+            intentIdentifiers: []
+        )
+        if !existingCategories.contains(where: { $0.identifier == category.identifier }) {
+            existingCategories.append(category)
+        }
+        UNUserNotificationCenter.current().setNotificationCategories(Set(existingCategories))
+        existingCategories = getAllNotificationCategories()
+        content.categoryIdentifier = categoryIdentifier
+    }
+    
+    private func getAllNotificationCategories() -> [UNNotificationCategory] {
+        var result: [UNNotificationCategory] = []
+        let semaphore = DispatchSemaphore(value: 0)
+        UNUserNotificationCenter.current().getNotificationCategories { categories in
+            result = Array(categories)
+            semaphore.signal()
+        }
+        semaphore.wait()
+        
+        return result
     }
     
 }

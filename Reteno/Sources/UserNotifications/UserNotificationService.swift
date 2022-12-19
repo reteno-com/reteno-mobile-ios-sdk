@@ -25,6 +25,8 @@ public final class UserNotificationService: NSObject {
     /// dismissing the notification or choosing a UNNotificationAction.
     public var didReceiveNotificationUserInfo: ((_ userInfo: [AnyHashable: Any]) -> Void)?
     
+    public var notificationActionHandler: ((_ userInfo: [AnyHashable: Any], _ action: RetenoUserNotificationAction) -> Void)?
+    
     public static let shared = UserNotificationService()
         
     private override init() {}
@@ -81,7 +83,31 @@ public final class UserNotificationService: NSObject {
     public func processOpenedRemoteNotification(_ notification: UNNotification) {
         if let notification = RetenoUserNotification(userInfo: notification.request.content.userInfo) {
             Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .opened, date: Date())
-            DeepLinksProcessor.process(notification: notification)
+            DeepLinksProcessor.processLinks(wrappedUrl: notification.link, rawURL: notification.rawLink)
+        }
+    }
+    
+    /// Processing remote notification response
+    /// - Parameter response: Received notification response.
+    public func processRemoteNotificationResponse(_ response: UNNotificationResponse) {
+        switch response.actionIdentifier {
+        case UNNotificationDefaultActionIdentifier:
+            processOpenedRemoteNotification(response.notification)
+            
+        case UNNotificationDismissActionIdentifier:
+            break
+            
+        default:
+            if let notification = RetenoUserNotification(userInfo: response.notification.request.content.userInfo),
+               let actionButton = notification.actionButtons?.first(where: { $0.actionId == response.actionIdentifier }) {
+                DeepLinksProcessor.processLinks(wrappedUrl: actionButton.link, rawURL: actionButton.rawLink)
+                let action = RetenoUserNotificationAction(
+                    actionId: actionButton.actionId,
+                    customData: actionButton.customData,
+                    link: actionButton.rawLink
+                )
+                notificationActionHandler?(response.notification.request.content.userInfo, action)
+            }
         }
     }
     
@@ -115,9 +141,7 @@ extension UserNotificationService: UNUserNotificationCenterDelegate {
         didReceive response: UNNotificationResponse,
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
-        if response.actionIdentifier == UNNotificationDefaultActionIdentifier {
-            processOpenedRemoteNotification(response.notification)
-        }
+        processRemoteNotificationResponse(response)
         didReceiveNotificationResponseHandler?(response)
         didReceiveNotificationUserInfo?(response.notification.request.content.userInfo)
         completionHandler()
