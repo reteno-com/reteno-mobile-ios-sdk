@@ -10,7 +10,7 @@ import Foundation
 public struct Event: Codable {
     
     public struct Parameter: Codable {
-        
+                
         let name: String
         let value: String
         

@@ -29,7 +29,7 @@ final class AnalyticsServiceTests: XCTestCase {
     
     func test_controllerViewDidAppearMethod_sendEvent() throws {
         setupService(isAutomaticScreenReportingEnabled: true)
-        let viewController = MenuViewController(viewModel: MenuViewModel(model: MenuModel()))
+        let viewController = AppInboxViewController(viewModel: AppInboxViewModel(model: AppInboxModel()))
         viewController.viewDidAppear(true)
                 
         let events = storage.getEvents()
@@ -44,7 +44,7 @@ final class AnalyticsServiceTests: XCTestCase {
     
     func test_controllerViewDidLoadMethod_sendEvent() {
         setupService(isAutomaticScreenReportingEnabled: true)
-        let viewController = MenuViewController(viewModel: MenuViewModel(model: MenuModel()))
+        let viewController = AppInboxViewController(viewModel: AppInboxViewModel(model: AppInboxModel()))
         viewController.viewDidLoad()
         
         let events = storage.getEvents()

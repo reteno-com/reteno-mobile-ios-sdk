@@ -54,7 +54,7 @@ final class ProfileModel {
             firstName: user.firstName.isEmpty ? nil : user.firstName,
             lastName: user.lastName.isEmpty ? nil : user.lastName
         )
-        
+
         Reteno.updateUserAttributes(externalUserId: user.id, userAttributes: attributes)
         navigationHandler.backToMain()
     }

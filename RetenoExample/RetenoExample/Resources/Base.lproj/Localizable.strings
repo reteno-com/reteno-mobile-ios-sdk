@@ -8,12 +8,12 @@
 
 "common.error.title" = "Error";
 "common.ok" = "Ok";
+"common.create" = "Create";
 
 // MARK: - Main
 
 "main_screen.title" = "Reteno Example App";
 "main_screen.log_event_button.title" = "Log event";
-"menu_screen.title" = "Menu";
 
 // MARK: - Create profile
 
@@ -49,3 +49,56 @@
 "recoms_settings_screen.clear_filters_button.title" = "Clear filters";
 "recoms_settings_screen.filters_info" = "Enter field key you want to filter recoms by in the name field (possible values productId/name/descr/imageUrl/price) and attribute values separated with ,\n\nExample:\nField name - name\nFiled values - Luma Yoga For Life,Beginner's Yoga";
 "recoms_settings_screen.get_recoms_button.title" = "Get recommendations";
+
+// MARK: - Ecommerce
+
+"ecommerce_screen.title" = "Ecommerce";
+"ecommerce_screen.product_viewed_button.title" = "Product Viewed";
+"ecommerce_screen.product_category_viewed_button.title" = "Product Category Viewed";
+"ecommerce_screen.product_added_to_wishlist_button.title" = "Product Added To Wishlist";
+"ecommerce_screen.cart_updated_button.title" = "Cart Updated";
+"ecommerce_screen.order_created_button.title" = "Order Created";
+"ecommerce_screen.order_updated_button.title" = "Order Updated";
+"ecommerce_screen.order_delivered_button.title" = "Order Delivered";
+"ecommerce_screen.order_cancelled_button.title" = "Order Cancelled";
+"ecommerce_screen.search_request_button.title" = "Search Request";
+
+"ecommerce_screen.shared.fields.orderId" = "Order ID (Required)";
+"ecommerce_screen.shared.fields.productId" = "Product ID (Required)";
+"ecommerce_screen.shared.fields.product_price" = "Product Price (Required)";
+"ecommerce_screen.shared.fields.currency" = "Currency (Optional)";
+"ecommerce_screen.shared.fields.attribute_key" = "Key";
+"ecommerce_screen.shared.fields.attribute_value" = "Value";
+"ecommerce_screen.shared.buttons.send_event_button" = "Send Event";
+"ecommerce_screen.shared.labels.is_in_stock_label" = "Is in stock";
+"ecommerce_screen.shared.labels.is_force_pushed_label" = "Force push";
+
+"ecommerce_screen.category_viewed_screen.fields.categoryId" = "Category ID (Required)";
+"ecommerce_screen.cart_updated_screen.fields.cartId" = "Cart ID (Required)";
+"ecommerce_screen.cart_updated_screen.fields.quantity" = "Quantity (Required)";
+"ecommerce_screen.cart_updated_screen.fields.discount" = "Discount (Optional)";
+"ecommerce_screen.cart_updated_screen.fields.name" = "Name (Optional)";
+"ecommerce_screen.cart_updated_screen.fields.category" = "Category (Optional)";
+"ecommerce_screen.cart_updated_screen.fields.new_quantity" = "Quantity";
+"ecommerce_screen.cart_updated_screen.fields.new_productId" = "Product ID";
+"ecommerce_screen.cart_updated_screen.fields.new_product_price" = "Product Price";
+"ecommerce_screen.cart_updated_screen.labels.products" = "Products";
+"ecommerce_screen.cart_updated_screen.buttons.add_products" = "Add product";
+"ecommerce_screen.search_request_screen.fields.query" = "Query (Required)";
+"ecommerce_screen.search_request_screen.labels.is_found_label" = "Is found";
+
+"ecommerce.order_created_screen.fields.order_id" = "External order id (Required)";
+"ecommerce.order_created_screen.fields.total_cost" = "Total cost (Required)";
+"ecommerce.order_created_screen.fields.status" = "Status (Required)";
+"ecommerce.order_created_screen.add_item_button.title" = "Add order item";
+
+"ecommerce.create_order_item_screen.title" = "Create order item";
+"ecommerce.create_order_item_screen.fields.id" = "External item id (Required)";
+"ecommerce.create_order_item_screen.fields.name" = "Product name (Required)";
+"ecommerce.create_order_item_screen.fields.category" = "Product category (Required)";
+"ecommerce.create_order_item_screen.fields.quantity" = "Number of items (Required)";
+"ecommerce.create_order_item_screen.fields.cost" = "Product price (Required)";
+"ecommerce.create_order_item_screen.fields.url" = "Link to product page (Required)";
+"ecommerce.create_order_item_screen.fields.image_url" = "Link to a product image";
+"ecommerce.create_order_item_screen.fields.description" = "Short description of product";
+"ecommerce.create_order_item_screen.validation_error.missed_required_parameters" = "Not all required parameters are filled out";

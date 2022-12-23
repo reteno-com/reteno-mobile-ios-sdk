@@ -11,7 +11,7 @@ import Reteno
 
 protocol MainModelNavigationHandler {
     
-    func openMenu()
+    func openEcommerce()
     func createProfile()
     func openAppInbox()
     func openRecoms()
@@ -33,17 +33,18 @@ final class MainModel {
         self.navigationHandler = navigationHandler
     }
     
-    func openMenu() {
-        navigationHandler.openMenu()
-    }
-    
     func logCustomEvent() {
         Reteno.logEvent(
             eventTypeKey: "test_event_type",
+            date: Date(),
             parameters: [Event.Parameter(name: "Parameter name", value: "some parameter value")],
             forcePush: true
         )
 	}
+    
+    func openEcommerce() {
+        navigationHandler.openEcommerce()
+    }
 	
     func openProfile() {
         navigationHandler.createProfile()

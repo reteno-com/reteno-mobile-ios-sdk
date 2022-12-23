@@ -35,8 +35,8 @@ final class MainViewController: NiblessViewController {
     // MARK: Actions
     
     @objc
-    private func menuButtonAction(_ sender: UIButton) {
-        viewModel.openMenu()
+    private func ecommerceButtonAction(_ sender: UIButton) {
+        viewModel.openEcommerce()
     }
     
     @objc
@@ -88,11 +88,11 @@ private extension MainViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12.0)
         }
         
-        let menuButton = UIButton(type: .system)
-        menuButton.setTitle(NSLocalizedString("menu_screen.title", comment: ""), for: .normal)
-        menuButton.addTarget(self, action: #selector(menuButtonAction(_:)), for: .touchUpInside)
-        stack.addArrangedSubview(menuButton)
-        baseSetup(for: menuButton)
+        let ecommerceButton = UIButton(type: .system)
+        ecommerceButton.setTitle(NSLocalizedString("ecommerce_screen.title", comment: ""), for: .normal)
+        ecommerceButton.addTarget(self, action: #selector(ecommerceButtonAction(_:)), for: .touchUpInside)
+        stack.addArrangedSubview(ecommerceButton)
+        baseSetup(for: ecommerceButton)
         
         let profileButton = UIButton(type: .system)
         profileButton.setTitle(NSLocalizedString("createProfile_screen.title", comment: ""), for: .normal)

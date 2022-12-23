@@ -11,7 +11,7 @@ import UserNotifications
 public struct Reteno {
     
     /// SDK version
-    static var version = "1.4.0"
+    static var version = "1.5.0"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -78,6 +78,11 @@ public struct Reteno {
                 || groupNamesExclude.isNotEmpty
         else { return }
         
+        let userId = externalUserId ?? ExternalUserIdHelper.getId() ?? ""
+        if userId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            print("\n[Reteno] Error: trying to update user with empty ID. This operation won't be completed.")
+        }
+        
         senderScheduler.updateUserAttributes(
             externalUserId: externalUserId,
             userAttributes: userAttributes,
@@ -110,5 +115,13 @@ public struct Reteno {
     
     /// Get instance of `Recommendations`
     public static func recommendations() -> Recommendations { recoms }
+    
+    // MARK: Ecommerce
+    
+    private static var ecom: Ecommerce = {
+        Ecommerce(requestService: MobileRequestServiceBuilder.build(), storage: StorageBuilder.build())
+    }()
+    
+    public static func ecommerce() -> Ecommerce { ecom }
     
 }

@@ -60,11 +60,6 @@ final class ApplicationFlowCoordinator {
         setWindowRootViewController(with: navigationController)
     }
     
-    private func presentMenu() {
-        let controller = container.resolve(MenuViewController.self)!
-        navigationController?.pushViewController(controller, animated: true)
-    }
-        
     // MARK: Helpers
     
     private func setWindowRootViewController(with viewController: UIViewController) {
@@ -78,8 +73,10 @@ final class ApplicationFlowCoordinator {
 
 extension ApplicationFlowCoordinator: MainModelNavigationHandler {
     
-    func openMenu() {
-        presentMenu()
+    func openEcommerce() {
+        let navigationHandler: EcommerceModelNavigationHandler = self
+        let controller = container.resolve(EcommerceViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     func createProfile() {
@@ -98,6 +95,82 @@ extension ApplicationFlowCoordinator: MainModelNavigationHandler {
         let controller = container.resolve(RecomsViewController.self, argument: navigationHandler)!
         recomsViewComtroller = controller
         navigationController?.pushViewController(controller, animated: true)
+    }
+    
+}
+
+// MARK: EcommerceModelNavigationHandler
+
+extension ApplicationFlowCoordinator: EcommerceModelNavigationHandler {
+    
+    func openProductViewed() {
+        let navigationHandler: EcommerceViewsNavigationHandler = self
+        let controller = container.resolve(ProductViewedViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func openProductCategoryViewed() {
+        let navigationHandler: EcommerceViewsNavigationHandler = self
+        let controller = container.resolve(ProductCategoryViewedViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func openProductAddedToWishlist() {
+        let navigationHandler: EcommerceViewsNavigationHandler = self
+        let controller = container.resolve(ProductAddedToWishlistViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func openCartUpdated() {
+        let navigationHandler: EcommerceViewsNavigationHandler = self
+        let controller = container.resolve(CartUpdatedViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func openOrderCreated() {
+        let navigationHandler: OrderCreatedModelNavigationHandler = self
+        let controller = container.resolve(
+            OrderCreatedViewController.self,
+            arguments: navigationHandler, OrderCreatedModel.State.create
+        )!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func openOrderUpdated() {
+        let navigationHandler: OrderCreatedModelNavigationHandler = self
+        let controller = container.resolve(
+            OrderCreatedViewController.self,
+            arguments: navigationHandler, OrderCreatedModel.State.update
+        )!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func openOrderDelivered() {
+        let navigationHandler: EcommerceViewsNavigationHandler = self
+        let controller = container.resolve(OrderDeliveredViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func openOrderCancelled() {
+        let navigationHandler: EcommerceViewsNavigationHandler = self
+        let controller = container.resolve(OrderCancelledViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func openSearchRequest() {
+        let navigationHandler: EcommerceViewsNavigationHandler = self
+        let controller = container.resolve(SearchRequestViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+}
+
+// MARK: EcommerceViewsNavigationHandler
+
+extension ApplicationFlowCoordinator: EcommerceViewsNavigationHandler {
+    
+    func backToEcommerce() {
+        navigationController?.popViewController(animated: true)
     }
     
 }
@@ -130,6 +203,21 @@ extension ApplicationFlowCoordinator: RecomsSettingsModelNavigationHandler {
     
     func backToRecoms(settings: RecommendationsSettings) {
         recomsViewComtroller?.loadRecoms(with: settings)
+        navigationController?.popViewController(animated: true)
+    }
+    
+}
+
+// MARK: OrderCreatedModelNavigationHandler
+
+extension ApplicationFlowCoordinator: OrderCreatedModelNavigationHandler {
+    
+    func createOrderItem(completion: @escaping (OrderItem) -> Void) {
+        let controller = container.resolve(CreateOrderItemViewController.self, argument: completion)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func popViewController() {
         navigationController?.popViewController(animated: true)
     }
     

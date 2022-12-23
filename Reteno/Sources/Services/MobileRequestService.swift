@@ -48,7 +48,15 @@ final class MobileRequestService {
         user: User,
         completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
     ) {
-        let externalUserId = user.externalUserId ?? ExternalUserIdHelper.getId() ?? ""
+        guard
+            let externalUserId = user.externalUserId ?? ExternalUserIdHelper.getId(),
+            !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else {
+            let error = NetworkError(statusCode: 400, title: "Error", detail: "Empty external user id", invalidParams: nil)
+            completionHandler(.failure(error))
+            return
+        }
+        
         let request = UpdateUserAttributesRequest(
             externalUserId: externalUserId,
             userAttributes: user.userAttributes,

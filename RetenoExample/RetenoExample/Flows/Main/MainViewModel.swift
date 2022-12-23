@@ -22,8 +22,8 @@ final class MainViewModel {
         self.model = model
     }
     
-    func openMenu() {
-        model.openMenu()
+    func openEcommerce() {
+        model.openEcommerce()
     }
     
     func logCustomEvent() {
