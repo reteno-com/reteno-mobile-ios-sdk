@@ -18,11 +18,12 @@
 // MARK: - Create profile
 
 "createProfile_screen.title" = "Create Profile";
-"createProfile_screen.fields.externalId" = "External user id (optional)";
+"createProfile_screen.fields.externalId" = "External user id";
 "createProfile_screen.fields.firstName" = "First name (optional)";
 "createProfile_screen.fields.lastName" = "Last name (optional)";
 "createProfile_screen.fields.phone" = "Phone (optional)";
 "createProfile_screen.fields.email" = "Email (optional)";
+"createProfile_screen.generateButton" = "Generate";
 "createProfile_screen.saveButton" = "Save";
 
 "createProfile_screen.doneButton" = "Done";

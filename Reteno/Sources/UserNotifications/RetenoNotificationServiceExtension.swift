@@ -13,6 +13,8 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
     
+    private let imageCarouselCategoryIdentifier = "ImageCarousel"
+    
     open override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         guard RetenoNotificationsHelper.isRetenoPushNotification(request.content.userInfo) else {
             contentHandler(request.content)
@@ -38,9 +40,14 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
 
         addActionButtons(from: notification, to: bestAttemptContent)
         
-        if let mediaURLString = notification.imageURLString {
-            buildAttachments(by: mediaURLString) { attachments in
-                attachments.flatMap { bestAttemptContent.attachments = $0 }
+        if let imagesURLStrings = notification.imagesURLStrings, imagesURLStrings.isNotEmpty {
+            buildAttachments(by: imagesURLStrings) { attachments in
+                bestAttemptContent.attachments = attachments
+                contentHandler(bestAttemptContent)
+            }
+        } else if let mediaURLString = notification.imageURLString {
+            buildAttachments(by: [mediaURLString]) { attachments in
+                bestAttemptContent.attachments = attachments
                 contentHandler(bestAttemptContent)
             }
         } else {
@@ -58,15 +65,22 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
     
     // MARK: Helpers
     
-    private func buildAttachments(by urlString: String, completionHandler: @escaping ([UNNotificationAttachment]?) -> Void) {
-        let fileType = URL(fileURLWithPath: urlString).pathExtension
-        loadAttachment(by: urlString, fileType: fileType) { attachment in
-            guard let attachment = attachment else {
-                completionHandler(nil)
-                return
-            }
+    private func buildAttachments(by urlStrings: [String], completionHandler: @escaping ([UNNotificationAttachment]) -> Void) {
+        var attachments: [UNNotificationAttachment] = []
+        let dispatchGroup = DispatchGroup()
+        urlStrings.forEach { urlString in
+            dispatchGroup.enter()
+            let fileType = URL(fileURLWithPath: urlString).pathExtension
+            loadAttachment(by: urlString, fileType: fileType) { attachment in
+                dispatchGroup.leave()
+                
+                guard let attachment = attachment else { return }
 
-            completionHandler([attachment])
+                attachments.append(attachment)
+            }
+        }
+        dispatchGroup.notify(queue: DispatchQueue.global()) {
+            completionHandler(attachments)
         }
     }
     
@@ -110,8 +124,16 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
     private func addActionButtons(from notification: RetenoUserNotification, to content: UNMutableNotificationContent) {
         guard let actionButtons = notification.actionButtons,
               actionButtons.isNotEmpty,
-              content.categoryIdentifier.isEmpty
-        else { return }
+              content.categoryIdentifier.isEmpty || content.categoryIdentifier == imageCarouselCategoryIdentifier
+        else {
+            // Since notifications with images carousel always have the same categoryIdentifier,
+            // we have to update setted previously category, because it might have registered action buttons.
+            if content.categoryIdentifier == imageCarouselCategoryIdentifier {
+                let category = UNNotificationCategory(identifier: imageCarouselCategoryIdentifier, actions: [], intentIdentifiers: [])
+                updateNotificationCategories(with: category)
+            }
+            return
+        }
         
         let actions: [UNNotificationAction] = actionButtons.map {
             if #available(iOS 15.0, *) {
@@ -125,19 +147,27 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
                 return UNNotificationAction(identifier: $0.actionId, title: $0.title, options: .foreground)
             }
         }
-        var existingCategories = getAllNotificationCategories()
-        let categoryIdentifier = "__reteno__\(notification.id)"
+        
+        let categoryIdentifier = content.categoryIdentifier.isEmpty ? "__reteno__\(notification.id)" : content.categoryIdentifier
         let category = UNNotificationCategory(
             identifier: categoryIdentifier,
             actions: actions,
             intentIdentifiers: []
         )
+        updateNotificationCategories(with: category)
+        content.categoryIdentifier = categoryIdentifier
+    }
+    
+    private func updateNotificationCategories(with category: UNNotificationCategory) {
+        var existingCategories = getAllNotificationCategories()
         if !existingCategories.contains(where: { $0.identifier == category.identifier }) {
+            existingCategories.append(category)
+        } else if category.identifier == imageCarouselCategoryIdentifier {
+            existingCategories.removeAll(where: { $0.identifier == category.identifier })
             existingCategories.append(category)
         }
         UNUserNotificationCenter.current().setNotificationCategories(Set(existingCategories))
         existingCategories = getAllNotificationCategories()
-        content.categoryIdentifier = categoryIdentifier
     }
     
     private func getAllNotificationCategories() -> [UNNotificationCategory] {

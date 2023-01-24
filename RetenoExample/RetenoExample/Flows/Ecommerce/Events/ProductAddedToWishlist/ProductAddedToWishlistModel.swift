@@ -11,9 +11,9 @@ import Reteno
 
 final class ProductAddedToWishlistModel {
     
-    private let navigationHandler: EcommerceViewsNavigationHandler
+    private let navigationHandler: EcommerceModelNavigationHandler
     
-    init(navigationHandler: EcommerceViewsNavigationHandler) {
+    init(navigationHandler: EcommerceModelNavigationHandler) {
         self.navigationHandler = navigationHandler
     }
     

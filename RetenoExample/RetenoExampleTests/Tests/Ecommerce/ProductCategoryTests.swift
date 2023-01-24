@@ -28,5 +28,12 @@ final class ProductCategoryTests: XCTestCase {
         XCTAssertTrue(result?.contains("\"productCategoryId\":\"ugug\"") == true, "should contains valid productCategoryId")
         XCTAssertTrue(result?.contains("\"size\":[\"M\",\"L\"]") == true, "should contains valid size")
     }
+    
+    func test_convertToStringWithoutAttributes() {
+        sut = Ecommerce.ProductCategory(
+            productCategoryId: "123"
+        )
+        XCTAssertEqual(sut.attributes, nil,  "doesn't contain attributes")
+    }
 
 }

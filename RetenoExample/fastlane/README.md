@@ -55,6 +55,14 @@ Sync development, adhoc and appstore certificates or the one, provided by MATCH_
 
 Make development, adhoc and appstore certificates or the one, provided by MATCH_TYPE environment variable
 
+### ios drop_certs
+
+```sh
+[bundle exec] fastlane ios drop_certs
+```
+
+Drop development, adhoc and appstore certificates or the one, provided by MATCH_TYPE environment variable
+
 ### ios deploy
 
 ```sh

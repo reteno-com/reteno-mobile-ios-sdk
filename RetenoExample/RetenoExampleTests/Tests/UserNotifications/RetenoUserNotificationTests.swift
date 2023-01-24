@@ -68,4 +68,19 @@ final class RetenoUserNotificationTests: XCTestCase {
         XCTAssertEqual(buttonCustomData["id"] as? String, "1", "should have valid button customData")
         XCTAssertEqual(buttonCustomData["title"] as? String, "Test Title", "should have valid button customData")
     }
+    
+    func test_userNotificationInitialization_fromPayload_withImages() throws {
+        let userInfo: [AnyHashable: Any] = [
+            "es_interaction_id": "656dgggf66",
+            "es_notification_images":"[\"first_url\",\"second_url\",\"third_url\"]"
+        ]
+        let result = try XCTUnwrap(RetenoUserNotification(userInfo: userInfo), "should have value")
+        
+        XCTAssertEqual(result.id, "656dgggf66", "should have valid `id`")
+        XCTAssertEqual(result.imagesURLStrings?.count, 3, "should have valid array count")
+        XCTAssertEqual(result.imagesURLStrings?[0], "first_url", "should have valid first item")
+        XCTAssertEqual(result.imagesURLStrings?[1], "second_url", "should have valid second item")
+        XCTAssertEqual(result.imagesURLStrings?[2], "third_url", "should have valid third item")
+    }
+    
 }

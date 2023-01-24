@@ -9,9 +9,8 @@
 import UIKit
 import SnapKit
 
-final class ProductViewedViewController: NiblessViewController {
+final class ProductViewedViewController: KeyboardHandlingViewController {
     
-    private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let stack = UIStackView()
     private let productIdTextField = UITextField()
@@ -39,35 +38,6 @@ final class ProductViewedViewController: NiblessViewController {
         
         setupLayout()
         setupHandlers()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
-    
-    @objc
-    func keyboardWillShow(notification: NSNotification) {
-        guard
-            let userInfo = notification.userInfo,
-            let info = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
-        else { return }
-        
-        let keyboardFrame = view.convert(info.cgRectValue, from: nil)
-        scrollView.contentInset.bottom = keyboardFrame.size.height + 20
-    }
-    
-    @objc
-    func keyboardWillHide(notification: NSNotification) {
-        scrollView.contentInset = .zero
     }
     
     @objc

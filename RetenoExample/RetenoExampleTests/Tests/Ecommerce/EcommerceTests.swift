@@ -127,6 +127,19 @@ final class EcommerceTests: XCTestCase {
         )
     }
     
+    func test_log_productViewedEvent_withoutAttributes() throws {
+        let product = Ecommerce.Product(
+            productId: "12312",
+            price: 50,
+            isInStock: true
+        )
+        sut.logEvent(type: .productViewed(product: product, currencyCode: "EUR"))
+        let event = try XCTUnwrap(
+            storage.getEvents().filter { $0.eventTypeKey == "productViewed" }.first,
+            "stored event model should exists"
+        )
+    }
+    
     // MARK: productAddedToWishlist
     
     func test_log_productAddedToWishlistEvent_withSpecifiedCurrencyCode() throws {

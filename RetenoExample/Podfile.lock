@@ -78,7 +78,7 @@ PODS:
 DEPENDENCIES:
   - FirebaseMessaging
   - OHHTTPStubs/Swift
-  - Reteno (= 1.5.0)
+  - Reteno (from `../`)
   - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `7.28.0`)
   - SnapKit (~> 5.6.0)
   - Swinject (~> 2.7.1)
@@ -96,11 +96,12 @@ SPEC REPOS:
     - nanopb
     - OHHTTPStubs
     - PromisesObjC
-    - Reteno
     - SnapKit
     - Swinject
 
 EXTERNAL SOURCES:
+  Reteno:
+    :path: "../"
   Sentry:
     :git: https://github.com/getsentry/sentry-cocoa.git
     :tag: 7.28.0
@@ -122,11 +123,11 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  Reteno: 63e644b6814bef4984550e8f4566ccf8b6348140
+  Reteno: a466931a195f458274bdb886307a75b2d6765e9c
   Sentry: 2c6053e4cfe6dea6608135dea1928ffbb4ecfba5
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: 410d55c97b901a623f7aaffdb10d7553c21c5560
+PODFILE CHECKSUM: fad71d531814b4792222cc1dc7303250368c9767
 
 COCOAPODS: 1.11.3

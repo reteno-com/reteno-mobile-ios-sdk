@@ -11,9 +11,9 @@ import Reteno
 
 final class OrderCancelledModel {
     
-    private let navigationHandler: EcommerceViewsNavigationHandler
+    private let navigationHandler: EcommerceModelNavigationHandler
     
-    init(navigationHandler: EcommerceViewsNavigationHandler) {
+    init(navigationHandler: EcommerceModelNavigationHandler) {
         self.navigationHandler = navigationHandler
     }
     

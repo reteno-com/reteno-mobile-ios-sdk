@@ -11,5 +11,6 @@ public enum InteractionStatus: String, Codable {
     
     case delivered = "DELIVERED"
     case opened = "OPENED"
+    case clicked = "CLICKED"
     
 }   

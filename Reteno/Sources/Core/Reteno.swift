@@ -11,7 +11,7 @@ import UserNotifications
 public struct Reteno {
     
     /// SDK version
-    static var version = "1.5.0"
+    static var version = "1.5.1"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -51,7 +51,7 @@ public struct Reteno {
     
     /// Update push notification status in `Reteno`
     /// - Parameter interactionId: `InteractionId` from push payload
-    /// - Parameter status: Interaction status. Possible values `.delivered`, `.opened`
+    /// - Parameter status: Interaction status. Possible values `.delivered`, `.opened`, `.clicked`
     /// - Parameter date: Time when event occurred
     public static func updateNotificationInteractionStatus(interactionId: String, status: InteractionStatus, date: Date = Date()) {
         senderScheduler.updateNotificationInteractionStatus(interactionId: interactionId, status: status, date: date)
@@ -71,16 +71,24 @@ public struct Reteno {
         groupNamesExclude: [String] = []
     ) {
         guard
-            externalUserId.isSome
+            (externalUserId.isSome && externalUserId?.isEmpty == false)
                 || userAttributes.isSome
                 || subscriptionKeys.isNotEmpty
                 || groupNamesInclude.isNotEmpty
                 || groupNamesExclude.isNotEmpty
         else { return }
         
-        let userId = externalUserId ?? ExternalUserIdHelper.getId() ?? ""
-        if userId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            print("\n[Reteno] Error: trying to update user with empty ID. This operation won't be completed.")
+        if let externalUserId = externalUserId,
+            !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            ExternalUserIdHelper.setId(externalUserId)
+        }
+        
+        guard
+            let userId = ExternalUserIdHelper.getId(),
+            !userId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else {
+            print("[Reteno] Error: trying to update user with empty ID. This operation won't be completed.")
+            return
         }
         
         senderScheduler.updateUserAttributes(

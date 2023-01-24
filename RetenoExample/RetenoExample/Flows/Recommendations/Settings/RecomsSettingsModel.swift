@@ -9,12 +9,6 @@
 import Foundation
 import Reteno
 
-protocol RecomsSettingsModelNavigationHandler {
-    
-    func backToRecoms(settings: RecommendationsSettings)
-    
-}
-
 final class RecomsSettingsModel {
     
     private(set) var settings: RecommendationsSettings

@@ -47,6 +47,10 @@ final class ProfileModel {
         user.email = email
     }
     
+    func generateId() -> String {
+        UUID().uuidString
+    }
+    
     func saveUser() {
         let attributes = UserAttributes(
             phone: user.phone.isEmpty ? nil : user.phone,

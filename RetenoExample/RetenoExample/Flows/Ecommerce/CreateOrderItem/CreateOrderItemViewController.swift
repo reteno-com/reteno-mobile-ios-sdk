@@ -8,9 +8,8 @@
 
 import UIKit
 
-final class CreateOrderItemViewController: NiblessViewController, AlertPresentable {
+final class CreateOrderItemViewController: KeyboardHandlingViewController, AlertPresentable {
     
-    private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let stack = UIStackView()
     private let idTextField = UITextField()
@@ -37,18 +36,6 @@ final class CreateOrderItemViewController: NiblessViewController, AlertPresentab
         super.viewDidLoad()
 
         setupLayout()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
     }
     
     // MARK: Actions
@@ -81,24 +68,6 @@ final class CreateOrderItemViewController: NiblessViewController, AlertPresentab
             description: descriptionTextField.text
         )
         viewModel.createOrderItem(item)
-    }
-    
-    // MARK: Handle keyboard
-    
-    @objc
-    private func keyboardWillShow(notification: NSNotification) {
-        guard
-            let userInfo = notification.userInfo,
-            let info = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue
-        else { return }
-        
-        let keyboardFrame = view.convert(info.cgRectValue, from: nil)
-        scrollView.contentInset.bottom = keyboardFrame.size.height + 20
-    }
-    
-    @objc
-    private func keyboardWillHide(notification: NSNotification) {
-        scrollView.contentInset = .zero
     }
 
 }

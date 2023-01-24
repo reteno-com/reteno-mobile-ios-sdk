@@ -62,6 +62,13 @@ platform :ios do
     end
   end
 
+  desc 'Drop development, adhoc and appstore certificates or the one, provided by MATCH_TYPE environment variable'
+  lane :drop_certs do    
+      ['development', 'adhoc', 'appstore'].each do |x|
+        match_nuke(type: x)
+      end
+  end
+
   desc 'Make a build, export it into an archive and upload to the Crashlytics'
   lane :deploy do |options|
     # Uncomment next section to use Keys from repo

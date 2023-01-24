@@ -15,7 +15,7 @@ struct User {
     var phone: String
     var email: String
     
-    init(id: String = UUID().uuidString, firstName: String = "", lastName: String = "", phone: String = "", email: String = "") {
+    init(id: String = "", firstName: String = "", lastName: String = "", phone: String = "", email: String = "") {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName

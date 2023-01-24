@@ -15,6 +15,7 @@ final class ProfileViewController: NiblessViewController {
     private let lastNameTextField = UITextField()
     private let phoneTextField = UITextField()
     private let emailTextField = UITextField()
+    private let generateIdButton = UIButton()
     private let saveButton = UIButton()
     
     private let viewModel: ProfileViewModel
@@ -38,6 +39,7 @@ final class ProfileViewController: NiblessViewController {
         lastNameTextField.addTarget(self, action: #selector(lastNameHandler), for: .editingChanged)
         phoneTextField.addTarget(self, action: #selector(phoneHandler), for: .editingChanged)
         emailTextField.addTarget(self, action: #selector(emailHandler), for: .editingChanged)
+        generateIdButton.addTarget(self, action: #selector(generateIdAction), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
     }
     
@@ -67,6 +69,13 @@ final class ProfileViewController: NiblessViewController {
     }
     
     @objc
+    func generateIdAction(_ button: UIButton) {
+        let id = viewModel.generateId()
+        externalIdTextField.text = id
+        viewModel.updateExternalId(id)
+    }
+    
+    @objc
     func saveAction(_ button: UIButton) {
         viewModel.saveUser()
     }
@@ -90,9 +99,28 @@ private extension ProfileViewController {
         stack.axis = .vertical
         stack.spacing = 10.0
         
-        stack.addArrangedSubview(externalIdTextField)
+        let idStackView = UIStackView()
+        idStackView.axis = .horizontal
+        idStackView.distribution = .fill
+        idStackView.spacing = 8.0
+        stack.addArrangedSubview(idStackView)
+        
+        externalIdTextField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        idStackView.addArrangedSubview(externalIdTextField)
         baseSetup(for: externalIdTextField)
         externalIdTextField.placeholder = NSLocalizedString("createProfile_screen.fields.externalId", comment: "")
+        externalIdTextField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        
+        generateIdButton.contentEdgeInsets = UIEdgeInsets(top: 0.0, left: 4.0, bottom: 0.0, right: 4.0)
+        generateIdButton.layer.cornerRadius = 8.0
+        generateIdButton.backgroundColor = .systemBlue
+        generateIdButton.setTitleColor(.white, for: .normal)
+        generateIdButton.setTitle(NSLocalizedString("createProfile_screen.generateButton", comment: ""), for: .normal)
+        generateIdButton.snp.makeConstraints {
+            $0.height.equalTo(30.0)
+        }
+        generateIdButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        idStackView.addArrangedSubview(generateIdButton)
         
         stack.addArrangedSubview(firstNameTextField)
         baseSetup(for: firstNameTextField)
@@ -140,5 +168,4 @@ private extension ProfileViewController {
         textField.inputAccessoryView = doneBar
     }
 
-    
 }

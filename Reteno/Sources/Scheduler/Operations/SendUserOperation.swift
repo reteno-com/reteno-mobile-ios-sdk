@@ -41,9 +41,6 @@ final class SendUserOperation: DateOperation {
             switch result {
             case .success:
                 self.storage.clearUser(user)
-                if let externalUserId = user.externalUserId {
-                    ExternalUserIdHelper.setId(externalUserId)
-                }
                 self.finish()
                 
             case .failure(let failure):
@@ -61,7 +58,7 @@ final class SendUserOperation: DateOperation {
             }
         }
         
-        if let externalUserId = user.externalUserId {
+        if let externalUserId = user.externalUserId, !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             RetenoNotificationsHelper.isSubscribedOnNotifications { [weak self] isSubscribed in
                 self?.requestService.upsertDevice(
                     externalUserId: externalUserId,
@@ -71,7 +68,14 @@ final class SendUserOperation: DateOperation {
                     
                     switch result {
                     case .success:
-                        self.requestService.updateUserAttributes(user: self.user, completionHandler: updateAttributesResult)
+                        if self.user.userAttributes.isSome
+                            || self.user.subscriptionKeys.isNotEmpty
+                            || self.user.groupNamesInclude.isNotEmpty
+                            || self.user.groupNamesExclude.isNotEmpty {
+                            self.requestService.updateUserAttributes(user: self.user, completionHandler: updateAttributesResult)
+                        } else {
+                            self.finish()
+                        }
                         
                     case .failure(let failure):
                         if let responseCode = (failure as? NetworkError)?.statusCode ?? (failure as? AFError)?.responseCode {

@@ -35,6 +35,10 @@ final class ProfileViewModel {
         model.updateEmail(email)
     }
     
+    func generateId() -> String {
+        model.generateId()
+    }
+    
     func saveUser() {
         model.saveUser()
     }

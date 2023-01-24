@@ -9,9 +9,8 @@
 import UIKit
 import SnapKit
 
-final class CartUpdatedViewController: NiblessViewController {
+final class CartUpdatedViewController: KeyboardHandlingViewController {
     
-    private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let stack = UIStackView()
     private let cartIdTextField = UITextField()
@@ -21,7 +20,7 @@ final class CartUpdatedViewController: NiblessViewController {
     private var productsLabel = UILabel()
     private let addNewProductInCartButton = UIButton()
     private let sendEventButton = UIButton()
-
+    
     private var productIdsTextFields: [UITextField] = []
     private var productPricesTextFields: [UITextField] = []
     private var productQuantityTextFields: [UITextField] = []
@@ -44,19 +43,6 @@ final class CartUpdatedViewController: NiblessViewController {
         
         setupLayout()
         setupHandlers()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
     }
     
     private func mapAttributes(at index: Int) -> [String: [String]]? {
@@ -146,23 +132,6 @@ final class CartUpdatedViewController: NiblessViewController {
             products: mapProductsInCart()
         )
         viewModel.backToEcommerce()
-    }
-    
-    // MARK: Handle keyboard
-    
-    @objc
-    func keyboardWillShow(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        
-        if let info = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue {
-            let keyboardFrame = view.convert(info.cgRectValue, from: nil)
-            scrollView.contentInset.bottom = keyboardFrame.size.height + 20
-        }
-    }
-    
-    @objc
-    func keyboardWillHide(notification: NSNotification) {
-        scrollView.contentInset = .zero
     }
     
 }

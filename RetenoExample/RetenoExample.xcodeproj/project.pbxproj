@@ -15,6 +15,7 @@
 		1856108A28EC757800744967 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1856108928EC757700744967 /* EventTests.swift */; };
 		1875126028EAD44A0068B5F4 /* AnalyticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1875125F28EAD44A0068B5F4 /* AnalyticsServiceTests.swift */; };
 		1875126628EAD74E0068B5F4 /* EventsSenderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1875126528EAD74E0068B5F4 /* EventsSenderMock.swift */; };
+		1881FDAF297FD428007A3D1E /* CarouselNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881FDAE297FD428007A3D1E /* CarouselNotificationViewController.swift */; };
 		188DA3B328E1FEB600AAA6EA /* RequestManager+Stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DA3A628E1FEB500AAA6EA /* RequestManager+Stub.swift */; };
 		188DA3B428E1FEB600AAA6EA /* RequestDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DA3A928E1FEB500AAA6EA /* RequestDecoratorTests.swift */; };
 		188DA3B528E1FEB600AAA6EA /* BundleIdHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DA3AB28E1FEB500AAA6EA /* BundleIdHelperTests.swift */; };
@@ -22,7 +23,6 @@
 		188DA3B728E1FEB600AAA6EA /* RetenoNotificationsHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DA3AF28E1FEB500AAA6EA /* RetenoNotificationsHelperTests.swift */; };
 		188DA3B828E1FEB600AAA6EA /* RetenoUserNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DA3B028E1FEB500AAA6EA /* RetenoUserNotificationTests.swift */; };
 		188DA3B928E1FEB600AAA6EA /* ApiRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188DA3B228E1FEB500AAA6EA /* ApiRequestMock.swift */; };
-		270D90552950C2F400A53698 /* EcommerceViewsNavigationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270D90542950C2F400A53698 /* EcommerceViewsNavigationHandler.swift */; };
 		2752B3CD294E425800CB2DFC /* ProductCategoryViewedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2752B3CC294E425800CB2DFC /* ProductCategoryViewedModel.swift */; };
 		2752B3CF294E426300CB2DFC /* ProductCategoryViewedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2752B3CE294E426300CB2DFC /* ProductCategoryViewedViewModel.swift */; };
 		2752B3D1294E426F00CB2DFC /* ProductCategoryViewedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2752B3D0294E426F00CB2DFC /* ProductCategoryViewedViewController.swift */; };
@@ -44,12 +44,18 @@
 		2752B3FF294E44D900CB2DFC /* SearchRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2752B3FE294E44D900CB2DFC /* SearchRequestModel.swift */; };
 		2752B401294E44DE00CB2DFC /* SearchRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2752B400294E44DE00CB2DFC /* SearchRequestViewModel.swift */; };
 		2752B403294E44E900CB2DFC /* SearchRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2752B402294E44E900CB2DFC /* SearchRequestViewController.swift */; };
+		27821B49295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27821B48295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift */; };
+		27821B4B295B0299007AFA7E /* EcommerceFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27821B4A295B0299007AFA7E /* EcommerceFlowAssembly.swift */; };
+		27ACBCF52954ACB2009C761A /* KeyboardHandlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACBCF42954ACB2009C761A /* KeyboardHandlingViewController.swift */; };
 		27F4110B2949DCCB00BFCC9D /* ProductViewedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F4110A2949DCCB00BFCC9D /* ProductViewedViewController.swift */; };
 		27F4110E2949EB7900BFCC9D /* ProductViewedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F4110D2949EB7900BFCC9D /* ProductViewedModel.swift */; };
 		27F411102949EB8800BFCC9D /* ProductViewedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F4110F2949EB8800BFCC9D /* ProductViewedViewModel.swift */; };
 		27F60CAD29489B5A009E70EF /* EcommerceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F60CAC29489B5A009E70EF /* EcommerceModel.swift */; };
 		27F60CAF29489BE7009E70EF /* EcommerceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F60CAE29489BE7009E70EF /* EcommerceViewModel.swift */; };
 		27F60CB129489C32009E70EF /* EcommerceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F60CB029489C32009E70EF /* EcommerceViewController.swift */; };
+		27FACDAB295C495F001B34D1 /* RecommendationsFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FACDAA295C495F001B34D1 /* RecommendationsFlowAssembly.swift */; };
+		27FACDAD295C5080001B34D1 /* RecommendationsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FACDAC295C5080001B34D1 /* RecommendationsCoordinator.swift */; };
+		40C6F174BA66262819E336C0 /* Pods_RetenoExample_NotificationContentExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842D9A493F94F46E94A09E2F /* Pods_RetenoExample_NotificationContentExtension.framework */; };
 		7004E8AB236C85060003EBCB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7004E8A9236C85060003EBCB /* Localizable.strings */; };
 		700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700D24DA236C6D3300918E21 /* MainFlowAssembly.swift */; };
 		7071CE18238305C700D34895 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7071CE17238305C700D34895 /* LaunchScreen.storyboard */; };
@@ -111,6 +117,9 @@
 		D5CBB0E62952F633009CB2B3 /* CreateOrderItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0E52952F633009CB2B3 /* CreateOrderItemViewController.swift */; };
 		D5CBB0E82952F654009CB2B3 /* CreateOrderItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0E72952F654009CB2B3 /* CreateOrderItemViewModel.swift */; };
 		D5CBB0EA2952F663009CB2B3 /* CreateOrderItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0E92952F663009CB2B3 /* CreateOrderItemModel.swift */; };
+		D5CBB0F829701BAE009CB2B3 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5CBB0F729701BAE009CB2B3 /* UserNotifications.framework */; };
+		D5CBB0FA29701BAE009CB2B3 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5CBB0F929701BAE009CB2B3 /* UserNotificationsUI.framework */; };
+		D5CBB10429701BAE009CB2B3 /* NotificationContentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D5CBB0F629701BAE009CB2B3 /* NotificationContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D5F91E2D29080C5500EA5FBA /* AppInboxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E2C29080C5500EA5FBA /* AppInboxModel.swift */; };
 		D5F91E2F29080C6000EA5FBA /* AppInboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E2E29080C6000EA5FBA /* AppInboxViewModel.swift */; };
 		D5F91E3129080C6D00EA5FBA /* AppInboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */; };
@@ -134,16 +143,24 @@
 			remoteGlobalIDString = B52C7C1B28DA83220014ED15;
 			remoteInfo = NotificationServiceExtension;
 		};
+		D5CBB10229701BAE009CB2B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C52110221DAB85BC006CEBCE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D5CBB0F529701BAE009CB2B3;
+			remoteInfo = NotificationContentExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		B52C7C2B28DA83230014ED15 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
 				B52C7C2328DA83220014ED15 /* NotificationServiceExtension.appex in Embed Foundation Extensions */,
+				D5CBB10429701BAE009CB2B3 /* NotificationContentExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -173,6 +190,7 @@
 		1856108928EC757700744967 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
 		1875125F28EAD44A0068B5F4 /* AnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceTests.swift; sourceTree = "<group>"; };
 		1875126528EAD74E0068B5F4 /* EventsSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSenderMock.swift; sourceTree = "<group>"; };
+		1881FDAE297FD428007A3D1E /* CarouselNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselNotificationViewController.swift; sourceTree = "<group>"; };
 		188DA39828E1FE9500AAA6EA /* RetenoExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RetenoExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		188DA3A628E1FEB500AAA6EA /* RequestManager+Stub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RequestManager+Stub.swift"; sourceTree = "<group>"; };
 		188DA3A928E1FEB500AAA6EA /* RequestDecoratorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDecoratorTests.swift; sourceTree = "<group>"; };
@@ -182,8 +200,8 @@
 		188DA3B028E1FEB500AAA6EA /* RetenoUserNotificationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoUserNotificationTests.swift; sourceTree = "<group>"; };
 		188DA3B228E1FEB500AAA6EA /* ApiRequestMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiRequestMock.swift; sourceTree = "<group>"; };
 		189E14F0C28C95AA3A13B59F /* Pods-UI.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.staging-debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		1B34B787E1CC1CE4D16B7CBA /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig"; sourceTree = "<group>"; };
 		2619A193756A64D2D1C3F4FD /* Pods-UI.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.production-release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.production-release.xcconfig"; sourceTree = "<group>"; };
-		270D90542950C2F400A53698 /* EcommerceViewsNavigationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceViewsNavigationHandler.swift; sourceTree = "<group>"; };
 		2752B3CC294E425800CB2DFC /* ProductCategoryViewedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategoryViewedModel.swift; sourceTree = "<group>"; };
 		2752B3CE294E426300CB2DFC /* ProductCategoryViewedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategoryViewedViewModel.swift; sourceTree = "<group>"; };
 		2752B3D0294E426F00CB2DFC /* ProductCategoryViewedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategoryViewedViewController.swift; sourceTree = "<group>"; };
@@ -205,17 +223,24 @@
 		2752B3FE294E44D900CB2DFC /* SearchRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequestModel.swift; sourceTree = "<group>"; };
 		2752B400294E44DE00CB2DFC /* SearchRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequestViewModel.swift; sourceTree = "<group>"; };
 		2752B402294E44E900CB2DFC /* SearchRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequestViewController.swift; sourceTree = "<group>"; };
+		27821B48295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceFlowCoordinator.swift; sourceTree = "<group>"; };
+		27821B4A295B0299007AFA7E /* EcommerceFlowAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceFlowAssembly.swift; sourceTree = "<group>"; };
+		27ACBCF42954ACB2009C761A /* KeyboardHandlingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHandlingViewController.swift; sourceTree = "<group>"; };
 		27F4110A2949DCCB00BFCC9D /* ProductViewedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewedViewController.swift; sourceTree = "<group>"; };
 		27F4110D2949EB7900BFCC9D /* ProductViewedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewedModel.swift; sourceTree = "<group>"; };
 		27F4110F2949EB8800BFCC9D /* ProductViewedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewedViewModel.swift; sourceTree = "<group>"; };
 		27F60CAC29489B5A009E70EF /* EcommerceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceModel.swift; sourceTree = "<group>"; };
 		27F60CAE29489BE7009E70EF /* EcommerceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceViewModel.swift; sourceTree = "<group>"; };
 		27F60CB029489C32009E70EF /* EcommerceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceViewController.swift; sourceTree = "<group>"; };
+		27FACDAA295C495F001B34D1 /* RecommendationsFlowAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsFlowAssembly.swift; sourceTree = "<group>"; };
+		27FACDAC295C5080001B34D1 /* RecommendationsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsCoordinator.swift; sourceTree = "<group>"; };
 		2E9BE80671C7517B9FB230A0 /* Pods-RetenoExample.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-debug.xcconfig"; sourceTree = "<group>"; };
+		3361B37B988BF7E7E25C1145 /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
 		3685374ED0B7F16718DC2284 /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		3ADD3D3531D6027393E59D4B /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
 		3C86699AF6FDB7FE6EA0625C /* Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig"; sourceTree = "<group>"; };
 		3FB4DA2A38A43DB1256A02E8 /* Pods-MainMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.debug.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.debug.xcconfig"; sourceTree = "<group>"; };
+		43247078A9A30091F01022F3 /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
 		484993947A614A40FF1E5921 /* Pods-RetenoExample-RetenoExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4AD9FF1B1C8EF0F74A6B1634 /* Pods-MainMenu.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.staging-release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.staging-release.xcconfig"; sourceTree = "<group>"; };
 		505FCBED2052E6B0006CF982 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -225,6 +250,7 @@
 		5F1F0645A410B4A5147DA1A5 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
 		634F8430613D0E87E9F4C182 /* Pods-Auth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.release.xcconfig"; sourceTree = "<group>"; };
 		64A9384D18D1BB0F30A8D2C2 /* Pods_Auth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Auth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A839F4FF05F6C0BF703AE17 /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		6C251F865E4FD81D3CB6FFA0 /* Pods_MainMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MainMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D436F370ABE6B53FD7AC4E7 /* Pods-UI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.debug.xcconfig"; sourceTree = "<group>"; };
 		7004E8AA236C85060003EBCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -249,7 +275,9 @@
 		70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFlowCoordinator.swift; sourceTree = "<group>"; };
 		70BF67AF2045A6AD00803C08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76C0DDEB3379C3D6DF04F99A /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		8163E8A8DBB26B9D68AD01CD /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.release.xcconfig"; sourceTree = "<group>"; };
 		83030DA4C97EF2043137F794 /* Pods-Auth.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.production-debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.production-debug.xcconfig"; sourceTree = "<group>"; };
+		842D9A493F94F46E94A09E2F /* Pods_RetenoExample_NotificationContentExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationContentExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		844B1D30B4FE94FE7A771FC6 /* Pods_UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8690A2926A92253B06E013B1 /* Pods-Auth.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.production-release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.production-release.xcconfig"; sourceTree = "<group>"; };
 		884E7374B6C5D8DD5FF453B5 /* Pods-Auth.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.staging-debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.staging-debug.xcconfig"; sourceTree = "<group>"; };
@@ -330,6 +358,10 @@
 		D5CBB0E52952F633009CB2B3 /* CreateOrderItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderItemViewController.swift; sourceTree = "<group>"; };
 		D5CBB0E72952F654009CB2B3 /* CreateOrderItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderItemViewModel.swift; sourceTree = "<group>"; };
 		D5CBB0E92952F663009CB2B3 /* CreateOrderItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderItemModel.swift; sourceTree = "<group>"; };
+		D5CBB0F629701BAE009CB2B3 /* NotificationContentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationContentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5CBB0F729701BAE009CB2B3 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		D5CBB0F929701BAE009CB2B3 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		D5CBB10129701BAE009CB2B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5F91E2C29080C5500EA5FBA /* AppInboxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxModel.swift; sourceTree = "<group>"; };
 		D5F91E2E29080C6000EA5FBA /* AppInboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxViewModel.swift; sourceTree = "<group>"; };
 		D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxViewController.swift; sourceTree = "<group>"; };
@@ -342,6 +374,7 @@
 		E6A63ECAF8D0F08F0024AFD7 /* Pods_RetenoExample_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6C663062A1DF3333F7BE745 /* Pods-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.release.xcconfig"; sourceTree = "<group>"; };
 		EC2062A50BE1033A244940D2 /* Pods-RetenoExample.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-debug.xcconfig"; sourceTree = "<group>"; };
+		F03A14F73450E796170756BF /* Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		F826678FCCB36EE09EBD3638 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; sourceTree = "<group>"; };
 		FAAE89E81B28BFDDE3A67323 /* Pods-RetenoExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.release.xcconfig"; sourceTree = "<group>"; };
 		FCF8F7791E4FCFECDA482150 /* Pods-Core.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.staging-debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.staging-debug.xcconfig"; sourceTree = "<group>"; };
@@ -373,6 +406,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D5CBB0F329701BAE009CB2B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5CBB0FA29701BAE009CB2B3 /* UserNotificationsUI.framework in Frameworks */,
+				D5CBB0F829701BAE009CB2B3 /* UserNotifications.framework in Frameworks */,
+				40C6F174BA66262819E336C0 /* Pods_RetenoExample_NotificationContentExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -395,6 +438,8 @@
 		187BD95228E5F1F300699C42 /* Ecommerce */ = {
 			isa = PBXGroup;
 			children = (
+				27821B48295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift */,
+				27821B4A295B0299007AFA7E /* EcommerceFlowAssembly.swift */,
 				D5CBB0E32952F5F0009CB2B3 /* CreateOrderItem */,
 				D5CBB0E42952F60F009CB2B3 /* Ecommerce */,
 				27F411092949DBF900BFCC9D /* Events */,
@@ -538,6 +583,12 @@
 				DFB719135EFD2259BF5BBDAB /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */,
 				B7276B489D51CFF936977A55 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */,
 				94C6C6049C0D3DC0BBE6DCE4 /* Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig */,
+				6A839F4FF05F6C0BF703AE17 /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */,
+				3361B37B988BF7E7E25C1145 /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */,
+				F03A14F73450E796170756BF /* Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig */,
+				8163E8A8DBB26B9D68AD01CD /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */,
+				43247078A9A30091F01022F3 /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */,
+				1B34B787E1CC1CE4D16B7CBA /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -612,10 +663,17 @@
 			path = SearchRequest;
 			sourceTree = "<group>";
 		};
+		27ACBCF129547C84009C761A /* KeyboardHandler */ = {
+			isa = PBXGroup;
+			children = (
+				27ACBCF42954ACB2009C761A /* KeyboardHandlingViewController.swift */,
+			);
+			path = KeyboardHandler;
+			sourceTree = "<group>";
+		};
 		27F411092949DBF900BFCC9D /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				270D90542950C2F400A53698 /* EcommerceViewsNavigationHandler.swift */,
 				2752B3D9294E433000CB2DFC /* CartUpdated */,
 				2752B3F6294E444A00CB2DFC /* OrderCancelled */,
 				2752B3E0294E436700CB2DFC /* OrderCreated */,
@@ -750,6 +808,9 @@
 				844B1D30B4FE94FE7A771FC6 /* Pods_UI.framework */,
 				E6A63ECAF8D0F08F0024AFD7 /* Pods_RetenoExample_NotificationServiceExtension.framework */,
 				D82E5EEB2E5083851EE593C9 /* Pods_RetenoExample_RetenoExampleTests.framework */,
+				D5CBB0F729701BAE009CB2B3 /* UserNotifications.framework */,
+				D5CBB0F929701BAE009CB2B3 /* UserNotificationsUI.framework */,
+				842D9A493F94F46E94A09E2F /* Pods_RetenoExample_NotificationContentExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -862,6 +923,7 @@
 		B5E67AE828DDEECD0093C7FB /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				27ACBCF129547C84009C761A /* KeyboardHandler */,
 				D5F91E3729096BC900EA5FBA /* DateFormatters */,
 				D5C96C1C291ED5D40049109A /* Extensions */,
 				B5E67AE928DDEF0D0093C7FB /* InformationAlert */,
@@ -888,6 +950,7 @@
 				7075EC13236C2E6E00327FF9 /* Environment */,
 				7075EC17236C2E8300327FF9 /* xcconfig */,
 				B52C7C1D28DA83220014ED15 /* NotificationServiceExtension */,
+				D5CBB0FB29701BAE009CB2B3 /* NotificationContentExtension */,
 				188DA39928E1FE9500AAA6EA /* RetenoExampleTests */,
 				C521102B1DAB85BC006CEBCE /* Products */,
 				1EE6FDB9A97FD76044569E18 /* Pods */,
@@ -901,6 +964,7 @@
 				C521102A1DAB85BC006CEBCE /* RetenoExample.app */,
 				B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */,
 				188DA39828E1FE9500AAA6EA /* RetenoExampleTests.xctest */,
+				D5CBB0F629701BAE009CB2B3 /* NotificationContentExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -908,6 +972,8 @@
 		D545923B291D219300E589A9 /* Recommendations */ = {
 			isa = PBXGroup;
 			children = (
+				27FACDAC295C5080001B34D1 /* RecommendationsCoordinator.swift */,
+				27FACDAA295C495F001B34D1 /* RecommendationsFlowAssembly.swift */,
 				D5C96C19291E92590049109A /* Models */,
 				D5C96C22292245EC0049109A /* List */,
 				D5C96C21292245DB0049109A /* Settings */,
@@ -1011,6 +1077,15 @@
 			path = Ecommerce;
 			sourceTree = "<group>";
 		};
+		D5CBB0FB29701BAE009CB2B3 /* NotificationContentExtension */ = {
+			isa = PBXGroup;
+			children = (
+				D5CBB10129701BAE009CB2B3 /* Info.plist */,
+				1881FDAE297FD428007A3D1E /* CarouselNotificationViewController.swift */,
+			);
+			path = NotificationContentExtension;
+			sourceTree = "<group>";
+		};
 		D5F91E2B29080C2700EA5FBA /* AppInbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -1096,6 +1171,7 @@
 			);
 			dependencies = (
 				B52C7C2228DA83220014ED15 /* PBXTargetDependency */,
+				D5CBB10329701BAE009CB2B3 /* PBXTargetDependency */,
 			);
 			name = RetenoExample;
 			packageProductDependencies = (
@@ -1105,13 +1181,31 @@
 			productReference = C521102A1DAB85BC006CEBCE /* RetenoExample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D5CBB0F529701BAE009CB2B3 /* NotificationContentExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D5CBB10529701BAF009CB2B3 /* Build configuration list for PBXNativeTarget "NotificationContentExtension" */;
+			buildPhases = (
+				E1FD2F72869871AF3836E601 /* [CP] Check Pods Manifest.lock */,
+				D5CBB0F229701BAE009CB2B3 /* Sources */,
+				D5CBB0F329701BAE009CB2B3 /* Frameworks */,
+				D5CBB0F429701BAE009CB2B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationContentExtension;
+			productName = NotificationContentExtension;
+			productReference = D5CBB0F629701BAE009CB2B3 /* NotificationContentExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		C52110221DAB85BC006CEBCE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = Yalantis;
 				TargetAttributes = {
@@ -1133,6 +1227,10 @@
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Manual;
 					};
+					D5CBB0F529701BAE009CB2B3 = {
+						CreatedOnToolsVersion = 14.0.1;
+						LastSwiftMigration = 1420;
+					};
 				};
 			};
 			buildConfigurationList = C52110251DAB85BC006CEBCE /* Build configuration list for PBXProject "RetenoExample" */;
@@ -1145,7 +1243,7 @@
 			);
 			mainGroup = C52110211DAB85BC006CEBCE;
 			packageReferences = (
-				D5F91E3A290972AE00EA5FBA /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				D5F91E3A290972AE00EA5FBA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = C521102B1DAB85BC006CEBCE /* Products */;
 			projectDirPath = "";
@@ -1153,6 +1251,7 @@
 			targets = (
 				C52110291DAB85BC006CEBCE /* RetenoExample */,
 				B52C7C1B28DA83220014ED15 /* NotificationServiceExtension */,
+				D5CBB0F529701BAE009CB2B3 /* NotificationContentExtension */,
 				188DA39728E1FE9500AAA6EA /* RetenoExampleTests */,
 			);
 		};
@@ -1181,6 +1280,13 @@
 				B52C7C2D28DA92340014ED15 /* GoogleService-Info.plist in Resources */,
 				70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */,
 				7004E8AB236C85060003EBCB /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5CBB0F429701BAE009CB2B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1361,6 +1467,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E1FD2F72869871AF3836E601 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RetenoExample-NotificationContentExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1447,12 +1575,15 @@
 				27F60CB129489C32009E70EF /* EcommerceViewController.swift in Sources */,
 				B5EEC31128EF2321005D0314 /* ProfileViewController.swift in Sources */,
 				70BF67CF2045A6AD00803C08 /* ApplicationFlowCoordinator.swift in Sources */,
+				27ACBCF52954ACB2009C761A /* KeyboardHandlingViewController.swift in Sources */,
 				D5F91E342908138F00EA5FBA /* AppInboxMessageCell.swift in Sources */,
 				B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */,
 				70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */,
 				2752B403294E44E900CB2DFC /* SearchRequestViewController.swift in Sources */,
 				D5F91E3929096BF800EA5FBA /* BaseDateFormatter.swift in Sources */,
 				D5C96C2629224B6D0049109A /* RecommendationsSettings.swift in Sources */,
+				27821B49295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift in Sources */,
+				27FACDAB295C495F001B34D1 /* RecommendationsFlowAssembly.swift in Sources */,
 				2752B3E4294E439000CB2DFC /* OrderCreatedViewModel.swift in Sources */,
 				B5EEC30F28EF2136005D0314 /* ProfileViewModel.swift in Sources */,
 				2752B3D4294E430700CB2DFC /* ProductAddedToWishlistModel.swift in Sources */,
@@ -1464,13 +1595,14 @@
 				B57EAB6728EE0D0000EA1260 /* User.swift in Sources */,
 				27F411102949EB8800BFCC9D /* ProductViewedViewModel.swift in Sources */,
 				27F4110B2949DCCB00BFCC9D /* ProductViewedViewController.swift in Sources */,
-				270D90552950C2F400A53698 /* EcommerceViewsNavigationHandler.swift in Sources */,
 				2752B3CF294E426300CB2DFC /* ProductCategoryViewedViewModel.swift in Sources */,
 				2752B3CD294E425800CB2DFC /* ProductCategoryViewedModel.swift in Sources */,
 				2752B3D8294E431900CB2DFC /* ProductAddedToWishlistViewController.swift in Sources */,
 				2752B3FF294E44D900CB2DFC /* SearchRequestModel.swift in Sources */,
 				2752B3E2294E438800CB2DFC /* OrderCreatedModel.swift in Sources */,
+				27821B4B295B0299007AFA7E /* EcommerceFlowAssembly.swift in Sources */,
 				2752B3F3294E443C00CB2DFC /* OrderDeliveredViewModel.swift in Sources */,
+				27FACDAD295C5080001B34D1 /* RecommendationsCoordinator.swift in Sources */,
 				D5C96C242922476B0049109A /* RecomsSettingsModel.swift in Sources */,
 				D5CBB0E62952F633009CB2B3 /* CreateOrderItemViewController.swift in Sources */,
 				2752B3F1294E443500CB2DFC /* OrderDeliveredModel.swift in Sources */,
@@ -1486,6 +1618,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D5CBB0F229701BAE009CB2B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1881FDAF297FD428007A3D1E /* CarouselNotificationViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1498,6 +1638,11 @@
 			isa = PBXTargetDependency;
 			target = B52C7C1B28DA83220014ED15 /* NotificationServiceExtension */;
 			targetProxy = B52C7C2128DA83220014ED15 /* PBXContainerItemProxy */;
+		};
+		D5CBB10329701BAE009CB2B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D5CBB0F529701BAE009CB2B3 /* NotificationContentExtension */;
+			targetProxy = D5CBB10229701BAE009CB2B3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2169,7 +2314,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.reteno.example-app.NotificationServiceExtension";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationServiceExtension";
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2202,7 +2347,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.reteno.example-app.NotificationServiceExtension";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationServiceExtension";
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2395,6 +2540,237 @@
 			};
 			name = Release;
 		};
+		D5CBB10629701BAF009CB2B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A839F4FF05F6C0BF703AE17 /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationContentExtension";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D5CBB10729701BAF009CB2B3 /* Production-Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3361B37B988BF7E7E25C1145 /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationContentExtension";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Production-Debug";
+		};
+		D5CBB10829701BAF009CB2B3 /* Staging-Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F03A14F73450E796170756BF /* Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationContentExtension";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Staging-Debug";
+		};
+		D5CBB10929701BAF009CB2B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8163E8A8DBB26B9D68AD01CD /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationContentExtension";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D5CBB10A29701BAF009CB2B3 /* Staging-Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43247078A9A30091F01022F3 /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationContentExtension";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Staging-Release";
+		};
+		D5CBB10B29701BAF009CB2B3 /* Production-Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B34B787E1CC1CE4D16B7CBA /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationContentExtension";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Production-Release";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2450,10 +2826,23 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D5CBB10529701BAF009CB2B3 /* Build configuration list for PBXNativeTarget "NotificationContentExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D5CBB10629701BAF009CB2B3 /* Debug */,
+				D5CBB10729701BAF009CB2B3 /* Production-Debug */,
+				D5CBB10829701BAF009CB2B3 /* Staging-Debug */,
+				D5CBB10929701BAF009CB2B3 /* Release */,
+				D5CBB10A29701BAF009CB2B3 /* Staging-Release */,
+				D5CBB10B29701BAF009CB2B3 /* Production-Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5F91E3A290972AE00EA5FBA /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		D5F91E3A290972AE00EA5FBA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -2466,7 +2855,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D5F91E3B290972AE00EA5FBA /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5F91E3A290972AE00EA5FBA /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = D5F91E3A290972AE00EA5FBA /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

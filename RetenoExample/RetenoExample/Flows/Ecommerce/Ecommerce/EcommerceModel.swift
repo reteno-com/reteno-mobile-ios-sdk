@@ -10,23 +10,15 @@ import Foundation
 
 protocol EcommerceModelNavigationHandler {
     
-    func openProductViewed()
-    func openProductCategoryViewed()
-    func openProductAddedToWishlist()
-    func openCartUpdated()
-    func openOrderCreated()
-    func openOrderUpdated()
-    func openOrderDelivered()
-    func openOrderCancelled()
-    func openSearchRequest()
-
+    func backToEcommerce()
+    
 }
 
 final class EcommerceModel {
     
-    private let navigationHandler: EcommerceModelNavigationHandler
+    private let navigationHandler: EcommerceFlowNavigationHandler
     
-    init(navigationHandler: EcommerceModelNavigationHandler) {
+    init(navigationHandler: EcommerceFlowNavigationHandler) {
         self.navigationHandler = navigationHandler
     }
     

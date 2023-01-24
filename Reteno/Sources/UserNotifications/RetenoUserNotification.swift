@@ -35,18 +35,25 @@ struct RetenoUserNotification {
     }
     
     let id: String
-    let imageURLString: String?
     let link: URL?
     let rawLink: URL?
+    let imageURLString: String?
+    let imagesURLStrings: [String]?
     let actionButtons: [ActionButton]?
     
     init?(userInfo: [AnyHashable: Any]) {
         guard let id = userInfo["es_interaction_id"] as? String else { return nil }
         
         self.id = id
-        imageURLString = userInfo["es_notification_image"] as? String
         link = (userInfo["es_link"] as? String).flatMap { URL(string: $0) }
         rawLink = (userInfo["es_link_raw"] as? String).flatMap { URL(string: $0) }
+        imageURLString = userInfo["es_notification_image"] as? String
+        if let imagesString = userInfo["es_notification_images"] as? String,
+           let imagesData = imagesString.replacingOccurrences(of: "\\", with: "").data(using: .utf8) {
+            imagesURLStrings = try? JSONDecoder().decode([String].self, from: imagesData)
+        } else {
+            imagesURLStrings = nil
+        }
         if let buttonsString = userInfo["es_buttons"] as? String,
            let buttonsData = buttonsString.data(using: .utf8),
            let jsonObject = try? JSONSerialization.jsonObject(with: buttonsData, options: []),

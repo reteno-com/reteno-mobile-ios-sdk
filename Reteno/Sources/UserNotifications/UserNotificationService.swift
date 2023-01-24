@@ -82,7 +82,7 @@ public final class UserNotificationService: NSObject {
     /// - Parameter notification: The notification to which the user responded.
     public func processOpenedRemoteNotification(_ notification: UNNotification) {
         if let notification = RetenoUserNotification(userInfo: notification.request.content.userInfo) {
-            Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .opened, date: Date())
+            Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .clicked, date: Date())
             DeepLinksProcessor.processLinks(wrappedUrl: notification.link, rawURL: notification.rawLink)
         }
     }
@@ -100,6 +100,7 @@ public final class UserNotificationService: NSObject {
         default:
             if let notification = RetenoUserNotification(userInfo: response.notification.request.content.userInfo),
                let actionButton = notification.actionButtons?.first(where: { $0.actionId == response.actionIdentifier }) {
+                Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .clicked, date: Date())
                 DeepLinksProcessor.processLinks(wrappedUrl: actionButton.link, rawURL: actionButton.rawLink)
                 let action = RetenoUserNotificationAction(
                     actionId: actionButton.actionId,
