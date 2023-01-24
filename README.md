@@ -2,6 +2,8 @@
 
 The Reteno iOS SDK for Mobile Customer Engagement and Analytics solutions
 
+[Documentation](https://docs.reteno.com/reference/ios-sdk)
+
 ## Overview
 
 `Reteno` is a lightweight SDK for iOS that helps mobile teams integrate Reteno into their mobile apps. The server-side library makes it easy to call the `Reteno API`.
