@@ -27,6 +27,15 @@ struct NotificationStatus: Codable {
 
 extension NotificationStatus: ExpirableData {
     
-    static var logTitle: String { "Notification Statuses" }
+    static var logTitle: String { "Removed interactions" }
+    
+}
+
+// MARK: Groupable
+
+extension NotificationStatus: Groupable {
+    
+    static var keyTitle: String { "interaction_status" }
+    var key: String { status.rawValue }
     
 }

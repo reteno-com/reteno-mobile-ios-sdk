@@ -65,7 +65,8 @@ final class SendUserOperationTests: XCTestCase {
             subscriptionKeys: ["key2, key3"],
             groupNamesInclude: ["group1"],
             groupNamesExclude: ["group2"],
-            date: Date()
+            date: Date(),
+            isAnonymous: false
         )
         storage.addUser(user)
         let operation = SendUserOperation(
@@ -104,7 +105,8 @@ final class SendUserOperationTests: XCTestCase {
             subscriptionKeys: ["key2, key3"],
             groupNamesInclude: ["group1"],
             groupNamesExclude: ["group2"],
-            date: Date()
+            date: Date(),
+            isAnonymous: false
         )
         storage.addUser(user)
         let operation = SendUserOperation(
@@ -149,7 +151,8 @@ final class SendUserOperationTests: XCTestCase {
             subscriptionKeys: ["key2, key3"],
             groupNamesInclude: ["group1"],
             groupNamesExclude: ["group2"],
-            date: Date()
+            date: Date(),
+            isAnonymous: false
         )
         storage.addUser(user)
         let operation = SendUserOperation(
@@ -194,7 +197,8 @@ final class SendUserOperationTests: XCTestCase {
             subscriptionKeys: ["key2, key3"],
             groupNamesInclude: ["group1"],
             groupNamesExclude: ["group2"],
-            date: Date()
+            date: Date(),
+            isAnonymous: false
         )
         storage.addUser(user)
         let operation = SendUserOperation(
@@ -239,7 +243,8 @@ final class SendUserOperationTests: XCTestCase {
             subscriptionKeys: ["key2, key3"],
             groupNamesInclude: ["group1"],
             groupNamesExclude: ["group2"],
-            date: Date()
+            date: Date(),
+            isAnonymous: false
         )
         storage.addUser(user)
         let operation = SendUserOperation(
@@ -284,7 +289,8 @@ final class SendUserOperationTests: XCTestCase {
             subscriptionKeys: ["key2, key3"],
             groupNamesInclude: ["group1"],
             groupNamesExclude: ["group2"],
-            date: Date()
+            date: Date(),
+            isAnonymous: false
         )
         storage.addUser(user)
         let operation = SendUserOperation(

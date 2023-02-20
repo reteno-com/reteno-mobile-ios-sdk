@@ -28,7 +28,9 @@ final class RequestManager {
             decorator.decorate(&request)
         }
         
-        print(request)
+        if DebugModeHelper.isDebugModeOn() {
+            Logger.log(request, eventType: .info)
+        }
         
         AF.request(
             baseURLComponent + request.path,
@@ -45,6 +47,9 @@ final class RequestManager {
                     completionHandler(.success(resultValue))
                 } catch {
                     SentryHelper.capture(error: error)
+                    if DebugModeHelper.isDebugModeOn() {
+                        Logger.log(error, eventType: .error)
+                    }
                     completionHandler(.failure(error))
                 }
             }
@@ -63,6 +68,9 @@ final class RequestManager {
                 let errorHandler = DecodableResponseHandler<NetworkError>()
                 var networkError = try? errorHandler.handleResponse(response.data ?? Data())
                 networkError?.statusCode = response.error?.asAFError?.responseCode
+                if DebugModeHelper.isDebugModeOn() {
+                    Logger.log(networkError ?? error, eventType: .error)
+                }
                 completionHandler(.failure(networkError ?? error))
             }
         }

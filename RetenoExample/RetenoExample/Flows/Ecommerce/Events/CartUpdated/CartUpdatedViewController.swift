@@ -13,22 +13,23 @@ final class CartUpdatedViewController: KeyboardHandlingViewController {
     
     private let contentView = UIView()
     private let stack = UIStackView()
-    private let cartIdTextField = UITextField()
-    private let currencyTextField = UITextField()
+    private let cartIdTextField = CommonTextField()
+    private let currencyTextField = CommonTextField()
     private let isForcePushedLabel = UILabel()
     private let isForcePushedSwitch = UISwitch()
     private var productsLabel = UILabel()
-    private let addNewProductInCartButton = UIButton()
-    private let sendEventButton = UIButton()
     
-    private var productIdsTextFields: [UITextField] = []
-    private var productPricesTextFields: [UITextField] = []
-    private var productQuantityTextFields: [UITextField] = []
-    private var discountTextFields: [UITextField] = []
-    private var nameTextFields: [UITextField] = []
-    private var categoryTextFields: [UITextField] = []
-    private var attributesKeysTextFields: [[UITextField]] = [[]]
-    private var attributesValuesTextFields: [[UITextField]] = [[]]
+    private let addNewProductInCartButton = CommonButton()
+    private let sendEventButton = CommonButton()
+
+    private var productIdsTextFields: [CommonTextField] = []
+    private var productPricesTextFields: [CommonTextField] = []
+    private var productQuantityTextFields: [CommonTextField] = []
+    private var discountTextFields: [CommonTextField] = []
+    private var nameTextFields: [CommonTextField] = []
+    private var categoryTextFields: [CommonTextField] = []
+    private var attributesKeysTextFields: [[CommonTextField]] = [[]]
+    private var attributesValuesTextFields: [[CommonTextField]] = [[]]
     
     private let viewModel: CartUpdatedViewModel
     
@@ -146,32 +147,20 @@ private extension CartUpdatedViewController {
         stack.spacing = 20.0
         stack.distribution = .fillProportionally
         
-        let attributeKeyTextField = UITextField()
+        let attributeKeyTextField = CommonTextField()
         stack.addArrangedSubview(attributeKeyTextField)
-        baseSetup(for: attributeKeyTextField)
         attributeKeyTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.attribute_key", comment: "")
         attributeKeyTextField.snp.makeConstraints {
             $0.width.equalTo(stack).multipliedBy(0.3)
         }
         attributesKeysTextFields[index].append(attributeKeyTextField)
         
-        let attributeValueTextField = UITextField()
+        let attributeValueTextField = CommonTextField()
         stack.addArrangedSubview(attributeValueTextField)
-        baseSetup(for: attributeValueTextField)
         attributeValueTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.attribute_value", comment: "")
         attributesValuesTextFields[index].append(attributeValueTextField)
         
         return stack
-    }
-    
-    func setupSeparatorView(stack: UIStackView, color: UIColor, viewHeight: Double) {
-        let separatorView = UIView()
-        separatorView.backgroundColor = color
-        stack.addArrangedSubview(separatorView)
-        separatorView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(viewHeight)
-        }
     }
     
     func setupNewProductInCartTextFields() -> UIView {
@@ -179,52 +168,43 @@ private extension CartUpdatedViewController {
         stack.axis = .vertical
         stack.spacing = 10.0
         
-        let productIdTextField = UITextField()
+        let productIdTextField = CommonTextField()
         stack.addArrangedSubview(productIdTextField)
-        baseSetup(for: productIdTextField)
         productIdTextField.placeholder = NSLocalizedString("ecommerce_screen.cart_updated_screen.fields.new_productId", comment: "")
         productIdsTextFields.append(productIdTextField)
         
-        let productPriceTextField = UITextField()
+        let productPriceTextField = CommonTextField()
         stack.addArrangedSubview(productPriceTextField)
-        baseSetup(for: productPriceTextField)
         productPriceTextField.keyboardType = .numberPad
         productPriceTextField.placeholder = NSLocalizedString("ecommerce_screen.cart_updated_screen.fields.new_product_price", comment: "")
         productPricesTextFields.append(productPriceTextField)
         
-        let quantityTextField = UITextField()
+        let quantityTextField = CommonTextField()
         stack.addArrangedSubview(quantityTextField)
-        baseSetup(for: quantityTextField)
         quantityTextField.keyboardType = .numberPad
         quantityTextField.placeholder = NSLocalizedString("ecommerce_screen.cart_updated_screen.fields.new_quantity", comment: "")
         productQuantityTextFields.append(quantityTextField)
         
-        let discountTextField = UITextField()
+        let discountTextField = CommonTextField()
         stack.addArrangedSubview(discountTextField)
-        baseSetup(for: discountTextField)
         discountTextField.keyboardType = .numberPad
         discountTextField.placeholder = NSLocalizedString("ecommerce_screen.cart_updated_screen.fields.discount", comment: "")
         discountTextFields.append(discountTextField)
         
-        let nameTextField = UITextField()
+        let nameTextField = CommonTextField()
         stack.addArrangedSubview(nameTextField)
-        baseSetup(for: nameTextField)
         nameTextField.placeholder = NSLocalizedString("ecommerce_screen.cart_updated_screen.fields.name", comment: "")
         nameTextFields.append(nameTextField)
         
-        let categoryTextField = UITextField()
+        let categoryTextField = CommonTextField()
         stack.addArrangedSubview(categoryTextField)
-        baseSetup(for: categoryTextField)
         categoryTextField.placeholder = NSLocalizedString("ecommerce_screen.cart_updated_screen.fields.category", comment: "")
         categoryTextFields.append(categoryTextField)
         
-        let addAttributeButton = UIButton()
+        let addAttributeButton = CommonButton()
         addAttributeButton.tag = attributesKeysTextFields.count - 1
         attributesKeysTextFields.append([])
         attributesValuesTextFields.append([])
-        addAttributeButton.layer.cornerRadius = 8.0
-        addAttributeButton.backgroundColor = .black
-        addAttributeButton.setTitleColor(.white, for: .normal)
         addAttributeButton.setTitle("+", for: .normal)
         addAttributeButton.addTarget(self, action: #selector(addAttribute(_:)), for: .touchUpInside)
         stack.addArrangedSubview(addAttributeButton)
@@ -233,30 +213,8 @@ private extension CartUpdatedViewController {
             $0.trailing.equalTo(stack)
         }
         
-        setupSeparatorView(stack: stack, color: .darkGray, viewHeight: 1.0)
+        ReusableViews.setupSeparatorView(stack: stack, color: .darkGray, viewHeight: 1.0)
                 
-        return stack
-    }
-    
-    func setupSwitch(label: UILabel, switcher: UISwitch, labelText: String, switcherIsOn: Bool = false) -> UIView {
-        let stack = UIStackView()
-        view.addSubview(stack)
-        stack.axis = .horizontal
-        label.text = labelText
-        
-        stack.addArrangedSubview(label)
-        baseSetup(for: label)
-        label.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(20.0)
-        }
-        
-        stack.addArrangedSubview(switcher)
-        switcher.isOn = switcherIsOn
-        baseSetup(for: switcher)
-        switcher.snp.makeConstraints {
-            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(20.0)
-        }
-        
         return stack
     }
     
@@ -285,11 +243,9 @@ private extension CartUpdatedViewController {
         stack.spacing = 10.0
         
         stack.addArrangedSubview(cartIdTextField)
-        baseSetup(for: cartIdTextField)
         cartIdTextField.placeholder = NSLocalizedString("ecommerce_screen.cart_updated_screen.fields.cartId", comment: "")
         
         stack.addArrangedSubview(currencyTextField)
-        baseSetup(for: currencyTextField)
         currencyTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.currency", comment: "")
         
         stack.addArrangedSubview(productsLabel)
@@ -309,18 +265,14 @@ private extension CartUpdatedViewController {
             $0.top.equalTo(stack.snp.bottom).inset(-10.0)
             $0.bottom.lessThanOrEqualTo(contentView.snp.bottom)
         }
-        addNewProductInCartButton.layer.cornerRadius = 8.0
-        addNewProductInCartButton.backgroundColor = .black
-        addNewProductInCartButton.setTitleColor(.white, for: .normal)
         addNewProductInCartButton.setTitle(NSLocalizedString("ecommerce_screen.cart_updated_screen.buttons.add_products", comment: ""), for: .normal)
         addNewProductInCartButton.addTarget(self, action: #selector(addNewProductInCart(_:)), for: .touchUpInside)
         
-        let isForcedPushOption = setupSwitch(
-            label: isForcePushedLabel,
+        let isForcedPushOption = ReusableViews.setupSwitch(
+            view: view, label: isForcePushedLabel,
             switcher: isForcePushedSwitch,
             labelText: NSLocalizedString("ecommerce_screen.shared.labels.is_force_pushed_label", comment: "")
         )
-        
         view.addSubview(isForcedPushOption)
         isForcedPushOption.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(90.0)
@@ -332,32 +284,8 @@ private extension CartUpdatedViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(20.0)
             $0.height.equalTo(50.0)
         }
-        
-        sendEventButton.layer.cornerRadius = 8.0
-        sendEventButton.backgroundColor = .black
-        sendEventButton.setTitleColor(.white, for: .normal)
-        sendEventButton.setTitle(NSLocalizedString("ecommerce_screen.shared.buttons.send_event_button",comment: ""), for: .normal)
+        sendEventButton.setTitle(NSLocalizedString("ecommerce_screen.shared.buttons.send_event_button", comment: ""), for: .normal)
         sendEventButton.addTarget(self, action: #selector(sendEvent(_:)), for: .touchUpInside)
-    }
-    
-    func baseSetup(for view: UIView) {
-        view.snp.makeConstraints {
-            $0.height.equalTo(30.0)
-        }
-    }
-    
-    func baseSetup(for textField: UITextField) {
-        textField.snp.makeConstraints {
-            $0.height.equalTo(30.0)
-        }
-        textField.textAlignment = .center
-        textField.layer.cornerRadius = 8.0
-        textField.backgroundColor = .white
-        textField.autocapitalizationType = .none
-        textField.autocorrectionType = .no
-        
-        let doneBar = DoneBar(textField: textField)
-        textField.inputAccessoryView = doneBar
     }
     
 }

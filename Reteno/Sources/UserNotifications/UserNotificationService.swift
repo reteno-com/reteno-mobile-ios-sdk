@@ -43,7 +43,7 @@ public final class UserNotificationService: NSObject {
         let notificationsCenter = UNUserNotificationCenter.current()
         notificationsCenter.requestAuthorization(options: options) { [weak self] granted, error in
             if let error = error {
-                print(error)
+                Logger.log(error, eventType: .error)
             }
             if granted {
                 notificationsCenter.delegate = self
@@ -69,8 +69,15 @@ public final class UserNotificationService: NSObject {
     /// Processing device token for receiving `Remote notifications`
     /// - Parameter deviceToken: Registered for device token.
     public func processRemoteNotificationsToken(_ deviceToken: String) {
-        StorageBuilder.build().set(value: deviceToken, forKey: StorageKeys.pushToken.rawValue)
+        let storage = StorageBuilder.build()
+        if deviceToken.isEmpty {
+            Logger.log("Provided empty token", eventType: .error)
+        } else {
+            storage.set(value: deviceToken, forKey: StorageKeys.pushToken.rawValue)
+        }
+        
         RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
+            storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
             MobileRequestServiceBuilder.build().upsertDevice(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed)
         }
     }

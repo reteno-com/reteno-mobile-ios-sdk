@@ -86,14 +86,16 @@ final class EventsSenderScheduler {
         userAttributes: UserAttributes?,
         subscriptionKeys: [String],
         groupNamesInclude: [String],
-        groupNamesExclude: [String]
+        groupNamesExclude: [String],
+        isAnonymous: Bool
     ) {
         let user = User(
             externalUserId: externalUserId,
             userAttributes: userAttributes,
             subscriptionKeys: subscriptionKeys,
             groupNamesInclude: groupNamesInclude,
-            groupNamesExclude: groupNamesExclude
+            groupNamesExclude: groupNamesExclude,
+            isAnonymous: isAnonymous
         )
         storage.addUser(user)
         
@@ -122,6 +124,12 @@ final class EventsSenderScheduler {
             self,
             selector: #selector(handleApplicationWillEnterForegroundNotification(_:)),
             name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleApplicationDidBecomeActiveNotification(_:)),
+            name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
     }
@@ -158,8 +166,21 @@ final class EventsSenderScheduler {
             
             let oldNotificationStatuses = self.storage.getNotificationStatuses().filter { !$0.isValid }
             if oldNotificationStatuses.isNotEmpty {
-                SentryHelper.captureLog(title: NotificationStatus.logTitle, count: oldNotificationStatuses.count)
+                SentryHelper.captureItems(
+                    oldNotificationStatuses,
+                    title: NotificationStatus.logTitle,
+                    tagTitle: NotificationStatus.keyTitle
+                )
                 self.storage.clearOldNotificationStatusesCache()
+            }
+            let oldLinks = self.storage.getLinks().filter { !$0.isValid }
+            if oldLinks.isNotEmpty {
+                SentryHelper.captureItems(
+                    oldLinks,
+                    title: StorableLink.logTitle,
+                    tagTitle: StorableLink.keyTitle
+                )
+                self.storage.clearLinks(oldLinks)
             }
             self.endTask()
         }
@@ -169,7 +190,7 @@ final class EventsSenderScheduler {
     }
     
     private func prepareOperationSequence() -> [Operation] {
-        var operations = sendNotificationsStatusOperations() + sendUsersOperations()
+        var operations = sendNotificationsStatusOperations() + sendUsersOperations() + registerWrappedLinkClickOperations()
         if let sendEventOperation = sendEventsOperation() {
             operations.append(sendEventOperation)
         }
@@ -230,7 +251,7 @@ final class EventsSenderScheduler {
     private func sendEventsOperation() -> DateOperation? {
         let oldEvents = storage.getEvents().filter { !$0.isValid }
         if oldEvents.isNotEmpty {
-            SentryHelper.captureLog(title: Event.logTitle, count: oldEvents.count)
+            SentryHelper.captureItems(oldEvents, title: Event.logTitle, tagTitle: Event.keyTitle)
             storage.clearEvents(oldEvents)
         }
         
@@ -284,6 +305,21 @@ final class EventsSenderScheduler {
         )
     }
     
+    private func registerWrappedLinkClickOperations() -> [DateOperation] {
+        let links = storage.getLinks()
+        let validLinks = links.filter { $0.isValid }
+        
+        guard !validLinks.isEmpty else { return [] }
+        
+        return validLinks.map {
+            RegisterLinkClickOperation(
+                requestService: SendingServiceBuilder.buildServiceWithEmptyURL(),
+                storage: storage,
+                link: $0
+            )
+        }
+    }
+    
     // MARK: Handle notifications
     
     @objc
@@ -296,6 +332,19 @@ final class EventsSenderScheduler {
     private func handleApplicationWillEnterForegroundNotification(_ notification: Notification) {
         application = notification.object as? UIApplication
         scheduleTask()
+    }
+    
+    @objc
+    private func handleApplicationDidBecomeActiveNotification(_ notification: Notification) {
+        RetenoNotificationsHelper.isSubscribedOnNotifications { [weak self] isSubscribed in
+            guard isSubscribed != RetenoNotificationsHelper.isPushSubscribed() else { return }
+            
+            StorageBuilder.build().set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
+            self?.mobileRequestService.upsertDevice(
+                externalUserId: ExternalUserIdHelper.getId(),
+                isSubscribedOnPush: isSubscribed
+            )
+        }
     }
     
 }

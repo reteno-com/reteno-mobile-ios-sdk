@@ -45,5 +45,29 @@ final class SendingServicesTests: XCTestCase {
             XCTAssertTrue(expectedSuccess == true, "should return true")
         }
     }
+    
+    func test_registerLinkClickRequest() throws {
+        let link = StorableLink(value: "google.com", date: Date())
+        stub(condition: pathEndsWith(link.value)) { _ in
+          let stubData = "OK".data(using: .utf8)
+              
+          return HTTPStubsResponse(data: stubData!, statusCode: 200, headers: nil)
+        }
+        var expectedSuccess: Bool?
+        let expectation = expectation(description: "Request")
+        sut.registerLinkClick(link.value) { result in
+            switch result {
+            case .success:
+                expectedSuccess = true
+                
+            case .failure:
+                expectedSuccess = false
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertTrue(expectedSuccess == true, "should return true")
+        }
+    }
 
 }

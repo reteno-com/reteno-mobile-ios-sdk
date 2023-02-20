@@ -21,7 +21,7 @@ final class SendingServices {
         token: String,
         status: InteractionStatus,
         date: Date = Date(),
-        completionHandler: @escaping (Result<Void, Error>) -> Void = { _ in }
+        completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
     ) {
         let request = UpdateInteractionStatusRequest(
             interactionId: interactionId,
@@ -31,16 +31,7 @@ final class SendingServices {
         )
         let handler = EmptyResponseHandler()
         
-        requestManager.execute(request: request, responseHandler: handler) { result in
-            switch result {
-            case .success(let success):
-                print("request result: \(success)")
-                completionHandler(.success(()))
-            case .failure(let failure):
-                print("request failure: \(failure)")
-                completionHandler(.failure(failure))
-            }
-        }
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
     
     func registerLinkClick(_ link: String, completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }) {

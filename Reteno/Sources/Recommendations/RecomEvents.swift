@@ -40,6 +40,6 @@ struct RecomEvents: Codable {
 
 extension RecomEvents: ExpirableData {
     
-    static var logTitle: String { "Recom events" }
+    static var logTitle: String { "Removed recommendations" }
     
 }

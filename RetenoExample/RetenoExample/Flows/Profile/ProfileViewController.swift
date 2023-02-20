@@ -10,11 +10,13 @@ import SnapKit
 
 final class ProfileViewController: NiblessViewController {
     
-    private let externalIdTextField = UITextField()
-    private let firstNameTextField = UITextField()
-    private let lastNameTextField = UITextField()
-    private let phoneTextField = UITextField()
-    private let emailTextField = UITextField()
+    private let externalIdTextField = CommonTextField()
+    private let firstNameTextField = CommonTextField()
+    private let lastNameTextField = CommonTextField()
+    private let phoneTextField = CommonTextField()
+    private let emailTextField = CommonTextField()
+    private let isAnonymousSwitch = UISwitch()
+    
     private let generateIdButton = UIButton()
     private let saveButton = UIButton()
     
@@ -39,6 +41,7 @@ final class ProfileViewController: NiblessViewController {
         lastNameTextField.addTarget(self, action: #selector(lastNameHandler), for: .editingChanged)
         phoneTextField.addTarget(self, action: #selector(phoneHandler), for: .editingChanged)
         emailTextField.addTarget(self, action: #selector(emailHandler), for: .editingChanged)
+        isAnonymousSwitch.addTarget(self, action: #selector(isAnonymousSwitchHandler), for: .valueChanged)
         generateIdButton.addTarget(self, action: #selector(generateIdAction), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
     }
@@ -69,6 +72,15 @@ final class ProfileViewController: NiblessViewController {
     }
     
     @objc
+    private func isAnonymousSwitchHandler(_ sender: UISwitch) {
+        phoneTextField.text = nil
+        viewModel.updatePhone(phoneTextField.text ?? "")
+        emailTextField.text = nil
+        viewModel.updateEmail(emailTextField.text ?? "")
+        viewModel.updateIsAnonymous(sender.isOn)
+    }
+    
+    @objc
     func generateIdAction(_ button: UIButton) {
         let id = viewModel.generateId()
         externalIdTextField.text = id
@@ -88,7 +100,7 @@ private extension ProfileViewController {
     
     func setupLayout() {
         title = NSLocalizedString("createProfile_screen.title", comment: "")
-        view.backgroundColor = .systemTeal
+        view.backgroundColor = .white
         
         let stack = UIStackView()
         view.addSubview(stack)
@@ -107,7 +119,7 @@ private extension ProfileViewController {
         
         externalIdTextField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         idStackView.addArrangedSubview(externalIdTextField)
-        baseSetup(for: externalIdTextField)
+        
         externalIdTextField.placeholder = NSLocalizedString("createProfile_screen.fields.externalId", comment: "")
         externalIdTextField.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
@@ -123,24 +135,30 @@ private extension ProfileViewController {
         idStackView.addArrangedSubview(generateIdButton)
         
         stack.addArrangedSubview(firstNameTextField)
-        baseSetup(for: firstNameTextField)
         firstNameTextField.keyboardType = .namePhonePad
         firstNameTextField.placeholder = NSLocalizedString("createProfile_screen.fields.firstName", comment: "")
         
         stack.addArrangedSubview(lastNameTextField)
-        baseSetup(for: lastNameTextField)
         lastNameTextField.keyboardType = .namePhonePad
         lastNameTextField.placeholder = NSLocalizedString("createProfile_screen.fields.lastName", comment: "")
         
         stack.addArrangedSubview(phoneTextField)
-        baseSetup(for: phoneTextField)
         phoneTextField.keyboardType = .phonePad
         phoneTextField.placeholder = NSLocalizedString("createProfile_screen.fields.phone", comment: "")
         
         stack.addArrangedSubview(emailTextField)
-        baseSetup(for: emailTextField)
         emailTextField.keyboardType = .emailAddress
         emailTextField.placeholder = NSLocalizedString("createProfile_screen.fields.email", comment: "")
+
+        let isAnonymousStackView = UIStackView()
+        isAnonymousStackView.axis = .horizontal
+        isAnonymousStackView.spacing = 6.0
+        let isAnonymousLabel = UILabel()
+        isAnonymousLabel.text = NSLocalizedString("createProfile_screen.anonymousSwitch", comment: "")
+        isAnonymousStackView.addArrangedSubview(isAnonymousSwitch)
+        isAnonymousStackView.addArrangedSubview(isAnonymousLabel)
+        
+        stack.addArrangedSubview(isAnonymousStackView)
         
         view.addSubview(saveButton)
         saveButton.snp.makeConstraints {
@@ -148,24 +166,10 @@ private extension ProfileViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(20.0)
             $0.height.equalTo(50.0)
         }
-        saveButton.layer.cornerRadius = 8.0
-        saveButton.backgroundColor = .black
-        saveButton.setTitleColor(.white, for: .normal)
         saveButton.setTitle(NSLocalizedString("createProfile_screen.saveButton", comment: ""), for: .normal)
-    }
-    
-    func baseSetup(for textField: UITextField) {
-        textField.snp.makeConstraints {
-            $0.height.equalTo(30.0)
-        }
-        textField.textAlignment = .center
-        textField.layer.cornerRadius = 8.0
-        textField.backgroundColor = .white
-        textField.autocapitalizationType = .none
-        textField.autocorrectionType = .no
-        
-        let doneBar = DoneBar(textField: textField)
-        textField.inputAccessoryView = doneBar
+        saveButton.backgroundColor = .systemGray
+        saveButton.setTitleColor(.black, for: .normal)
+        saveButton.layer.cornerRadius = 6.0
     }
 
 }

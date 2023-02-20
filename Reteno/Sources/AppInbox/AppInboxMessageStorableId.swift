@@ -17,7 +17,7 @@ struct AppInboxMessageStorableId: Codable {
 extension AppInboxMessageStorableId: ExpirableData {
     
     static var logTitle: String {
-        "App Inbox opened messages ids"
+        "Removed inbox opened messages"
     }
     
 }

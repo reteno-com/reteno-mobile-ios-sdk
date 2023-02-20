@@ -11,7 +11,7 @@ import UserNotifications
 public struct Reteno {
     
     /// SDK version
-    static var version = "1.5.1"
+    static var version = "1.5.3"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -87,7 +87,7 @@ public struct Reteno {
             let userId = ExternalUserIdHelper.getId(),
             !userId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         else {
-            print("[Reteno] Error: trying to update user with empty ID. This operation won't be completed.")
+            Logger.log("Trying to update user with empty ID. This operation won't be completed.", eventType: .error)
             return
         }
         
@@ -96,7 +96,36 @@ public struct Reteno {
             userAttributes: userAttributes,
             subscriptionKeys: subscriptionKeys,
             groupNamesInclude: groupNamesInclude,
-            groupNamesExclude: groupNamesExclude
+            groupNamesExclude: groupNamesExclude,
+            isAnonymous: false
+        )
+    }
+    
+    /// Update Anonymous User attributes
+    /// - Parameter userAttributes: user specific attributes in format `AnonymousUserAttributes` (firstName, address, etc.)
+    /// - Parameter subscriptionKeys: list of subscription categories keys, can be empty
+    /// - Parameter groupNamesInclude: list of group ID to add a contact to, can be empty
+    /// - Parameter groupNamesExclude: list of group ID to remove a contact from, can be empty
+    public static func updateAnonymousUserAttributes(
+        userAttributes: AnonymousUserAttributes,
+        subscriptionKeys: [String] = [],
+        groupNamesInclude: [String] = [],
+        groupNamesExclude: [String] = []
+    ) {
+        senderScheduler.updateUserAttributes(
+            externalUserId: nil,
+            userAttributes: UserAttributes(
+                firstName: userAttributes.firstName,
+                lastName: userAttributes.lastName,
+                languageCode: userAttributes.languageCode,
+                timeZone: userAttributes.timeZone,
+                address: userAttributes.address,
+                fields: userAttributes.fields
+            ),
+            subscriptionKeys: subscriptionKeys,
+            groupNamesInclude: groupNamesInclude,
+            groupNamesExclude: groupNamesExclude,
+            isAnonymous: true
         )
     }
     

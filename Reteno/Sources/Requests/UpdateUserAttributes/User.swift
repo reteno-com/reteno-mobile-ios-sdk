@@ -16,6 +16,7 @@ struct User: Codable {
     let groupNamesInclude: [String]
     let groupNamesExclude: [String]
     let date: Date
+    let isAnonymous: Bool
     
     init(
         externalUserId: String? = nil,
@@ -23,7 +24,8 @@ struct User: Codable {
         subscriptionKeys: [String],
         groupNamesInclude: [String],
         groupNamesExclude: [String],
-        date: Date = Date()
+        date: Date = Date(),
+        isAnonymous: Bool
     ) {
         self.id = UUID().uuidString
         self.externalUserId = externalUserId
@@ -32,6 +34,7 @@ struct User: Codable {
         self.groupNamesInclude = groupNamesInclude
         self.groupNamesExclude = groupNamesExclude
         self.date = date
+        self.isAnonymous = isAnonymous
     }
     
 }

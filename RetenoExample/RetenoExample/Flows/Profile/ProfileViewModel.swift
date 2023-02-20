@@ -35,6 +35,10 @@ final class ProfileViewModel {
         model.updateEmail(email)
     }
     
+    func updateIsAnonymous(_ isAnonymous: Bool) {
+        model.updateIsAnonymous(isAnonymous)
+    }
+    
     func generateId() -> String {
         model.generateId()
     }

@@ -10,6 +10,7 @@ import Foundation
 enum StorageKeys: String, CaseIterable {
     
     case pushToken = "com.reteno.push-token.key"
+    case isPushSubscribed = "com.reteno.is-push-subscribed.key"
     case deviceId = "com.reteno.device-id.key"
     case externalUserId = "com.reteno.external-user-id.key"
     case apiKey = "com.reteno.api-key.key"
@@ -19,6 +20,7 @@ enum StorageKeys: String, CaseIterable {
     case debugModeFlag = "com.reteno.debug-mode-flag.key"
     case recomEvents = "com.reteno.recom_events.key"
     case inboxOpenedMessagesIds = "com.reteno.inbox_opened_messages_ids.key"
+    case wrappedLinks = "com.reteno.wrapped-links.key"
     
 }
 
@@ -319,6 +321,54 @@ final class KeyValueStorage {
         guard let storage = storageUnwrapper() else { return }
         
         storage.set([], forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
+    }
+    
+    // MARK: Wrapped links logic
+    
+    func appendLink(_ link: StorableLink) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            var existingLinks = getLinks()
+            existingLinks.append(link)
+            let encodedLinks = try JSONEncoder().encode(existingLinks)
+            storage.set(encodedLinks, forKey: StorageKeys.wrappedLinks.rawValue)
+        } catch {
+            SentryHelper.capture(error: error)
+        }
+    }
+    
+    func getLinks() -> [StorableLink] {
+        guard let storage = storageUnwrapper() else { return [] }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.wrappedLinks.rawValue) else { return [] }
+            
+            let decodedLinks = try JSONDecoder().decode([StorableLink].self, from: data)
+            return decodedLinks
+        } catch {
+            SentryHelper.capture(error: error)
+            return []
+        }
+    }
+    
+    func clearLinks(_ links: [StorableLink]) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            var existingLinks = getLinks()
+            existingLinks.removeAll(where: { links.contains($0) })
+            let encodedLinks = try JSONEncoder().encode(existingLinks)
+            storage.set(encodedLinks, forKey: StorageKeys.wrappedLinks.rawValue)
+        } catch {
+            SentryHelper.capture(error: error)
+        }
+    }
+    
+    func clearAllLinks() {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.setValue([], forKey: StorageKeys.wrappedLinks.rawValue)
     }
     
 }

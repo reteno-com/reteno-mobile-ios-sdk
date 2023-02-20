@@ -31,9 +31,19 @@ final class SendNotificationsStatusOperation: DateOperation {
             return
         }
         
+        let token = RetenoNotificationsHelper.deviceToken() ?? ""
+        if token.isEmpty {
+            SentryHelper.captureWarningEvent(
+                message: "Sending interaction status with empty token",
+                tags: [
+                    "reteno.interaction_id": notificationStatus.interactionId,
+                    "reteno.interaction_status": notificationStatus.status.rawValue
+                ]
+            )
+        }
         sendingService.updateInteractionStatus(
             interactionId: notificationStatus.interactionId,
-            token: RetenoNotificationsHelper.deviceToken() ?? "",
+            token: token,
             status: notificationStatus.status,
             date: notificationStatus.date
         ) { [weak self, notificationStatus] result in

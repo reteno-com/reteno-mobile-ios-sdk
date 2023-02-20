@@ -103,7 +103,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
                 try fileManager.moveItem(at: fileURL, to: localURL)
             } catch let moveError {
                 SentryHelper.capture(error: moveError)
-                print("Failed to move file: ", moveError.localizedDescription)
+                Logger.log("Failed to move file: \(moveError.localizedDescription)", eventType: .error)
                 completionHandler(nil)
                 return
             }
@@ -115,7 +115,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
                 completionHandler(attachment)
             } catch let attachmentError {
                 SentryHelper.capture(error: attachmentError)
-                print("Unable to add attachment: ", attachmentError.localizedDescription)
+                Logger.log("Failed to move file: \(attachmentError.localizedDescription)", eventType: .error)
                 completionHandler(nil)
             }
         }

@@ -34,12 +34,6 @@ final class MobileRequestService {
         let handler = EmptyResponseHandler()
         
         requestManager.execute(request: request, responseHandler: handler) { result in
-            switch result {
-            case .success(let success):
-                print("request result: \(success)")
-            case .failure(let failure):
-                print("request failure: \(failure)")
-            }
             completionHandler(result)
         }
     }
@@ -48,9 +42,10 @@ final class MobileRequestService {
         user: User,
         completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
     ) {
+        let externalUserId = user.externalUserId ?? ExternalUserIdHelper.getId() ?? ""
+        
         guard
-            let externalUserId = user.externalUserId ?? ExternalUserIdHelper.getId(),
-            !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || user.isAnonymous
         else {
             let error = NetworkError(statusCode: 400, title: "Error", detail: "Empty external user id", invalidParams: nil)
             completionHandler(.failure(error))
@@ -58,7 +53,7 @@ final class MobileRequestService {
         }
         
         let request = UpdateUserAttributesRequest(
-            externalUserId: externalUserId,
+            externalUserId: user.isAnonymous ? nil : externalUserId,
             userAttributes: user.userAttributes,
             subscriptionKeys: user.subscriptionKeys,
             groupNamesInclude: user.groupNamesInclude,
@@ -67,12 +62,6 @@ final class MobileRequestService {
         let handler = EmptyResponseHandler()
         
         requestManager.execute(request: request, responseHandler: handler) { result in
-            switch result {
-            case .success(let success):
-                print("request result: \(success)")
-            case .failure(let failure):
-                print("request failure: \(failure)")
-            }
             completionHandler(result)
         }
     }

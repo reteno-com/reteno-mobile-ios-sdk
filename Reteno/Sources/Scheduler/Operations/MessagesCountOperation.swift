@@ -29,8 +29,7 @@ final class MessagesCountOperation: NetworkOperation {
                 self.inbox.messagesCount = response.unreadCount
                 self.finish()
                 
-            case .failure(let failure):
-                print("MessagesCountOperation finish with error: \(failure.localizedDescription)")
+            case .failure:
                 self.cancel()
             }
         }

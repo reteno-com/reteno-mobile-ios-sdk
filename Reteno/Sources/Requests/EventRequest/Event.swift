@@ -46,10 +46,19 @@ public struct Event: Codable {
     
 }
 
-// MARK - ExpirableData
+// MARK: ExpirableData
 
 extension Event: ExpirableData {
     
-    static var logTitle: String { "Events" }
+    static var logTitle: String { "Removed events" }
+    
+}
+
+// MARK: Groupable
+
+extension Event: Groupable {
+    
+    static var keyTitle: String { "event_type_key" }
+    var key: String { eventTypeKey }
     
 }

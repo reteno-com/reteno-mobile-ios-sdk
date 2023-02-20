@@ -47,6 +47,9 @@
 		27821B49295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27821B48295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift */; };
 		27821B4B295B0299007AFA7E /* EcommerceFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27821B4A295B0299007AFA7E /* EcommerceFlowAssembly.swift */; };
 		27ACBCF52954ACB2009C761A /* KeyboardHandlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACBCF42954ACB2009C761A /* KeyboardHandlingViewController.swift */; };
+		27ACBCF82954C320009C761A /* ReusableViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACBCF72954C320009C761A /* ReusableViews.swift */; };
+		27B05B77296DB1B4006302A4 /* CommonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B05B76296DB1B4006302A4 /* CommonButton.swift */; };
+		27B05B79296DB78C006302A4 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B05B78296DB78C006302A4 /* CommonTextField.swift */; };
 		27F4110B2949DCCB00BFCC9D /* ProductViewedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F4110A2949DCCB00BFCC9D /* ProductViewedViewController.swift */; };
 		27F4110E2949EB7900BFCC9D /* ProductViewedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F4110D2949EB7900BFCC9D /* ProductViewedModel.swift */; };
 		27F411102949EB8800BFCC9D /* ProductViewedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F4110F2949EB8800BFCC9D /* ProductViewedViewModel.swift */; };
@@ -55,7 +58,6 @@
 		27F60CB129489C32009E70EF /* EcommerceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F60CB029489C32009E70EF /* EcommerceViewController.swift */; };
 		27FACDAB295C495F001B34D1 /* RecommendationsFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FACDAA295C495F001B34D1 /* RecommendationsFlowAssembly.swift */; };
 		27FACDAD295C5080001B34D1 /* RecommendationsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FACDAC295C5080001B34D1 /* RecommendationsCoordinator.swift */; };
-		40C6F174BA66262819E336C0 /* Pods_RetenoExample_NotificationContentExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842D9A493F94F46E94A09E2F /* Pods_RetenoExample_NotificationContentExtension.framework */; };
 		7004E8AB236C85060003EBCB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7004E8A9236C85060003EBCB /* Localizable.strings */; };
 		700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700D24DA236C6D3300918E21 /* MainFlowAssembly.swift */; };
 		7071CE18238305C700D34895 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7071CE17238305C700D34895 /* LaunchScreen.storyboard */; };
@@ -90,6 +92,7 @@
 		B5EEC30D28EEF916005D0314 /* NiblessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEC30C28EEF916005D0314 /* NiblessViewController.swift */; };
 		B5EEC30F28EF2136005D0314 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEC30E28EF2136005D0314 /* ProfileViewModel.swift */; };
 		B5EEC31128EF2321005D0314 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EEC31028EF2321005D0314 /* ProfileViewController.swift */; };
+		D083C2EB66C1DC6D18180143 /* Pods_RetenoExample_NotificationContentExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C98AC003E31E6FC89A085A99 /* Pods_RetenoExample_NotificationContentExtension.framework */; };
 		D10F78FDDAAE8C9CAB9535E3 /* Pods_RetenoExample_RetenoExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82E5EEB2E5083851EE593C9 /* Pods_RetenoExample_RetenoExampleTests.framework */; };
 		D5095508292BDA2B009AF3BC /* AppInboxMarkAsOpenedRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5095507292BDA2B009AF3BC /* AppInboxMarkAsOpenedRequestTests.swift */; };
 		D509550A292E2F44009AF3BC /* SendAppInboxMessagesIdsOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5095509292E2F44009AF3BC /* SendAppInboxMessagesIdsOperationTests.swift */; };
@@ -120,6 +123,9 @@
 		D5CBB0F829701BAE009CB2B3 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5CBB0F729701BAE009CB2B3 /* UserNotifications.framework */; };
 		D5CBB0FA29701BAE009CB2B3 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5CBB0F929701BAE009CB2B3 /* UserNotificationsUI.framework */; };
 		D5CBB10429701BAE009CB2B3 /* NotificationContentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D5CBB0F629701BAE009CB2B3 /* NotificationContentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D5F707422991240E0018F304 /* ConformanceGroupableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F707412991240E0018F304 /* ConformanceGroupableTests.swift */; };
+		D5F7074B29955C800018F304 /* RegisterLinkClickOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F7074A29955C800018F304 /* RegisterLinkClickOperationTests.swift */; };
+		D5F7074E29956C8C0018F304 /* DeepLinksProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F7074D29956C8C0018F304 /* DeepLinksProcessorTests.swift */; };
 		D5F91E2D29080C5500EA5FBA /* AppInboxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E2C29080C5500EA5FBA /* AppInboxModel.swift */; };
 		D5F91E2F29080C6000EA5FBA /* AppInboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E2E29080C6000EA5FBA /* AppInboxViewModel.swift */; };
 		D5F91E3129080C6D00EA5FBA /* AppInboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */; };
@@ -182,6 +188,7 @@
 		013CE231394F0A6BDA657303 /* Pods-RetenoExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.debug.xcconfig"; sourceTree = "<group>"; };
 		03A1808A01EF31FB22D3A039 /* Pods-Core.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.debug.xcconfig"; sourceTree = "<group>"; };
 		046BDAD35D280EACCF4300B9 /* Pods-MainMenu.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.production-debug.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.production-debug.xcconfig"; sourceTree = "<group>"; };
+		05357D8E46AE65C43AD9A5AB /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		0AD6BFE5E7F2211A7DD95A35 /* Pods-FeatureCommon.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.staging-release.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.staging-release.xcconfig"; sourceTree = "<group>"; };
 		181BFDB5290073E0007C5422 /* OptionalExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalExtensionsTests.swift; sourceTree = "<group>"; };
 		181BFDB729007505007C5422 /* ArrayExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensionsTests.swift; sourceTree = "<group>"; };
@@ -200,7 +207,7 @@
 		188DA3B028E1FEB500AAA6EA /* RetenoUserNotificationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoUserNotificationTests.swift; sourceTree = "<group>"; };
 		188DA3B228E1FEB500AAA6EA /* ApiRequestMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiRequestMock.swift; sourceTree = "<group>"; };
 		189E14F0C28C95AA3A13B59F /* Pods-UI.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.staging-debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		1B34B787E1CC1CE4D16B7CBA /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig"; sourceTree = "<group>"; };
+		25D1E4B9F20CFE91372E8E22 /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
 		2619A193756A64D2D1C3F4FD /* Pods-UI.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.production-release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.production-release.xcconfig"; sourceTree = "<group>"; };
 		2752B3CC294E425800CB2DFC /* ProductCategoryViewedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategoryViewedModel.swift; sourceTree = "<group>"; };
 		2752B3CE294E426300CB2DFC /* ProductCategoryViewedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategoryViewedViewModel.swift; sourceTree = "<group>"; };
@@ -226,6 +233,9 @@
 		27821B48295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceFlowCoordinator.swift; sourceTree = "<group>"; };
 		27821B4A295B0299007AFA7E /* EcommerceFlowAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceFlowAssembly.swift; sourceTree = "<group>"; };
 		27ACBCF42954ACB2009C761A /* KeyboardHandlingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardHandlingViewController.swift; sourceTree = "<group>"; };
+		27ACBCF72954C320009C761A /* ReusableViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViews.swift; sourceTree = "<group>"; };
+		27B05B76296DB1B4006302A4 /* CommonButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonButton.swift; sourceTree = "<group>"; };
+		27B05B78296DB78C006302A4 /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
 		27F4110A2949DCCB00BFCC9D /* ProductViewedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewedViewController.swift; sourceTree = "<group>"; };
 		27F4110D2949EB7900BFCC9D /* ProductViewedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewedModel.swift; sourceTree = "<group>"; };
 		27F4110F2949EB8800BFCC9D /* ProductViewedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewedViewModel.swift; sourceTree = "<group>"; };
@@ -235,12 +245,11 @@
 		27FACDAA295C495F001B34D1 /* RecommendationsFlowAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsFlowAssembly.swift; sourceTree = "<group>"; };
 		27FACDAC295C5080001B34D1 /* RecommendationsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsCoordinator.swift; sourceTree = "<group>"; };
 		2E9BE80671C7517B9FB230A0 /* Pods-RetenoExample.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-debug.xcconfig"; sourceTree = "<group>"; };
-		3361B37B988BF7E7E25C1145 /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
 		3685374ED0B7F16718DC2284 /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		3ADD3D3531D6027393E59D4B /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
 		3C86699AF6FDB7FE6EA0625C /* Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.production-debug.xcconfig"; sourceTree = "<group>"; };
 		3FB4DA2A38A43DB1256A02E8 /* Pods-MainMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.debug.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.debug.xcconfig"; sourceTree = "<group>"; };
-		43247078A9A30091F01022F3 /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
+		46B5F960BF34311F0EE9B3B5 /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.release.xcconfig"; sourceTree = "<group>"; };
 		484993947A614A40FF1E5921 /* Pods-RetenoExample-RetenoExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4AD9FF1B1C8EF0F74A6B1634 /* Pods-MainMenu.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MainMenu.staging-release.xcconfig"; path = "Target Support Files/Pods-MainMenu/Pods-MainMenu.staging-release.xcconfig"; sourceTree = "<group>"; };
 		505FCBED2052E6B0006CF982 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -249,8 +258,8 @@
 		581CB6AC8B9512C71BCF6A1C /* Pods-Core.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.production-debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.production-debug.xcconfig"; sourceTree = "<group>"; };
 		5F1F0645A410B4A5147DA1A5 /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
 		634F8430613D0E87E9F4C182 /* Pods-Auth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.release.xcconfig"; sourceTree = "<group>"; };
+		64646E718F23BEF80D0E4C5A /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
 		64A9384D18D1BB0F30A8D2C2 /* Pods_Auth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Auth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A839F4FF05F6C0BF703AE17 /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		6C251F865E4FD81D3CB6FFA0 /* Pods_MainMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MainMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D436F370ABE6B53FD7AC4E7 /* Pods-UI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.debug.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.debug.xcconfig"; sourceTree = "<group>"; };
 		7004E8AA236C85060003EBCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -275,11 +284,10 @@
 		70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationFlowCoordinator.swift; sourceTree = "<group>"; };
 		70BF67AF2045A6AD00803C08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		76C0DDEB3379C3D6DF04F99A /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		8163E8A8DBB26B9D68AD01CD /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.release.xcconfig"; sourceTree = "<group>"; };
 		83030DA4C97EF2043137F794 /* Pods-Auth.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.production-debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.production-debug.xcconfig"; sourceTree = "<group>"; };
-		842D9A493F94F46E94A09E2F /* Pods_RetenoExample_NotificationContentExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationContentExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		844B1D30B4FE94FE7A771FC6 /* Pods_UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8690A2926A92253B06E013B1 /* Pods-Auth.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.production-release.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.production-release.xcconfig"; sourceTree = "<group>"; };
+		877A36F444A1EA82FE60D709 /* Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		884E7374B6C5D8DD5FF453B5 /* Pods-Auth.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.staging-debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		8C74AC4639F918F92C4632AB /* Pods-FeatureCommon.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.staging-debug.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		8DB2450CF4BCF9FEA02DA14F /* Pods-FeatureCommon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FeatureCommon.release.xcconfig"; path = "Target Support Files/Pods-FeatureCommon/Pods-FeatureCommon.release.xcconfig"; sourceTree = "<group>"; };
@@ -329,8 +337,10 @@
 		B5EEC30E28EF2136005D0314 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		B5EEC31028EF2321005D0314 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		B7276B489D51CFF936977A55 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; sourceTree = "<group>"; };
+		B809251A39859EDB0AC9AB6C /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig"; sourceTree = "<group>"; };
 		BD4EC3C5F65DB5B0C4BADC36 /* Pods-UI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UI.release.xcconfig"; path = "Target Support Files/Pods-UI/Pods-UI.release.xcconfig"; sourceTree = "<group>"; };
 		C521102A1DAB85BC006CEBCE /* RetenoExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetenoExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C98AC003E31E6FC89A085A99 /* Pods_RetenoExample_NotificationContentExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationContentExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5095507292BDA2B009AF3BC /* AppInboxMarkAsOpenedRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMarkAsOpenedRequestTests.swift; sourceTree = "<group>"; };
 		D5095509292E2F44009AF3BC /* SendAppInboxMessagesIdsOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAppInboxMessagesIdsOperationTests.swift; sourceTree = "<group>"; };
 		D545923C291D225300E589A9 /* RecomsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomsViewController.swift; sourceTree = "<group>"; };
@@ -362,6 +372,9 @@
 		D5CBB0F729701BAE009CB2B3 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		D5CBB0F929701BAE009CB2B3 /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
 		D5CBB10129701BAE009CB2B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D5F707412991240E0018F304 /* ConformanceGroupableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConformanceGroupableTests.swift; sourceTree = "<group>"; };
+		D5F7074A29955C800018F304 /* RegisterLinkClickOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterLinkClickOperationTests.swift; sourceTree = "<group>"; };
+		D5F7074D29956C8C0018F304 /* DeepLinksProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinksProcessorTests.swift; sourceTree = "<group>"; };
 		D5F91E2C29080C5500EA5FBA /* AppInboxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxModel.swift; sourceTree = "<group>"; };
 		D5F91E2E29080C6000EA5FBA /* AppInboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxViewModel.swift; sourceTree = "<group>"; };
 		D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxViewController.swift; sourceTree = "<group>"; };
@@ -374,7 +387,6 @@
 		E6A63ECAF8D0F08F0024AFD7 /* Pods_RetenoExample_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6C663062A1DF3333F7BE745 /* Pods-Core.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.release.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.release.xcconfig"; sourceTree = "<group>"; };
 		EC2062A50BE1033A244940D2 /* Pods-RetenoExample.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-debug.xcconfig"; sourceTree = "<group>"; };
-		F03A14F73450E796170756BF /* Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		F826678FCCB36EE09EBD3638 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; sourceTree = "<group>"; };
 		FAAE89E81B28BFDDE3A67323 /* Pods-RetenoExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.release.xcconfig"; sourceTree = "<group>"; };
 		FCF8F7791E4FCFECDA482150 /* Pods-Core.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core.staging-debug.xcconfig"; path = "Target Support Files/Pods-Core/Pods-Core.staging-debug.xcconfig"; sourceTree = "<group>"; };
@@ -412,7 +424,7 @@
 			files = (
 				D5CBB0FA29701BAE009CB2B3 /* UserNotificationsUI.framework in Frameworks */,
 				D5CBB0F829701BAE009CB2B3 /* UserNotifications.framework in Frameworks */,
-				40C6F174BA66262819E336C0 /* Pods_RetenoExample_NotificationContentExtension.framework in Frameworks */,
+				D083C2EB66C1DC6D18180143 /* Pods_RetenoExample_NotificationContentExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +483,7 @@
 				1875125E28EAD3EA0068B5F4 /* Analytics */,
 				B51AF01B290E920100D723CD /* AppInbox */,
 				188DA3AA28E1FEB500AAA6EA /* Common */,
+				D5F7074C29956C6E0018F304 /* DeepLinks */,
 				D5CBB0CE2941E55E009CB2B3 /* Ecommerce */,
 				184D994328FEF4B200ABCA8C /* EventsSenderScheduler */,
 				B57EAB4F28EC8C4D00EA1260 /* HelpersTests */,
@@ -501,6 +514,7 @@
 				B593CD6D28E38C5100130C2E /* BaseBEDateFormatterTests.swift */,
 				188DA3AB28E1FEB500AAA6EA /* BundleIdHelperTests.swift */,
 				184D993D28FEB73D00ABCA8C /* DateExtensionsTests.swift */,
+				D5F707412991240E0018F304 /* ConformanceGroupableTests.swift */,
 				181BFDB5290073E0007C5422 /* OptionalExtensionsTests.swift */,
 				188DA3AF28E1FEB500AAA6EA /* RetenoNotificationsHelperTests.swift */,
 			);
@@ -583,12 +597,12 @@
 				DFB719135EFD2259BF5BBDAB /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */,
 				B7276B489D51CFF936977A55 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */,
 				94C6C6049C0D3DC0BBE6DCE4 /* Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig */,
-				6A839F4FF05F6C0BF703AE17 /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */,
-				3361B37B988BF7E7E25C1145 /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */,
-				F03A14F73450E796170756BF /* Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig */,
-				8163E8A8DBB26B9D68AD01CD /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */,
-				43247078A9A30091F01022F3 /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */,
-				1B34B787E1CC1CE4D16B7CBA /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */,
+				05357D8E46AE65C43AD9A5AB /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */,
+				25D1E4B9F20CFE91372E8E22 /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */,
+				877A36F444A1EA82FE60D709 /* Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig */,
+				46B5F960BF34311F0EE9B3B5 /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */,
+				64646E718F23BEF80D0E4C5A /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */,
+				B809251A39859EDB0AC9AB6C /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -669,6 +683,16 @@
 				27ACBCF42954ACB2009C761A /* KeyboardHandlingViewController.swift */,
 			);
 			path = KeyboardHandler;
+			sourceTree = "<group>";
+		};
+		27ACBCFD2955F7A6009C761A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				27ACBCF72954C320009C761A /* ReusableViews.swift */,
+				27B05B76296DB1B4006302A4 /* CommonButton.swift */,
+				27B05B78296DB78C006302A4 /* CommonTextField.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		27F411092949DBF900BFCC9D /* Events */ = {
@@ -810,7 +834,7 @@
 				D82E5EEB2E5083851EE593C9 /* Pods_RetenoExample_RetenoExampleTests.framework */,
 				D5CBB0F729701BAE009CB2B3 /* UserNotifications.framework */,
 				D5CBB0F929701BAE009CB2B3 /* UserNotificationsUI.framework */,
-				842D9A493F94F46E94A09E2F /* Pods_RetenoExample_NotificationContentExtension.framework */,
+				C98AC003E31E6FC89A085A99 /* Pods_RetenoExample_NotificationContentExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -900,6 +924,7 @@
 		B5A97DB32902E7860017B2A1 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
+				D5F7074A29955C800018F304 /* RegisterLinkClickOperationTests.swift */,
 				D5095509292E2F44009AF3BC /* SendAppInboxMessagesIdsOperationTests.swift */,
 				B5A97DB6290453BD0017B2A1 /* SendEventsOperationTests.swift */,
 				B5A97DB8290463380017B2A1 /* SendNotificationsStatusOperationTests.swift */,
@@ -923,6 +948,7 @@
 		B5E67AE828DDEECD0093C7FB /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				27ACBCFD2955F7A6009C761A /* UI */,
 				27ACBCF129547C84009C761A /* KeyboardHandler */,
 				D5F91E3729096BC900EA5FBA /* DateFormatters */,
 				D5C96C1C291ED5D40049109A /* Extensions */,
@@ -1061,8 +1087,8 @@
 			isa = PBXGroup;
 			children = (
 				D5CBB0E92952F663009CB2B3 /* CreateOrderItemModel.swift */,
-				D5CBB0E52952F633009CB2B3 /* CreateOrderItemViewController.swift */,
 				D5CBB0E72952F654009CB2B3 /* CreateOrderItemViewModel.swift */,
+				D5CBB0E52952F633009CB2B3 /* CreateOrderItemViewController.swift */,
 			);
 			path = CreateOrderItem;
 			sourceTree = "<group>";
@@ -1084,6 +1110,14 @@
 				1881FDAE297FD428007A3D1E /* CarouselNotificationViewController.swift */,
 			);
 			path = NotificationContentExtension;
+			sourceTree = "<group>";
+		};
+		D5F7074C29956C6E0018F304 /* DeepLinks */ = {
+			isa = PBXGroup;
+			children = (
+				D5F7074D29956C8C0018F304 /* DeepLinksProcessorTests.swift */,
+			);
+			path = DeepLinks;
 			sourceTree = "<group>";
 		};
 		D5F91E2B29080C2700EA5FBA /* AppInbox */ = {
@@ -1185,7 +1219,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D5CBB10529701BAF009CB2B3 /* Build configuration list for PBXNativeTarget "NotificationContentExtension" */;
 			buildPhases = (
-				E1FD2F72869871AF3836E601 /* [CP] Check Pods Manifest.lock */,
+				4A53ED229FB795594BE75B87 /* [CP] Check Pods Manifest.lock */,
 				D5CBB0F229701BAE009CB2B3 /* Sources */,
 				D5CBB0F329701BAE009CB2B3 /* Frameworks */,
 				D5CBB0F429701BAE009CB2B3 /* Resources */,
@@ -1381,6 +1415,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		4A53ED229FB795594BE75B87 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RetenoExample-NotificationContentExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7075EC41236C309900327FF9 /* Copy Config */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1467,28 +1523,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E1FD2F72869871AF3836E601 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-RetenoExample-NotificationContentExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1512,6 +1546,7 @@
 				B5B2191428F8BF5E000DB212 /* UserCustomFieldTests.swift in Sources */,
 				D509550A292E2F44009AF3BC /* SendAppInboxMessagesIdsOperationTests.swift in Sources */,
 				D5CBB0DC29463B48009CB2B3 /* ProductCategoryTests.swift in Sources */,
+				D5F7074B29955C800018F304 /* RegisterLinkClickOperationTests.swift in Sources */,
 				D5CBB0DA29463965009CB2B3 /* ProductInCartTests.swift in Sources */,
 				188DA3B828E1FEB600AAA6EA /* RetenoUserNotificationTests.swift in Sources */,
 				B57EAB4D28EC8BA600EA1260 /* DeviceRequestTests.swift in Sources */,
@@ -1523,6 +1558,7 @@
 				D5CBB0E029463D3E009CB2B3 /* OrderTests.swift in Sources */,
 				D5095508292BDA2B009AF3BC /* AppInboxMarkAsOpenedRequestTests.swift in Sources */,
 				D5C96C2C2923BD200049109A /* SendRecomEventsOperationTests.swift in Sources */,
+				D5F7074E29956C8C0018F304 /* DeepLinksProcessorTests.swift in Sources */,
 				B5A97DB7290453BE0017B2A1 /* SendEventsOperationTests.swift in Sources */,
 				181BFDB6290073E0007C5422 /* OptionalExtensionsTests.swift in Sources */,
 				B51AF01D290E924100D723CD /* MessageCountTests.swift in Sources */,
@@ -1531,6 +1567,7 @@
 				B5A97DB52902E8D30017B2A1 /* SendUserOperationTests.swift in Sources */,
 				188DA3B428E1FEB600AAA6EA /* RequestDecoratorTests.swift in Sources */,
 				D5CBB0D42941EE4D009CB2B3 /* JSONInitableTests.swift in Sources */,
+				D5F707422991240E0018F304 /* ConformanceGroupableTests.swift in Sources */,
 				D5CBB0E229463E95009CB2B3 /* ItemTests.swift in Sources */,
 				B593CD6C28E33FF300130C2E /* UpdateInteractionStatusRequestTests.swift in Sources */,
 				B57EAB5328ECC9D000EA1260 /* DeviceCategoryHelperTests.swift in Sources */,
@@ -1559,8 +1596,10 @@
 				D5C96C2029223D6E0049109A /* AlertPresentable.swift in Sources */,
 				2752B3DD294E435900CB2DFC /* CartUpdatedViewModel.swift in Sources */,
 				700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */,
+				27B05B77296DB1B4006302A4 /* CommonButton.swift in Sources */,
 				D5459241291D227300E589A9 /* RecomsModel.swift in Sources */,
 				D5CBB0E82952F654009CB2B3 /* CreateOrderItemViewModel.swift in Sources */,
+				27B05B79296DB78C006302A4 /* CommonTextField.swift in Sources */,
 				27F60CAF29489BE7009E70EF /* EcommerceViewModel.swift in Sources */,
 				2752B3FC294E447600CB2DFC /* OrderCancelledViewController.swift in Sources */,
 				2752B401294E44DE00CB2DFC /* SearchRequestViewModel.swift in Sources */,
@@ -1585,6 +1624,7 @@
 				27821B49295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift in Sources */,
 				27FACDAB295C495F001B34D1 /* RecommendationsFlowAssembly.swift in Sources */,
 				2752B3E4294E439000CB2DFC /* OrderCreatedViewModel.swift in Sources */,
+				27ACBCF82954C320009C761A /* ReusableViews.swift in Sources */,
 				B5EEC30F28EF2136005D0314 /* ProfileViewModel.swift in Sources */,
 				2752B3D4294E430700CB2DFC /* ProductAddedToWishlistModel.swift in Sources */,
 				2752B3D6294E431000CB2DFC /* ProductAddedToWishlistViewModel.swift in Sources */,
@@ -2542,7 +2582,7 @@
 		};
 		D5CBB10629701BAF009CB2B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6A839F4FF05F6C0BF703AE17 /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */;
+			baseConfigurationReference = 05357D8E46AE65C43AD9A5AB /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -2581,7 +2621,7 @@
 		};
 		D5CBB10729701BAF009CB2B3 /* Production-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3361B37B988BF7E7E25C1145 /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */;
+			baseConfigurationReference = 25D1E4B9F20CFE91372E8E22 /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -2619,7 +2659,7 @@
 		};
 		D5CBB10829701BAF009CB2B3 /* Staging-Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F03A14F73450E796170756BF /* Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig */;
+			baseConfigurationReference = 877A36F444A1EA82FE60D709 /* Pods-RetenoExample-NotificationContentExtension.staging-debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -2657,7 +2697,7 @@
 		};
 		D5CBB10929701BAF009CB2B3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8163E8A8DBB26B9D68AD01CD /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */;
+			baseConfigurationReference = 46B5F960BF34311F0EE9B3B5 /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -2696,7 +2736,7 @@
 		};
 		D5CBB10A29701BAF009CB2B3 /* Staging-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 43247078A9A30091F01022F3 /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */;
+			baseConfigurationReference = 64646E718F23BEF80D0E4C5A /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -2735,7 +2775,7 @@
 		};
 		D5CBB10B29701BAF009CB2B3 /* Production-Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1B34B787E1CC1CE4D16B7CBA /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */;
+			baseConfigurationReference = B809251A39859EDB0AC9AB6C /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

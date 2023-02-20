@@ -70,6 +70,132 @@ final class MobileRequestServiceTests: XCTestCase {
         }
     }
     
+    // MARK: Update User attributes
+    
+    func test_updateUserAttributes_withPositiveResult() {
+        stub(condition: pathEndsWith("v1/user")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 200, headers: nil)
+        }
+        var expectedSuccess: Bool?
+        let expectation = expectation(description: "Request")
+        let user = User(
+            externalUserId: "fjf8",
+            userAttributes: UserAttributes(phone: "+380509876755", email: "test@gmail.com", firstName: "john"),
+            subscriptionKeys: [],
+            groupNamesInclude: [],
+            groupNamesExclude: [],
+            isAnonymous: false
+        )
+        sut.updateUserAttributes(user: user) { result in
+            switch result {
+            case .success:
+                expectedSuccess = true
+                
+            case .failure:
+                expectedSuccess = false
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertTrue(expectedSuccess ?? false, "expectedSuccess should be true")
+        }
+    }
+    
+    func test_updateUserAttributes_withoutExternalUserId() {
+        stub(condition: pathEndsWith("v1/user")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 422, headers: nil)
+        }
+        var expectedSuccess: Bool?
+        let expectation = expectation(description: "Request")
+        let user = User(
+            externalUserId: nil,
+            userAttributes: UserAttributes(phone: "+380509876755", email: "test@gmail.com", firstName: "john"),
+            subscriptionKeys: [],
+            groupNamesInclude: [],
+            groupNamesExclude: [],
+            isAnonymous: false
+        )
+        sut.updateUserAttributes(user: user) { result in
+            switch result {
+            case .success:
+                expectedSuccess = true
+                
+            case .failure:
+                expectedSuccess = false
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertFalse(expectedSuccess ?? true, "expectedSuccess should be false")
+        }
+    }
+    
+    func test_updateUserAttributes_withoutExternalUserId_forAnonymousUser() {
+        stub(condition: pathEndsWith("v1/user")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 200, headers: nil)
+        }
+        var expectedSuccess: Bool?
+        let expectation = expectation(description: "Request")
+        let user = User(
+            externalUserId: nil,
+            userAttributes: UserAttributes(firstName: "john"),
+            subscriptionKeys: [],
+            groupNamesInclude: [],
+            groupNamesExclude: [],
+            isAnonymous: true
+        )
+        sut.updateUserAttributes(user: user) { result in
+            switch result {
+            case .success:
+                expectedSuccess = true
+                
+            case .failure:
+                expectedSuccess = false
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertTrue(expectedSuccess ?? false, "expectedSuccess should be true")
+        }
+    }
+    
+    func test_updateUserAttributes_withoutExternalUserId_forAnonymousUser_withEmail() {
+        stub(condition: pathEndsWith("v1/user")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 422, headers: nil)
+        }
+        var expectedSuccess: Bool?
+        let expectation = expectation(description: "Request")
+        let user = User(
+            externalUserId: nil,
+            userAttributes: UserAttributes(email: "test@gmail.com", firstName: "john"),
+            subscriptionKeys: [],
+            groupNamesInclude: [],
+            groupNamesExclude: [],
+            isAnonymous: true
+        )
+        sut.updateUserAttributes(user: user) { result in
+            switch result {
+            case .success:
+                expectedSuccess = true
+                
+            case .failure:
+                expectedSuccess = false
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertFalse(expectedSuccess ?? true, "expectedSuccess should be false")
+        }
+    }
+    
     // MARK: Log events
     
     func test_logEventsRequest_withPositiveResult() {

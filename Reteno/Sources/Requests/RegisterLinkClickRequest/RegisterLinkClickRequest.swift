@@ -13,7 +13,7 @@ struct RegisterLinkClickRequest: APIRequest {
     var parameters: Parameters?
     
     let path: String
-    let method = HTTPMethod.get
+    let method = HTTPMethod.head
     let encoding: ParameterEncoding? = URLEncoding.default
     
     init(link: String) {

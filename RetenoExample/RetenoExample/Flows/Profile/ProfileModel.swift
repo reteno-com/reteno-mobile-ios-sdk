@@ -17,6 +17,7 @@ protocol ProfileModelNavigationHandler {
 final class ProfileModel {
     
     private var user: User
+    private var isAnonymous = false
     
     private let navigationHandler: ProfileModelNavigationHandler
     
@@ -51,15 +52,28 @@ final class ProfileModel {
         UUID().uuidString
     }
     
+    func updateIsAnonymous(_ isAnonymous: Bool) {
+        self.isAnonymous = isAnonymous
+    }
+    
     func saveUser() {
-        let attributes = UserAttributes(
-            phone: user.phone.isEmpty ? nil : user.phone,
-            email: user.email.isEmpty ? nil : user.email,
-            firstName: user.firstName.isEmpty ? nil : user.firstName,
-            lastName: user.lastName.isEmpty ? nil : user.lastName
-        )
-
-        Reteno.updateUserAttributes(externalUserId: user.id, userAttributes: attributes)
+        if isAnonymous {
+            let attributes = AnonymousUserAttributes(
+                firstName: user.firstName.isEmpty ? nil : user.firstName,
+                lastName: user.lastName.isEmpty ? nil : user.lastName,
+                timeZone: TimeZone.current.identifier
+            )
+            Reteno.updateAnonymousUserAttributes(userAttributes: attributes)
+        } else {
+            let attributes = UserAttributes(
+                phone: user.phone.isEmpty ? nil : user.phone,
+                email: user.email.isEmpty ? nil : user.email,
+                firstName: user.firstName.isEmpty ? nil : user.firstName,
+                lastName: user.lastName.isEmpty ? nil : user.lastName
+            )
+            Reteno.updateUserAttributes(externalUserId: user.id, userAttributes: attributes)
+        }
+        
         navigationHandler.backToMain()
     }
     

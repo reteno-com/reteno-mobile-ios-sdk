@@ -66,10 +66,12 @@ final class EventsSenderSchedulerTests: XCTestCase {
             return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
         }
         sut.updateUserAttributes(
-            externalUserId: nil, userAttributes: UserAttributes(phone: "0509876543", email: "test@gmail.com", firstName: "John"),
+            externalUserId: nil,
+            userAttributes: UserAttributes(phone: "0509876543", email: "test@gmail.com", firstName: "John"),
             subscriptionKeys: [],
             groupNamesInclude: [],
-            groupNamesExclude: []
+            groupNamesExclude: [],
+            isAnonymous: false
         )
         wait(for: [expectation], timeout: 1.0)
         

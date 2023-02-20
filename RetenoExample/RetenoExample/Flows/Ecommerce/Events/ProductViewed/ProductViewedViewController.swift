@@ -13,17 +13,17 @@ final class ProductViewedViewController: KeyboardHandlingViewController {
     
     private let contentView = UIView()
     private let stack = UIStackView()
-    private let productIdTextField = UITextField()
-    private let productPriceTextField = UITextField()
-    private let currencyTextField = UITextField()
+    private let productIdTextField = CommonTextField()
+    private let productPriceTextField = CommonTextField()
+    private let currencyTextField = CommonTextField()
     private let isInStockLabel = UILabel()
     private let isForcePushedLabel = UILabel()
     private let isInStockSwitch = UISwitch()
     private let isForcePushedSwitch = UISwitch()
-    private let sendEventButton = UIButton()
-    private let addAttributeButton = UIButton()
-    private var keysTextFields: [UITextField] = []
-    private var valuesTextFields: [UITextField] = []
+    private let sendEventButton = CommonButton()
+    private let addAttributeButton = CommonButton()
+    private var keysTextFields: [CommonTextField] = []
+    private var valuesTextFields: [CommonTextField] = []
     
     private let viewModel: ProductViewedViewModel
     
@@ -96,46 +96,22 @@ private extension ProductViewedViewController {
     
     func setupAttribiteTextFields() -> UIView {
         let stack = UIStackView()
-        let attributeKeyTextField = UITextField()
-        let attributeValueTextField = UITextField()
+        let attributeKeyTextField = CommonTextField()
+        let attributeValueTextField = CommonTextField()
         stack.axis = .horizontal
         stack.spacing = 20.0
         stack.distribution = .fillProportionally
         
         stack.addArrangedSubview(attributeKeyTextField)
-        baseSetup(for: attributeKeyTextField)
         attributeKeyTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.attribute_key", comment: "")
         attributeKeyTextField.snp.makeConstraints {
             $0.width.equalTo(stack).multipliedBy(0.3)
         }
         
         stack.addArrangedSubview(attributeValueTextField)
-        baseSetup(for: attributeValueTextField)
         attributeValueTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.attribute_value", comment: "")
         keysTextFields.append(attributeKeyTextField)
         valuesTextFields.append(attributeValueTextField)
-        return stack
-    }
-    
-    func setupSwitch(label: UILabel, switcher: UISwitch, labelText: String, switcherIsOn: Bool = false) -> UIView {
-        let stack = UIStackView()
-        view.addSubview(stack)
-        stack.axis = .horizontal
-        label.text = labelText
-        
-        stack.addArrangedSubview(label)
-        baseSetup(for: label)
-        label.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(20.0)
-        }
-        
-        stack.addArrangedSubview(switcher)
-        switcher.isOn = switcherIsOn
-        baseSetup(for: switcher)
-        switcher.snp.makeConstraints {
-            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(20.0)
-        }
-        
         return stack
     }
     
@@ -164,27 +140,25 @@ private extension ProductViewedViewController {
         stack.spacing = 10.0
         
         stack.addArrangedSubview(productIdTextField)
-        baseSetup(for: productIdTextField)
         productIdTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.productId", comment: "")
         
         stack.addArrangedSubview(productPriceTextField)
-        baseSetup(for: productPriceTextField)
         productPriceTextField.keyboardType = .numberPad
         productPriceTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.product_price", comment: "")
         
         stack.addArrangedSubview(currencyTextField)
-        baseSetup(for: currencyTextField)
         currencyTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.currency", comment: "")
         
-        stack.addArrangedSubview(
-            setupSwitch(
-                label: isInStockLabel,
-                switcher: isInStockSwitch,
-                labelText: NSLocalizedString( "ecommerce_screen.shared.labels.is_in_stock_label", comment: "" ),
-                switcherIsOn: true
-            )
+        stack.addArrangedSubview(ReusableViews.setupSwitch(
+            view: view,
+            label: isInStockLabel,
+            switcher: isInStockSwitch,
+            labelText: NSLocalizedString( "ecommerce_screen.shared.labels.is_in_stock_label", comment: "" ),
+            switcherIsOn: true)
         )
         
+        addAttributeButton.setTitle("+", for: .normal)
+        addAttributeButton.addTarget(self, action: #selector(addAttribute(_:)), for: .touchUpInside)
         contentView.addSubview(addAttributeButton)
         addAttributeButton.snp.makeConstraints {
             $0.height.equalTo(50.0)
@@ -193,55 +167,25 @@ private extension ProductViewedViewController {
             $0.top.equalTo(stack.snp.bottom).inset(-10.0)
             $0.bottom.lessThanOrEqualTo(contentView.snp.bottom)
         }
-        addAttributeButton.layer.cornerRadius = 8.0
-        addAttributeButton.backgroundColor = .black
-        addAttributeButton.setTitleColor(.white, for: .normal)
-        addAttributeButton.setTitle("+", for: .normal)
-        addAttributeButton.addTarget(self, action: #selector(addAttribute(_:)), for: .touchUpInside)
         
-        let isForcedPushOption = setupSwitch(
-            label: isForcePushedLabel,
+        let isForcedPushOption = ReusableViews.setupSwitch(
+            view: view, label: isForcePushedLabel,
             switcher: isForcePushedSwitch,
             labelText: NSLocalizedString("ecommerce_screen.shared.labels.is_force_pushed_label", comment: "")
         )
-        
         view.addSubview(isForcedPushOption)
         isForcedPushOption.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(90.0)
         }
         
+        sendEventButton.setTitle(NSLocalizedString("ecommerce_screen.shared.buttons.send_event_button",comment: ""), for: .normal)
+        sendEventButton.addTarget(self, action: #selector(sendEvent(_:)), for: .touchUpInside)
         view.addSubview(sendEventButton)
         sendEventButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16.0)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(20.0)
             $0.height.equalTo(50.0)
         }
-        
-        sendEventButton.layer.cornerRadius = 8.0
-        sendEventButton.backgroundColor = .black
-        sendEventButton.setTitleColor(.white, for: .normal)
-        sendEventButton.setTitle(NSLocalizedString("ecommerce_screen.shared.buttons.send_event_button",comment: ""), for: .normal)
-        sendEventButton.addTarget(self, action: #selector(sendEvent(_:)), for: .touchUpInside)
-    }
-    
-    func baseSetup(for view: UIView) {
-        view.snp.makeConstraints {
-            $0.height.equalTo(30.0)
-        }
-    }
-    
-    func baseSetup(for textField: UITextField) {
-        textField.snp.makeConstraints {
-            $0.height.equalTo(30.0)
-        }
-        textField.textAlignment = .center
-        textField.layer.cornerRadius = 8.0
-        textField.backgroundColor = .white
-        textField.autocapitalizationType = .none
-        textField.autocorrectionType = .no
-        
-        let doneBar = DoneBar(textField: textField)
-        textField.inputAccessoryView = doneBar
     }
     
 }

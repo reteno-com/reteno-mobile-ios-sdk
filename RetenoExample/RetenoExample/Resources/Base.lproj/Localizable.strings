@@ -24,6 +24,7 @@
 "createProfile_screen.fields.phone" = "Phone (optional)";
 "createProfile_screen.fields.email" = "Email (optional)";
 "createProfile_screen.generateButton" = "Generate";
+"createProfile_screen.anonymousSwitch" = "is anonymous contact";
 "createProfile_screen.saveButton" = "Save";
 
 "createProfile_screen.doneButton" = "Done";

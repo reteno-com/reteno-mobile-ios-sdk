@@ -53,7 +53,6 @@ final class SendUserOperation: DateOperation {
                         break
                     }
                 }
-                print(failure.localizedDescription)
                 self.cancel()
             }
         }
@@ -87,7 +86,6 @@ final class SendUserOperation: DateOperation {
                                 break
                             }
                         }
-                        print(failure.localizedDescription)
                         self.cancel()
                     }
                 }

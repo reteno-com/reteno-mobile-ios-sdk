@@ -7,23 +7,24 @@
 //
 
 import UIKit
+import SnapKit
 
 final class OrderCreatedViewController: KeyboardHandlingViewController {
     
     private let contentView = UIView()
     private let stack = UIStackView()
-    private let externalOrderIdTextField = UITextField()
-    private let totalCostTextField = UITextField()
-    private let statusTextField = UITextField()
-    private let currencyTextField = UITextField()
+    private let externalOrderIdTextField = CommonTextField()
+    private let totalCostTextField = CommonTextField()
+    private let statusTextField = CommonTextField()
+    private let currencyTextField = CommonTextField()
     private let isForcePushedLabel = UILabel()
     private let isForcePushedSwitch = UISwitch()
-    private let sendEventButton = UIButton()
-    private let addAttributeButton = UIButton()
+    private let sendEventButton = CommonButton()
+    private let addAttributeButton = CommonButton()
     private let addItemButton = UIButton()
     
-    private var keysTextFields: [UITextField] = []
-    private var valuesTextFields: [UITextField] = []
+    private var keysTextFields: [CommonTextField] = []
+    private var valuesTextFields: [CommonTextField] = []
     
     private let viewModel: OrderCreatedViewModel
     
@@ -112,38 +113,21 @@ private extension OrderCreatedViewController {
         stack.spacing = 20.0
         stack.distribution = .fillProportionally
         
-        let attributeKeyTextField = UITextField()
+        let attributeKeyTextField = CommonTextField()
         stack.addArrangedSubview(attributeKeyTextField)
-        baseSetup(for: attributeKeyTextField)
         attributeKeyTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.attribute_key", comment: "")
         attributeKeyTextField.snp.makeConstraints {
             $0.width.equalTo(stack).multipliedBy(0.3)
         }
         keysTextFields.append(attributeKeyTextField)
         
-        let attributeValueTextField = UITextField()
+        let attributeValueTextField = CommonTextField()
         stack.addArrangedSubview(attributeValueTextField)
-        baseSetup(for: attributeValueTextField)
         attributeValueTextField.placeholder = NSLocalizedString(
             "ecommerce_screen.shared.fields.attribute_value",
             comment: ""
         )
         valuesTextFields.append(attributeValueTextField)
-        
-        return stack
-    }
-    
-    func setupSwitch(label: UILabel, switcher: UISwitch, labelText: String, switcherIsOn: Bool = false) -> UIView {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        
-        label.text = labelText
-        stack.addArrangedSubview(label)
-        baseSetup(for: label)
-        
-        stack.addArrangedSubview(switcher)
-        switcher.isOn = switcherIsOn
-        baseSetup(for: switcher)
         
         return stack
     }
@@ -171,25 +155,18 @@ private extension OrderCreatedViewController {
         stack.spacing = 10.0
         
         stack.addArrangedSubview(externalOrderIdTextField)
-        baseSetup(for: externalOrderIdTextField)
         externalOrderIdTextField.placeholder = NSLocalizedString("ecommerce.order_created_screen.fields.order_id", comment: "")
         
         stack.addArrangedSubview(totalCostTextField)
-        baseSetup(for: totalCostTextField)
         totalCostTextField.keyboardType = .phonePad
         totalCostTextField.placeholder = NSLocalizedString("ecommerce.order_created_screen.fields.total_cost", comment: "")
         
         stack.addArrangedSubview(statusTextField)
-        baseSetup(for: statusTextField)
         statusTextField.placeholder = NSLocalizedString("ecommerce.order_created_screen.fields.status", comment: "")
 
         stack.addArrangedSubview(currencyTextField)
-        baseSetup(for: currencyTextField)
         currencyTextField.placeholder = NSLocalizedString("ecommerce_screen.shared.fields.currency", comment: "")
         
-        addAttributeButton.layer.cornerRadius = 8.0
-        addAttributeButton.backgroundColor = .black
-        addAttributeButton.setTitleColor(.white, for: .normal)
         addAttributeButton.setTitle("+", for: .normal)
         addAttributeButton.addTarget(self, action: #selector(addAttribute(_:)), for: .touchUpInside)
         contentView.addSubview(addAttributeButton)
@@ -215,7 +192,8 @@ private extension OrderCreatedViewController {
             $0.height.equalTo(50.0)
         }
         
-        let isForcedPushOption = setupSwitch(
+        let isForcedPushOption = ReusableViews.setupSwitch(
+            view: view,
             label: isForcePushedLabel,
             switcher: isForcePushedSwitch,
             labelText: NSLocalizedString("ecommerce_screen.shared.labels.is_force_pushed_label", comment: "")
@@ -226,9 +204,6 @@ private extension OrderCreatedViewController {
             $0.leading.trailing.equalToSuperview().inset(20.0)
         }
         
-        sendEventButton.layer.cornerRadius = 8.0
-        sendEventButton.backgroundColor = .black
-        sendEventButton.setTitleColor(.white, for: .normal)
         sendEventButton.setTitle(NSLocalizedString("ecommerce_screen.shared.buttons.send_event_button",comment: ""), for: .normal)
         sendEventButton.addTarget(self, action: #selector(sendEvent(_:)), for: .touchUpInside)
         view.addSubview(sendEventButton)
@@ -238,26 +213,6 @@ private extension OrderCreatedViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20.0)
             $0.height.equalTo(50.0)
         }
-    }
-    
-    func baseSetup(for view: UIView) {
-        view.snp.makeConstraints {
-            $0.height.equalTo(30.0)
-        }
-    }
-    
-    func baseSetup(for textField: UITextField) {
-        textField.snp.makeConstraints {
-            $0.height.equalTo(30.0)
-        }
-        textField.textAlignment = .center
-        textField.layer.cornerRadius = 8.0
-        textField.backgroundColor = .white
-        textField.autocapitalizationType = .none
-        textField.autocorrectionType = .no
-        
-        let doneBar = DoneBar(textField: textField)
-        textField.inputAccessoryView = doneBar
     }
     
 }

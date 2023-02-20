@@ -13,9 +13,14 @@ struct DeviceIdHelper {
     private init() {}
     
     static func actualizeDeviceId() {
-        guard let id = UIDevice.current.identifierForVendor else { return }
+        guard let id = UIDevice.current.identifierForVendor, id.uuidString != deviceId() else { return }
         
-        StorageBuilder.build().set(value: id.uuidString, forKey: StorageKeys.deviceId.rawValue)
+        let storage = StorageBuilder.build()
+        storage.set(value: id.uuidString, forKey: StorageKeys.deviceId.rawValue)
+        RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
+            storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
+            MobileRequestServiceBuilder.build().upsertDevice(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed)
+        }
     }
     
     static func deviceId() -> String? {

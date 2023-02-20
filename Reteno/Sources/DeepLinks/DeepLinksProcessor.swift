@@ -10,12 +10,17 @@ import UIKit
 struct DeepLinksProcessor {
     
     @available(iOSApplicationExtension, unavailable)
-    static func processLinks(wrappedUrl: URL?, rawURL: URL?) {
+    static func processLinks(
+        wrappedUrl: URL?,
+        rawURL: URL?,
+        storage: KeyValueStorage = StorageBuilder.build(),
+        scheduler: EventsSenderScheduler = Reteno.senderScheduler
+    ) {
         guard let url = rawURL else { return }
         
         if let wrappedUrl = wrappedUrl {
-            let service = SendingServiceBuilder.buildServiceWithEmptyURL()
-            service.registerLinkClick(wrappedUrl.absoluteString)
+            storage.appendLink(StorableLink(value: wrappedUrl.absoluteString, date: Date()))
+            scheduler.forcePushEvents()
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }

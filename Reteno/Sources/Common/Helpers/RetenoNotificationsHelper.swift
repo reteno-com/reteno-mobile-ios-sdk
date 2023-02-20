@@ -20,6 +20,10 @@ struct RetenoNotificationsHelper {
         StorageBuilder.build().getValue(forKey: StorageKeys.pushToken.rawValue)
     }
     
+    static func isPushSubscribed() -> Bool {
+        StorageBuilder.build().getValue(forKey: StorageKeys.isPushSubscribed.rawValue)
+    }
+    
     static func isSubscribedOnNotifications(completion: @escaping (Bool) -> Void) {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             switch settings.authorizationStatus {
