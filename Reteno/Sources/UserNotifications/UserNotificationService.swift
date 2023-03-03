@@ -36,9 +36,11 @@ public final class UserNotificationService: NSObject {
     /// Rgistering application for receiving `Remote notifications`
     /// - Parameter options: Options that determine the authorized features of local and remote notifications.
     /// - Parameter application: Current `UIApplication`. The centralized point of control and coordination for apps running in iOS.
+    /// - Parameter userResponse: Closure with user response on permission prompt.
     public func registerForRemoteNotifications(
         with options: UNAuthorizationOptions = [.sound, .alert, .badge],
-        application: UIApplication
+        application: UIApplication = UIApplication.shared,
+        userResponse: ((_ granted: Bool) -> Void)? = nil
     ) {
         let notificationsCenter = UNUserNotificationCenter.current()
         notificationsCenter.requestAuthorization(options: options) { [weak self] granted, error in
@@ -49,17 +51,16 @@ public final class UserNotificationService: NSObject {
                 notificationsCenter.delegate = self
             }
             
-            notificationsCenter.getNotificationSettings { _ in
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
-                }
+            DispatchQueue.main.async {
+                application.registerForRemoteNotifications()
+                userResponse?(granted)
             }
         }
     }
     
     /// Unregistering from receiving `Remote notifications`
     /// - Parameter application: Current `UIApplication`. The centralized point of control and coordination for apps running in iOS.
-    public func unregisterFromRemoteNotifications(application: UIApplication) {
+    public func unregisterFromRemoteNotifications(application: UIApplication = UIApplication.shared) {
         if application.isRegisteredForRemoteNotifications {
             application.unregisterForRemoteNotifications()
             application.applicationIconBadgeNumber = 0
@@ -78,7 +79,7 @@ public final class UserNotificationService: NSObject {
         
         RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
             storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
-            MobileRequestServiceBuilder.build().upsertDevice(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed)
+            Reteno.upsertDevice(Device(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed))
         }
     }
     
@@ -117,6 +118,15 @@ public final class UserNotificationService: NSObject {
                 notificationActionHandler?(response.notification.request.content.userInfo, action)
             }
         }
+    }
+    
+    func setNotificationCenterDelegate() {
+        guard
+            UIApplication.shared.isRegisteredForRemoteNotifications,
+            UNUserNotificationCenter.current().delegate.isNone
+        else { return }
+        
+        UNUserNotificationCenter.current().delegate = self
     }
     
 }

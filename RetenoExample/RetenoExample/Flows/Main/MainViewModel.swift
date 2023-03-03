@@ -42,4 +42,8 @@ final class MainViewModel {
         model.openRecoms()
     }
     
+    func subscribeOnPushNotifications() {
+        model.subscribeOnPushNotifications()
+    }
+    
 }

@@ -58,4 +58,8 @@ final class MainModel {
         navigationHandler.openRecoms()
     }
     
+    func subscribeOnPushNotifications() {
+        Reteno.userNotificationService.registerForRemoteNotifications(with: [.sound, .alert, .badge])
+    }
+    
 }

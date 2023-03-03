@@ -18,13 +18,6 @@ final class EventsSenderScheduler {
         }
     }
     
-    /// Mobile request service
-    private let mobileRequestService: MobileRequestService
-    /// Notification interaction status updater
-    private let sendingService: SendingServices
-    /// Local storage, based on `UserDefaults`
-    private let storage: KeyValueStorage
-    
     private lazy var operationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .utility
@@ -33,17 +26,21 @@ final class EventsSenderScheduler {
         return queue
     }()
     
+    private var pendingSendDeviceOperations: [SendDeviceOperation] = []
     private var backgroundTaskIdentifier: UIBackgroundTaskIdentifier = .invalid
-    
     private var sendingTimer: Timer?
-    
     private var application: UIApplication?
-    
     private var lastForcePushTimestamp: Date?
-    
     /// time interval resolvers
     private var timeIntervalResolver: () -> TimeInterval
     private var randomOffsetResolver: () -> TimeInterval
+    
+    /// Mobile request service
+    private let mobileRequestService: MobileRequestService
+    /// Notification interaction status updater
+    private let sendingService: SendingServices
+    /// Local storage, based on `UserDefaults`
+    private let storage: KeyValueStorage
     
     // MARK: Lifecycle
     
@@ -67,6 +64,19 @@ final class EventsSenderScheduler {
         self.randomOffsetResolver = randomOffsetResolver
         
         subscribeOnNotifications()
+    }
+    
+    func upsertDevice(_ device: Device, date: Date = Date()) {
+        guard !pendingSendDeviceOperations.contains(where: { $0.device == device }) else {
+            return
+        }
+        
+        let operation = SendDeviceOperation(requestService: mobileRequestService, device: device, date: date)
+        operation.completionBlock = { [weak self] in
+            self?.pendingSendDeviceOperations.removeAll(where: { $0.uuid == operation.uuid })
+        }
+        pendingSendDeviceOperations.append(operation)
+        operationQueue.addOperation(operation)
     }
         
     func updateNotificationInteractionStatus(interactionId: String, status: InteractionStatus, date: Date) {
@@ -109,6 +119,12 @@ final class EventsSenderScheduler {
         
         sendCollectedData()
         lastForcePushTimestamp = Date()
+    }
+    
+    func forceFetchMessagesCount() {
+        guard let messagesOperation = messagesCountOperation() else { return }
+        
+        operationQueue.addOperation(messagesOperation)
     }
     
     // MARK: Subscribe on notifications
@@ -190,7 +206,7 @@ final class EventsSenderScheduler {
     }
     
     private func prepareOperationSequence() -> [Operation] {
-        var operations = sendNotificationsStatusOperations() + sendUsersOperations() + registerWrappedLinkClickOperations()
+        var operations = sendUsersOperations() + registerWrappedLinkClickOperations()
         if let sendEventOperation = sendEventsOperation() {
             operations.append(sendEventOperation)
         }
@@ -201,6 +217,7 @@ final class EventsSenderScheduler {
             operations.append(sendAppInboxMessagesIdsOperation)
         }
         operations.sort(by: { $0.date < $1.date })
+        operations.insert(contentsOf: sendNotificationsStatusOperations().sorted(by: { $0.date < $1.date }), at: 0)
         Operation.makeDependencies(forOperations: operations)
         let serviceOperations = prepareServiceOperations()
         
@@ -219,12 +236,6 @@ final class EventsSenderScheduler {
     private func endTask() {
         application?.endBackgroundTask(self.backgroundTaskIdentifier)
         backgroundTaskIdentifier = .invalid
-    }
-    
-    func forceFetchMessagesCount() {
-        guard let messagesOperation = messagesCountOperation() else { return }
-        
-        operationQueue.addOperation(messagesOperation)
     }
     
     // MARK: Sending logic

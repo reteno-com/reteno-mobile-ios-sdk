@@ -19,7 +19,7 @@ struct DeviceIdHelper {
         storage.set(value: id.uuidString, forKey: StorageKeys.deviceId.rawValue)
         RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
             storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
-            MobileRequestServiceBuilder.build().upsertDevice(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed)
+            Reteno.upsertDevice(Device(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed))
         }
     }
     

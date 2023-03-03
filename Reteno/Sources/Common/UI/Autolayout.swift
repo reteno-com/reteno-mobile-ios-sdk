@@ -5,14 +5,14 @@
 
 import UIKit
 
-public protocol LayoutAnchor {
+protocol LayoutAnchor {
     
     func constraint(equalTo anchor: Self, constant: CGFloat) -> NSLayoutConstraint
     func constraint(greaterThanOrEqualTo anchor: Self, constant: CGFloat) -> NSLayoutConstraint
     func constraint(lessThanOrEqualTo anchor: Self, constant: CGFloat) -> NSLayoutConstraint
 }
 
-public protocol LayoutDimension: LayoutAnchor {
+protocol LayoutDimension: LayoutAnchor {
     
     func constraint(equalToConstant constant: CGFloat) -> NSLayoutConstraint
     func constraint(greaterThanOrEqualToConstant constant: CGFloat) -> NSLayoutConstraint
@@ -24,40 +24,40 @@ public protocol LayoutDimension: LayoutAnchor {
 extension NSLayoutAnchor: LayoutAnchor {}
 extension NSLayoutDimension: LayoutDimension {}
 
-public class LayoutProperty<Anchor: LayoutAnchor> {
+class LayoutProperty<Anchor: LayoutAnchor> {
     
     fileprivate let anchor: Anchor
     fileprivate let kind: Kind
     
-    public enum Kind { case leading, trailing, top, bottom, centerX, centerY, width, height }
+    enum Kind { case leading, trailing, top, bottom, centerX, centerY, width, height }
     
-    public init(anchor: Anchor, kind: Kind) {
+    init(anchor: Anchor, kind: Kind) {
         self.anchor = anchor
         self.kind = kind
     }
 }
 
-public class LayoutAttribute<Dimension: LayoutDimension>: LayoutProperty<Dimension> {
+class LayoutAttribute<Dimension: LayoutDimension>: LayoutProperty<Dimension> {
     
     fileprivate let dimension: Dimension
     
-    public init(dimension: Dimension, kind: Kind) {
+    init(dimension: Dimension, kind: Kind) {
         self.dimension = dimension
         
         super.init(anchor: dimension, kind: kind)
     }
 }
 
-public final class LayoutProxy {
+final class LayoutProxy {
     
-    public lazy var leading = property(with: view.leadingAnchor, kind: .leading)
-    public lazy var trailing = property(with: view.trailingAnchor, kind: .trailing)
-    public lazy var top = property(with: view.topAnchor, kind: .top)
-    public lazy var bottom = property(with: view.bottomAnchor, kind: .bottom)
-    public lazy var centerX = property(with: view.centerXAnchor, kind: .centerX)
-    public lazy var centerY = property(with: view.centerYAnchor, kind: .centerY)
-    public lazy var width = attribute(with: view.widthAnchor, kind: .width)
-    public lazy var height = attribute(with: view.heightAnchor, kind: .height)
+    lazy var leading = property(with: view.leadingAnchor, kind: .leading)
+    lazy var trailing = property(with: view.trailingAnchor, kind: .trailing)
+    lazy var top = property(with: view.topAnchor, kind: .top)
+    lazy var bottom = property(with: view.bottomAnchor, kind: .bottom)
+    lazy var centerX = property(with: view.centerXAnchor, kind: .centerX)
+    lazy var centerY = property(with: view.centerYAnchor, kind: .centerY)
+    lazy var width = attribute(with: view.widthAnchor, kind: .width)
+    lazy var height = attribute(with: view.heightAnchor, kind: .height)
     
     private let view: UIView
     
@@ -74,7 +74,7 @@ public final class LayoutProxy {
     }
 }
 
-public extension LayoutAttribute {
+extension LayoutAttribute {
     
     @discardableResult
     func equal(to constant: CGFloat, priority: UILayoutPriority? = nil, isActive: Bool = true) -> NSLayoutConstraint {
@@ -124,7 +124,7 @@ public extension LayoutAttribute {
     }
 }
 
-public extension LayoutProperty {
+extension LayoutProperty {
     
     @discardableResult
     func equal(
@@ -173,7 +173,7 @@ public extension LayoutProperty {
     }
 }
 
-public extension UIView {
+extension UIView {
     
     func layout(using closure: (LayoutProxy) -> Void) {
         translatesAutoresizingMaskIntoConstraints = false
@@ -197,88 +197,88 @@ public extension UIView {
 
 //swiftlint:disable large_tuple
 
-public func +<A: LayoutAnchor>(lhs: A, rhs: CGFloat) -> (A, CGFloat) {
+func +<A: LayoutAnchor>(lhs: A, rhs: CGFloat) -> (A, CGFloat) {
     return (lhs, rhs)
 }
 
-public func -<A: LayoutAnchor>(lhs: A, rhs: CGFloat) -> (A, CGFloat) {
+func -<A: LayoutAnchor>(lhs: A, rhs: CGFloat) -> (A, CGFloat) {
     return (lhs, -rhs)
 }
 
 @discardableResult
-public func ==<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: (A, CGFloat)) -> NSLayoutConstraint {
+func ==<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: (A, CGFloat)) -> NSLayoutConstraint {
     return lhs.equal(to: rhs.0, offsetBy: rhs.1)
 }
 
 @discardableResult
-public func ==<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: ((A, CGFloat), UILayoutPriority)) -> NSLayoutConstraint {
+func ==<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: ((A, CGFloat), UILayoutPriority)) -> NSLayoutConstraint {
     return lhs.equal(to: rhs.0.0, offsetBy: rhs.0.1, priority: rhs.1)
 }
 
 @discardableResult
-public func ==<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: (A, UILayoutPriority)) -> NSLayoutConstraint {
+func ==<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: (A, UILayoutPriority)) -> NSLayoutConstraint {
     return lhs.equal(to: rhs.0, priority: rhs.1)
 }
 
 @discardableResult
-public func ==<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: A) -> NSLayoutConstraint {
+func ==<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: A) -> NSLayoutConstraint {
     return lhs.equal(to: rhs)
 }
 
 @discardableResult
-public func >=<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: (A, CGFloat)) -> NSLayoutConstraint {
+func >=<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: (A, CGFloat)) -> NSLayoutConstraint {
     return lhs.greaterThanOrEqual(to: rhs.0, offsetBy: rhs.1)
 }
 
 @discardableResult
-public func >=<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: A) -> NSLayoutConstraint {
+func >=<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: A) -> NSLayoutConstraint {
     return lhs.greaterThanOrEqual(to: rhs)
 }
 
 @discardableResult
-public func <=<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: (A, CGFloat)) -> NSLayoutConstraint {
+func <=<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: (A, CGFloat)) -> NSLayoutConstraint {
     return lhs.lessThanOrEqual(to: rhs.0, offsetBy: rhs.1)
 }
 
 @discardableResult
-public func <=<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: A) -> NSLayoutConstraint {
+func <=<A: LayoutAnchor>(lhs: LayoutProperty<A>, rhs: A) -> NSLayoutConstraint {
     return lhs.lessThanOrEqual(to: rhs)
 }
 
 @discardableResult
-public func <=<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: CGFloat) -> NSLayoutConstraint {
+func <=<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: CGFloat) -> NSLayoutConstraint {
     return lhs.lessThanOrEqual(to: rhs)
 }
 
 @discardableResult
-public func ==<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: CGFloat) -> NSLayoutConstraint {
+func ==<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: CGFloat) -> NSLayoutConstraint {
     return lhs.equal(to: rhs)
 }
 
 @discardableResult
-public func ==<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: (CGFloat, UILayoutPriority)) -> NSLayoutConstraint {
+func ==<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: (CGFloat, UILayoutPriority)) -> NSLayoutConstraint {
     return lhs.equal(to: rhs.0, priority: rhs.1)
 }
 
 @discardableResult
-public func ==<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: LayoutAttribute<D>) -> NSLayoutConstraint {
+func ==<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: LayoutAttribute<D>) -> NSLayoutConstraint {
     return lhs.equal(to: rhs.dimension)
 }
 
 @discardableResult
-public func *=<D: LayoutDimension>(lhs: LayoutAttribute<D>,
+func *=<D: LayoutDimension>(lhs: LayoutAttribute<D>,
                                    rhs: (LayoutAttribute<D>, CGFloat, UILayoutPriority)) -> NSLayoutConstraint {
     return lhs.equal(to: rhs.0.dimension, multiplier: rhs.1, priority: rhs.2)
 }
 
 @discardableResult
-public func >=<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: CGFloat) -> NSLayoutConstraint {
+func >=<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: CGFloat) -> NSLayoutConstraint {
     return lhs.greaterThanOrEqual(to: rhs)
 }
 
 //swiftlint:enable large_tuple
 
-public extension UIView {
+extension UIView {
     
     private struct AssociatedKeys {
         static var layout = "layout"
@@ -307,16 +307,16 @@ public extension UIView {
     }
 }
 
-public final class Layout: NSObject {
+final class Layout: NSObject {
     
-    public weak var top: NSLayoutConstraint?
-    public weak var bottom: NSLayoutConstraint?
-    public weak var leading: NSLayoutConstraint?
-    public weak var trailing: NSLayoutConstraint?
-    public weak var centerX: NSLayoutConstraint?
-    public weak var centerY: NSLayoutConstraint?
-    public weak var width: NSLayoutConstraint?
-    public weak var height: NSLayoutConstraint?
+    weak var top: NSLayoutConstraint?
+    weak var bottom: NSLayoutConstraint?
+    weak var leading: NSLayoutConstraint?
+    weak var trailing: NSLayoutConstraint?
+    weak var centerX: NSLayoutConstraint?
+    weak var centerY: NSLayoutConstraint?
+    weak var width: NSLayoutConstraint?
+    weak var height: NSLayoutConstraint?
     
     fileprivate func update<A: LayoutAnchor>(constraint: NSLayoutConstraint, kind: LayoutProperty<A>.Kind) {
         switch kind {
@@ -332,7 +332,7 @@ public final class Layout: NSObject {
     }
 }
 
-public extension NSLayoutConstraint {
+extension NSLayoutConstraint {
     
     func constraintWithMultiplier(_ multiplier: CGFloat) -> NSLayoutConstraint {
         return NSLayoutConstraint(

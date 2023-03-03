@@ -37,4 +37,16 @@ struct User: Codable {
         self.isAnonymous = isAnonymous
     }
     
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.externalUserId = try container.decodeIfPresent(String.self, forKey: .externalUserId)
+        self.userAttributes = try container.decodeIfPresent(UserAttributes.self, forKey: .userAttributes)
+        self.subscriptionKeys = try container.decode([String].self, forKey: .subscriptionKeys)
+        self.groupNamesInclude = try container.decode([String].self, forKey: .groupNamesInclude)
+        self.groupNamesExclude = try container.decode([String].self, forKey: .groupNamesExclude)
+        self.date = try container.decode(Date.self, forKey: .date)
+        self.isAnonymous = (try? container.decode(Bool.self, forKey: .isAnonymous)) ?? false
+    }
+    
 }

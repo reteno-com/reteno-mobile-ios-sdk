@@ -38,8 +38,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         Messaging.messaging().delegate = self
         
         Reteno.start(apiKey: "630A66AF-C1D3-4F2A-ACC1-0D51C38D2B05", isDebugMode: true)
-        Reteno.userNotificationService.registerForRemoteNotifications(with: [.sound, .alert, .badge], application: application)
-        Reteno.userNotificationService.willPresentNotificationHandler = { notification in
+        Reteno.userNotificationService.willPresentNotificationHandler = { [weak self] notification in
+            let alert = InformationAlert(text: "Will present notification:\n\(notification.request.content.userInfo)")
+            self?.window?.showInformationAlert(alert)
+            
             let authOptions: UNNotificationPresentationOptions
             if #available(iOS 14.0, *) {
                 authOptions = [.badge, .sound, .banner]
@@ -48,7 +50,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             }
             return authOptions
         }
-        Reteno.userNotificationService.didReceiveNotificationResponseHandler = { response in
+        Reteno.userNotificationService.didReceiveNotificationResponseHandler = { [weak self] response in
             switch response.actionIdentifier {
             case UNNotificationDefaultActionIdentifier:
                 print("Default action")
@@ -59,6 +61,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             default:
                 print(response.actionIdentifier)
             }
+            
+            let alert = InformationAlert(text: "Received response - \(response.actionIdentifier)")
+            self?.window?.showInformationAlert(alert)
         }
         Reteno.userNotificationService.notificationActionHandler = { [weak self] userInfo, action in
             let customDataText = action.customData.flatMap { "\nWith custom data: - \($0)" } ?? ""
@@ -72,8 +77,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             
             // Features turned off by default, but worth checking out
             options.enableAppHangTracking = true
-            options.enableFileIOTracking = true
-            options.enableCoreDataTracking = true
+            options.enableFileIOTracing = true
         }
         
         let window = UIWindow()

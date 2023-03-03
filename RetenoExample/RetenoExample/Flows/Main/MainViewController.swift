@@ -59,6 +59,11 @@ final class MainViewController: NiblessViewController {
         viewModel.openRecoms()
     }
     
+    @objc
+    private func subscribeOnPushButtonAction(_ sender: UIButton) {
+        viewModel.subscribeOnPushNotifications()
+    }
+    
 }
 
 // MARK: - Layout
@@ -71,7 +76,7 @@ private extension MainViewController {
         let label = UILabel()
         view.addSubview(label)
         label.snp.makeConstraints {
-            $0.center.equalToSuperview()
+            $0.center.equalToSuperview().priority(.medium)
         }
         
         label.font = .systemFont(ofSize: 20.0)
@@ -84,9 +89,17 @@ private extension MainViewController {
         
         view.addSubview(stack)
         stack.snp.makeConstraints {
+            $0.top.equalTo(label.snp.bottom).offset(20.0)
             $0.leading.trailing.equalToSuperview().inset(12.0)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12.0)
         }
+        
+        let subscribeOnPushButton = UIButton(type: .system)
+        subscribeOnPushButton.setTitle(NSLocalizedString("main_screen.subscribe_on_push_button.title", comment: ""), for: .normal)
+        subscribeOnPushButton.addTarget(self, action: #selector(subscribeOnPushButtonAction(_:)), for: .touchUpInside)
+        stack.addArrangedSubview(subscribeOnPushButton)
+        baseSetup(for: subscribeOnPushButton)
+        subscribeOnPushButton.backgroundColor = .systemGreen
         
         let ecommerceButton = UIButton(type: .system)
         ecommerceButton.setTitle(NSLocalizedString("ecommerce_screen.title", comment: ""), for: .normal)

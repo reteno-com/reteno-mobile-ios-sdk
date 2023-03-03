@@ -14,6 +14,7 @@
 
 "main_screen.title" = "Reteno Example App";
 "main_screen.log_event_button.title" = "Log event";
+"main_screen.subscribe_on_push_button.title" = "Subscribe on push notifications";
 
 // MARK: - Create profile
 

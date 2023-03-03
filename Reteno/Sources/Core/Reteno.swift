@@ -11,7 +11,7 @@ import UserNotifications
 public struct Reteno {
     
     /// SDK version
-    static var version = "1.5.3"
+    static var version = "1.5.4"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -29,12 +29,14 @@ public struct Reteno {
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
     /// - Parameter isAutomaticScreenReportingEnabled: Flag that indicates if automatic screen view tracking enabled
     /// - Parameter isDebugMode: Flag that indicates if `DebugMode` is enabled
+    @available(iOSApplicationExtension, unavailable)
     public static func start(apiKey: String, isAutomaticScreenReportingEnabled: Bool = true, isDebugMode: Bool = false) {
         DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
         DebugModeHelper.setIsDebugModeOn(isDebugMode)
         analyticsService = AnalyticsServiceBuilder.build(isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled)
         senderScheduler.subscribeOnNotifications()
+        userNotificationService.setNotificationCenterDelegate()
     }
     
     /// Log events
@@ -160,5 +162,11 @@ public struct Reteno {
     }()
     
     public static func ecommerce() -> Ecommerce { ecom }
+    
+    // MARK: Upsert device
+    
+    static func upsertDevice(_ device: Device) {
+        senderScheduler.upsertDevice(device)
+    }
     
 }

@@ -13,12 +13,12 @@ struct SentryHelper {
     
     static func capture(error: Error) {
         let hub = prepareHub()
-        hub?.capture(error: error)
+        hub.capture(error: error)
     }
     
     static func capture(exeption: NSException) {
         let hub = prepareHub()
-        hub?.capture(exception: exeption)
+        hub.capture(exception: exeption)
     }
     
     static func captureLog(title: String, count: Int) {
@@ -26,7 +26,7 @@ struct SentryHelper {
         let event = Sentry.Event(level: SentryLevel.info)
         event.message = SentryMessage(formatted: "Removed \(title): - \(count)")
         event.fingerprint = [BundleIdHelper.getMainAppBundleId(), title]
-        hub?.capture(event: event)
+        hub.capture(event: event)
     }
     
     static func captureItems(_ items: [Groupable], title: String, tagTitle: String) {
@@ -42,7 +42,7 @@ struct SentryHelper {
             event.message = SentryMessage(formatted: "\(title)(\($0.key)) - \($0.value.count)")
             event.fingerprint = [BundleIdHelper.getMainAppBundleId(), title, $0.key]
             event.tags = [tagTitle: $0.key]
-            hub?.capture(event: event)
+            hub.capture(event: event)
         }
     }
     
@@ -52,34 +52,26 @@ struct SentryHelper {
         event.message = SentryMessage(formatted: message)
         event.fingerprint = [BundleIdHelper.getMainAppBundleId(), message]
         event.tags = tags
-        hub?.capture(event: event)
+        hub.capture(event: event)
     }
     
-    static private func prepareHub() -> SentryHub? {
-        do {
-            let options = try Sentry.Options(
-                dict: ["dsn": "https://699db07fec57455e964892ba10da106f@sentry.reteno.com/4504043420450816"]
-            )
-            
-            // Features turned off by default, but worth checking out
-            options.enableAppHangTracking = true
-            options.enableFileIOTracking = true
-            
-            let client = Client(options: options)
-            let hub = SentryHub(client: client, andScope: Scope())
-            hub.scope.setTags(
-                [
-                    "reteno.sdk_version": "\(Reteno.version)",
-                    "reteno.device_id": DeviceIdHelper.deviceId() ?? "",
-                    "reteno.bundle_id": BundleIdHelper.getMainAppBundleId()
-                ]
-            )
-            
-            return hub
-        } catch {
-            Logger.log(error.localizedDescription, eventType: .error)
-            return nil
-        }
+    static private func prepareHub() -> SentryHub {
+        let options = Options()
+        options.dsn = "https://699db07fec57455e964892ba10da106f@sentry.reteno.com/4504043420450816"
+        options.enableAppHangTracking = true
+        options.enableFileIOTracing = true
+        
+        let client = SentryClient(options: Options())
+        let hub = SentryHub(client: client, andScope: Scope())
+        hub.scope.setTags(
+            [
+                "reteno.sdk_version": "\(Reteno.version)",
+                "reteno.device_id": DeviceIdHelper.deviceId() ?? "",
+                "reteno.bundle_id": BundleIdHelper.getMainAppBundleId()
+            ]
+        )
+        
+        return hub
     }
     
 }
