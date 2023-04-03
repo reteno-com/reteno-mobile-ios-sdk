@@ -10,18 +10,18 @@ import UserNotifications
 
 public struct Reteno {
     
+    @available(iOSApplicationExtension, unavailable)
+    public static let userNotificationService = UserNotificationService.shared
+    
     /// SDK version
-    static var version = "1.5.4"
+    static var version = "1.5.5"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
     }()
-    
-    @available(iOSApplicationExtension, unavailable)
-    public static let userNotificationService = UserNotificationService.shared
-        
-    static let senderScheduler = EventsSenderSchedulerBuilder.build()
+    static var linkHandler: ((URL) -> Void)?
     static var analyticsService: AnalyticsService!
+    static let senderScheduler = EventsSenderSchedulerBuilder.build()
     
     private init() {}
     
@@ -34,6 +34,8 @@ public struct Reteno {
         DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
         DebugModeHelper.setIsDebugModeOn(isDebugMode)
+        let storage = StorageBuilder.build()
+        storage.set(value: isAutomaticScreenReportingEnabled, forKey: StorageKeys.screenTrackingFlag.rawValue)
         analyticsService = AnalyticsServiceBuilder.build(isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled)
         senderScheduler.subscribeOnNotifications()
         userNotificationService.setNotificationCenterDelegate()
@@ -45,10 +47,22 @@ public struct Reteno {
     /// - Parameter parameters: List of event parameters as array of "key" - "value" pairs. Parameter keys are arbitrary. Used in campaigns and for dynamic content creation in messages.
     /// - Parameter forcePush: indicates if event should be send immediately or in the next scheduled batch.
     public static func logEvent(eventTypeKey: String, date: Date = Date(), parameters: [Event.Parameter], forcePush: Bool = false) {
+        if analyticsService.isNone {
+            /// Check and initialize `AnalyticsService`. It might be `nil` if is being called from app extension.
+            let storage = StorageBuilder.build()
+            analyticsService = AnalyticsService(
+                isAutomaticScreenReportingEnabled: storage.getValue(forKey: StorageKeys.screenTrackingFlag.rawValue),
+                storage: storage
+            )
+        }
         analyticsService.logEvent(eventTypeKey: eventTypeKey, date: date, parameters: parameters)
         if forcePush {
             senderScheduler.forcePushEvents()
         }
+    }
+    
+    public static func addLinkHandler(_ handler: @escaping (URL) -> Void) {
+        linkHandler = handler
     }
     
     /// Update push notification status in `Reteno`

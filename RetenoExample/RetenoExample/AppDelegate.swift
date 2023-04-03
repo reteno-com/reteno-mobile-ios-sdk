@@ -37,7 +37,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         
-        Reteno.start(apiKey: "SDK_API_KEY", isDebugMode: true)
+        Reteno.start(apiKey: "630A66AF-C1D3-4F2A-ACC1-0D51C38D2B05", isDebugMode: true)
         Reteno.userNotificationService.willPresentNotificationHandler = { [weak self] notification in
             let alert = InformationAlert(text: "Will present notification:\n\(notification.request.content.userInfo)")
             self?.window?.showInformationAlert(alert)
@@ -69,6 +69,19 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             let customDataText = action.customData.flatMap { "\nWith custom data: - \($0)" } ?? ""
             let alert = InformationAlert(text: "Received action - \(action.actionId)\(customDataText)")
             self?.window?.showInformationAlert(alert)
+        }
+        Reteno.addLinkHandler { [weak self] url in
+            guard
+                let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+                components.host == "example-app.esclick.me",
+                let linkItem = UniversalLinkItem(rawValue: components.path)
+            else {
+                // if it's not a deep link, just open Safari
+                application.open(url)
+                return
+            }
+            
+            self?.applicationFlowCoordinator.handleUniversalLink(linkItem)
         }
         
         SentrySDK.start { options in
@@ -102,6 +115,23 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         applicationFlowCoordinator.handleDeeplink(url)
         
         return true
+    }
+    
+    func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+        guard
+            userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+            let url = userActivity.webpageURL,
+            let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+            let linkItem = UniversalLinkItem(rawValue: components.path)
+        else { return false }
+        
+        applicationFlowCoordinator.handleUniversalLink(linkItem)
+        
+        return false
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {

@@ -7,6 +7,10 @@
 import UIKit
 import Swinject
 
+enum UniversalLinkItem: String {
+    case inbox = "/app_inbox", profile = "/profile", recom = "/recom"
+}
+
 final class ApplicationFlowCoordinator {
     
     private weak var navigationController: UINavigationController?
@@ -45,6 +49,19 @@ final class ApplicationFlowCoordinator {
             
         default:
             break
+        }
+    }
+    
+    func handleUniversalLink(_ item: UniversalLinkItem) {
+        switch item {
+        case .inbox:
+            openAppInbox()
+            
+        case .recom:
+            openRecoms()
+            
+        case .profile:
+            createProfile()
         }
     }
     

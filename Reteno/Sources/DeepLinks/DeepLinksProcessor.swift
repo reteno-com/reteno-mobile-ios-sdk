@@ -22,7 +22,7 @@ struct DeepLinksProcessor {
             storage.appendLink(StorableLink(value: wrappedUrl.absoluteString, date: Date()))
             scheduler.forcePushEvents()
         }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        Reteno.linkHandler?(url) ?? UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
 }
