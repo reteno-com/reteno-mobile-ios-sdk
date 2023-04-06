@@ -175,12 +175,12 @@ extension Ecommerce {
             }
             if let items = items,
                items.isNotEmpty,
-               let escapedItems = EcommerceHelper().convertJSONToString(items.map { $0.toJSON() }) {
+               let escapedItems = JSONConverterHelper.convertJSONToString(items.map { $0.toJSON() }) {
                 parameters.append(.init(name: "items", value: escapedItems))
             }
             if let attributes = attributes, !attributes.isEmpty {
                 attributes.keys.forEach {
-                    if let json = attributes[$0], let escapedJSON = EcommerceHelper().convertJSONToString(json) {
+                    if let json = attributes[$0], let escapedJSON = JSONConverterHelper.convertJSONToString(json) {
                         parameters.append(.init(name: $0, value: escapedJSON))
                     }
                 }

@@ -72,7 +72,7 @@ public final class Ecommerce {
             
         case .cartUpdated(let cartId, let products, let currencyCode):
             var parameters: [Event.Parameter] = [.init(name: "cartId", value: cartId)]
-            if products.isNotEmpty, let escapedProducts = EcommerceHelper().convertJSONToString(products.map { $0.toJSON() }) {
+            if products.isNotEmpty, let escapedProducts = JSONConverterHelper.convertJSONToString(products.map { $0.toJSON() }) {
                 parameters.append(.init(name: "products", value: escapedProducts))
             }
             if let currencyCode = currencyCode {

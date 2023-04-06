@@ -40,6 +40,7 @@ struct RetenoUserNotification {
     let imageURLString: String?
     let imagesURLStrings: [String]?
     let actionButtons: [ActionButton]?
+    let isInApp: Bool
     
     init?(userInfo: [AnyHashable: Any]) {
         guard let id = userInfo["es_interaction_id"] as? String else { return nil }
@@ -62,6 +63,7 @@ struct RetenoUserNotification {
         } else {
             actionButtons = nil
         }
+        isInApp = (userInfo["es_inapp"] as? NSString)?.boolValue ?? false
     }
     
 }

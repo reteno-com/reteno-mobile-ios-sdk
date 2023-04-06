@@ -33,7 +33,7 @@ extension Ecommerce {
                 json[key] = value
             }
             
-            return EcommerceHelper().convertJSONToString(json)
+            return JSONConverterHelper.convertJSONToString(json)
         }
     }
     

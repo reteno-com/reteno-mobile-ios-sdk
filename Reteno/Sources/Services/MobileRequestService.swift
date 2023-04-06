@@ -66,6 +66,13 @@ final class MobileRequestService {
         }
     }
     
+    func getInAppMessage(by id: String, completionHandler: @escaping (Result<InAppMessage, Error>) -> Void) {
+        let request = InAppMessageRequest(id: id)
+        let handler = DecodableResponseHandler<InAppMessage>()
+
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
+    }
+    
 }
 
 // MARK: EventsSender

@@ -515,6 +515,33 @@ final class MobileRequestServiceTests: XCTestCase {
         }
     }
     
+    // MARK: - InAppMessage
+    
+    func test_getInAppMessage_withPositiveResult() {
+        let id = "tr66"
+        stub(condition: pathEndsWith("v1/inapp/interactions/\(id)/message")) { _ in
+            let stubPath = OHPathForFile("in_app_message.json", type(of: self))
+            
+            return fixture(filePath: stubPath!, headers: nil)
+        }
+        var expectedModel: InAppMessage?
+        let expectation = expectation(description: "Request")
+        sut.getInAppMessage(by: id) { result in
+            switch result {
+            case .success(let model):
+                expectedModel = model
+                
+            case .failure:
+                expectedModel = nil
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertNotNil(expectedModel, "expected model should exists")
+            XCTAssertTrue(expectedModel?.model.isEmpty == false, "model property shouldn't be empty")
+        }
+    }
+    
     // MARK: Helpers
     
     private func recomsJsonData() throws -> Data {

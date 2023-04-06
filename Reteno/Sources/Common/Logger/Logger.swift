@@ -26,7 +26,7 @@ struct Logger {
         return formatter
     }
     
-    // MARK: Logging
+    // MARK: Logging method
     
     static func log( _ object: Any, eventType: EventType) {
         #if DEBUG

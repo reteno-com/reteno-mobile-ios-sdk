@@ -17,16 +17,20 @@ struct UpdateInteractionStatusRequest: APIRequest {
     let method = HTTPMethod.put
     let encoding: ParameterEncoding? = JSONEncoding.default
     
-    init(interactionId: String, token: String? = nil, status: InteractionStatus, time: Date? = nil) {
-        path = "v1/interactions/\(interactionId)/status"
+    init(status: NotificationStatus, token: String? = nil) {
+        path = "v1/interactions/\(status.interactionId)/status"
         
         var parameters = Parameters()
         if let token = token {
             parameters["token"] = token
         }
-        parameters["status"] = status.rawValue
-        if let time = time {
-            parameters["time"] = DateFormatter.baseBEDateFormatter.string(from: time)
+        parameters["status"] = status.status.rawValue
+        parameters["time"] = DateFormatter.baseBEDateFormatter.string(from: status.date)
+        if let action = status.action {
+            var actionParameters = ["type": action.type]
+            action.targetComponentId.flatMap { actionParameters["targetComponentId"] = $0 }
+            action.url.flatMap { actionParameters["url"] = $0 }
+            parameters["action"] = actionParameters
         }
         
         self.parameters = parameters

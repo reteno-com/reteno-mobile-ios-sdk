@@ -31,7 +31,10 @@ final class SendingServicesTests: XCTestCase {
         }
         var expectedSuccess: Bool?
         let expectation = expectation(description: "Request")
-        sut.updateInteractionStatus(interactionId: "-1", token: "token", status: .delivered, date: Date()) { result in
+        sut.updateInteractionStatus(
+            status: NotificationStatus(interactionId: "-1", status: .delivered, date: Date()),
+            token: "token"
+        ) { result in
             switch result {
             case .success:
                 expectedSuccess = true

@@ -22,6 +22,7 @@ enum StorageKeys: String, CaseIterable {
     case inboxOpenedMessagesIds = "com.reteno.inbox_opened_messages_ids.key"
     case wrappedLinks = "com.reteno.wrapped-links.key"
     case screenTrackingFlag = "com.reteno.screen-tracking-flag.key"
+    case inAppMessageBaseHTMLVersion = "com.reteno.in-app_message_base_html.key"
     
 }
 

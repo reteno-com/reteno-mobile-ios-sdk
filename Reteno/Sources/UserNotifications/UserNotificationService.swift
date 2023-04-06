@@ -85,11 +85,15 @@ public final class UserNotificationService: NSObject {
     
     /// Processing opened remote notification
     ///
-    /// If there is a link in the notification, it will be handled. Also the notification `OPENED` status will be tracked.
+    /// If there is a link in the notification, it will be handled. Also the notification `CLICKED` status will be tracked.
     ///
     /// - Parameter notification: The notification to which the user responded.
     public func processOpenedRemoteNotification(_ notification: UNNotification) {
-        if let notification = RetenoUserNotification(userInfo: notification.request.content.userInfo) {
+        guard let notification = RetenoUserNotification(userInfo: notification.request.content.userInfo) else { return }
+        
+        if notification.isInApp {
+            Reteno.inAppMessages().presentInApp(by: notification.id)
+        } else {
             Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .clicked, date: Date())
             DeepLinksProcessor.processLinks(wrappedUrl: notification.link, rawURL: notification.rawLink)
         }
@@ -98,6 +102,8 @@ public final class UserNotificationService: NSObject {
     /// Processing remote notification response
     /// - Parameter response: Received notification response.
     public func processRemoteNotificationResponse(_ response: UNNotificationResponse) {
+        guard let notification = RetenoUserNotification(userInfo: response.notification.request.content.userInfo) else { return }
+        
         switch response.actionIdentifier {
         case UNNotificationDefaultActionIdentifier:
             processOpenedRemoteNotification(response.notification)
@@ -106,8 +112,12 @@ public final class UserNotificationService: NSObject {
             break
             
         default:
-            if let notification = RetenoUserNotification(userInfo: response.notification.request.content.userInfo),
-               let actionButton = notification.actionButtons?.first(where: { $0.actionId == response.actionIdentifier }) {
+            guard !notification.isInApp else {
+                Reteno.inAppMessages().presentInApp(by: notification.id)
+                return
+            }
+            
+            if let actionButton = notification.actionButtons?.first(where: { $0.actionId == response.actionIdentifier }) {
                 Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .clicked, date: Date())
                 DeepLinksProcessor.processLinks(wrappedUrl: actionButton.link, rawURL: actionButton.rawLink)
                 let action = RetenoUserNotificationAction(

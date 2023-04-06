@@ -99,6 +99,7 @@
 		D545923D291D225300E589A9 /* RecomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545923C291D225300E589A9 /* RecomsViewController.swift */; };
 		D545923F291D226B00E589A9 /* RecomsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D545923E291D226B00E589A9 /* RecomsViewModel.swift */; };
 		D5459241291D227300E589A9 /* RecomsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5459240291D227300E589A9 /* RecomsModel.swift */; };
+		D55047F829C4681E00C95B04 /* in_app_message.json in Resources */ = {isa = PBXBuildFile; fileRef = D55047F629C467EE00C95B04 /* in_app_message.json */; };
 		D5C96C18291E8D0D0049109A /* RecomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C96C17291E8D0D0049109A /* RecomCell.swift */; };
 		D5C96C1B291E926B0049109A /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C96C1A291E926B0049109A /* Recommendation.swift */; };
 		D5C96C1E291ED5F80049109A /* String+HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C96C1D291ED5F80049109A /* String+HTML.swift */; };
@@ -111,7 +112,7 @@
 		D5CBB0D22941E58C009CB2B3 /* EcommerceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0D12941E58C009CB2B3 /* EcommerceTests.swift */; };
 		D5CBB0D42941EE4D009CB2B3 /* JSONInitableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0D32941EE4D009CB2B3 /* JSONInitableTests.swift */; };
 		D5CBB0D62941EE63009CB2B3 /* RecomsResponseHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0D52941EE63009CB2B3 /* RecomsResponseHandlerTests.swift */; };
-		D5CBB0D8294335F7009CB2B3 /* EcommerceHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0D7294335F7009CB2B3 /* EcommerceHelperTests.swift */; };
+		D5CBB0D8294335F7009CB2B3 /* JSONConverterHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0D7294335F7009CB2B3 /* JSONConverterHelperTests.swift */; };
 		D5CBB0DA29463965009CB2B3 /* ProductInCartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0D929463965009CB2B3 /* ProductInCartTests.swift */; };
 		D5CBB0DC29463B48009CB2B3 /* ProductCategoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0DB29463B48009CB2B3 /* ProductCategoryTests.swift */; };
 		D5CBB0DE29463C58009CB2B3 /* ProductTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CBB0DD29463C58009CB2B3 /* ProductTests.swift */; };
@@ -126,6 +127,8 @@
 		D5F707422991240E0018F304 /* ConformanceGroupableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F707412991240E0018F304 /* ConformanceGroupableTests.swift */; };
 		D5F7074B29955C800018F304 /* RegisterLinkClickOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F7074A29955C800018F304 /* RegisterLinkClickOperationTests.swift */; };
 		D5F7074E29956C8C0018F304 /* DeepLinksProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F7074D29956C8C0018F304 /* DeepLinksProcessorTests.swift */; };
+		D5F7075C29969ED50018F304 /* InAppRequestServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F7075A29969ED50018F304 /* InAppRequestServiceTests.swift */; };
+		D5F7075D29969ED50018F304 /* InAppScriptMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F7075B29969ED50018F304 /* InAppScriptMessageTests.swift */; };
 		D5F91E2D29080C5500EA5FBA /* AppInboxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E2C29080C5500EA5FBA /* AppInboxModel.swift */; };
 		D5F91E2F29080C6000EA5FBA /* AppInboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E2E29080C6000EA5FBA /* AppInboxViewModel.swift */; };
 		D5F91E3129080C6D00EA5FBA /* AppInboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */; };
@@ -346,6 +349,7 @@
 		D545923C291D225300E589A9 /* RecomsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomsViewController.swift; sourceTree = "<group>"; };
 		D545923E291D226B00E589A9 /* RecomsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomsViewModel.swift; sourceTree = "<group>"; };
 		D5459240291D227300E589A9 /* RecomsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomsModel.swift; sourceTree = "<group>"; };
+		D55047F629C467EE00C95B04 /* in_app_message.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = in_app_message.json; sourceTree = "<group>"; };
 		D5B7629666AADFDA356F6DDB /* Pods-Auth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Auth.debug.xcconfig"; path = "Target Support Files/Pods-Auth/Pods-Auth.debug.xcconfig"; sourceTree = "<group>"; };
 		D5C96C17291E8D0D0049109A /* RecomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomCell.swift; sourceTree = "<group>"; };
 		D5C96C1A291E926B0049109A /* Recommendation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendation.swift; sourceTree = "<group>"; };
@@ -359,7 +363,7 @@
 		D5CBB0D12941E58C009CB2B3 /* EcommerceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceTests.swift; sourceTree = "<group>"; };
 		D5CBB0D32941EE4D009CB2B3 /* JSONInitableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONInitableTests.swift; sourceTree = "<group>"; };
 		D5CBB0D52941EE63009CB2B3 /* RecomsResponseHandlerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecomsResponseHandlerTests.swift; sourceTree = "<group>"; };
-		D5CBB0D7294335F7009CB2B3 /* EcommerceHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceHelperTests.swift; sourceTree = "<group>"; };
+		D5CBB0D7294335F7009CB2B3 /* JSONConverterHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverterHelperTests.swift; sourceTree = "<group>"; };
 		D5CBB0D929463965009CB2B3 /* ProductInCartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInCartTests.swift; sourceTree = "<group>"; };
 		D5CBB0DB29463B48009CB2B3 /* ProductCategoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategoryTests.swift; sourceTree = "<group>"; };
 		D5CBB0DD29463C58009CB2B3 /* ProductTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductTests.swift; sourceTree = "<group>"; };
@@ -375,6 +379,8 @@
 		D5F707412991240E0018F304 /* ConformanceGroupableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConformanceGroupableTests.swift; sourceTree = "<group>"; };
 		D5F7074A29955C800018F304 /* RegisterLinkClickOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterLinkClickOperationTests.swift; sourceTree = "<group>"; };
 		D5F7074D29956C8C0018F304 /* DeepLinksProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinksProcessorTests.swift; sourceTree = "<group>"; };
+		D5F7075A29969ED50018F304 /* InAppRequestServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppRequestServiceTests.swift; sourceTree = "<group>"; };
+		D5F7075B29969ED50018F304 /* InAppScriptMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppScriptMessageTests.swift; sourceTree = "<group>"; };
 		D5F91E2C29080C5500EA5FBA /* AppInboxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxModel.swift; sourceTree = "<group>"; };
 		D5F91E2E29080C6000EA5FBA /* AppInboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxViewModel.swift; sourceTree = "<group>"; };
 		D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxViewController.swift; sourceTree = "<group>"; };
@@ -463,6 +469,7 @@
 			isa = PBXGroup;
 			children = (
 				188DA3A528E1FEB500AAA6EA /* Extensions */,
+				D55047F529C467CF00C95B04 /* Fixtures */,
 				188DA3B128E1FEB500AAA6EA /* StubsAndMocks */,
 				188DA3A728E1FEB500AAA6EA /* Tests */,
 			);
@@ -487,6 +494,7 @@
 				D5CBB0CE2941E55E009CB2B3 /* Ecommerce */,
 				184D994328FEF4B200ABCA8C /* EventsSenderScheduler */,
 				B57EAB4F28EC8C4D00EA1260 /* HelpersTests */,
+				D5F7075929969ED50018F304 /* InApp */,
 				D5C96C10291D5B200049109A /* JSONInitable */,
 				B57EAB4928EC7DB300EA1260 /* MobileRequestService */,
 				188DA3A828E1FEB500AAA6EA /* Network */,
@@ -885,6 +893,7 @@
 			isa = PBXGroup;
 			children = (
 				B57EAB5228ECC9D000EA1260 /* DeviceCategoryHelperTests.swift */,
+				D5CBB0D7294335F7009CB2B3 /* JSONConverterHelperTests.swift */,
 			);
 			path = HelpersTests;
 			sourceTree = "<group>";
@@ -1007,6 +1016,14 @@
 			path = Recommendations;
 			sourceTree = "<group>";
 		};
+		D55047F529C467CF00C95B04 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				D55047F629C467EE00C95B04 /* in_app_message.json */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
 		D5C96C10291D5B200049109A /* JSONInitable */ = {
 			isa = PBXGroup;
 			children = (
@@ -1072,7 +1089,6 @@
 		D5CBB0CE2941E55E009CB2B3 /* Ecommerce */ = {
 			isa = PBXGroup;
 			children = (
-				D5CBB0D7294335F7009CB2B3 /* EcommerceHelperTests.swift */,
 				D5CBB0D12941E58C009CB2B3 /* EcommerceTests.swift */,
 				D5CBB0E129463E95009CB2B3 /* ItemTests.swift */,
 				D5CBB0DF29463D3E009CB2B3 /* OrderTests.swift */,
@@ -1118,6 +1134,15 @@
 				D5F7074D29956C8C0018F304 /* DeepLinksProcessorTests.swift */,
 			);
 			path = DeepLinks;
+			sourceTree = "<group>";
+		};
+		D5F7075929969ED50018F304 /* InApp */ = {
+			isa = PBXGroup;
+			children = (
+				D5F7075A29969ED50018F304 /* InAppRequestServiceTests.swift */,
+				D5F7075B29969ED50018F304 /* InAppScriptMessageTests.swift */,
+			);
+			path = InApp;
 			sourceTree = "<group>";
 		};
 		D5F91E2B29080C2700EA5FBA /* AppInbox */ = {
@@ -1296,6 +1321,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D55047F829C4681E00C95B04 /* in_app_message.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1540,7 +1566,7 @@
 				184D993E28FEB73D00ABCA8C /* DateExtensionsTests.swift in Sources */,
 				1856108A28EC757800744967 /* EventTests.swift in Sources */,
 				B5B2191A28F97772000DB212 /* UpdateUserAttributesRequestsTests.swift in Sources */,
-				D5CBB0D8294335F7009CB2B3 /* EcommerceHelperTests.swift in Sources */,
+				D5CBB0D8294335F7009CB2B3 /* JSONConverterHelperTests.swift in Sources */,
 				181BFDB829007505007C5422 /* ArrayExtensionsTests.swift in Sources */,
 				1875126628EAD74E0068B5F4 /* EventsSenderMock.swift in Sources */,
 				B5B2191428F8BF5E000DB212 /* UserCustomFieldTests.swift in Sources */,
@@ -1560,8 +1586,10 @@
 				D5C96C2C2923BD200049109A /* SendRecomEventsOperationTests.swift in Sources */,
 				D5F7074E29956C8C0018F304 /* DeepLinksProcessorTests.swift in Sources */,
 				B5A97DB7290453BE0017B2A1 /* SendEventsOperationTests.swift in Sources */,
+				D5F7075C29969ED50018F304 /* InAppRequestServiceTests.swift in Sources */,
 				181BFDB6290073E0007C5422 /* OptionalExtensionsTests.swift in Sources */,
 				B51AF01D290E924100D723CD /* MessageCountTests.swift in Sources */,
+				D5F7075D29969ED50018F304 /* InAppScriptMessageTests.swift in Sources */,
 				D5CBB0DE29463C58009CB2B3 /* ProductTests.swift in Sources */,
 				B57EAB4B28EC7E2000EA1260 /* MobileRequestServiceTests.swift in Sources */,
 				B5A97DB52902E8D30017B2A1 /* SendUserOperationTests.swift in Sources */,

@@ -14,7 +14,7 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "1.5.5"
+    static var version = "1.6.0"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -39,6 +39,7 @@ public struct Reteno {
         analyticsService = AnalyticsServiceBuilder.build(isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled)
         senderScheduler.subscribeOnNotifications()
         userNotificationService.setNotificationCenterDelegate()
+        inApps.subscribeOnNotifications()
     }
     
     /// Log events
@@ -176,6 +177,20 @@ public struct Reteno {
     }()
     
     public static func ecommerce() -> Ecommerce { ecom }
+    
+    // MARK: InApp messages
+    
+    @available(iOSApplicationExtension, unavailable)
+    private static var inApps: InAppMessages = {
+        InAppMessages(
+            mobileRequestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(),
+            inAppRequestService: InAppRequestService(requestManager: NetworkBuilder.buildApiManagerWithEmptyBaseURL()),
+            storage: StorageBuilder.build()
+        )
+    }()
+    
+    @available(iOSApplicationExtension, unavailable)
+    static func inAppMessages() -> InAppMessages { inApps }
     
     // MARK: Upsert device
     

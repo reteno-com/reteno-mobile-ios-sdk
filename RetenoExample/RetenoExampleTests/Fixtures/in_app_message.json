@@ -1,0 +1,178 @@
+{
+  "iid": "tr66",
+  "layoutType": "FULL",
+  "displayRules": {},
+  "model": {
+    "version": "1",
+    "type": "MODEL",
+    "views": [
+      {
+        "id": "id0",
+        "component": "SysContainer",
+        "props": {
+          "textContent": ""
+        },
+        "attributes": {
+          "style": {
+            "position": "relative",
+            "background": "#fff",
+            "display": "flex",
+            "height": "100vh",
+            "flex-direction": "column",
+            "justify-content": "flex-end",
+            "align-items": "center",
+            "color": "#000",
+            "background": "url(https://s-http-public.s3.eu-central-1.         amazonaws.com/viber/istockphoto-1447590534-612x612.jpg)",
+            "background-repeat": "no-repeat",
+            "background-position": "top",
+            "background-size": "contain"
+          }
+        },
+        "handlers": [],
+        "children": [
+          {
+            "id": "id1",
+            "component": "SysText",
+            "props": {
+              "textContent": "\uD83D\uDD25 Special offer for new users"
+            },
+            "attributes": {
+              "style": {
+                "padding-top": "3px",
+                "padding-bottom": "3px",
+                "padding-left": "10px",
+                "padding-right": "10px",
+                "margin-top": "calc(50% + 40px)",
+                "color": "#F2C66A",
+                "font-size": "11px",
+                "font-weight": "bold",
+                "border": "1px",
+                "border-style": "solid",
+                "border-color": "#F2C66A",
+                "background": "#FCF9E6",
+                "border-radius": "30px"
+              }
+            }
+          },
+          {
+            "id": "id2",
+            "component": "SysText",
+            "props": {
+              "textContent": "Don't postpone your life. Start your     transformation today."
+            },
+            "attributes": {
+              "style": {
+                "max-width": "300px",
+                "color": "#000",
+                "padding-top": "0",
+                "padding-bottom": "0",
+                "padding-left": "10px",
+                "padding-right": "10px",
+                "margin-top": "20px",
+                "margin-bottom": "70px",
+                "margin-left": "10px",
+                "margin-right": "10px",
+                "font-size": "20px",
+                "font-weight": "bold",
+                "text-align": "center"
+              }
+            }
+          },
+          {
+            "id": "id3",
+            "component": "SysText",
+            "props": {
+              "textContent": "30-days free trial, then 0,99$ billed     monthly"
+            },
+            "attributes": {
+              "style": {
+                "padding": "10px",
+                "color": "#BFBFC0",
+                "font-size": "11px",
+                "font-weight": "normal"
+              }
+            }
+          },
+          {
+            "id": "id4",
+            "component": "SysButton",
+            "props": {
+              "textContent": "Start 30 day free trial"
+            },
+            "attributes": {
+              "style": {
+                "color": "#fff",
+                "background": "#50C661",
+                "border-style": "solid",
+                "border": "0px",
+                "padding-top": "20px",
+                "padding-bottom": "20px",
+                "padding-left": "30px",
+                "padding-right": "30px",
+                "margin-bottom": "40px",
+                "border": "1px",
+                "border-radius": "30px",
+                "font-size": "14px",
+                "letter-spacing": "2px",
+                "text-transform": "uppercase"
+              },
+              "href": "https://google.com"
+            },
+            "handlers": [
+              {
+                "type": "CLICK",
+                "actions": [
+                  {
+                    "type": "OPEN_URL",
+                    "params": {
+                      
+                    },
+                    "payload": {
+                      "url": "https://google.com"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "id5",
+            "component": "SysButton",
+            "props": {
+              "textContent": ""
+            },
+            "attributes": {
+              "style": {
+                "width": "30px",
+                "height": "30px",
+                "color": "#909496",
+                "font-size": "24px",
+                "position": "fixed",
+                "right": "20px",
+                "top": "30px",
+                "z-index": "100",
+                "padding": "0",
+                "margin": "0",
+                "background": "transparent",
+                "border": "0"
+              }
+            },
+            "handlers": [
+              {
+                "type": "CLICK",
+                "actions": [
+                  {
+                    "type": "CLOSE_WIDGET",
+                    "params": {}
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "shared": {}
+  },
+  "personalisation": {}
+}

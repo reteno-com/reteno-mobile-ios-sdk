@@ -12,5 +12,6 @@ enum BaseURL: String {
     case `default` = "https://api.reteno.com/api/"
     case esputnik = "https://esputnik.com/api/"
     case retenoMobile = "https://mobile-api.reteno.com/api/"
+    case retenoStatics = "https://statics.reteno.com/"
     
 }

@@ -33,6 +33,7 @@ final class RecommendationsCoordinator {
     func createFlow() -> UIViewController {
         let handler: RecomsModelNavigationHandler = self
         let controller = container.resolve(RecomsViewController.self, argument: handler)!
+        recomsViewComtroller = controller
         return controller
     }
 }

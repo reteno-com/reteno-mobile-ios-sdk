@@ -42,10 +42,8 @@ final class SendNotificationsStatusOperation: DateOperation {
             )
         }
         sendingService.updateInteractionStatus(
-            interactionId: notificationStatus.interactionId,
-            token: token,
-            status: notificationStatus.status,
-            date: notificationStatus.date
+            status: notificationStatus,
+            token: token
         ) { [weak self, notificationStatus] result in
             guard let self = self else { return }
             

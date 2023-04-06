@@ -17,18 +17,11 @@ final class SendingServices {
     }
     
     func updateInteractionStatus(
-        interactionId: String,
+        status: NotificationStatus,
         token: String,
-        status: InteractionStatus,
-        date: Date = Date(),
         completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
     ) {
-        let request = UpdateInteractionStatusRequest(
-            interactionId: interactionId,
-            token: token,
-            status: status,
-            time: date
-        )
+        let request = UpdateInteractionStatusRequest(status: status, token: token)
         let handler = EmptyResponseHandler()
         
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
