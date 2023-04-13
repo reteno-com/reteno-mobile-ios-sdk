@@ -67,9 +67,7 @@ final class EventsSenderScheduler {
     }
     
     func upsertDevice(_ device: Device, date: Date = Date()) {
-        guard !pendingSendDeviceOperations.contains(where: { $0.device == device }) else {
-            return
-        }
+        guard !pendingSendDeviceOperations.contains(where: { $0.device == device }) else { return }
         
         let operation = SendDeviceOperation(requestService: mobileRequestService, device: device, date: date)
         operation.completionBlock = { [weak self] in
@@ -351,10 +349,7 @@ final class EventsSenderScheduler {
             guard isSubscribed != RetenoNotificationsHelper.isPushSubscribed() else { return }
             
             StorageBuilder.build().set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
-            self?.mobileRequestService.upsertDevice(
-                externalUserId: ExternalUserIdHelper.getId(),
-                isSubscribedOnPush: isSubscribed
-            )
+            self?.upsertDevice(Device(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed))
         }
     }
     

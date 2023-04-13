@@ -53,7 +53,7 @@ final class InAppMessageWebViewController: UIViewController {
             let htmlContent = try String(contentsOf: url, encoding: .utf8)
             let htmlString = htmlContent
                 .replacingOccurrences(of: "${documentModel}", with: message.model)
-                .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "${personalisation}")
+                .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")
             webView.layout(in: view)
             webView.scrollView.isScrollEnabled = false
             webView.navigationDelegate = self

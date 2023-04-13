@@ -58,19 +58,25 @@ final class ProfileModel {
     
     func saveUser() {
         if isAnonymous {
-            let attributes = AnonymousUserAttributes(
-                firstName: user.firstName.isEmpty ? nil : user.firstName,
-                lastName: user.lastName.isEmpty ? nil : user.lastName,
-                timeZone: TimeZone.current.identifier
-            )
-            Reteno.updateAnonymousUserAttributes(userAttributes: attributes)
+            if !user.firstName.isEmpty || !user.lastName.isEmpty {
+                let attributes = AnonymousUserAttributes(
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    timeZone: TimeZone.current.identifier
+                )
+                Reteno.updateAnonymousUserAttributes(userAttributes: attributes)
+            }
         } else {
-            let attributes = UserAttributes(
-                phone: user.phone.isEmpty ? nil : user.phone,
-                email: user.email.isEmpty ? nil : user.email,
-                firstName: user.firstName.isEmpty ? nil : user.firstName,
-                lastName: user.lastName.isEmpty ? nil : user.lastName
-            )
+            let attributes: UserAttributes? = {
+                guard
+                    !user.phone.isEmpty
+                    || !user.email.isEmpty
+                    || !user.firstName.isEmpty
+                    || !user.lastName.isEmpty
+                else { return nil }
+                
+                return .init(phone: user.phone, email: user.email, firstName: user.firstName, lastName: user.lastName)
+            }()
             Reteno.updateUserAttributes(externalUserId: user.id, userAttributes: attributes)
         }
         

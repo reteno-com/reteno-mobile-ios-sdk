@@ -73,6 +73,7 @@ final class SendUserOperation: DateOperation {
                             || self.user.groupNamesExclude.isNotEmpty {
                             self.requestService.updateUserAttributes(user: self.user, completionHandler: updateAttributesResult)
                         } else {
+                            self.storage.clearUser(self.user)
                             self.finish()
                         }
                         
