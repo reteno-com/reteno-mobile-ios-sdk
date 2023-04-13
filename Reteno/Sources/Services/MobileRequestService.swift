@@ -42,7 +42,14 @@ final class MobileRequestService {
         user: User,
         completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
     ) {
-        let externalUserId = user.externalUserId ?? ExternalUserIdHelper.getId() ?? ""
+        let externalUserId: String = {
+            guard
+                let externalUserId = user.externalUserId,
+                !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            else { return ExternalUserIdHelper.getId() ?? "" }
+            
+            return externalUserId
+        }()
         
         guard
             !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || user.isAnonymous
