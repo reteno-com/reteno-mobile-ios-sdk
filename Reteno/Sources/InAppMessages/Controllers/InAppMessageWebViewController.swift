@@ -35,8 +35,12 @@ final class InAppMessageWebViewController: UIViewController {
         let configuration = WKWebViewConfiguration()
         configuration.preferences = preferences
         webView = WKWebView(frame: CGRect.zero, configuration: configuration)
+        webView.backgroundColor = .clear
+        webView.scrollView.backgroundColor = .clear
         
         super.init(nibName: nil, bundle: nil)
+        
+        view.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
@@ -55,7 +59,7 @@ final class InAppMessageWebViewController: UIViewController {
                 .replacingOccurrences(of: "${documentModel}", with: message.model)
                 .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")
             webView.layout(in: view)
-            webView.scrollView.isScrollEnabled = false
+            webView.scrollView.bounces = false
             webView.navigationDelegate = self
             webView.configuration.userContentController.add(self, name: "retenoHandler")
             webView.loadHTMLString(htmlString, baseURL: nil)

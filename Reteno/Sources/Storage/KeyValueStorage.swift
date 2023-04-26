@@ -30,7 +30,7 @@ final class KeyValueStorage {
     
     private let storage: UserDefaults?
     
-    init(storage: UserDefaults? = UserDefaults(suiteName:  "group.\(BundleIdHelper.getMainAppBundleId()).reteno-local-storage")) {
+    init(storage: UserDefaults? = UserDefaults(suiteName: "group.\(BundleIdHelper.getMainAppBundleId()).reteno-local-storage")) {
         self.storage = storage
     }
     

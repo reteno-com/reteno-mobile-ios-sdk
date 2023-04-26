@@ -18,11 +18,18 @@ final class InAppMessages {
     private let mobileRequestService: MobileRequestService
     private let inAppRequestService: InAppRequestService
     private let storage: KeyValueStorage
+    private let scheduler: EventsSenderScheduler
     
-    init(mobileRequestService: MobileRequestService, inAppRequestService: InAppRequestService, storage: KeyValueStorage) {
+    init(
+        mobileRequestService: MobileRequestService,
+        inAppRequestService: InAppRequestService,
+        storage: KeyValueStorage,
+        scheduler: EventsSenderScheduler = Reteno.senderScheduler
+    ) {
         self.mobileRequestService = mobileRequestService
         self.inAppRequestService = inAppRequestService
         self.storage = storage
+        self.scheduler = scheduler
     }
     
     func presentInApp(by id: String) {
@@ -156,6 +163,7 @@ final class InAppMessages {
     private func handleInteraction(messageId: String, action: NotificationStatus.Action) {
         let status = NotificationStatus(interactionId: messageId, status: .clicked, date: Date(), action: action)
         storage.addNotificationStatus(status)
+        scheduler.forcePushEvents()
     }
     
     // MARK: Handle notifications

@@ -12,6 +12,7 @@ struct DeviceIdHelper {
     
     private init() {}
     
+    @available(iOSApplicationExtension, unavailable)
     static func actualizeDeviceId() {
         guard let id = UIDevice.current.identifierForVendor, id.uuidString != deviceId() else { return }
         

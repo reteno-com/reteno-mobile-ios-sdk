@@ -58,37 +58,35 @@ final class SendUserOperation: DateOperation {
         }
         
         if let externalUserId = user.externalUserId, !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            RetenoNotificationsHelper.isSubscribedOnNotifications { [weak self] isSubscribed in
-                self?.requestService.upsertDevice(
-                    externalUserId: externalUserId,
-                    isSubscribedOnPush: isSubscribed
-                ) { [weak self] result in
-                    guard let self = self else { return }
-                    
-                    switch result {
-                    case .success:
-                        if self.user.userAttributes.isSome
-                            || self.user.subscriptionKeys.isNotEmpty
-                            || self.user.groupNamesInclude.isNotEmpty
-                            || self.user.groupNamesExclude.isNotEmpty {
-                            self.requestService.updateUserAttributes(user: self.user, completionHandler: updateAttributesResult)
-                        } else {
-                            self.storage.clearUser(self.user)
-                            self.finish()
-                        }
-                        
-                    case .failure(let failure):
-                        if let responseCode = (failure as? NetworkError)?.statusCode ?? (failure as? AFError)?.responseCode {
-                            switch responseCode {
-                            case 400...499:
-                                self.storage.clearUser(self.user)
-                                
-                            default:
-                                break
-                            }
-                        }
-                        self.cancel()
+            requestService.upsertDevice(
+                externalUserId: externalUserId,
+                isSubscribedOnPush: RetenoNotificationsHelper.isPushSubscribed()
+            ) { [weak self] result in
+                guard let self = self else { return }
+                
+                switch result {
+                case .success:
+                    if self.user.userAttributes.isSome
+                        || self.user.subscriptionKeys.isNotEmpty
+                        || self.user.groupNamesInclude.isNotEmpty
+                        || self.user.groupNamesExclude.isNotEmpty {
+                        self.requestService.updateUserAttributes(user: self.user, completionHandler: updateAttributesResult)
+                    } else {
+                        self.storage.clearUser(self.user)
+                        self.finish()
                     }
+                    
+                case .failure(let failure):
+                    if let responseCode = (failure as? NetworkError)?.statusCode ?? (failure as? AFError)?.responseCode {
+                        switch responseCode {
+                        case 400...499:
+                            self.storage.clearUser(self.user)
+                            
+                        default:
+                            break
+                        }
+                    }
+                    self.cancel()
                 }
             }
         } else {

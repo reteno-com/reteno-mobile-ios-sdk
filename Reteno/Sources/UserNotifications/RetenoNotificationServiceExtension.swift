@@ -91,6 +91,10 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
         }
         
         AF.download(url).response { response in
+            if let error = response.error {
+                SentryHelper.capture(error: error)
+            }
+            
             guard let fileURL = response.fileURL else {
                 completionHandler(nil)
                 return
