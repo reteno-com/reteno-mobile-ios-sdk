@@ -1,17 +1,17 @@
 PODS:
   - Alamofire (5.6.2)
-  - FirebaseCore (10.0.0):
+  - FirebaseCore (10.9.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.0.0):
+  - FirebaseCoreInternal (10.9.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseInstallations (10.0.0):
+  - FirebaseInstallations (10.9.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseMessaging (10.0.0):
+  - FirebaseMessaging (10.9.0):
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
     - GoogleDataTransport (~> 9.2)
@@ -20,26 +20,26 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - GoogleDataTransport (9.2.0):
+  - GoogleDataTransport (9.2.3):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.8.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.11.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.8.0):
+  - GoogleUtilities/Environment (7.11.1):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.8.0):
+  - GoogleUtilities/Logger (7.11.1):
     - GoogleUtilities/Environment
-  - GoogleUtilities/Network (7.8.0):
+  - GoogleUtilities/Network (7.11.1):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.8.0)"
-  - GoogleUtilities/Reachability (7.8.0):
+  - "GoogleUtilities/NSData+zlib (7.11.1)"
+  - GoogleUtilities/Reachability (7.11.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.8.0):
+  - GoogleUtilities/UserDefaults (7.11.1):
     - GoogleUtilities/Logger
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
@@ -59,24 +59,24 @@ PODS:
   - OHHTTPStubs/OHPathHelpers (9.1.0)
   - OHHTTPStubs/Swift (9.1.0):
     - OHHTTPStubs/Default
-  - PromisesObjC (2.1.1)
-  - Reteno (1.6.2):
+  - PromisesObjC (2.2.0)
+  - Reteno (1.6.3):
     - Alamofire (= 5.6.2)
-    - Sentry (= 8.2.0)
-  - Sentry (8.2.0):
-    - Sentry/Core (= 8.2.0)
-    - SentryPrivate (= 8.2.0)
-  - Sentry/Core (8.2.0):
-    - SentryPrivate (= 8.2.0)
-  - SentryPrivate (8.2.0)
+    - Sentry (= 8.7.0)
+  - Sentry (8.7.0):
+    - Sentry/Core (= 8.7.0)
+    - SentryPrivate (= 8.7.0)
+  - Sentry/Core (8.7.0):
+    - SentryPrivate (= 8.7.0)
+  - SentryPrivate (8.7.0)
   - SnapKit (5.6.0)
   - Swinject (2.7.1)
 
 DEPENDENCIES:
   - FirebaseMessaging
   - OHHTTPStubs/Swift
-  - Reteno (= 1.6.2)
-  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `8.2.0`)
+  - Reteno (from `../`)
+  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `8.7.0`)
   - SnapKit (~> 5.6.0)
   - Swinject (~> 2.7.1)
 
@@ -92,38 +92,39 @@ SPEC REPOS:
     - nanopb
     - OHHTTPStubs
     - PromisesObjC
-    - Reteno
     - SentryPrivate
     - SnapKit
     - Swinject
 
 EXTERNAL SOURCES:
+  Reteno:
+    :path: "../"
   Sentry:
     :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 8.2.0
+    :tag: 8.7.0
 
 CHECKOUT OPTIONS:
   Sentry:
     :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 8.2.0
+    :tag: 8.7.0
 
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
-  FirebaseCore: 97f48a3a567a72b8d4daa0f03c3aadb78df4e995
-  FirebaseCoreInternal: 5eb3960335da5ea30115d57d39db6988c4ad06f3
-  FirebaseInstallations: 7f1c9ae6bd9df6abe9c74124b38fa8740aba5df4
-  FirebaseMessaging: 8916bf5edb1dbfac74665a181e4d1ab3a78a08a2
-  GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
-  GoogleUtilities: 1d20a6ad97ef46f67bbdec158ce00563a671ebb7
+  FirebaseCore: b68d3616526ec02e4d155166bbafb8eca64af557
+  FirebaseCoreInternal: d2b4acb827908e72eca47a9fd896767c3053921e
+  FirebaseInstallations: c58489c9caacdbf27d1da60891a87318e20218e0
+  FirebaseMessaging: 6b7052cc3da7bc8e5f72bef871243e8f04a14eed
+  GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
+  GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
-  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  Reteno: b26aa4c22d4744f96e0b8d74d1e37b9f21c5efc4
-  Sentry: cf1d35c866266da58964fe7b62526bda93ffcb38
-  SentryPrivate: 2909bcc7b19a827b49e9bde0e56116b08d40dfdf
+  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  Reteno: e5dfd7d60544f74422f4361ff7171e9ca04f5f45
+  Sentry: 72793f12750254183eaac6c62cedc4e6ee294e04
+  SentryPrivate: b1fc5cb0de8a8d80fa6a7958146d342c20f65b88
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: 17810d493cf8304e2ecf08cc3c7f701594496415
+PODFILE CHECKSUM: 74b6be9144b83ae0a16377ee8c9106785632ef4d
 
 COCOAPODS: 1.11.3

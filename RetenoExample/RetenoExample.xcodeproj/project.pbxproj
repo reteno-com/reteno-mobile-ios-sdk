@@ -1209,6 +1209,8 @@
 			dependencies = (
 			);
 			name = NotificationServiceExtension;
+			packageProductDependencies = (
+			);
 			productName = NotificationServiceExtension;
 			productReference = B52C7C1C28DA83220014ED15 /* NotificationServiceExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -1254,6 +1256,8 @@
 			dependencies = (
 			);
 			name = NotificationContentExtension;
+			packageProductDependencies = (
+			);
 			productName = NotificationContentExtension;
 			productReference = D5CBB0F629701BAE009CB2B3 /* NotificationContentExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
