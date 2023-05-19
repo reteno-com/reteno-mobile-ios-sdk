@@ -71,4 +71,12 @@ final class SentryHelper {
         shared.hub.capture(event: event)
     }
     
+    static func captureErrorEvent(message: String, tags: [String: String]? = nil) {
+        let event = Sentry.Event(level: SentryLevel.error)
+        event.message = SentryMessage(formatted: message)
+        event.fingerprint = [BundleIdHelper.getMainAppBundleId(), message]
+        event.tags = tags
+        shared.hub.capture(event: event)
+    }
+    
 }

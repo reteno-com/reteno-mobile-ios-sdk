@@ -6,7 +6,6 @@
 //
 
 import UserNotifications
-import Alamofire
 
 open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
     
@@ -86,43 +85,53 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
     
     private func loadAttachment(by urlString: String, fileType: String, completionHandler: @escaping (UNNotificationAttachment?) -> Void) {
         guard let url = URL(string: urlString) else {
+            SentryHelper.captureErrorEvent(
+                message: "Couldn't create attachment URL",
+                tags: ["reteno.attachment_url": urlString]
+            )
             completionHandler(nil)
             return
         }
         
-        AF.download(url).response { response in
-            if let error = response.error {
+        let session = URLSession(configuration: .default)
+        session.downloadTask(with: url, completionHandler: { temporaryLocation, response, error in
+            if let error = error {
                 SentryHelper.capture(error: error)
             }
             
-            guard let fileURL = response.fileURL else {
+            guard
+                let fileName = response?.suggestedFilename,
+                let localURL = temporaryLocation
+            else {
+                SentryHelper.captureErrorEvent(
+                    message: "Couldn't download attachment",
+                    tags: ["reteno.attachment_url": urlString]
+                )
                 completionHandler(nil)
                 return
             }
+            
+            let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
             
             // Move the downloaded file to temp folder
-            let fileManager = FileManager.default
-            let localURL = URL(fileURLWithPath: fileURL.path + "." + fileType)
             do {
-                try fileManager.moveItem(at: fileURL, to: localURL)
-            } catch let moveError {
-                SentryHelper.capture(error: moveError)
-                Logger.log("Failed to move file: \(moveError.localizedDescription)", eventType: .error)
+                try FileManager.default.moveItem(at: localURL, to: fileURL)
+            } catch {
+                SentryHelper.capture(error: error)
+                Logger.log("Failed to move file: \(error.localizedDescription)", eventType: .error)
                 completionHandler(nil)
                 return
             }
-            
             // Create the notification attachment from the file
-            var attachment: UNNotificationAttachment? = nil
             do {
-                attachment = try UNNotificationAttachment(identifier: "image", url: localURL, options: nil)
+                let attachment = try UNNotificationAttachment(identifier: "", url: fileURL, options: nil)
                 completionHandler(attachment)
-            } catch let attachmentError {
-                SentryHelper.capture(error: attachmentError)
-                Logger.log("Failed to move file: \(attachmentError.localizedDescription)", eventType: .error)
+            } catch {
+                SentryHelper.capture(error: error)
+                Logger.log("Failed to create attachment: \(error.localizedDescription)", eventType: .error)
                 completionHandler(nil)
             }
-        }
+        }).resume()
     }
     
     private func addActionButtons(from notification: RetenoUserNotification, to content: UNMutableNotificationContent) {
