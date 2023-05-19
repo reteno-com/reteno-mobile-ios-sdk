@@ -115,6 +115,11 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
             
             // Move the downloaded file to temp folder
             do {
+                // The file should be removed automatically from temp
+                // Delete it manually if it is not
+                if FileManager.default.fileExists(atPath: fileURL.path) {
+                    try FileManager.default.removeItem(at: fileURL)
+                }
                 try FileManager.default.moveItem(at: localURL, to: fileURL)
             } catch {
                 SentryHelper.capture(error: error)
