@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.6.2"),
-        .package(name: "Sentry", url: "https://github.com/getsentry/sentry-cocoa", from: "8.7.0")
+        .package(name: "Sentry", url: "https://github.com/getsentry/sentry-cocoa", from: "8.8.0")
     ],
     targets: [
         .target(
