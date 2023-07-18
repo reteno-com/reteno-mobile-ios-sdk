@@ -11,11 +11,17 @@ final class SentryHelper {
     
     static let shared = SentryHelper()
     
-    private let hub: SentryHub
+    private let hub: SentryHub?
     
     private init() {
+        guard AnalyticModeHelper.isAnalyticModelOn() else {
+            hub = nil
+            return
+        }
+        
         let options = Options()
-        options.dsn = "https://699db07fec57455e964892ba10da106f@sentry.reteno.com/4504043420450816"
+        options.dsn = "https://4d9bf85beb7443069b6882ba8ffdee24@sentry.reteno.com/4503999620841472"
+        options.debug = true
         options.enableAppHangTracking = true
         options.enableFileIOTracing = true
         let client = SentryClient(options: options)
@@ -33,21 +39,29 @@ final class SentryHelper {
     }
     
     static func capture(error: Error) {
-        shared.hub.capture(error: error)
+        guard AnalyticModeHelper.isAnalyticModelOn() else { return }
+        
+        shared.hub?.capture(error: error)
     }
     
     static func capture(exeption: NSException) {
-        shared.hub.capture(exception: exeption)
+        guard AnalyticModeHelper.isAnalyticModelOn() else { return }
+
+        shared.hub?.capture(exception: exeption)
     }
     
     static func captureLog(title: String, count: Int) {
+        guard AnalyticModeHelper.isAnalyticModelOn() else { return }
+        
         let event = Sentry.Event(level: SentryLevel.info)
         event.message = SentryMessage(formatted: "Removed \(title): - \(count)")
         event.fingerprint = [BundleIdHelper.getMainAppBundleId(), title]
-        shared.hub.capture(event: event)
+        shared.hub?.capture(event: event)
     }
     
     static func captureItems(_ items: [Groupable], title: String, tagTitle: String) {
+        guard AnalyticModeHelper.isAnalyticModelOn() else { return }
+
         let groupedItems = items.reduce(into: [String: [Groupable]]()) { result, item in
             if result[item.key].isNone {
                 result[item.key] = []
@@ -59,24 +73,28 @@ final class SentryHelper {
             event.message = SentryMessage(formatted: "\(title)(\($0.key)) - \($0.value.count)")
             event.fingerprint = [BundleIdHelper.getMainAppBundleId(), title, $0.key]
             event.tags = [tagTitle: $0.key]
-            shared.hub.capture(event: event)
+            shared.hub?.capture(event: event)
         }
     }
     
     static func captureWarningEvent(message: String, tags: [String: String]? = nil) {
+        guard AnalyticModeHelper.isAnalyticModelOn() else { return }
+
         let event = Sentry.Event(level: SentryLevel.warning)
         event.message = SentryMessage(formatted: message)
         event.fingerprint = [BundleIdHelper.getMainAppBundleId(), message]
         event.tags = tags
-        shared.hub.capture(event: event)
+        shared.hub?.capture(event: event)
     }
     
     static func captureErrorEvent(message: String, tags: [String: String]? = nil) {
+        guard AnalyticModeHelper.isAnalyticModelOn() else { return }
+
         let event = Sentry.Event(level: SentryLevel.error)
         event.message = SentryMessage(formatted: message)
         event.fingerprint = [BundleIdHelper.getMainAppBundleId(), message]
         event.tags = tags
-        shared.hub.capture(event: event)
+        shared.hub?.capture(event: event)
     }
     
 }

@@ -18,6 +18,7 @@ enum StorageKeys: String, CaseIterable {
     case notificationStatuses = "com.reteno.notification-statuses.key"
     case users = "com.reteno.users.key"
     case debugModeFlag = "com.reteno.debug-mode-flag.key"
+    case analyticModeFlag = "com.reteno.analytic-mode-flag.key"
     case recomEvents = "com.reteno.recom_events.key"
     case inboxOpenedMessagesIds = "com.reteno.inbox_opened_messages_ids.key"
     case wrappedLinks = "com.reteno.wrapped-links.key"
