@@ -20,8 +20,7 @@ final class SentryHelper {
         }
         
         let options = Options()
-        options.dsn = "https://4d9bf85beb7443069b6882ba8ffdee24@sentry.reteno.com/4503999620841472"
-        options.debug = true
+        options.dsn = "https://699db07fec57455e964892ba10da106f@sentry.reteno.com/4504043420450816"
         options.enableAppHangTracking = true
         options.enableFileIOTracing = true
         let client = SentryClient(options: options)
