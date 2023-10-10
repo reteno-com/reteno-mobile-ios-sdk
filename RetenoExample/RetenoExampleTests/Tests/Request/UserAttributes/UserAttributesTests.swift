@@ -64,4 +64,81 @@ final class UserAttributesTests: XCTestCase {
         XCTAssertNil(sut.toJSON(), "json should be nill")
     }
     
+    func test_toEqual_Users() {
+        let phone = "000000000"
+        let email = "test@test.com"
+        let firstName = "firstName"
+        let lastName = "lastName"
+        let languageCode = "ua"
+        let timeZone = "Kyiv/Ukraine"
+        let address = Address(region: "fdksfl", town: "dskdsl", address: "kfmslk", postcode: "dkslas")
+        let fiels = UserCustomField(key: "key", value: "value")
+        
+        let sut = UserAttributes(
+            phone: phone,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            languageCode: languageCode,
+            timeZone: timeZone,
+            address: address,
+            fields: [fiels]
+        )
+        
+        let sut2 = UserAttributes(
+            phone: phone,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            languageCode: languageCode,
+            timeZone: timeZone,
+            address: address,
+            fields: [fiels]
+        )
+        
+        let user = User(externalUserId: "1", userAttributes: sut, subscriptionKeys: [], groupNamesInclude: [], groupNamesExclude: [], isAnonymous: false)
+        let user2 =  User(externalUserId: "1", userAttributes: sut2, subscriptionKeys: [], groupNamesInclude: [], groupNamesExclude: [], isAnonymous: false)
+        
+        XCTAssertTrue(user == user2, "users should be the same")
+    }
+    
+    func test_toNotEqual_Users() {
+        let phone = "000000000"
+        let email = "test@test.com"
+        let firstName = "firstName"
+        let lastName = "lastName"
+        let languageCode = "ua"
+        let timeZone = "Kyiv/Ukraine"
+        let address = Address(region: "fdksfl", town: "dskdsl", address: "kfmslk", postcode: "dkslas")
+        let address2 = Address(region: "fdksfl", town: "dskdsl", address: "kfmslk", postcode: "dkslas")
+        let fiels = UserCustomField(key: "key", value: "value")
+        let fiels2 = UserCustomField(key: "key", value: "value")
+        
+        let sut = UserAttributes(
+            phone: phone,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            languageCode: languageCode,
+            timeZone: timeZone,
+            address: address,
+            fields: [fiels]
+        )
+        
+        let sut2 = UserAttributes(
+            phone: phone,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            languageCode: languageCode,
+            timeZone: timeZone,
+            address: address2,
+            fields: [fiels2]
+        )
+        
+        let user = User(externalUserId: "1", userAttributes: sut, subscriptionKeys: ["1"], groupNamesInclude: [], groupNamesExclude: [], isAnonymous: false)
+        let user2 =  User(externalUserId: "1", userAttributes: sut2, subscriptionKeys: [], groupNamesInclude: ["2"], groupNamesExclude: [], isAnonymous: false)
+        
+        XCTAssertTrue(user != user2, "users shouldn't be the same")
+    }
 }

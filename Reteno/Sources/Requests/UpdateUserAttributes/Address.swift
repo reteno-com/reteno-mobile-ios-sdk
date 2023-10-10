@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Address: Codable {
+public struct Address: Codable, Equatable {
     
     private let region: String?
     private let town: String?

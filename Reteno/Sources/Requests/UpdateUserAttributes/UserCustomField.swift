@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct UserCustomField: Codable {
+public struct UserCustomField: Codable, Equatable {
     
     private let key: String
     private let value: String

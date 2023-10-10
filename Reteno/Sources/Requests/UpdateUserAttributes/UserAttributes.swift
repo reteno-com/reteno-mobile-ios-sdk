@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct UserAttributes: Codable {
+public struct UserAttributes: Codable, Equatable {
     
     let phone: String?
     let email: String?
@@ -55,4 +55,7 @@ public struct UserAttributes: Codable {
         return tempJSON.isEmpty ? nil : tempJSON
     }
     
+    public static func == (lhs: UserAttributes, rhs: UserAttributes) -> Bool {
+        lhs.phone == rhs.phone && lhs.email == rhs.email && lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName && lhs.languageCode == rhs.languageCode && lhs.timeZone == rhs.timeZone && lhs.address == rhs.address && lhs.fields == rhs.fields
+    }
 }

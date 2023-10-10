@@ -14,7 +14,7 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "1.6.6"
+    static var version = "1.6.7"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -41,7 +41,7 @@ public struct Reteno {
         analyticsService = AnalyticsServiceBuilder.build(isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled)
         senderScheduler.subscribeOnNotifications()
         userNotificationService.setNotificationCenterDelegate()
-        inApps.subscribeOnNotifications()
+        inApps.subscribeOnNotifications()        
     }
     
     /// Log events

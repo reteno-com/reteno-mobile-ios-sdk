@@ -10,12 +10,12 @@ import Foundation
 struct User {
     
     var id: String
-    var firstName: String
-    var lastName: String
-    var phone: String
-    var email: String
+    var firstName: String?
+    var lastName: String?
+    var phone: String?
+    var email: String?
     
-    init(id: String = "", firstName: String = "", lastName: String = "", phone: String = "", email: String = "") {
+    init(id: String = "", firstName: String? = nil, lastName: String? = nil, phone: String? = nil, email: String? = nil) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName

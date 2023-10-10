@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Codable {
+struct User: Codable, Equatable {
     
     let id: String
     let externalUserId: String?
@@ -49,4 +49,7 @@ struct User: Codable {
         self.isAnonymous = (try? container.decode(Bool.self, forKey: .isAnonymous)) ?? false
     }
     
+    static func == (lhs: User, rhs: User) -> Bool {
+        lhs.externalUserId == rhs.externalUserId && lhs.userAttributes == rhs.userAttributes && lhs.subscriptionKeys == rhs.subscriptionKeys && lhs.groupNamesInclude == rhs.groupNamesInclude && lhs.groupNamesExclude == rhs.groupNamesExclude
+    }
 }

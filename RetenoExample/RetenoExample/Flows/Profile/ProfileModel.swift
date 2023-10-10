@@ -58,7 +58,7 @@ final class ProfileModel {
     
     func saveUser() {
         if isAnonymous {
-            if !user.firstName.isEmpty || !user.lastName.isEmpty {
+            if user.firstName != nil || user.lastName != nil {
                 let attributes = AnonymousUserAttributes(
                     firstName: user.firstName,
                     lastName: user.lastName,
@@ -69,10 +69,10 @@ final class ProfileModel {
         } else {
             let attributes: UserAttributes? = {
                 guard
-                    !user.phone.isEmpty
-                    || !user.email.isEmpty
-                    || !user.firstName.isEmpty
-                    || !user.lastName.isEmpty
+                    user.phone != nil
+                    || user.email != nil
+                    || user.firstName != nil
+                    || user.lastName != nil
                 else { return nil }
                 
                 return .init(phone: user.phone, email: user.email, firstName: user.firstName, lastName: user.lastName)
