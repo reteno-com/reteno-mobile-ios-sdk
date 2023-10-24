@@ -62,7 +62,7 @@ final class InAppRequestService {
                 try fileManager.moveItem(at: fileURL, to: localURL)
                 completionHandler(.success(true))
             } catch {
-                SentryHelper.capture(error: error)
+                ErrorLogger.shared.capture(error: error)
                 Logger.log("Failed to move file: \(error.localizedDescription)", eventType: .error)
                 completionHandler(.failure(error))
             }

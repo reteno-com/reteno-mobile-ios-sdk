@@ -34,4 +34,21 @@ final class SendingServices {
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
     
+    // MARK: ErrorEventsSender
+    
+    func sendErrorEvents(_ errorEvents: [ErrorEvent], completionHandler: @escaping (Result<Void, Error>) -> Void = { _ in }) {
+        let request = ErrorEventRequest(events: errorEvents)
+        let handler = EmptyResponseHandler()
+        
+        requestManager.execute(request: request, responseHandler: handler) { result in
+            switch result {
+            case .success:
+                completionHandler(.success(()))
+                
+            case .failure(let failure):
+                completionHandler(.failure(failure))
+            }
+        }
+    }
+    
 }

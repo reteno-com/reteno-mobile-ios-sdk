@@ -64,7 +64,7 @@ final class InAppMessageWebViewController: UIViewController {
             webView.configuration.userContentController.add(self, name: "retenoHandler")
             webView.loadHTMLString(htmlString, baseURL: nil)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
             Logger.log(error.localizedDescription, eventType: .error)
         }
     }
@@ -86,7 +86,7 @@ extension InAppMessageWebViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         Logger.log(error.localizedDescription, eventType: .error)
-        SentryHelper.capture(error: error)
+        ErrorLogger.shared.capture(error: error)
     }
     
 }
@@ -102,7 +102,7 @@ extension InAppMessageWebViewController: WKScriptMessageHandler {
             let bodyData = body.data(using: .utf8)
         else {
             Logger.log("Received message\nname: \(message.name);\nbody: \(message.body)", eventType: .debug)
-            SentryHelper.captureWarningEvent(
+            ErrorLogger.shared.captureWarningEvent(
                 message: "Couldn't parse script message [\(message.body)]",
                 tags: ["reteno.in_app_message_id": self.message.id]
             )
@@ -115,7 +115,7 @@ extension InAppMessageWebViewController: WKScriptMessageHandler {
             Logger.log("Received message: \(scriptMessage)", eventType: .debug)
         } catch {
             Logger.log(error, eventType: .error)
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     

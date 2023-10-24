@@ -34,7 +34,7 @@ struct RetenoNotificationsHelper {
                 completion(false)
                 
             @unknown default:
-                SentryHelper.capture(
+                ErrorLogger.shared.capture(
                     error: NotificationAuthorizationStatusError(unsupportedStatus: settings.authorizationStatus)
                 )
             }

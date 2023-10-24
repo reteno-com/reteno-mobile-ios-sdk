@@ -22,7 +22,7 @@ struct DeviceCategoryHelper {
             
         default:
             let error = DeviceCategoryError()
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
             
             throw error
         }

@@ -251,7 +251,7 @@ final class EventsSenderScheduler {
             
             let oldNotificationStatuses = self.storage.getNotificationStatuses().filter { !$0.isValid }
             if oldNotificationStatuses.isNotEmpty {
-                SentryHelper.captureItems(
+                ErrorLogger.shared.captureItems(
                     oldNotificationStatuses,
                     title: NotificationStatus.logTitle,
                     tagTitle: NotificationStatus.keyTitle
@@ -260,7 +260,7 @@ final class EventsSenderScheduler {
             }
             let oldLinks = self.storage.getLinks().filter { !$0.isValid }
             if oldLinks.isNotEmpty {
-                SentryHelper.captureItems(
+                ErrorLogger.shared.captureItems(
                     oldLinks,
                     title: StorableLink.logTitle,
                     tagTitle: StorableLink.keyTitle
@@ -285,6 +285,10 @@ final class EventsSenderScheduler {
         if let sendAppInboxMessagesIdsOperation = sendAppInboxMessagesIdsOperation() {
             operations.append(sendAppInboxMessagesIdsOperation)
         }
+        if let sendErrorEventOperation = sendErrorEventsOperation() {
+            operations.append(sendErrorEventOperation)
+        }
+        
         operations.sort(by: { $0.date < $1.date })
         operations.insert(contentsOf: sendNotificationsStatusOperations().sorted(by: { $0.date < $1.date }), at: 0)
         Operation.makeDependencies(forOperations: operations)
@@ -331,7 +335,7 @@ final class EventsSenderScheduler {
     private func sendEventsOperation() -> DateOperation? {
         let oldEvents = storage.getEvents().filter { !$0.isValid }
         if oldEvents.isNotEmpty {
-            SentryHelper.captureItems(oldEvents, title: Event.logTitle, tagTitle: Event.keyTitle)
+            ErrorLogger.shared.captureItems(oldEvents, title: Event.logTitle, tagTitle: Event.keyTitle)
             storage.clearEvents(oldEvents)
         }
         
@@ -352,7 +356,7 @@ final class EventsSenderScheduler {
     private func sendRecomEventsOperation() -> DateOperation? {
         let oldEvents = storage.getRecomEvents().filter { !$0.isValid }
         if oldEvents.isNotEmpty {
-            SentryHelper.captureLog(title: RecomEvents.logTitle, count: oldEvents.count)
+            ErrorLogger.shared.captureLog(title: RecomEvents.logTitle, count: oldEvents.count)
             storage.clearRecomEvents(oldEvents)
         }
         
@@ -370,7 +374,7 @@ final class EventsSenderScheduler {
     private func sendAppInboxMessagesIdsOperation() -> DateOperation? {
         let oldIds = storage.getInboxOpenedMessagesIds().filter { !$0.isValid }
         if oldIds.isNotEmpty {
-            SentryHelper.captureLog(title: AppInboxMessageStorableId.logTitle, count: oldIds.count)
+            ErrorLogger.shared.captureLog(title: AppInboxMessageStorableId.logTitle, count: oldIds.count)
             storage.clearInboxOpenedMessagesIds(oldIds)
         }
         
@@ -398,6 +402,16 @@ final class EventsSenderScheduler {
                 link: $0
             )
         }
+    }
+    
+    private func sendErrorEventsOperation() -> DateOperation? {
+        let events = storage.getErrorEvents()
+                        
+        return SendErrorEventsOperation(
+            requestService: SendingServiceBuilder.buildServiceWithEmptyURL(),
+            storage: storage,
+            events: events
+        )
     }
     
     // MARK: Handle notifications

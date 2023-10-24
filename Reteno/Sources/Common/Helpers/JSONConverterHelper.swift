@@ -14,7 +14,7 @@ public struct JSONConverterHelper {
             let data = try JSONSerialization.data(withJSONObject: json, options: [])
             return String(data: data, encoding: .utf8)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
             return nil
         }
     }

@@ -20,6 +20,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
             return
         }
         
+        
         guard let bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent) else {
             contentHandler(request.content)
             return
@@ -85,7 +86,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
     
     private func loadAttachment(by urlString: String, fileType: String, completionHandler: @escaping (UNNotificationAttachment?) -> Void) {
         guard let url = URL(string: urlString) else {
-            SentryHelper.captureErrorEvent(
+            ErrorLogger.shared.captureErrorEvent(
                 message: "Couldn't create attachment URL",
                 tags: ["reteno.attachment_url": urlString]
             )
@@ -96,14 +97,14 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
         let session = URLSession(configuration: .default)
         session.downloadTask(with: url, completionHandler: { temporaryLocation, response, error in
             if let error = error {
-                SentryHelper.capture(error: error)
+                ErrorLogger.shared.capture(error: error)
             }
             
             guard
                 let fileName = response?.suggestedFilename,
                 let localURL = temporaryLocation
             else {
-                SentryHelper.captureErrorEvent(
+                ErrorLogger.shared.captureErrorEvent(
                     message: "Couldn't download attachment",
                     tags: ["reteno.attachment_url": urlString]
                 )
@@ -122,7 +123,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
                 }
                 try FileManager.default.moveItem(at: localURL, to: fileURL)
             } catch {
-                SentryHelper.capture(error: error)
+                ErrorLogger.shared.capture(error: error)
                 Logger.log("Failed to move file: \(error.localizedDescription)", eventType: .error)
                 completionHandler(nil)
                 return
@@ -132,7 +133,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
                 let attachment = try UNNotificationAttachment(identifier: "", url: fileURL, options: nil)
                 completionHandler(attachment)
             } catch {
-                SentryHelper.capture(error: error)
+                ErrorLogger.shared.capture(error: error)
                 Logger.log("Failed to create attachment: \(error.localizedDescription)", eventType: .error)
                 completionHandler(nil)
             }

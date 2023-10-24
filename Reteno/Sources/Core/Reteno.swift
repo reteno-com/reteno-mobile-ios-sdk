@@ -14,7 +14,7 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "1.6.7"
+    static var version = "1.6.8"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -31,17 +31,16 @@ public struct Reteno {
     /// - Parameter isDebugMode: Flag that indicates if `DebugMode` is enabled
     /// - Parameter isEnableAnalytic: Flag that indicates if `Analytic` is enabled
     @available(iOSApplicationExtension, unavailable)
-    public static func start(apiKey: String, isAutomaticScreenReportingEnabled: Bool = true, isDebugMode: Bool = false, isEnableAnalytic: Bool = true) {
+    public static func start(apiKey: String, isAutomaticScreenReportingEnabled: Bool = true, isDebugMode: Bool = false) {
         DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
-        AnalyticModeHelper.setIsAnalyticModelOn(isEnableAnalytic)
         DebugModeHelper.setIsDebugModeOn(isDebugMode)
         let storage = StorageBuilder.build()
         storage.set(value: isAutomaticScreenReportingEnabled, forKey: StorageKeys.screenTrackingFlag.rawValue)
         analyticsService = AnalyticsServiceBuilder.build(isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled)
         senderScheduler.subscribeOnNotifications()
         userNotificationService.setNotificationCenterDelegate()
-        inApps.subscribeOnNotifications()        
+        inApps.subscribeOnNotifications()
     }
     
     /// Log events

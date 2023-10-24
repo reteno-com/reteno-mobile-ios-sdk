@@ -46,7 +46,7 @@ final class RequestManager {
                     let resultValue = try responseHandler.handleResponse(data)
                     completionHandler(.success(resultValue))
                 } catch {
-                    SentryHelper.capture(error: error)
+                    ErrorLogger.shared.capture(error: error)
                     if DebugModeHelper.isDebugModeOn() {
                         Logger.log(error, eventType: .error)
                     }
@@ -104,7 +104,7 @@ final class RequestManager {
                     let resultValue = try responseHandler.handleResponse(data)
                     completionHandler(.success(resultValue), response.response?.headers)
                 } catch {
-                    SentryHelper.capture(error: error)
+                    ErrorLogger.shared.capture(error: error)
                     completionHandler(.failure(error), response.response?.headers)
                 }
             }

@@ -80,13 +80,13 @@ final class InAppMessages {
                         self.storage.set(value: version, forKey: StorageKeys.inAppMessageBaseHTMLVersion.rawValue)
                         
                     case .failure(let error):
-                        SentryHelper.capture(error: error)
+                        ErrorLogger.shared.capture(error: error)
                     }
                     completion()
                 }
                 
             case .failure(let error):
-                SentryHelper.capture(error: error)
+                ErrorLogger.shared.capture(error: error)
                 completion()
             }
         }
@@ -126,7 +126,7 @@ final class InAppMessages {
         window?.rootViewController = viewController
         window?.isHidden = false
         if window.isNone {
-            SentryHelper.captureWarningEvent(message: "Couldn't resolve window to present InApp")
+            ErrorLogger.shared.captureWarningEvent(message: "Couldn't resolve window to present InApp")
         }
         
         if animated {

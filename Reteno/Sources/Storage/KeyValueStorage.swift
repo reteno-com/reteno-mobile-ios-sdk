@@ -18,12 +18,12 @@ enum StorageKeys: String, CaseIterable {
     case notificationStatuses = "com.reteno.notification-statuses.key"
     case users = "com.reteno.users.key"
     case debugModeFlag = "com.reteno.debug-mode-flag.key"
-    case analyticModeFlag = "com.reteno.analytic-mode-flag.key"
     case recomEvents = "com.reteno.recom_events.key"
     case inboxOpenedMessagesIds = "com.reteno.inbox_opened_messages_ids.key"
     case wrappedLinks = "com.reteno.wrapped-links.key"
     case screenTrackingFlag = "com.reteno.screen-tracking-flag.key"
     case inAppMessageBaseHTMLVersion = "com.reteno.in-app_message_base_html.key"
+    case errorEvents = "com.reteno.error_events.key"
     
 }
 
@@ -70,7 +70,7 @@ final class KeyValueStorage {
             let encodedEvents = try JSONEncoder().encode(existingEvents)
             storage.set(encodedEvents, forKey: StorageKeys.events.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -84,7 +84,7 @@ final class KeyValueStorage {
             
             return decodedEvents
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
             
             return []
         }
@@ -106,7 +106,7 @@ final class KeyValueStorage {
             let encodedEvents = try JSONEncoder().encode(resultEvents)
             storage.set(encodedEvents, forKey: StorageKeys.events.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -121,7 +121,7 @@ final class KeyValueStorage {
             let encodedStatuses = try JSONEncoder().encode(existingStatuses)
             storage.set(encodedStatuses, forKey: StorageKeys.notificationStatuses.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -135,7 +135,7 @@ final class KeyValueStorage {
             
             return decodedEvents
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
             
             return []
         }
@@ -150,7 +150,7 @@ final class KeyValueStorage {
             let encodedStatuses = try JSONEncoder().encode(existingStatuses)
             storage.set(encodedStatuses, forKey: StorageKeys.notificationStatuses.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -163,7 +163,7 @@ final class KeyValueStorage {
             let encodedStatuses = try JSONEncoder().encode(existingStatuses)
             storage.set(encodedStatuses, forKey: StorageKeys.notificationStatuses.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -178,7 +178,7 @@ final class KeyValueStorage {
             let encodedUsers = try JSONEncoder().encode(existingUsers)
             storage.set(encodedUsers, forKey: StorageKeys.users.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -192,7 +192,7 @@ final class KeyValueStorage {
             
             return decodedUsers
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
             
             return []
         }
@@ -207,13 +207,13 @@ final class KeyValueStorage {
             let encodedUsers = try JSONEncoder().encode(existingUsers)
             storage.set(encodedUsers, forKey: StorageKeys.users.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
     private func storageUnwrapper() -> UserDefaults? {
         guard let storage = storage else {
-            SentryHelper.capture(error: StorageDoesNotExistError())
+            ErrorLogger.shared.capture(error: StorageDoesNotExistError())
             
             return nil
         }
@@ -232,7 +232,7 @@ final class KeyValueStorage {
             let encodedEvents = try JSONEncoder().encode(existingEvents)
             storage.set(encodedEvents, forKey: StorageKeys.recomEvents.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -246,7 +246,7 @@ final class KeyValueStorage {
             
             return decodedEvents
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
             
             return []
         }
@@ -268,7 +268,7 @@ final class KeyValueStorage {
             let encodedEvents = try JSONEncoder().encode(resultEvents)
             storage.set(encodedEvents, forKey: StorageKeys.recomEvents.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -286,7 +286,7 @@ final class KeyValueStorage {
             let encodedIds = try JSONEncoder().encode(existingIds)
             storage.set(encodedIds, forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
 
@@ -300,7 +300,7 @@ final class KeyValueStorage {
             
             return decodedIds
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
             
             return []
         }
@@ -316,7 +316,7 @@ final class KeyValueStorage {
             let encodedIds = try JSONEncoder().encode(resultIds)
             storage.set(encodedIds, forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
 
@@ -337,7 +337,7 @@ final class KeyValueStorage {
             let encodedLinks = try JSONEncoder().encode(existingLinks)
             storage.set(encodedLinks, forKey: StorageKeys.wrappedLinks.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -350,7 +350,7 @@ final class KeyValueStorage {
             let decodedLinks = try JSONDecoder().decode([StorableLink].self, from: data)
             return decodedLinks
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
             return []
         }
     }
@@ -364,7 +364,7 @@ final class KeyValueStorage {
             let encodedLinks = try JSONEncoder().encode(existingLinks)
             storage.set(encodedLinks, forKey: StorageKeys.wrappedLinks.rawValue)
         } catch {
-            SentryHelper.capture(error: error)
+            ErrorLogger.shared.capture(error: error)
         }
     }
     
@@ -374,6 +374,57 @@ final class KeyValueStorage {
         storage.setValue([], forKey: StorageKeys.wrappedLinks.rawValue)
     }
     
+    // MARK: Error
+    
+    func addErrorEvent(_ event: ErrorEvent) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            var existingEvents = getErrorEvents()
+            existingEvents.append(event)
+            let encodedEvents = try JSONEncoder().encode(existingEvents)
+            storage.set(encodedEvents, forKey: StorageKeys.errorEvents.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+
+    
+    func getErrorEvents() -> [ErrorEvent] {
+        guard let storage = storageUnwrapper() else { return [] }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.errorEvents.rawValue) else { return [] }
+            
+            let decodedEvents = try JSONDecoder().decode([ErrorEvent].self, from: data)
+            
+            return decodedEvents
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            
+            return []
+        }
+    }
+    
+    func clearErrorEvents(_ errorEvents: [ErrorEvent]) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        let idForRemove = errorEvents.map { $0.id }
+        let resultEvents = getErrorEvents().filter { !idForRemove.contains($0.id) }
+        
+        do {
+            let encodedEvents = try JSONEncoder().encode(resultEvents)
+            storage.set(encodedEvents, forKey: StorageKeys.errorEvents.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+    
+    func clearAllErrorEvents() {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.set([], forKey: StorageKeys.errorEvents.rawValue)
+    }
 }
 
 // MARK: StorageDoesNotExistError

@@ -60,23 +60,15 @@ PODS:
   - OHHTTPStubs/Swift (9.1.0):
     - OHHTTPStubs/Default
   - PromisesObjC (2.2.0)
-  - Reteno (1.6.7):
+  - Reteno (1.6.8):
     - Alamofire (= 5.6.2)
-    - Sentry (>= 8.7.3)
-  - Sentry (8.9.0):
-    - Sentry/Core (= 8.9.0)
-    - SentryPrivate (= 8.9.0)
-  - Sentry/Core (8.9.0):
-    - SentryPrivate (= 8.9.0)
-  - SentryPrivate (8.9.0)
   - SnapKit (5.6.0)
   - Swinject (2.7.1)
 
 DEPENDENCIES:
   - FirebaseMessaging
   - OHHTTPStubs/Swift
-  - Reteno (= 1.6.7)
-  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `8.9.0`)
+  - Reteno (from `../`)
   - SnapKit (~> 5.6.0)
   - Swinject (~> 2.7.1)
 
@@ -92,20 +84,12 @@ SPEC REPOS:
     - nanopb
     - OHHTTPStubs
     - PromisesObjC
-    - Reteno
-    - SentryPrivate
     - SnapKit
     - Swinject
 
 EXTERNAL SOURCES:
-  Sentry:
-    :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 8.9.0
-
-CHECKOUT OPTIONS:
-  Sentry:
-    :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 8.9.0
+  Reteno:
+    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
@@ -118,12 +102,10 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  Reteno: f15e462c20267b77712980d47ce8eddc19379446
-  Sentry: cea04a0096449065510da918b6228976cfdd185a
-  SentryPrivate: f04a3ce2624c8f4cc75c86cb816ec8a15c7f60e1
+  Reteno: 1bd83f31094554cba6408f1ed11fe8693c029fb8
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: c96104642bc2b1ba46bd79063a8e9bcd02b0d940
+PODFILE CHECKSUM: bc8ace8611de7ca23e3b33386d955fc749416cab
 
 COCOAPODS: 1.12.1
