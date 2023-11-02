@@ -234,6 +234,9 @@ final class EventsSenderScheduler {
     }
     
     private func sendCollectedData() {
+        if backgroundTaskIdentifier != .invalid {
+            self.endTask()
+        }
         backgroundTaskIdentifier = application?.beginBackgroundTask(expirationHandler: { [weak self] in
             guard let self = self else { return }
             

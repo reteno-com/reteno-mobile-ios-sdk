@@ -14,7 +14,7 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "1.6.8"
+    static var version = "1.6.9"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -29,7 +29,6 @@ public struct Reteno {
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
     /// - Parameter isAutomaticScreenReportingEnabled: Flag that indicates if automatic screen view tracking enabled
     /// - Parameter isDebugMode: Flag that indicates if `DebugMode` is enabled
-    /// - Parameter isEnableAnalytic: Flag that indicates if `Analytic` is enabled
     @available(iOSApplicationExtension, unavailable)
     public static func start(apiKey: String, isAutomaticScreenReportingEnabled: Bool = true, isDebugMode: Bool = false) {
         DeviceIdHelper.actualizeDeviceId()
