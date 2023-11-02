@@ -40,12 +40,13 @@ public struct ErrorEvent: Codable {
         
         json["id"] = id
         json["platformName"] = "iOS"
-        json["version"] = UIDevice.current.systemVersion
+        json["version"] = AppVersionHelper.appVersion()
         json["device"] = UIDevice.current.model
         json["sdkVersion"] = Reteno.version
         json["deviceId"] = DeviceIdHelper.deviceId() ?? ""
         json["bundleId"] = BundleIdHelper.getMainAppBundleId()
         json["logLevel"] = logLevel
+        json["osVersion"] = UIDevice.current.systemVersion
         if let customData = data {
             json["data"] = customData
         }
