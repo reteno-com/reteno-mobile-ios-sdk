@@ -70,7 +70,12 @@ final class EventsSenderScheduler {
     func upsertDevice(_ device: Device, date: Date = Date()) {
         guard !pendingSendDeviceOperations.contains(where: { $0.device == device }) else { return }
         
-        let operation = SendDeviceOperation(requestService: mobileRequestService, device: device, date: date)
+        let operation = SendDeviceOperation(
+            requestService: mobileRequestService,
+            storage: storage,
+            device: device,
+            date: date
+        )
         operation.completionBlock = { [weak self] in
             self?.pendingSendDeviceOperations.removeAll(where: { $0.uuid == operation.uuid })
         }
@@ -278,6 +283,15 @@ final class EventsSenderScheduler {
     }
     
     private func prepareOperationSequence() -> [Operation] {
+        if storage.getValue(forKey: StorageKeys.isUpdatedDevice.rawValue) == false {
+            upsertDevice(
+                Device(
+                    externalUserId: ExternalUserIdHelper.getId(),
+                    isSubscribedOnPush: RetenoNotificationsHelper.isPushSubscribed()
+                )
+            )
+        }
+        
         var operations = sendUsersOperations() + registerWrappedLinkClickOperations()
         if let sendEventOperation = sendEventsOperation() {
             operations.append(sendEventOperation)

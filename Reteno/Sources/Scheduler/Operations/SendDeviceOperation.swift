@@ -12,10 +12,18 @@ final class SendDeviceOperation: DateOperation {
     let uuid: String
     let device: Device
     private let requestService: MobileRequestService
+    private let storage: KeyValueStorage
     
-    init(uuid: String = UUID().uuidString, requestService: MobileRequestService, device: Device, date: Date) {
+    init(
+        uuid: String = UUID().uuidString,
+        requestService: MobileRequestService,
+        storage: KeyValueStorage,
+        device: Device,
+        date: Date
+    ) {
         self.uuid = uuid
         self.requestService = requestService
+        self.storage = storage
         self.device = device
         
         super.init(date: date)
@@ -33,8 +41,17 @@ final class SendDeviceOperation: DateOperation {
         requestService.upsertDevice(
             externalUserId: device.externalUserId,
             isSubscribedOnPush: device.isSubscribedOnPush
-        ) { [weak self] _ in
-            self?.finish()
+        ) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success:
+                self.storage.set(value: true, forKey: StorageKeys.isUpdatedDevice.rawValue)
+            case .failure:
+                self.storage.set(value: false, forKey: StorageKeys.isUpdatedDevice.rawValue)
+            }
+
+            self.finish()
         }
     }
     

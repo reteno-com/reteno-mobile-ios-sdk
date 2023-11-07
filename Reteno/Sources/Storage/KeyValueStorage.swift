@@ -11,6 +11,7 @@ enum StorageKeys: String, CaseIterable {
     
     case pushToken = "com.reteno.push-token.key"
     case isPushSubscribed = "com.reteno.is-push-subscribed.key"
+    case isUpdatedDevice = "com.reteno.is-updated-device.key"
     case deviceId = "com.reteno.device-id.key"
     case externalUserId = "com.reteno.external-user-id.key"
     case apiKey = "com.reteno.api-key.key"
