@@ -112,15 +112,8 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
                 return
             }
             
-            let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(fileName)
-            
-            // Move the downloaded file to temp folder
+            let fileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString + fileName)
             do {
-                // The file should be removed automatically from temp
-                // Delete it manually if it is not
-                if FileManager.default.fileExists(atPath: fileURL.path) {
-                    try FileManager.default.removeItem(at: fileURL)
-                }
                 try FileManager.default.moveItem(at: localURL, to: fileURL)
             } catch {
                 ErrorLogger.shared.capture(error: error)

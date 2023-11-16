@@ -12,12 +12,14 @@ enum StorageKeys: String, CaseIterable {
     case pushToken = "com.reteno.push-token.key"
     case isPushSubscribed = "com.reteno.is-push-subscribed.key"
     case isUpdatedDevice = "com.reteno.is-updated-device.key"
+    case cachedDevice = "com.reteno.last-sended-device.key"
     case deviceId = "com.reteno.device-id.key"
     case externalUserId = "com.reteno.external-user-id.key"
     case apiKey = "com.reteno.api-key.key"
     case events = "com.reteno.events.key"
     case notificationStatuses = "com.reteno.notification-statuses.key"
     case users = "com.reteno.users.key"
+    case cachedUser = "com.reteno.last-sended-user.key"
     case debugModeFlag = "com.reteno.debug-mode-flag.key"
     case recomEvents = "com.reteno.recom_events.key"
     case inboxOpenedMessagesIds = "com.reteno.inbox_opened_messages_ids.key"
@@ -220,6 +222,74 @@ final class KeyValueStorage {
         }
         
         return storage
+    }
+    
+    func updateCachedUser(_ user: User?) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            let encodedUser = try JSONEncoder().encode(user)
+            storage.set(encodedUser, forKey: StorageKeys.cachedUser.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+    
+    func getCachedUser() -> User? {
+        guard let storage = storageUnwrapper() else { return nil }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.cachedUser.rawValue) else { return nil }
+            
+            let decodedUser = try JSONDecoder().decode(User.self, from: data)
+            
+            return decodedUser
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            
+            return nil
+        }
+    }
+    
+    func clearCachedUser() {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.set(nil, forKey: StorageKeys.cachedUser.rawValue)
+    }
+    
+    // MARK: Cached Device Request
+    
+    func updateCachedDevice(_ cachedDevice: [String: Any]) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            let cachedDevice = try JSONSerialization.data(withJSONObject: cachedDevice, options: .prettyPrinted)
+            storage.set(cachedDevice, forKey: StorageKeys.cachedDevice.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+    
+    func getCachedDevice() -> [String: Any]? {
+        guard let storage = storageUnwrapper() else { return nil }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.cachedDevice.rawValue) else { return nil }
+            
+            let decodedDevice = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            
+            return decodedDevice
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            
+            return nil
+        }
+    }
+    
+    func clearCachedDevice() {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.set(nil, forKey: StorageKeys.cachedDevice.rawValue)
     }
     
     // MARK: Recom events logic

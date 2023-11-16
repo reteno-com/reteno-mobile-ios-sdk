@@ -38,6 +38,28 @@ final class MobileRequestService {
         }
     }
     
+    func isEqualDeviceRequest(
+        externalUserId: String? = nil,
+        isSubscribedOnPush: Bool,
+        cachedRequestParams: [String: Any]?
+    ) -> (isEqual: Bool, paramsToSave: [String: Any]?) {
+        let languageCode = Locale.current.languageCode
+        let pushToken = RetenoNotificationsHelper.deviceToken() ?? ""
+        let category = try? DeviceCategoryHelper.deviceType()
+        let request = DeviceRequest(
+            category: category ?? .mobile,
+            languageCode: languageCode,
+            pushToken: pushToken,
+            isSubscribedOnPush: isSubscribedOnPush,
+            externalUserId: externalUserId
+        )
+        guard let newParams = request.parameters, let cached = cachedRequestParams else {
+            return (false, nil)
+        }
+        
+        return (NSDictionary(dictionary: newParams).isEqual(cached), request.parameters)
+    }
+    
     func updateUserAttributes(
         user: User,
         completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }

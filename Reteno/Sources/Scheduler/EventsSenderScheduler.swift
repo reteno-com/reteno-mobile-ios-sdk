@@ -34,8 +34,6 @@ final class EventsSenderScheduler {
     /// time interval resolvers
     private var timeIntervalResolver: () -> TimeInterval
     private var randomOffsetResolver: () -> TimeInterval
-    /// cached last sended user
-    private var cachedLastUser: User?
     /// Mobile request service
     private let mobileRequestService: MobileRequestService
     /// Notification interaction status updater
@@ -82,7 +80,7 @@ final class EventsSenderScheduler {
         pendingSendDeviceOperations.append(operation)
         operationQueue.addOperation(operation)
     }
-        
+    
     func updateNotificationInteractionStatus(interactionId: String, status: InteractionStatus, date: Date) {
         let status = NotificationStatus(interactionId: interactionId, status: status, date: date)
         storage.addNotificationStatus(status)
@@ -104,73 +102,75 @@ final class EventsSenderScheduler {
         isAnonymous: Bool
     ) {
         let user: User
-        if !isAnonymous {
-            if let lastUser = cachedLastUser, lastUser.externalUserId == externalUserId, externalUserId != nil {
-                let userUpdates = User(
-                    externalUserId: externalUserId,
-                    userAttributes: userAttributes,
-                    subscriptionKeys: subscriptionKeys,
-                    groupNamesInclude: groupNamesInclude,
-                    groupNamesExclude: groupNamesExclude,
-                    isAnonymous: isAnonymous
-                )
-
-                guard userUpdates != cachedLastUser else { return }
-                
-                let attributesToSend = UserAttributes(
-                    phone: lastUser.userAttributes?.phone == userAttributes?.phone ? nil : userAttributes?.phone,
-                    email: lastUser.userAttributes?.email == userAttributes?.email ? nil : userAttributes?.email,
-                    firstName: lastUser.userAttributes?.firstName == userAttributes?.firstName ? nil : userAttributes?.firstName,
-                    lastName: lastUser.userAttributes?.lastName == userAttributes?.lastName ? nil : userAttributes?.lastName,
-                    languageCode: lastUser.userAttributes?.languageCode == userAttributes?.languageCode ? nil : userAttributes?.languageCode,
-                    timeZone: lastUser.userAttributes?.timeZone == userAttributes?.timeZone ? nil : userAttributes?.timeZone,
-                    address: lastUser.userAttributes?.address == userAttributes?.address ? nil : userAttributes?.address,
-                    fields: lastUser.userAttributes?.fields == userAttributes?.fields ? [] : (userAttributes?.fields ?? [])
-                )
-                
-                let userToSend = User(
-                    externalUserId: externalUserId,
-                    userAttributes: attributesToSend == lastUser.userAttributes ? nil : attributesToSend ,
-                    subscriptionKeys: subscriptionKeys == lastUser.subscriptionKeys ? [] : subscriptionKeys,
-                    groupNamesInclude: groupNamesInclude == lastUser.groupNamesInclude ? [] : groupNamesInclude,
-                    groupNamesExclude: groupNamesExclude == lastUser.groupNamesExclude ? [] : groupNamesExclude,
-                    isAnonymous: isAnonymous
-                )
-                
-                let attributesToSave = UserAttributes(
-                    phone: lastUser.userAttributes?.phone == userAttributes?.phone
-                        ? userAttributes?.phone : userAttributes?.phone ?? lastUser.userAttributes?.phone,
-                    email: lastUser.userAttributes?.email == userAttributes?.email ? userAttributes?.email : userAttributes?.email ?? lastUser.userAttributes?.email,
-                    firstName: lastUser.userAttributes?.firstName == userAttributes?.firstName ? userAttributes?.firstName : userAttributes?.firstName ?? lastUser.userAttributes?.firstName,
-                    lastName: lastUser.userAttributes?.lastName == userAttributes?.lastName ? userAttributes?.lastName : userAttributes?.lastName ?? lastUser.userAttributes?.lastName,
-                    languageCode: lastUser.userAttributes?.languageCode == userAttributes?.languageCode ? userAttributes?.languageCode : userAttributes?.languageCode ?? lastUser.userAttributes?.languageCode,
-                    timeZone: lastUser.userAttributes?.timeZone == userAttributes?.timeZone ? userAttributes?.timeZone : userAttributes?.timeZone ?? lastUser.userAttributes?.timeZone,
-                    address: lastUser.userAttributes?.address == userAttributes?.address ? userAttributes?.address : userAttributes?.address ?? lastUser.userAttributes?.address,
-                    fields: lastUser.userAttributes?.fields == userAttributes?.fields ? userAttributes?.fields ?? [] : userAttributes?.fields ?? lastUser.userAttributes?.fields ?? []
-                )
-                let userToSave = User(
-                    externalUserId: externalUserId,
-                    userAttributes: attributesToSave,
-                    subscriptionKeys: lastUser.subscriptionKeys == subscriptionKeys ? subscriptionKeys : subscriptionKeys.isEmpty ? lastUser.subscriptionKeys : [],
-                    groupNamesInclude: lastUser.groupNamesInclude == groupNamesInclude ? groupNamesInclude : groupNamesInclude.isEmpty ? lastUser.groupNamesInclude : [],
-                    groupNamesExclude: lastUser.groupNamesExclude == groupNamesExclude ? groupNamesExclude : groupNamesExclude.isEmpty ? lastUser.groupNamesExclude : [],
-                    isAnonymous: isAnonymous
-                )
-                
-                user = userToSend
-                cachedLastUser = userToSave
-            } else {
-                user = User(
-                    externalUserId: externalUserId,
-                    userAttributes: userAttributes,
-                    subscriptionKeys: subscriptionKeys,
-                    groupNamesInclude: groupNamesInclude,
-                    groupNamesExclude: groupNamesExclude,
-                    isAnonymous: isAnonymous
-                )
-
-                self.cachedLastUser = user
+        let cachedLastUser: User?
+        if let tempUser = storage.getCachedUser(), tempUser.isValid {
+            cachedLastUser = tempUser
+        } else {
+            storage.clearCachedUser()
+            cachedLastUser = nil
+        }
+        if let lastUser = cachedLastUser, lastUser.externalUserId == externalUserId, externalUserId != nil {
+            let userUpdates = User(
+                externalUserId: externalUserId,
+                userAttributes: userAttributes,
+                subscriptionKeys: subscriptionKeys,
+                groupNamesInclude: groupNamesInclude,
+                groupNamesExclude: groupNamesExclude,
+                isAnonymous: isAnonymous
+            )
+            
+            guard userUpdates != cachedLastUser else {
+                return
             }
+            
+            let attributesToSend = UserAttributes(
+                phone: lastUser.userAttributes?.phone == userAttributes?.phone ? nil : userAttributes?.phone,
+                email: lastUser.userAttributes?.email == userAttributes?.email ? nil : userAttributes?.email,
+                firstName: lastUser.userAttributes?.firstName == userAttributes?.firstName ? nil : userAttributes?.firstName,
+                lastName: lastUser.userAttributes?.lastName == userAttributes?.lastName ? nil : userAttributes?.lastName,
+                languageCode: lastUser.userAttributes?.languageCode == userAttributes?.languageCode ? nil : userAttributes?.languageCode,
+                timeZone: lastUser.userAttributes?.timeZone == userAttributes?.timeZone ? nil : userAttributes?.timeZone,
+                address: lastUser.userAttributes?.address == userAttributes?.address ? nil : userAttributes?.address,
+                fields: lastUser.userAttributes?.fields == userAttributes?.fields ? [] : (userAttributes?.fields ?? [])
+            )
+            
+            let userToSend = User(
+                externalUserId: externalUserId,
+                userAttributes: attributesToSend == lastUser.userAttributes ? nil : attributesToSend ,
+                subscriptionKeys: subscriptionKeys == lastUser.subscriptionKeys ? [] : subscriptionKeys,
+                groupNamesInclude: groupNamesInclude == lastUser.groupNamesInclude ? [] : groupNamesInclude,
+                groupNamesExclude: groupNamesExclude == lastUser.groupNamesExclude ? [] : groupNamesExclude,
+                isAnonymous: isAnonymous
+            )
+            
+            let attributes = userToSend.userAttributes
+            guard attributes?.phone != nil || attributes?.email != nil || attributes?.firstName != nil || attributes?.lastName != nil || attributes?.languageCode != nil || attributes?.timeZone != nil || attributes?.address != nil || attributes?.fields.isNotEmpty ?? false || userToSend.subscriptionKeys.isNotEmpty || userToSend.groupNamesInclude.isNotEmpty || userToSend.groupNamesExclude.isNotEmpty  else {
+                /// Not store, and not send request if all fields are same
+                return
+            }
+            
+            let attributesToSave = UserAttributes(
+                phone: lastUser.userAttributes?.phone == userAttributes?.phone
+                ? userAttributes?.phone : userAttributes?.phone ?? lastUser.userAttributes?.phone,
+                email: lastUser.userAttributes?.email == userAttributes?.email ? userAttributes?.email : userAttributes?.email ?? lastUser.userAttributes?.email,
+                firstName: lastUser.userAttributes?.firstName == userAttributes?.firstName ? userAttributes?.firstName : userAttributes?.firstName ?? lastUser.userAttributes?.firstName,
+                lastName: lastUser.userAttributes?.lastName == userAttributes?.lastName ? userAttributes?.lastName : userAttributes?.lastName ?? lastUser.userAttributes?.lastName,
+                languageCode: lastUser.userAttributes?.languageCode == userAttributes?.languageCode ? userAttributes?.languageCode : userAttributes?.languageCode ?? lastUser.userAttributes?.languageCode,
+                timeZone: lastUser.userAttributes?.timeZone == userAttributes?.timeZone ? userAttributes?.timeZone : userAttributes?.timeZone ?? lastUser.userAttributes?.timeZone,
+                address: lastUser.userAttributes?.address == userAttributes?.address ? userAttributes?.address : userAttributes?.address ?? lastUser.userAttributes?.address,
+                fields: lastUser.userAttributes?.fields == userAttributes?.fields ? userAttributes?.fields ?? [] : userAttributes?.fields ?? lastUser.userAttributes?.fields ?? []
+            )
+            let userToSave = User(
+                externalUserId: externalUserId,
+                userAttributes: attributesToSave,
+                subscriptionKeys: lastUser.subscriptionKeys == subscriptionKeys ? subscriptionKeys : subscriptionKeys.isEmpty ? lastUser.subscriptionKeys : [],
+                groupNamesInclude: lastUser.groupNamesInclude == groupNamesInclude ? groupNamesInclude : groupNamesInclude.isEmpty ? lastUser.groupNamesInclude : [],
+                groupNamesExclude: lastUser.groupNamesExclude == groupNamesExclude ? groupNamesExclude : groupNamesExclude.isEmpty ? lastUser.groupNamesExclude : [],
+                isAnonymous: isAnonymous
+            )
+            
+            user = userToSend
+            storage.updateCachedUser(userToSave)
         } else {
             user = User(
                 externalUserId: externalUserId,
@@ -180,6 +180,7 @@ final class EventsSenderScheduler {
                 groupNamesExclude: groupNamesExclude,
                 isAnonymous: isAnonymous
             )
+            storage.updateCachedUser(user)
         }
         storage.addUser(user)
         

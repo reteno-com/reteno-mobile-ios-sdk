@@ -52,4 +52,9 @@ struct User: Codable, Equatable {
     static func == (lhs: User, rhs: User) -> Bool {
         lhs.externalUserId == rhs.externalUserId && lhs.userAttributes == rhs.userAttributes && lhs.subscriptionKeys == rhs.subscriptionKeys && lhs.groupNamesInclude == rhs.groupNamesInclude && lhs.groupNamesExclude == rhs.groupNamesExclude
     }
+    
+    var isValid: Bool {
+        let lifetime = 40
+        return date <= Date() && Date().hours(from: date) < lifetime
+    }
 }
