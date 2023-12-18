@@ -69,14 +69,20 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             let alert = InformationAlert(text: "Received action - \(action.actionId)\(customDataText)")
             self?.window?.showInformationAlert(alert)
         }
-        Reteno.addLinkHandler { [weak self] url in
+        
+        Reteno.addLinkHandler { [weak self] url, customData in
             guard
                 let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
                 components.host == "example-app.esclick.me",
                 let linkItem = UniversalLinkItem(rawValue: components.path)
             else {
+                if customData != nil {
+                    let customDataText = customData.flatMap { "\nWith custom data: - \($0)" } ?? ""
+                    let alert = InformationAlert(text: "Received data - \(customDataText)")
+                    self?.window?.showInformationAlert(alert)
+                }
                 // if it's not a deep link, just open Safari
-                application.open(url)
+              //  application.open(url)
                 return
             }
             

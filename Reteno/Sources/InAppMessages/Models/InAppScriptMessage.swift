@@ -54,11 +54,18 @@ struct InAppScriptMessageURLPayload: Decodable, InAppScriptMessagePayload {
     
     let urlString: String
     let targetComponentId: String?
+    let customData: [String: Any]?
     
     enum CodingKeys: String, CodingKey {
-        case urlString = "url", targetComponentId
+        case urlString = "url", targetComponentId, customData
     }
     
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.urlString = try container.decode(String.self, forKey: .urlString)
+        self.targetComponentId = try? container.decode(String.self, forKey: .targetComponentId)
+        self.customData = try? container.decode([String:Any].self, forKey: .customData)
+    }
 }
 
 struct InAppScriptMessageErrorPayload: Decodable, InAppScriptMessagePayload {

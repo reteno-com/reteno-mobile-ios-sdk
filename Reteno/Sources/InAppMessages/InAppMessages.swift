@@ -226,7 +226,7 @@ extension InAppMessages: InAppScriptMessageHandler {
                         url: payload.urlString
                     )
                 )
-                DeepLinksProcessor.processLinks(wrappedUrl: nil, rawURL: url)
+                DeepLinksProcessor.processLinks(wrappedUrl: nil, rawURL: url, customData: payload.customData)
             }
             
         case .click:

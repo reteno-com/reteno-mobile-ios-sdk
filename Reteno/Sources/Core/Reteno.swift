@@ -14,12 +14,12 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "1.7.1"
+    static var version = "1.7.2"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
     }()
-    static var linkHandler: ((URL) -> Void)?
+    static var linkHandler: ((URL, [String:Any]?) -> Void)?
     static var analyticsService: AnalyticsService!
     static let senderScheduler = EventsSenderSchedulerBuilder.build()
     
@@ -62,7 +62,7 @@ public struct Reteno {
         }
     }
     
-    public static func addLinkHandler(_ handler: @escaping (URL) -> Void) {
+    public static func addLinkHandler(_ handler: @escaping (URL, [String:Any]?) -> Void) {
         linkHandler = handler
     }
     
