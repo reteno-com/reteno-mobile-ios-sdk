@@ -120,10 +120,7 @@ final class CartUpdatedViewController: KeyboardHandlingViewController {
     @objc
     func sendEvent(_ sender: UIButton) {
         guard
-            let cartIdText = cartIdTextField.text, !cartIdText.isEmpty,
-            let productIdText = productIdsTextFields.first?.text, !productIdText.isEmpty,
-            let productPriceText = productPricesTextFields.first?.text, !productPriceText.isEmpty,
-            let quantityText = productQuantityTextFields.first?.text, !quantityText.isEmpty
+            let cartIdText = cartIdTextField.text, !cartIdText.isEmpty
         else { return }
         
         viewModel.sendEvent(
