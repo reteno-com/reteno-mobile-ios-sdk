@@ -14,7 +14,7 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "1.7.3"
+    static var version = "1.7.4"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30

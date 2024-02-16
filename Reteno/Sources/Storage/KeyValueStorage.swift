@@ -27,6 +27,7 @@ enum StorageKeys: String, CaseIterable {
     case screenTrackingFlag = "com.reteno.screen-tracking-flag.key"
     case inAppMessageBaseHTMLVersion = "com.reteno.in-app_message_base_html.key"
     case errorEvents = "com.reteno.error_events.key"
+    case devicePlatform = "com.reteno.device_platform.key"
     
 }
 

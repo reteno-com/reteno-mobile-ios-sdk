@@ -449,11 +449,8 @@ final class EventsSenderScheduler {
     @objc
     private func handleApplicationDidBecomeActiveNotification(_ notification: Notification) {
         RetenoNotificationsHelper.isSubscribedOnNotifications { [weak self] isSubscribed in
-            guard isSubscribed != RetenoNotificationsHelper.isPushSubscribed() else { return }
-            
             StorageBuilder.build().set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
             self?.upsertDevice(Device(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed))
         }
     }
-    
 }

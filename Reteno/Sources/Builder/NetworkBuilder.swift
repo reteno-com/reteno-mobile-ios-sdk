@@ -29,7 +29,7 @@ struct NetworkBuilder {
         let headersDecorator = RequestDecorator { request in
             request.headers?.add(name: "Content-Type", value: "application/json")
             request.headers?.add(name: "X-Reteno-Access-Key", value: apiKey)
-            request.headers?.add(name: "X-Reteno-SDK-Version", value: Reteno.version)
+            request.headers?.add(name: "X-Reteno-SDK-Version", value: DevicePlatformHelper.getDevicePlatform())
             if DebugModeHelper.isDebugModeOn() {
                 request.headers?.add(name: "X-Reteno-Debug", value: "true")
             }
@@ -55,7 +55,7 @@ struct NetworkBuilder {
         let headersDecorator = RequestDecorator { request in
             request.headers?.add(name: "Content-Type", value: "application/json")
             request.headers?.add(name: "X-Reteno-Access-Key", value: apiKey)
-            request.headers?.add(name: "X-Reteno-SDK-Version", value: Reteno.version)
+            request.headers?.add(name: "X-Reteno-SDK-Version", value: DevicePlatformHelper.getDevicePlatform())
             if let deviceId = DeviceIdHelper.deviceId() {
                 request.headers?.add(name: "X-Reteno-Device-ID", value: deviceId)
             }
