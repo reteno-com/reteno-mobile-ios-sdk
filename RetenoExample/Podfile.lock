@@ -68,7 +68,7 @@ PODS:
 DEPENDENCIES:
   - FirebaseMessaging
   - OHHTTPStubs/Swift
-  - Reteno (from `../`)
+  - Reteno (= 1.7.4)
   - SnapKit (~> 5.6.0)
   - Swinject (~> 2.7.1)
 
@@ -84,12 +84,9 @@ SPEC REPOS:
     - nanopb
     - OHHTTPStubs
     - PromisesObjC
+    - Reteno
     - SnapKit
     - Swinject
-
-EXTERNAL SOURCES:
-  Reteno:
-    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
@@ -102,10 +99,10 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  Reteno: 18ae4215a2f02a2d29949d199d022ed31682af3c
+  Reteno: 7ff6529ea9f9ab212c940c5d4f6ff9e7a14ea5ea
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
-PODFILE CHECKSUM: bc8ace8611de7ca23e3b33386d955fc749416cab
+PODFILE CHECKSUM: 3193ca98db70794194c8afed29719e8e4afa4933
 
 COCOAPODS: 1.12.1
