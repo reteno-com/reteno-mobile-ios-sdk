@@ -29,6 +29,7 @@ final class SendDeviceOperation: DateOperation {
         super.init(date: date)
     }
     
+    @available(iOSApplicationExtension, unavailable)
     override func main() {
         super.main()
         
@@ -47,6 +48,8 @@ final class SendDeviceOperation: DateOperation {
             switch result {
             case .success:
                 self.storage.set(value: true, forKey: StorageKeys.isUpdatedDevice.rawValue)
+                Reteno.inAppMessages().getInAppMessages()
+                
             case .failure:
                 self.storage.set(value: false, forKey: StorageKeys.isUpdatedDevice.rawValue)
             }

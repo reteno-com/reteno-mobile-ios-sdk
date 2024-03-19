@@ -14,7 +14,9 @@ struct DeviceIdHelper {
     
     @available(iOSApplicationExtension, unavailable)
     static func actualizeDeviceId() {
-        guard let id = UIDevice.current.identifierForVendor, id.uuidString != deviceId() else { return }
+        guard let id = UIDevice.current.identifierForVendor, id.uuidString != deviceId() else {
+            return
+        }
         
         let storage = StorageBuilder.build()
         storage.set(value: id.uuidString, forKey: StorageKeys.deviceId.rawValue)

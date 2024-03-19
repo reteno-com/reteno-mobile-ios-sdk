@@ -35,6 +35,11 @@ final class MainViewController: NiblessViewController {
     // MARK: Actions
     
     @objc
+    private func pauseInAppSwitchAction(_ sender: UISwitch) {
+        viewModel.pausedInApp(sender.isOn)
+    }
+    
+    @objc
     private func ecommerceButtonAction(_ sender: UIButton) {
         viewModel.openEcommerce()
     }
@@ -132,6 +137,8 @@ private extension MainViewController {
         recomsButton.addTarget(self, action: #selector(recomsButtonAction(_:)), for: .touchUpInside)
         stack.addArrangedSubview(recomsButton)
         baseSetup(for: recomsButton)
+        
+        stack.addArrangedSubview(makePauseSwitcher())
     }
     
     func baseSetup(for button: UIButton) {
@@ -161,6 +168,34 @@ private extension MainViewController {
         }
         countLabel.textColor = .black
         countLabel.textAlignment = .center
+    }
+    
+    func makePauseSwitcher() -> UIView {
+        let containerView: UIView = .init()
+        containerView.backgroundColor = .systemGreen.withAlphaComponent(0.2)
+        containerView.layer.cornerRadius = 6.0
+        containerView.snp.makeConstraints {
+            $0.height.equalTo(50)
+        }
+        
+        let pauseSwitcher: UISwitch = .init()
+        pauseSwitcher.addTarget(self, action: #selector(pauseInAppSwitchAction(_:)), for: .valueChanged)
+        containerView.addSubview(pauseSwitcher)
+        pauseSwitcher.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20.0)
+        }
+        
+        let pauseLabel: UILabel = .init()
+        containerView.addSubview(pauseLabel)
+        pauseLabel.text = NSLocalizedString("main_screen.paused_in_app", comment: "")
+        pauseLabel.textColor = .black
+        pauseLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20.0)
+        }
+        
+        return containerView
     }
     
 }

@@ -7,31 +7,42 @@
 
 import UIKit
 
-@available(iOSApplicationExtension, unavailable)
 final class InAppMessages {
+    
+    var isPausedInApps: Bool = false
     
     private var application: UIApplication?
     private var window: UIWindow?
     
-    private var currentInAppMessage: InAppMessage?
+    private var currentInAppMessage: InApp?
     
     private let mobileRequestService: MobileRequestService
     private let inAppRequestService: InAppRequestService
     private let storage: KeyValueStorage
     private let scheduler: EventsSenderScheduler
+    private let sessionService: SessionService
+    private let inAppService: InAppService
+    
+    private var inAppPresenters: [InAppMessagePresenter] = []
+    
+    private var isAlreadySendRequest: Bool = false
     
     init(
         mobileRequestService: MobileRequestService,
         inAppRequestService: InAppRequestService,
         storage: KeyValueStorage,
-        scheduler: EventsSenderScheduler = Reteno.senderScheduler
+        scheduler: EventsSenderScheduler = Reteno.senderScheduler,
+        sessionService: SessionService
     ) {
         self.mobileRequestService = mobileRequestService
         self.inAppRequestService = inAppRequestService
         self.storage = storage
         self.scheduler = scheduler
+        self.sessionService = sessionService
+        self.inAppService = .init(requestService: mobileRequestService, storage: storage)
     }
     
+    @available(iOSApplicationExtension, unavailable)
     func presentInApp(by id: String) {
         mobileRequestService.getInAppMessage(by: id) { [weak self] result in
             switch result {
@@ -50,13 +61,54 @@ final class InAppMessages {
         }
     }
     
+    @available(iOSApplicationExtension, unavailable)
+    func presentInApp(by content: InAppContent) {
+        self.setupWebView(with: content)
+    }
+    
+    func logEventTrigger(eventTypeKey: String, parameters: [Event.Parameter]) {
+        if parameters.first(where: { $0.name == ScreenClass })?.value != "InAppMessageWebViewController" {
+            for inApp in inAppPresenters {
+                if inApp.isHasEventConditions() {
+                    inApp.checkEvent(eventTypeName: eventTypeKey, parameters: parameters)
+                }
+            }
+        }
+    }
+    
+    private func inAppPresentersSelections () {
+        sessionService.timeSpendInApp = { [weak self] time in
+            guard let self = self else { return }
+
+            for inAppPresenter in inAppPresenters {
+                if inAppPresenter.isHasTimeCondition() {
+                    inAppPresenter.updateTimeSpendInApp(time: time)
+                }
+            }
+        }
+    }
+    
     // MARK: Subscribe on notifications
     
+    @available(iOSApplicationExtension, unavailable)
     func subscribeOnNotifications() {
+        self.sessionService.subscribeOnNotifications()
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleApplicationDidBecomeActiveNotification),
             name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleApplicationWillTerminateNotification(_:)),
+            name: UIApplication.willTerminateNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleApplicationDidEnterBackgroundNotification(_:)),
+            name: UIApplication.didEnterBackgroundNotification,
             object: nil
         )
     }
@@ -92,12 +144,79 @@ final class InAppMessages {
         }
     }
     
-    private func setupWebView(with message: InAppMessage) {
-        let viewController = InAppMessageWebViewController(with: message)
+    @available(iOSApplicationExtension, unavailable)
+    func getInAppMessages() {
+        guard !isAlreadySendRequest else {
+            return
+        }
+        
+        isAlreadySendRequest = true
+        
+        inAppService.getInAppMessages()
+
+        inAppService.inAppContents = { [weak self] contents, showModels in
+            guard let self = self else { return }
+            
+            self.isAlreadySendRequest = false
+            self.presentingInApp(contents: contents, showModels: showModels)
+        }
+    }
+    
+    @available(iOSApplicationExtension, unavailable)
+    private func presentingInApp(contents: [InAppContent], showModels: [InAppShowModel]) {
+        for showModel in showModels {
+            let presenter: InAppMessagePresenter = .init(model: showModel, storage: storage) { inApp, canDelete in
+                guard !self.isPausedInApps else {
+                    return
+                }
+                
+                if let content = contents.first(where: { $0.messageInstanceId == inApp.messageInstanceId }) {
+                    if inApp.displayRules.async.segment.enabled, let segmentID = inApp.displayRules.async.segment.segmentId {
+                        self.inAppService.checkAsyncRulesSegment(id: segmentID) { checks in
+                            for segment in checks {
+                                if segment.segmentId == segmentID, segment.checkResult {
+                                    self.processingInApp(showModel: showModel, canDelete: canDelete)
+                                    self.presentInApp(by: content)
+                                    break
+                                }
+                            }
+                        }
+                    } else {
+                        self.processingInApp(showModel: showModel, canDelete: canDelete)
+                        self.presentInApp(by: content)
+                    }
+                }
+            }
+            self.inAppPresenters.append(presenter)
+        }
+        self.inAppPresentersSelections()
+    }
+    
+    private func sendInteraction(with inApp: InApp, status: NewInteractionStatus = .opened, description: String? = nil) {
+        guard let inAppContent = inApp as? InAppContent else {
+            return
+        }
+        
+        mobileRequestService.sendInteraction(
+            interaction: .init(
+                time: Date(),
+                messageInstanceId: inAppContent.messageInstanceId,
+                status: status,
+                statusDescription: description
+            )
+        )
+    }
+        
+    @available(iOSApplicationExtension, unavailable)
+    private func setupWebView(with message: InApp) {
+        let viewController = InAppMessageWebViewController(
+            with: message,
+            inAppService: inAppService
+        )
         viewController.delegate = self
         viewController.view.layoutIfNeeded()
     }
-        
+    
     private func presentInAppMessage(animated: Bool = true, in viewController: UIViewController) {
         // window for new In-app message
         var window: UIWindow?
@@ -158,6 +277,25 @@ final class InAppMessages {
         }
     }
     
+    // MARK: Processing InApps
+    
+    private func processingInApp(showModel: InAppShowModel, canDelete: Bool) {
+        if canDelete || showModel.frequency == .oncePerApp || showModel.frequency == .oncePerSession {
+            self.inAppPresenters.removeAll(where: { $0.model.message.messageId == showModel.message.messageId })
+        }
+        if showModel.frequency == .oncePerApp {
+            self.storage.addOnlyOnceDisplayedId(id: showModel.message.messageId)
+        } else if showModel.frequency == .oncePerSession {
+            self.storage.addOncePerSessionDisplayedId(id: showModel.message.messageId)
+        } else if showModel.frequency == .minInterval {
+            self.storage.addMinIntervalInApps(id: showModel.message.messageId)
+        } else if showModel.frequency == .timesPerTimeUnit {
+            self.storage.addTimePerTimeUnitInApps(id: showModel.message.messageId)
+        } else if showModel.frequency == .noLimit, showModel.conditions.isEmpty {
+            self.storage.addNoLimitDisplayedId(id: showModel.message.messageId)
+        }
+    }
+    
     // MARK: Handle interaction
     
     private func handleInteraction(messageId: String, action: NotificationStatus.Action) {
@@ -168,6 +306,7 @@ final class InAppMessages {
     
     // MARK: Handle notifications
     
+    @available(iOSApplicationExtension, unavailable)
     @objc
     private func handleApplicationDidBecomeActiveNotification(_ notification: Notification) {
         application = notification.object as? UIApplication
@@ -175,17 +314,26 @@ final class InAppMessages {
         DispatchQueue.global().async { [weak self] in
             self?.fetchBaseHTML { [weak self] in
                 guard let currentInAppMessage = self?.currentInAppMessage else { return }
-
+                
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-
+                    
                     self.setupWebView(with: currentInAppMessage)
                     self.currentInAppMessage = nil
                 }
             }
         }
     }
-
+    
+    @objc
+    private func handleApplicationWillTerminateNotification(_ notification: Notification) {
+        application = notification.object as? UIApplication
+    }
+    
+    @objc
+    private func handleApplicationDidEnterBackgroundNotification(_ notification: Notification) {
+        application = notification.object as? UIApplication
+    }
 }
 
 // MARK: InAppScriptMessageHandler
@@ -196,11 +344,12 @@ extension InAppMessages: InAppScriptMessageHandler {
     func inAppMessageWebViewController(
         _ viewController: InAppMessageWebViewController,
         didReceive scriptMessage: InAppScriptMessage,
-        in message: InAppMessage
+        in message: InApp
     ) {
         switch scriptMessage.type {
         case .completedLoading:
             presentInAppMessage(in: viewController)
+            self.inAppService.sendInteraction(with: message)
             
         case .failedLoading, .runtimeError:
             guard let payload = scriptMessage.payload as? InAppScriptMessageErrorPayload else { return }
@@ -209,6 +358,11 @@ extension InAppMessages: InAppScriptMessageHandler {
             inAppRequestService.sendScriptEvent(
                 messageId: message.id,
                 data: ["type": scriptMessage.type.rawValue, "payload": ["reason": payload.reason]]
+            )
+            self.inAppService.sendInteraction(
+                with: message,
+                status: .failed,
+                description: "Failed loading in-app script: \(payload.reason)"
             )
             
         case .close:

@@ -10,8 +10,6 @@ import XCTest
 @testable import Reteno
 
 final class InAppScriptMessageTests: XCTestCase {
-
-    private var sut: InAppScriptMessage!
     
     func test_initialization_for_completedLoadingModelType() throws {
         let jsonString = "{\"type\":\"WIDGET_INIT_SUCCESS\",\"payload\":{}}"

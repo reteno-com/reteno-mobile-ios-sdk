@@ -14,7 +14,7 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "1.7.4"
+    static var version = "2.0.0"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -29,8 +29,9 @@ public struct Reteno {
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
     /// - Parameter isAutomaticScreenReportingEnabled: Flag that indicates if automatic screen view tracking enabled
     /// - Parameter isDebugMode: Flag that indicates if `DebugMode` is enabled
+    /// - Parameter isPausedInAppMessages: Flag that indicates pause in InAppMessage presenting
     @available(iOSApplicationExtension, unavailable)
-    public static func start(apiKey: String, isAutomaticScreenReportingEnabled: Bool = true, isDebugMode: Bool = false) {
+    public static func start(apiKey: String, isAutomaticScreenReportingEnabled: Bool = true, isDebugMode: Bool = false, isPausedInAppMessages: Bool = false) {
         DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
         DebugModeHelper.setIsDebugModeOn(isDebugMode)
@@ -40,6 +41,7 @@ public struct Reteno {
         senderScheduler.subscribeOnNotifications()
         userNotificationService.setNotificationCenterDelegate()
         inApps.subscribeOnNotifications()
+        pauseInAppMessages(isPaused: isPausedInAppMessages)
     }
     
     /// Log events
@@ -57,6 +59,7 @@ public struct Reteno {
             )
         }
         analyticsService.logEvent(eventTypeKey: eventTypeKey, date: date, parameters: parameters)
+        inApps.logEventTrigger(eventTypeKey: eventTypeKey, parameters: parameters)
         if forcePush {
             senderScheduler.forcePushEvents()
         }
@@ -180,17 +183,20 @@ public struct Reteno {
     
     // MARK: InApp messages
     
-    @available(iOSApplicationExtension, unavailable)
     private static var inApps: InAppMessages = {
         InAppMessages(
             mobileRequestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(),
             inAppRequestService: InAppRequestService(requestManager: NetworkBuilder.buildApiManagerWithEmptyBaseURL()),
-            storage: StorageBuilder.build()
+            storage: StorageBuilder.build(), 
+            sessionService: SessionService()
         )
     }()
     
-    @available(iOSApplicationExtension, unavailable)
     static func inAppMessages() -> InAppMessages { inApps }
+        
+    public static func pauseInAppMessages(isPaused: Bool) {
+        inApps.isPausedInApps = isPaused
+    }
     
     // MARK: Upsert device
     

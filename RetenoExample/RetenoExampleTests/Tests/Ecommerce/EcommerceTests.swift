@@ -134,7 +134,7 @@ final class EcommerceTests: XCTestCase {
             isInStock: true
         )
         sut.logEvent(type: .productViewed(product: product, currencyCode: "EUR"))
-        let event = try XCTUnwrap(
+        _ = try XCTUnwrap(
             storage.getEvents().filter { $0.eventTypeKey == "productViewed" }.first,
             "stored event model should exists"
         )

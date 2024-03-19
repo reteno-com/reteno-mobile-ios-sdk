@@ -7,12 +7,7 @@
 
 import Foundation
 
-struct InAppMessage: Decodable {
-    
-    enum LayoutType: String, Codable {
-        case full = "FULL"
-    }
-    
+struct InAppMessage: InApp {
     let id: String
     let layoutType: LayoutType
     let model: String
@@ -46,4 +41,8 @@ struct InAppMessage: Decodable {
         }
     }
 
+}
+
+enum LayoutType: String, Codable {
+    case full = "FULL"
 }

@@ -42,6 +42,10 @@ final class MainModel {
         )
 	}
     
+    func pausedInApp(_ isPaused: Bool) {
+        Reteno.pauseInAppMessages(isPaused: isPaused)
+    }
+    
     func openEcommerce() {
         navigationHandler.openEcommerce()
     }

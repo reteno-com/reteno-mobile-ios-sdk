@@ -66,6 +66,12 @@
 		70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67552045A6AD00803C08 /* AppDelegate.swift */; };
 		70BF67CF2045A6AD00803C08 /* ApplicationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */; };
 		70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70BF67AF2045A6AD00803C08 /* Assets.xcassets */; };
+		8D0F43A02B6A5C590040B1D4 /* InAppServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F439F2B6A5C590040B1D4 /* InAppServiceTests.swift */; };
+		8D0F43A22B6A68260040B1D4 /* in_app_messages.json in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F43A12B6A68260040B1D4 /* in_app_messages.json */; };
+		8D0F43A42B6A82CA0040B1D4 /* in_app_message_content.json in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F43A32B6A82CA0040B1D4 /* in_app_message_content.json */; };
+		8DAF38902BA077D400C2D1F4 /* in_app_messages_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DAF388E2BA077D400C2D1F4 /* in_app_messages_valid.json */; };
+		8DAF38912BA077D400C2D1F4 /* in_app_contents_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DAF388F2BA077D400C2D1F4 /* in_app_contents_valid.json */; };
+		8DAF38952BA1D9D100C2D1F4 /* in_apps_async.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DAF38942BA1D9D100C2D1F4 /* in_apps_async.json */; };
 		A594AB78EF395FB93C3812D1 /* Pods_RetenoExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F50B28825570AAEC8CB350 /* Pods_RetenoExample.framework */; };
 		B51AF01D290E924100D723CD /* MessageCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AF01C290E924100D723CD /* MessageCountTests.swift */; };
 		B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1228DA808C0014ED15 /* MainModel.swift */; };
@@ -276,6 +282,12 @@
 		73F50B28825570AAEC8CB350 /* Pods_RetenoExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		75B601033BF5B297DDE734D6 /* Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.production-release.xcconfig"; sourceTree = "<group>"; };
 		75C113A8D59290DD3DE8B23F /* Pods-RetenoExample-RetenoExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8D0F439F2B6A5C590040B1D4 /* InAppServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppServiceTests.swift; sourceTree = "<group>"; };
+		8D0F43A12B6A68260040B1D4 /* in_app_messages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = in_app_messages.json; sourceTree = "<group>"; };
+		8D0F43A32B6A82CA0040B1D4 /* in_app_message_content.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = in_app_message_content.json; sourceTree = "<group>"; };
+		8DAF388E2BA077D400C2D1F4 /* in_app_messages_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = in_app_messages_valid.json; sourceTree = "<group>"; };
+		8DAF388F2BA077D400C2D1F4 /* in_app_contents_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = in_app_contents_valid.json; sourceTree = "<group>"; };
+		8DAF38942BA1D9D100C2D1F4 /* in_apps_async.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = in_apps_async.json; sourceTree = "<group>"; };
 		976B37F7BD59A3CD9946C0BA /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		B494975CB6A691F9E37715F7 /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
 		B51AF01C290E924100D723CD /* MessageCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountTests.swift; sourceTree = "<group>"; };
@@ -949,6 +961,11 @@
 		D55047F529C467CF00C95B04 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				8DAF38942BA1D9D100C2D1F4 /* in_apps_async.json */,
+				8DAF388F2BA077D400C2D1F4 /* in_app_contents_valid.json */,
+				8DAF388E2BA077D400C2D1F4 /* in_app_messages_valid.json */,
+				8D0F43A32B6A82CA0040B1D4 /* in_app_message_content.json */,
+				8D0F43A12B6A68260040B1D4 /* in_app_messages.json */,
 				D55047F629C467EE00C95B04 /* in_app_message.json */,
 			);
 			path = Fixtures;
@@ -1071,6 +1088,7 @@
 			children = (
 				D5F7075A29969ED50018F304 /* InAppRequestServiceTests.swift */,
 				D5F7075B29969ED50018F304 /* InAppScriptMessageTests.swift */,
+				8D0F439F2B6A5C590040B1D4 /* InAppServiceTests.swift */,
 			);
 			path = InApp;
 			sourceTree = "<group>";
@@ -1251,7 +1269,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D0F43A22B6A68260040B1D4 /* in_app_messages.json in Resources */,
+				8DAF38912BA077D400C2D1F4 /* in_app_contents_valid.json in Resources */,
+				8D0F43A42B6A82CA0040B1D4 /* in_app_message_content.json in Resources */,
+				8DAF38952BA1D9D100C2D1F4 /* in_apps_async.json in Resources */,
 				D55047F829C4681E00C95B04 /* in_app_message.json in Resources */,
+				8DAF38902BA077D400C2D1F4 /* in_app_messages_valid.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1490,6 +1513,7 @@
 				B5B2191A28F97772000DB212 /* UpdateUserAttributesRequestsTests.swift in Sources */,
 				D5CBB0D8294335F7009CB2B3 /* JSONConverterHelperTests.swift in Sources */,
 				181BFDB829007505007C5422 /* ArrayExtensionsTests.swift in Sources */,
+				8D0F43A02B6A5C590040B1D4 /* InAppServiceTests.swift in Sources */,
 				1875126628EAD74E0068B5F4 /* EventsSenderMock.swift in Sources */,
 				B5B2191428F8BF5E000DB212 /* UserCustomFieldTests.swift in Sources */,
 				D509550A292E2F44009AF3BC /* SendAppInboxMessagesIdsOperationTests.swift in Sources */,
@@ -1938,6 +1962,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2016,6 +2041,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2093,6 +2119,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2170,6 +2197,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2493,6 +2521,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2521,6 +2550,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

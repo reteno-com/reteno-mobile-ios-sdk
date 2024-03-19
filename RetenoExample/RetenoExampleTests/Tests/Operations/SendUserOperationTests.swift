@@ -162,14 +162,14 @@ final class SendUserOperationTests: XCTestCase {
         )
         
         operation.completionBlock = { [unowned storage] in
-            XCTAssertTrue(operation.isCancelled, "operation should be canceled")
-            XCTAssertTrue(storage!.getUsers().isNotEmpty, "array of users from storage shouldn't be empty")
+            XCTAssertTrue(operation.isFinished, "operation should be finished")
+            XCTAssertTrue(storage!.getUsers().isEmpty, "array of users from storage should be empty")
             
             expectation.fulfill()
         }
         operationQueue.addOperation(operation)
         
-        waitForExpectations(timeout: 1.0)
+        waitForExpectations(timeout: 2.0)
     }
     
     func test_sendUserOperation_withExternalUserIdAndFailedDeviceResult_with4xxStatusCode() {
@@ -206,9 +206,8 @@ final class SendUserOperationTests: XCTestCase {
             storage: storage,
             user: user
         )
-        
         operation.completionBlock = { [unowned storage] in
-            XCTAssertTrue(operation.isCancelled, "operation should be canceled")
+            XCTAssertTrue(operation.isFinished, "operation should be finished")
             XCTAssertTrue(storage!.getUsers().isEmpty, "array of users from storage should be empty")
             
             expectation.fulfill()

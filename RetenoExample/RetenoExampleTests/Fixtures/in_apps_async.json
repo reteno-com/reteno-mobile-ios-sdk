@@ -1,0 +1,16 @@
+{
+	"checks": [
+		{
+			"segmentId": 123,
+     		"checkResult": true
+		},
+		{
+			"segmentId": 1234,
+     		"checkResult": true
+		},
+		{
+			"segmentId": 12345,
+     		"checkResult": true
+     	}
+	]
+}

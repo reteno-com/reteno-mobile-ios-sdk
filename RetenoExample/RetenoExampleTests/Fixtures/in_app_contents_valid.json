@@ -1,0 +1,575 @@
+{
+  "contents": [
+    {
+      "messageInstanceId": 123123123,
+      "layoutType": "FULL",
+      "model": {
+        "version": "1",
+        "type": "MODEL",
+        "views": [
+          {
+            "id": "7f6a16bb-fe07-4e01-9311-16cbf5974ef6",
+            "path": [
+              0
+            ],
+            "label": "DEFAULT_PAGE",
+            "type": "VIEW",
+            "name": "SysContainerComponent",
+            "version": "1.0.0",
+            "props": {
+              "isResponsive": true,
+              "adaptiveStyles": {
+                "desktop": [
+                  {
+                    "element": "host",
+                    "styleAttributes": {},
+                    "classes": ""
+                  }
+                ],
+                "mobile": [
+                  {
+                    "element": "host",
+                    "styleAttributes": {
+                      "width": "100%",
+                      "minWidth": null,
+                      "height": "auto",
+                      "minHeight": "100%",
+                      "flexDirection": "column",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "gap": "30px",
+                      "paddingTop": "5px",
+                      "paddingBottom": "5px",
+                      "paddingLeft": "5px",
+                      "paddingRight": "5px",
+                      "marginTop": "0px",
+                      "marginBottom": "0px",
+                      "marginLeft": "0px",
+                      "marginRight": "0px",
+                      "background": "rgb(255, 255, 255)",
+                      "borderStyle": "solid",
+                      "borderTopWidth": "0px",
+                      "borderBottomWidth": "0px",
+                      "borderLeftWidth": "0px",
+                      "borderRightWidth": "0px",
+                      "borderTopColor": "rgb(0, 0, 0)",
+                      "borderLeftColor": "rgb(0, 0, 0)",
+                      "borderBottomColor": "rgb(0, 0, 0)",
+                      "borderRightColor": "rgb(0, 0, 0)",
+                      "borderTopLeftRadius": "0px",
+                      "borderTopRightRadius": "0px",
+                      "borderBottomLeftRadius": "0px",
+                      "borderBottomRightRadius": "0px",
+                      "boxShadow": "0px 4px 20px 0px rgba(0, 0, 0, 0.25098039215686274)"
+                    },
+                    "classes": ""
+                  }
+                ]
+              }
+            },
+            "children": [
+              {
+                "path": [
+                  0,
+                  0
+                ],
+                "id": "8697b250-2c03-4e5a-93c3-7d1cfa7eaaef",
+                "type": "IMAGE",
+                "name": "SysImageComponent",
+                "version": "1.0.0",
+                "props": {
+                  "control": {
+                    "imageSource": {
+                      "url": "https://forms.esputnik.com/img/in-app-template-Image-1.png"
+                    }
+                  },
+                  "adaptiveStyles": {
+                    "desktop": [
+                      {
+                        "element": "host",
+                        "styleAttributes": {
+                          "display": "block"
+                        },
+                        "classes": ""
+                      },
+                      {
+                        "element": "image",
+                        "styleAttributes": {
+                          "borderStyle": "solid",
+                          "borderTopWidth": "0px",
+                          "borderTopColor": "rgb(0, 0, 0)",
+                          "borderBottomWidth": "0px",
+                          "borderBottomColor": "rgb(0, 0, 0)",
+                          "borderLeftWidth": "0px",
+                          "borderLeftColor": "rgb(0, 0, 0)",
+                          "borderRightWidth": "0px",
+                          "borderRightColor": "rgb(0, 0, 0)",
+                          "borderTopLeftRadius": "0px",
+                          "borderTopRightRadius": "0px",
+                          "borderBottomLeftRadius": "0px",
+                          "borderBottomRightRadius": "0px"
+                        },
+                        "classes": ""
+                      }
+                    ],
+                    "mobile": [
+                      {
+                        "element": "host",
+                        "styleAttributes": {
+                          "width": "310px",
+                          "minWidth": "310px",
+                          "height": "auto",
+                          "minHeight": null,
+                          "paddingTop": "0px",
+                          "paddingBottom": "0px",
+                          "paddingLeft": "0px",
+                          "paddingRight": "0px",
+                          "display": "block",
+                          "zIndex": "0"
+                        },
+                        "classes": ""
+                      },
+                      {
+                        "element": "image",
+                        "styleAttributes": {
+                          "background": "transparent",
+                          "objectFit": "cover",
+                          "borderStyle": "solid",
+                          "borderTopWidth": "0px",
+                          "borderTopColor": "rgb(0, 0, 0)",
+                          "borderBottomWidth": "0px",
+                          "borderBottomColor": "rgb(0, 0, 0)",
+                          "borderLeftWidth": "0px",
+                          "borderLeftColor": "rgb(0, 0, 0)",
+                          "borderRightWidth": "0px",
+                          "borderRightColor": "rgb(0, 0, 0)",
+                          "borderTopLeftRadius": "0px",
+                          "borderTopRightRadius": "0px",
+                          "borderBottomLeftRadius": "0px",
+                          "borderBottomRightRadius": "0px"
+                        },
+                        "classes": ""
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "id": "add48b38-df4e-4911-aca0-b8baa91f8c9d",
+                "path": [
+                  0,
+                  1
+                ],
+                "type": "CONTAINER",
+                "name": "SysContainerComponent",
+                "version": "1.0.0",
+                "props": {
+                  "adaptiveStyles": {
+                    "desktop": [
+                      {
+                        "element": "host",
+                        "styleAttributes": {},
+                        "classes": ""
+                      }
+                    ],
+                    "mobile": [
+                      {
+                        "element": "host",
+                        "styleAttributes": {
+                          "width": "auto",
+                          "height": "auto",
+                          "flexDirection": "column",
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "gap": "20px",
+                          "paddingTop": "5px",
+                          "paddingBottom": "5px",
+                          "paddingLeft": "5px",
+                          "paddingRight": "5px",
+                          "marginTop": "0px",
+                          "marginBottom": "0px",
+                          "marginLeft": "0px",
+                          "marginRight": "0px",
+                          "background": "transparent",
+                          "borderStyle": "solid",
+                          "borderTopWidth": "0px",
+                          "borderBottomWidth": "0px",
+                          "borderLeftWidth": "0px",
+                          "borderRightWidth": "0px",
+                          "borderTopColor": "rgb(0, 0, 0)",
+                          "borderLeftColor": "rgb(0, 0, 0)",
+                          "borderBottomColor": "rgb(0, 0, 0)",
+                          "borderRightColor": "rgb(0, 0, 0)",
+                          "borderTopLeftRadius": "0px",
+                          "borderTopRightRadius": "0px",
+                          "borderBottomLeftRadius": "0px",
+                          "borderBottomRightRadius": "0px",
+                          "boxShadow": "none",
+                          "minWidth": "min-content",
+                          "minHeight": "min-content"
+                        },
+                        "classes": ""
+                      }
+                    ]
+                  }
+                },
+                "children": [
+                  {
+                    "id": "260d690e-f1db-4c0b-9964-44cad2781580",
+                    "path": [
+                      0,
+                      1,
+                      0
+                    ],
+                    "type": "TEXT",
+                    "name": "SysTextComponent",
+                    "version": "1.0.0",
+                    "props": {
+                      "adaptiveStyles": {
+                        "desktop": [
+                          {
+                            "element": "host",
+                            "styleAttributes": {}
+                          },
+                          {
+                            "element": "text",
+                            "styleAttributes": {},
+                            "classes": "cl-text-class-h1"
+                          }
+                        ],
+                        "mobile": [
+                          {
+                            "element": "host",
+                            "styleAttributes": {
+                              "width": "auto",
+                              "height": "auto",
+                              "marginTop": "0px",
+                              "marginBottom": "0px",
+                              "marginLeft": "0px",
+                              "marginRight": "0px",
+                              "minHeight": null
+                            }
+                          },
+                          {
+                            "element": "text",
+                            "styleAttributes": {
+                              "paddingTop": "0px",
+                              "paddingBottom": "0px",
+                              "paddingLeft": "0px",
+                              "paddingRight": "0px"
+                            },
+                            "classes": "cl-text-class-h1"
+                          }
+                        ]
+                      },
+                      "content": {
+                        "text": "Your Exclusive Renewal Offer!"
+                      }
+                    }
+                  },
+                  {
+                    "id": "be452675-a777-4fe9-a630-a86f3c7aa750",
+                    "path": [
+                      0,
+                      1,
+                      1
+                    ],
+                    "type": "TEXT",
+                    "name": "SysTextComponent",
+                    "version": "1.0.0",
+                    "props": {
+                      "adaptiveStyles": {
+                        "desktop": [
+                          {
+                            "element": "host",
+                            "styleAttributes": {}
+                          },
+                          {
+                            "element": "text",
+                            "styleAttributes": {},
+                            "classes": "cl-text-class-regular-text"
+                          }
+                        ],
+                        "mobile": [
+                          {
+                            "element": "host",
+                            "styleAttributes": {
+                              "width": "auto",
+                              "height": "auto",
+                              "marginTop": "0px",
+                              "marginBottom": "0px",
+                              "marginLeft": "0px",
+                              "marginRight": "0px",
+                              "minHeight": null
+                            }
+                          },
+                          {
+                            "element": "text",
+                            "styleAttributes": {
+                              "paddingTop": "0px",
+                              "paddingBottom": "0px",
+                              "paddingLeft": "0px",
+                              "paddingRight": "0px"
+                            },
+                            "classes": "cl-text-class-regular-text"
+                          }
+                        ]
+                      },
+                      "content": {
+                        "text": "Renew now and enjoy a 20% discount! Don't miss out on access to all your favorite features – offer valid for the next 48 hours only"
+                      }
+                    }
+                  },
+                  {
+                    "id": "2e9d2943-09ef-448e-b08f-50493b1ff729",
+                    "path": [
+                      0,
+                      1,
+                      2
+                    ],
+                    "type": "BUTTON",
+                    "name": "SysButtonComponent",
+                    "version": "1.0.0",
+                    "props": {
+                      "adaptiveStyles": {
+                        "desktop": [
+                          {
+                            "element": "host",
+                            "styleAttributes": {}
+                          },
+                          {
+                            "element": "button",
+                            "styleAttributes": {},
+                            "hoverStyleAttributes": {},
+                            "classes": "cl-text-class-button",
+                            "hoverAnimationType": null
+                          }
+                        ],
+                        "mobile": [
+                          {
+                            "element": "host",
+                            "styleAttributes": {
+                              "marginTop": "0px",
+                              "marginBottom": "0px",
+                              "marginLeft": "0px",
+                              "marginRight": "0px",
+                              "width": "100%",
+                              "height": "42px",
+                              "minHeight": "42px",
+                              "builder": {
+                                "styles": {}
+                              },
+                              "minWidth": null
+                            }
+                          },
+                          {
+                            "element": "button",
+                            "styleAttributes": {
+                              "width": "100%",
+                              "height": "100%",
+                              "background": "rgba(44, 161, 177, 1)",
+                              "borderStyle": "solid",
+                              "borderTopWidth": "0px",
+                              "borderBottomWidth": "0px",
+                              "borderLeftWidth": "0px",
+                              "borderRightWidth": "0px",
+                              "borderTopColor": "rgb(243, 73, 44)",
+                              "borderLeftColor": "rgb(243, 73, 44)",
+                              "borderBottomColor": "rgb(243, 73, 44)",
+                              "borderRightColor": "rgb(243, 73, 44)",
+                              "borderTopLeftRadius": "15px",
+                              "borderTopRightRadius": "15px",
+                              "borderBottomLeftRadius": "15px",
+                              "borderBottomRightRadius": "15px",
+                              "paddingTop": "7px",
+                              "paddingBottom": "7px",
+                              "paddingLeft": "25px",
+                              "paddingRight": "25px",
+                              "boxShadow": "none",
+                              "externalBackgroundUrlSource": false
+                            },
+                            "hoverStyleAttributes": {
+                              "background": "rgba(0, 0, 0, 0.74)",
+                              "borderTopColor": "rgb(0, 0, 0)",
+                              "borderLeftColor": "rgb(0, 0, 0)",
+                              "borderBottomColor": "rgb(0, 0, 0)",
+                              "borderRightColor": "rgb(0, 0, 0)",
+                              "boxShadow": null
+                            },
+                            "classes": "cl-text-class-button",
+                            "hoverAnimationType": null
+                          }
+                        ]
+                      },
+                      "content": {
+                        "text": "Renew and Save 20%"
+                      },
+                      "handlers": [
+                        {
+                          "type": "CLICK",
+                          "actions": [
+                            {
+                              "type": "CLOSE_WIDGET",
+                              "params": {},
+                              "linkedWidget": null
+                            },
+                            {
+                              "type": "CLICK",
+                              "params": null
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "shared": {
+          "mobileBreakpointWidth": 576,
+          "headerFontFamily": "",
+          "textFontFamily": "",
+          "textClasses": {
+            "cl-text-class-h1": {
+              "id": "cl-text-class-h1",
+              "name": "Title",
+              "isHeader": true,
+              "styleAttributes": {
+                "color": "rgba(44, 161, 177, 1)",
+                "textAlign": "center",
+                "lineHeight": "120%",
+                "fontWeight": "700",
+                "fontSize": "32px",
+                "textShadow": "none",
+                "fontFamily": null,
+                "letterSpacing": "0px",
+                "textTransform": "none"
+              },
+              "placeholderStyleAttributes": {
+                "color": "rgb(0, 0, 0)"
+              }
+            },
+            "cl-text-class-h2": {
+              "id": "cl-text-class-h2",
+              "name": "Subtitle",
+              "isHeader": true,
+              "styleAttributes": {
+                "color": "rgb(0, 0, 0)",
+                "textAlign": "start",
+                "lineHeight": "120%",
+                "fontWeight": "400",
+                "fontSize": "40px",
+                "textShadow": "none",
+                "fontFamily": "",
+                "letterSpacing": "0px"
+              }
+            },
+            "cl-text-class-regular-text": {
+              "id": "cl-text-class-regular-text",
+              "name": "Regular text",
+              "isHeader": false,
+              "styleAttributes": {
+                "color": "rgba(33, 34, 49, 0.8)",
+                "textAlign": "center",
+                "lineHeight": "120%",
+                "fontWeight": "500",
+                "fontSize": "16px",
+                "textShadow": "none",
+                "fontFamily": null,
+                "letterSpacing": "0px",
+                "textTransform": "none"
+              },
+              "placeholderStyleAttributes": {
+                "color": "rgb(0, 0, 0)"
+              }
+            },
+            "cl-text-class-button": {
+              "id": "cl-text-class-button",
+              "name": "Button text",
+              "isHeader": false,
+              "styleAttributes": {
+                "color": "rgba(255, 255, 255, 1)",
+                "textAlign": "center",
+                "lineHeight": "120%",
+                "fontWeight": "400",
+                "fontSize": "14px",
+                "textShadow": "none",
+                "fontFamily": null,
+                "letterSpacing": "0px",
+                "textTransform": "uppercase"
+              },
+              "placeholderStyleAttributes": {
+                "color": "rgb(0, 0, 0)"
+              }
+            },
+            "cl-text-class-input-label": {
+              "id": "cl-text-class-input-label",
+              "name": "Field title",
+              "isHeader": false,
+              "styleAttributes": {
+                "color": "rgb(0, 0, 0)",
+                "textAlign": "start",
+                "lineHeight": "120%",
+                "fontWeight": "400",
+                "fontSize": "16px",
+                "textShadow": "none",
+                "fontFamily": "",
+                "letterSpacing": "0px"
+              }
+            },
+            "cl-text-class-input-text": {
+              "id": "cl-text-class-input-text",
+              "name": "Field text",
+              "isHeader": false,
+              "styleAttributes": {
+                "color": "rgb(0, 0, 0)",
+                "textAlign": "start",
+                "lineHeight": "120%",
+                "fontWeight": "400",
+                "fontSize": "16px",
+                "textShadow": "none",
+                "fontFamily": "",
+                "letterSpacing": "0px"
+              }
+            }
+          },
+          "googleFonts": [],
+          "actualSize": {
+            "desktop": {
+              "width": "841px",
+              "height": "700px"
+            },
+            "mobile": {
+              "width": "318px",
+              "height": "612px"
+            }
+          },
+          "cssVars": {},
+          "linkColor": "rgb(0, 0, 238)",
+          "closeIcon": {
+            "desktop": {
+              "color": "rgb(0,0,0)",
+              "content": "1",
+              "height": "34px",
+              "horizontalOffset": "8px",
+              "inlineSvg": true,
+              "verticalOffset": "8px",
+              "width": "34px"
+            },
+            "mobile": {
+              "color": "rgb(0,0,0)",
+              "content": "1",
+              "height": "25px",
+              "horizontalOffset": "22px",
+              "inlineSvg": true,
+              "verticalOffset": "22px",
+              "width": "25px"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

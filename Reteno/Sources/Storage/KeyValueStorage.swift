@@ -28,7 +28,18 @@ enum StorageKeys: String, CaseIterable {
     case inAppMessageBaseHTMLVersion = "com.reteno.in-app_message_base_html.key"
     case errorEvents = "com.reteno.error_events.key"
     case devicePlatform = "com.reteno.device_platform.key"
-    
+    case inAppMessagePauseFlag = "com.reteno.in-app-message-pause-flag.key"
+    case lastActivityDate = "com.reteno.last-activity-date.key"
+    case sessionDuration = "com.reteno.start-session-date.key"
+    case noLimitInApps = "com.reteno.no-limit-in-apps.key"
+    case onlyOnceInApps = "com.reteno.only-once-in-apps.key"
+    case oncePerSessionInApps = "com.reteno.once-per-session-in-apps.key"
+    case minIntervalValue = "com.reteno.min-interval-value.key"
+    case timePerUnitInApps = "com.reteno.time-per-unit-in-apps.key"
+    case eTag = "com.reteno.e-tag.key"
+    case inAppMessages = "com.reteno.in-app-messages.key"
+    case inAppMessageContents = "com.reteno.in-app-message-contents.key"
+    case inAppCacheLastUpdate = "com.reteno.in-app-cache-last-update.key"
 }
 
 final class KeyValueStorage {
@@ -61,6 +72,36 @@ final class KeyValueStorage {
         guard let storage = storageUnwrapper() else { return false }
         
         return storage.bool(forKey: key)
+    }
+    
+    func set(value: Double, forKey key: String) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.set(value, forKey: key)
+    }
+    
+    func getValue(forKey key: String) -> Double? {
+        guard let storage = storageUnwrapper() else { return nil }
+
+        return storage.double(forKey: key)
+    }
+    
+    func set(value: Int, forKey key: String) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.set(value, forKey: key)
+    }
+    
+    func getValue(forKey key: String) -> Int? {
+        guard let storage = storageUnwrapper() else { return nil }
+
+        return storage.integer(forKey: key)
+    }
+    
+    func removeValue(forKey key: String) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.removeObject(forKey: key)
     }
     
     // MARK: Events logic
@@ -496,6 +537,228 @@ final class KeyValueStorage {
         guard let storage = storageUnwrapper() else { return }
         
         storage.set([], forKey: StorageKeys.errorEvents.rawValue)
+    }
+    
+    // MARK: Only once - Displayed inApp ids
+    
+    func getOnlyOnceDisplayedInAppIds() -> [Int] {
+        guard let storage = storageUnwrapper() else { return [] }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.onlyOnceInApps.rawValue) else { return [] }
+            
+            let decodedInAppsIds = try JSONDecoder().decode([Int].self, from: data)
+            return decodedInAppsIds
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            
+            return []
+        }
+    }
+    
+    func addOnlyOnceDisplayedId(id: Int) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            var existingIds = getOnlyOnceDisplayedInAppIds()
+            existingIds.append(id)
+            let encodedIds = try JSONEncoder().encode(existingIds)
+            storage.set(encodedIds, forKey: StorageKeys.onlyOnceInApps.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+    
+    // MARK: No Limit - Displayed inApp ids
+    
+    func getNoLimitDisplayedInAppIds() -> [Int] {
+        guard let storage = storageUnwrapper() else { return [] }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.noLimitInApps.rawValue) else { return [] }
+            
+            let decodedInAppsIds = try JSONDecoder().decode([Int].self, from: data)
+            return decodedInAppsIds
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            
+            return []
+        }
+    }
+    
+    func addNoLimitDisplayedId(id: Int) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            var existingIds = getNoLimitDisplayedInAppIds()
+            existingIds.append(id)
+            let encodedIds = try JSONEncoder().encode(existingIds)
+            storage.set(encodedIds, forKey: StorageKeys.noLimitInApps.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+    
+    func clearNoLimitEvents() {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.set([], forKey: StorageKeys.noLimitInApps.rawValue)
+    }
+    
+    // MARK: Once per session - Displayed inApp ids
+    
+    func getOncePerSessionDisplayedInAppIds() -> [Int] {
+        guard let storage = storageUnwrapper() else { return [] }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.oncePerSessionInApps.rawValue) else { return [] }
+            
+            let decodedInAppsIds = try JSONDecoder().decode([Int].self, from: data)
+            return decodedInAppsIds
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            
+            return []
+        }
+    }
+    
+    func addOncePerSessionDisplayedId(id: Int) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            var existingIds = getOncePerSessionDisplayedInAppIds()
+            existingIds.append(id)
+            let encodedIds = try JSONEncoder().encode(existingIds)
+            storage.set(encodedIds, forKey: StorageKeys.oncePerSessionInApps.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+    
+    func clearOncePerSessionEvents() {
+        guard let storage = storageUnwrapper() else { return }
+        
+        storage.set([], forKey: StorageKeys.oncePerSessionInApps.rawValue)
+    }
+    
+    // MARK: Min Interval - Displayed inApp Id and Date
+    
+    func getMinIntervalInApps() -> [Int: Date] {
+        guard let storage = storageUnwrapper() else { return [:] }
+        
+        do {
+            guard let data = storage.data(forKey: StorageKeys.minIntervalValue.rawValue) else { return [:] }
+            
+            let decodedInAppsIds = try JSONDecoder().decode([Int: Date].self, from: data)
+            return decodedInAppsIds
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            
+            return [:]
+        }
+    }
+    
+    func addMinIntervalInApps(id: Int) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            var existingIds = getMinIntervalInApps()
+            existingIds[id] = Date()
+            let encodedIds = try JSONEncoder().encode(existingIds)
+            storage.set(encodedIds, forKey: StorageKeys.minIntervalValue.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+    
+    // MARK: Time Per Time Unit
+    
+    func getTimePerTimeUnitInApps() -> [Int: [Date]] {
+        guard let storage = storageUnwrapper() else { return [:] }
+
+        do {
+            guard let data = storage.data(forKey: StorageKeys.timePerUnitInApps.rawValue) else { return [:] }
+            
+            let decodedInAppsIds = try JSONDecoder().decode([Int: [Date]].self, from: data)
+            return decodedInAppsIds
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            
+            return [:]
+        }
+    }
+    
+    func addTimePerTimeUnitInApps(id: Int) {
+        guard let storage = storageUnwrapper() else { return }
+
+        do {
+            var existingInApps = getTimePerTimeUnitInApps()
+            var existingInAppsTime: [Date] = existingInApps[id] ?? []
+            existingInAppsTime.append(Date())
+            existingInApps[id] = existingInAppsTime
+            let encodedIds = try JSONEncoder().encode(existingInApps)
+            storage.set(encodedIds, forKey: StorageKeys.timePerUnitInApps.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+    
+    // MARK: In App Messages
+    
+    func getInAppMessages() -> [Message] {
+        guard let storage = storageUnwrapper() else { return [] }
+
+        do {
+            guard let data = storage.data(forKey: StorageKeys.inAppMessages.rawValue) else {
+                return []
+            }
+            
+            let decodedInApps = try JSONDecoder().decode([Message].self, from: data)
+            return decodedInApps
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            return []
+        }
+    }
+    
+    func saveInAppMessages(messages: [Message]) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            let encodedMessages = try JSONEncoder().encode(messages)
+            storage.set(encodedMessages, forKey: StorageKeys.inAppMessages.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
+    }
+
+    // MARK: In App Message Contents
+    
+    func getInAppMessageContents() -> [InAppContent] {
+        guard let storage = storageUnwrapper() else { return [] }
+
+        do {
+            guard let data = storage.data(forKey: StorageKeys.inAppMessageContents.rawValue) else {
+                return []
+            }
+            
+            let decodedInAppContents = try JSONDecoder().decode([InAppContent].self, from: data)
+            return decodedInAppContents
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            return []
+        }
+    }
+    
+    func saveInAppMessageContents(contents: [InAppContent]) {
+        guard let storage = storageUnwrapper() else { return }
+        
+        do {
+            let encodedInAppContents = try JSONEncoder().encode(contents)
+            storage.set(encodedInAppContents, forKey: StorageKeys.inAppMessageContents.rawValue)
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+        }
     }
 }
 

@@ -82,7 +82,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                     self?.window?.showInformationAlert(alert)
                 }
                 // if it's not a deep link, just open Safari
-              //  application.open(url)
+                application.open(url)
                 return
             }
             

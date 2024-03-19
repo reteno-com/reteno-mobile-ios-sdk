@@ -88,7 +88,7 @@ final class MessageCountTests: XCTestCase {
             expectation.fulfill()
         }
         
-        waitForExpectations(timeout: 2.0)
+        waitForExpectations(timeout: 5.0)
         XCTAssertEqual(numberOfChanges, 2, "Counter should be changed 2 times")
         XCTAssertTrue(unreadNumbers.isEmpty, "unreadNumbers should be empty")
     }

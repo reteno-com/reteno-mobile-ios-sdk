@@ -542,6 +542,273 @@ final class MobileRequestServiceTests: XCTestCase {
         }
     }
     
+    func test_getInAppsMessageList_withPositiveResult() {
+        stub(condition: pathEndsWith("v1/inapp/messages")) { _ in
+            let stubPath = OHPathForFile("in_app_messages.json", type(of: self))
+            
+            return fixture(filePath: stubPath!, headers: nil)
+        }
+        
+        var expectedModel: InAppMessageLists?
+        let expectation = expectation(description: "Request")
+        sut.getInAppMessages(eTag: nil) { result in
+            switch result {
+            case .success(let result):
+                expectedModel = result.list
+                
+            case .failure:
+                expectedModel = nil
+            }
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertNotNil(expectedModel, "expected model should exists")
+            XCTAssertTrue(((expectedModel?.messages.isNotEmpty) != nil), "model property shouldn't be empty")
+        }
+    }
+    
+    func test_getInAppsMessageList_withNegativeResult() {
+        stub(condition: pathEndsWith("v1/inapp/messages")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
+        }
+        
+        var expectedModel: InAppMessageLists?
+        let expectation = expectation(description: "Request")
+        sut.getInAppMessages(eTag: nil) { result in
+            switch result {
+            case .success(let result):
+                expectedModel = result.list
+                
+            case .failure:
+                expectedModel = nil
+            }
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertTrue(expectedModel == nil, "expected model shouldn't exists")
+        }
+    }
+    
+    func test_getInAppsMessageList_with304Result() {
+        stub(condition: pathEndsWith("v1/inapp/messages")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 304, headers: nil)
+        }
+        
+        var notModified: Bool = false
+        let expectation = expectation(description: "Request")
+        sut.getInAppMessages(eTag: nil) { result in
+            switch result {
+            case .success:
+                notModified = false
+                
+            case .failure(let error):
+                notModified = error.asAFError?.responseCode == 304
+            }
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertTrue(notModified, "expected model shouldn't exists")
+        }
+    }
+    
+    func test_getInAppsMessageList_withETagHeaderResult() {
+        let testEtag = "1234567890"
+        stub(condition: pathEndsWith("v1/inapp/messages")) { _ in
+            let stubPath = OHPathForFile("in_app_messages.json", type(of: self))
+            
+            return fixture(filePath: stubPath!, headers: ["ETag": testEtag])
+        }
+        
+        var receivedEtag: String?
+        let expectation = expectation(description: "Request")
+        sut.getInAppMessages(eTag: nil) { result in
+            switch result {
+            case .success(let result):
+                receivedEtag = result.etag
+                
+            case .failure:
+                receivedEtag = nil
+            }
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertTrue(testEtag == receivedEtag, "tags should be equal")
+        }
+    }
+    
+    func test_getInAppsContent_withPositiveResult() {
+        stub(condition: pathEndsWith("v1/inapp/contents/request")) { _ in
+            let stubPath = OHPathForFile("in_app_message_content.json", type(of: self))
+            
+            return fixture(filePath: stubPath!, headers: nil)
+        }
+        
+        var expectedModel: InAppContents?
+        let expectation = expectation(description: "Request")
+        sut.getInAppMessageContent(messageInstanceIds: [123]) { result in
+            switch result {
+            case .success(let result):
+                expectedModel = result
+                
+            case .failure:
+                expectedModel = nil
+            }
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertNotNil(expectedModel, "expected model should exists")
+        }
+    }
+    
+    func test_getInAppsContent_withNegativeResult() {
+        stub(condition: pathEndsWith("v1/inapp/contents/request")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
+        }
+        
+        var expectedModel: InAppContents?
+        let expectation = expectation(description: "Request")
+        sut.getInAppMessageContent(messageInstanceIds: [123]) { result in
+            switch result {
+            case .success(let result):
+                expectedModel = result
+                
+            case .failure:
+                expectedModel = nil
+            }
+            expectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertNil(expectedModel, "expected model should exists")
+        }
+    }
+    
+    func test_sendInteractionWithPositivResult() {
+        stub(condition: pathEndsWith("v1/interaction")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 200, headers: nil)
+        }
+        var expectedSuccess: Bool?
+        let expectation = expectation(description: "Request")
+        let newInteraction: NewInteraction = .init(
+            id: "12312312",
+            time: Date(),
+            messageInstanceId: 123123123,
+            status: .opened,
+            statusDescription: nil
+        )
+        sut.sendInteraction(interaction: newInteraction) { result in
+            switch result {
+            case .success:
+                expectedSuccess = true
+                
+            case .failure:
+                expectedSuccess = false
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertTrue(expectedSuccess ?? false, "expectedSuccess should be true")
+        }
+    }
+    
+    func test_sendInteractionWithNegativeResult() {
+        stub(condition: pathEndsWith("v1/interaction")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
+        }
+        var expectedFailed: Bool?
+        let expectation = expectation(description: "Request")
+        let newInteraction: NewInteraction = .init(
+            id: "12312312",
+            time: Date(),
+            messageInstanceId: 123123123,
+            status: .opened,
+            statusDescription: nil
+        )
+        sut.sendInteraction(interaction: newInteraction) { result in
+            switch result {
+            case .success:
+                expectedFailed = false
+                
+            case .failure:
+                expectedFailed = true
+            }
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0) { _ in
+            XCTAssertTrue(expectedFailed ?? false, "expectedFailed should be true")
+        }
+    }
+    
+    func test_asyncCheckWithPositivResult() {
+        stub(condition: pathEndsWith("v1/inapp/async-rules/check")) { _ in
+            let stubPath = OHPathForFile("in_apps_async.json", type(of: self))
+            
+            return fixture(filePath: stubPath!, headers: nil)
+        }
+        var checks: [InAppAsyncCheck]?
+        let expectation = expectation(description: "Request")
+  
+        let segmentAsyncIds = [123, 1234, 12345]
+        
+        sut.checkAsyncSegmentRules(ids: segmentAsyncIds) { result in
+            switch result {
+            case .success(let success):
+                checks = success.checks
+                
+            case .failure:
+                checks = nil
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 2.0) { _ in
+            XCTAssertNotNil(checks, "checks shouldn't be nil")
+            XCTAssertTrue(checks?.count == segmentAsyncIds.count, "count should be equal")
+        }
+    }
+    
+    func test_asyncCheckWithNegativeResult() {
+        stub(condition: pathEndsWith("v1/inapp/async-rules/check")) { _ in
+            let stubData = "OK".data(using: .utf8)
+            
+            return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
+        }
+        var checks: [InAppAsyncCheck]?
+        let expectation = expectation(description: "Request")
+  
+        let segmentAsyncIds = [123, 1234, 12345]
+        
+        sut.checkAsyncSegmentRules(ids: segmentAsyncIds) { result in
+            switch result {
+            case .success(let success):
+                checks = success.checks
+                
+            case .failure:
+                checks = nil
+            }
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 2.0) { _ in
+            XCTAssertNil(checks, "checks shouldn't be nil")
+        }
+    }
+    
     // MARK: Helpers
     
     private func recomsJsonData() throws -> Data {
@@ -568,7 +835,6 @@ final class MobileRequestServiceTests: XCTestCase {
         ]
         return try JSONSerialization.data(withJSONObject: json, options: [])
     }
-    
 }
 
 private struct Product: Decodable {

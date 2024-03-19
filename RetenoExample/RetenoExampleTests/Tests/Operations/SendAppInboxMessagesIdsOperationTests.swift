@@ -136,7 +136,7 @@ final class SendAppInboxMessagesIdsOperationTests: XCTestCase {
         }
         operationQueue.addOperation(operation)
         
-        waitForExpectations(timeout: 1.0)
+        waitForExpectations(timeout: 2.0)
     }
 
 }

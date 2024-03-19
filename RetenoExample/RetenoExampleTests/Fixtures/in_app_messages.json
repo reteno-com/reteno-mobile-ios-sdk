@@ -1,0 +1,74 @@
+{
+  "messages": [
+    {
+      "messageId": 12312312333,
+      "messageInstanceId": 12312312333,
+      "displayRules": {
+        "FREQUENCY": {
+          "enabled": true,
+          "type": "FREQUENCY",
+          "predicates": [
+            {
+              "name": "ONCE_PER_APP",
+              "isActive": true
+            }
+          ]
+        },
+        "TARGETING": {
+          "enabled": true,
+          "type": "TARGETING",
+          "schema": {
+            "include": {
+              "relation": "AND",
+              "groups": [
+                {
+                  "relation": "AND",
+                  "conditions": [
+                    {
+                      "operand": {
+                        "name": "USER"
+                      },
+                      "operator": "TIME_SPENT_IN_APP",
+                      "values": [
+                        {
+                          "unit": "SECOND",
+                          "amount": "20"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "relation": "AND",
+                  "conditions": [
+                    {
+                      "operand": {
+                        "name": "USER"
+                      },
+                      "operator": "NEW_USER"
+                    }
+                  ]
+                }
+              ]
+            },
+            "exclude": {
+              "relation": "AND",
+              "groups": []
+            }
+          }
+        },
+        "SCHEDULE": {
+          "type": "SCHEDULE",
+          "enabled": false,
+          "predicates": []
+        },
+        "ASYNC": {
+          "IS_IN_SEGMENT": {
+            "enabled": true,
+            "segmentId": 123123123
+          }
+        }
+      }
+    }
+  ]
+}

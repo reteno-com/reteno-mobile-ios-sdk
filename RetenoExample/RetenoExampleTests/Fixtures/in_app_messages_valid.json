@@ -1,0 +1,231 @@
+{
+  "messages": [
+    {
+      "messageId": 123123123,
+      "messageInstanceId": 123123123,
+      "displayRules": {
+        "FREQUENCY": {
+          "enabled": true,
+          "type": "FREQUENCY",
+          "predicates": [
+            {
+              "name": "ONCE_PER_APP",
+              "isActive": true
+            }
+          ]
+        },
+        "TARGETING": {
+          "enabled": true,
+          "type": "TARGETING",
+          "schema": {
+            "include": {
+              "relation": "AND",
+              "groups": [
+                {
+                  "relation": "AND",
+                  "conditions": [
+                    {
+                      "operand": {
+                        "name": "USER"
+                      },
+                      "operator": "TIME_SPENT_IN_APP",
+                      "values": [
+                        {
+                          "unit": "SECOND",
+                          "amount": "20"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "relation": "AND",
+                  "conditions": [
+                    {
+                      "operand": {
+                        "name": "USER"
+                      },
+                      "operator": "NEW_USER"
+                    }
+                  ]
+                }
+              ]
+            },
+            "exclude": {
+              "relation": "AND",
+              "groups": []
+            }
+          }
+        },
+        "SCHEDULE": {
+          "type": "SCHEDULE",
+          "enabled": false,
+          "predicates": []
+        },
+        "ASYNC": {
+          "IS_IN_SEGMENT": {
+            "enabled": true,
+            "segmentId": 123123123
+          }
+        }
+      }
+    },
+    {
+      "messageId": 123123124,
+      "messageInstanceId": 123123124,
+      "displayRules": {
+        "FREQUENCY": {
+          "enabled": true,
+          "type": "FREQUENCY",
+          "predicates": [
+            {
+              "name": "NO_LIMIT",
+              "isActive": true
+            }
+          ]
+        },
+        "TARGETING": {
+          "enabled": true,
+          "type": "TARGETING",
+          "schema": {
+            "include": {
+              "relation": "AND",
+              "groups": [
+                {
+                  "relation": "AND",
+                  "conditions": [
+                    {
+                      "operand": {
+                        "name": "USER"
+                      },
+                      "operator": "TIME_SPENT_IN_APP",
+                      "values": [
+                        {
+                          "unit": "SECOND",
+                          "amount": "20"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "relation": "AND",
+                  "conditions": [
+                    {
+                      "operand": {
+                        "name": "USER"
+                      },
+                      "operator": "NEW_USER"
+                    }
+                  ]
+                }
+              ]
+            },
+            "exclude": {
+              "relation": "AND",
+              "groups": []
+            }
+          }
+        },
+        "SCHEDULE": {
+          "type": "SCHEDULE",
+          "enabled": false,
+          "predicates": []
+        },
+        "ASYNC": {
+          "IS_IN_SEGMENT": {
+            "enabled": false,
+            "segmentId": null
+          }
+        }
+      }
+    },
+    {
+      "messageId": 123123125,
+      "messageInstanceId": 123123125,
+      "displayRules": {
+        "FREQUENCY": {
+          "enabled": true,
+          "type": "FREQUENCY",
+          "predicates": [
+            {
+              "name": "NO_LIMIT",
+              "isActive": true
+            }
+          ]
+        },
+        "TARGETING": {
+          "enabled": true,
+          "type": "TARGETING",
+          "schema": {
+            "include": {
+              "relation": "AND",
+              "groups": [
+                {
+                  "relation": "AND",
+                  "conditions": [
+                    {
+                      "operand": {
+                        "name": "USER"
+                      },
+                      "operator": "TIME_SPENT_IN_APP",
+                      "values": [
+                        {
+                          "unit": "SECOND",
+                          "amount": "20"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "relation": "AND",
+                  "conditions": [
+                    {
+                      "operand": {
+                        "name": "USER"
+                      },
+                      "operator": "NEW_USER"
+                    }
+                  ]
+                }
+              ]
+            },
+            "exclude": {
+              "relation": "AND",
+              "groups": []
+            }
+          }
+        },
+        "SCHEDULE": {
+          "enabled": true,
+          "type": "SCHEDULE",
+          "predicates": [
+            {
+              "name": "SHOW_AFTER",
+              "isActive": true,
+              "params": {
+                "date": "2024-03-09T13:58",
+                "timeZone": null
+              }
+            },
+            {
+              "name": "HIDE_AFTER",
+              "isActive": true,
+              "params": {
+                "date": "2024-03-11T13:03",
+                "timeZone": null
+              }
+            }
+          ]
+        },
+        "ASYNC": {
+          "IS_IN_SEGMENT": {
+            "enabled": false,
+            "segmentId": null
+          }
+        }
+      }
+    }
+  ]
+}

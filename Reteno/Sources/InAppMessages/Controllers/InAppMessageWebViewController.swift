@@ -13,22 +13,23 @@ protocol InAppScriptMessageHandler: AnyObject {
     func inAppMessageWebViewController(
         _ viewController: InAppMessageWebViewController,
         didReceive scriptMessage: InAppScriptMessage,
-        in message: InAppMessage
+        in message: InApp
     )
     
 }
 
 final class InAppMessageWebViewController: UIViewController {
-    
     weak var delegate: InAppScriptMessageHandler?
     
-    private let message: InAppMessage
+    private let message: InApp
     private let webView: WKWebView
+    private let inAppService: InAppService
     
     // MARK: Init
     
-    init(with message: InAppMessage) {
+    init(with message: InApp, inAppService: InAppService) {
         self.message = message
+        self.inAppService = inAppService
         
         let preferences = WKPreferences()
         preferences.javaScriptEnabled = true
@@ -106,6 +107,12 @@ extension InAppMessageWebViewController: WKScriptMessageHandler {
                 message: "Couldn't parse script message [\(message.body)]",
                 tags: ["reteno.in_app_message_id": self.message.id]
             )
+            self.inAppService.sendInteraction(
+                with: self.message,
+                status: .failed,
+                description: "Couldn't parse script message [\(message.body)]"
+            )
+            
             return
         }
         
@@ -116,6 +123,11 @@ extension InAppMessageWebViewController: WKScriptMessageHandler {
         } catch {
             Logger.log(error, eventType: .error)
             ErrorLogger.shared.capture(error: error)
+            self.inAppService.sendInteraction(
+                with: self.message,
+                status: .failed,
+                description: error.localizedDescription
+            )
         }
     }
     

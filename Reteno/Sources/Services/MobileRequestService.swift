@@ -95,13 +95,6 @@ final class MobileRequestService {
         }
     }
     
-    func getInAppMessage(by id: String, completionHandler: @escaping (Result<InAppMessage, Error>) -> Void) {
-        let request = InAppMessageRequest(id: id)
-        let handler = DecodableResponseHandler<InAppMessage>()
-
-        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
-    }
-    
 }
 
 // MARK: EventsSender
@@ -187,4 +180,68 @@ extension MobileRequestService {
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
     
+}
+
+// MARK: InApp
+
+extension MobileRequestService {
+    
+    func getInAppMessage(by id: String, completionHandler: @escaping (Result<InAppMessage, Error>) -> Void) {
+        let request = InAppMessageRequest(id: id)
+        let handler = DecodableResponseHandler<InAppMessage>()
+
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
+    }
+
+    func getInAppMessages(eTag: String?, completionHandler: @escaping (Result<(list: InAppMessageLists, etag: String?), Error>) -> Void) {
+        let request = InAppMessagesRequest(eTag: eTag)
+        let handler = DecodableResponseHandler<InAppMessageLists>()
+        
+        URLCache.shared.removeAllCachedResponses()
+        requestManager.execute(request: request, responseHandler: handler) { result, httpHeaders in
+            switch result {
+            case .success(let resp):
+                let etag: String? = httpHeaders?.value(for: "ETag")?.replacingOccurrences(of: "\"", with: "")
+                completionHandler(.success((resp, etag)))
+            
+            case .failure(let failure):
+                completionHandler(.failure(failure))
+            }
+        }
+    }
+    
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+    
+    func getInAppMessageContent(messageInstanceIds: [Int], completionHandler: @escaping (Result< InAppContents, Error>) -> Void) {
+        let request = InAppMessageContentRequest(messageInstanceIds: messageInstanceIds)
+        let handler = DecodableResponseHandler<InAppContents>()
+        
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
+    }
+    
+    func sendInteraction(
+        interaction: NewInteraction,
+        completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
+    ) {
+        let request = NewInAppInteractionRequest(newInteraction: interaction)
+        let handler = EmptyResponseHandler()
+        
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
+    }
+    
+    func checkAsyncSegmentRules(ids: [Int], completionHandler: @escaping (Result< InAppAsyncChecks, Error>) -> Void) {
+        let request = InAppCheckAsyncRulesRequest(segmentsIds: ids)
+        let handler = DecodableResponseHandler<InAppAsyncChecks>()
+        
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
+    }
 }

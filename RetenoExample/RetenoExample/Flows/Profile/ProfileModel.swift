@@ -24,6 +24,15 @@ final class ProfileModel {
     init(user: User = User(), navigationHandler: ProfileModelNavigationHandler) {
         self.user = user
         self.navigationHandler = navigationHandler
+        
+        Reteno.logEvent(
+            eventTypeKey: "custom_android_event",
+            parameters: [
+                .init(name: "test", value: "te"),
+                .init(name: "equal", value: "teest"),
+                .init(name: "start", value: "par")
+            ]
+        )
     }
     
     func updateExternalId(_ externalId: String?) {
