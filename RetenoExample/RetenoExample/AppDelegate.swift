@@ -89,6 +89,25 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self?.applicationFlowCoordinator.handleUniversalLink(linkItem)
         }
         
+        Reteno.addInAppStatusHandler { [weak self] inAppMessageStatus in
+            switch inAppMessageStatus {
+            case .inAppShouldBeDisplayed:
+                print("inAppShouldBeDisplayed")
+                
+            case .inAppIsDisplayed:
+                print("inAppIsDisplayed")
+                
+            case .inAppShouldBeClosed(let action):
+                print("\(action)")
+            
+            case .inAppIsClosed(let action):
+                print("\(action)")
+
+            case .inAppReceivedError(let error):
+                print("inAppReceivedError")
+            }
+        }
+        
         let window = UIWindow()
         
         applicationFlowCoordinator = ApplicationFlowCoordinator(window: window)

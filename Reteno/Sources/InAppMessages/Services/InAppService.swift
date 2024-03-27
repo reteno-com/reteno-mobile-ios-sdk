@@ -56,13 +56,19 @@ final class InAppService {
         }
     }
     
-    func sendInteraction(with inApp: InApp, status: NewInteractionStatus = .opened, description: String? = nil) {
+    func sendInteraction(
+        with inApp: InApp,
+        interactionId: String = UUID().uuidString,
+        status: NewInteractionStatus = .opened,
+        description: String? = nil
+    ) {
         guard let inAppContent = inApp as? InAppContent else {
             return
         }
         
         requestService.sendInteraction(
             interaction: .init(
+                id: interactionId,
                 time: Date(),
                 messageInstanceId: inAppContent.messageInstanceId,
                 status: status,
@@ -116,8 +122,12 @@ final class InAppService {
         for predicate in message.displayRules.frequency.predicates.filter({ $0.isActive }) {
             switch predicate.name {
             case .noLimit:
-                let displayedInApps = storage.getNoLimitDisplayedInAppIds()
-                return (!displayedInApps.contains(message.messageId), predicate.name, predicate.params)
+                if message.displayRules.targeting.schema?.include.groups.isNotEmpty ?? false {
+                    return (true, predicate.name, predicate.params)
+                } else {
+                    let displayedInApps = storage.getNoLimitDisplayedInAppIds()
+                    return (!displayedInApps.contains(message.messageId), predicate.name, predicate.params)
+                }
                 
             case .oncePerApp:
                 let displayedInApps = storage.getOnlyOnceDisplayedInAppIds()

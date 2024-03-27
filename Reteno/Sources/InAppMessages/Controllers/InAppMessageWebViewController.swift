@@ -118,6 +118,7 @@ extension InAppMessageWebViewController: WKScriptMessageHandler {
         
         do {
             let scriptMessage = try JSONDecoder().decode(InAppScriptMessage.self, from: bodyData)
+            
             delegate?.inAppMessageWebViewController(self, didReceive: scriptMessage, in: self.message)
             Logger.log("Received message: \(scriptMessage)", eventType: .debug)
         } catch {

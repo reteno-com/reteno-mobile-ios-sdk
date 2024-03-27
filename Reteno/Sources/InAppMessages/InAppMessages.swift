@@ -15,6 +15,7 @@ final class InAppMessages {
     private var window: UIWindow?
     
     private var currentInAppMessage: InApp?
+    private var currentInteractionId: String?
     
     private let mobileRequestService: MobileRequestService
     private let inAppRequestService: InAppRequestService
@@ -50,6 +51,7 @@ final class InAppMessages {
                 guard let self = self else { return }
                 
                 if self.application?.isActive == true {
+                    Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
                     self.setupWebView(with: message)
                 } else {
                     self.currentInAppMessage = message
@@ -63,6 +65,7 @@ final class InAppMessages {
     
     @available(iOSApplicationExtension, unavailable)
     func presentInApp(by content: InAppContent) {
+        Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
         self.setupWebView(with: content)
     }
     
@@ -260,10 +263,13 @@ final class InAppMessages {
         }
     }
     
-    private func dismissInAppMessage(animated: Bool = true) {
+    private func dismissInAppMessage(action: InAppMessageAction? = nil, animated: Bool = true) {
         func hide() {
             window?.removeFromSuperview()
             window = nil
+            if let action = action {
+                Reteno.inAppStatusHander?(.inAppIsClosed(action: action))
+            }
         }
         
         if animated {
@@ -349,9 +355,18 @@ extension InAppMessages: InAppScriptMessageHandler {
         switch scriptMessage.type {
         case .completedLoading:
             presentInAppMessage(in: viewController)
-            self.inAppService.sendInteraction(with: message)
+            Reteno.inAppStatusHander?(.inAppIsDisplayed)
+            guard let inAppContent = message as? InAppContent else {
+                currentInteractionId = nil
+                return
+            }
+            
+            let intecationId = UUID().uuidString
+            currentInteractionId = intecationId
+            self.inAppService.sendInteraction(with: inAppContent, interactionId: intecationId)
             
         case .failedLoading, .runtimeError:
+            Reteno.inAppStatusHander?(.inAppReceivedError(error: "Failed loading in-app"))
             guard let payload = scriptMessage.payload as? InAppScriptMessageErrorPayload else { return }
 
             Logger.log("Failed loading in-app script: \(payload.reason)", eventType: .error)
@@ -366,14 +381,19 @@ extension InAppMessages: InAppScriptMessageHandler {
             )
             
         case .close:
-            dismissInAppMessage()
+            let action: InAppMessageAction = .init(isCloseButtonClicked: true)
+            Reteno.inAppStatusHander?(.inAppShouldBeClosed(action: action))
+            dismissInAppMessage(action: action)
+            currentInteractionId = nil
             
         case .openURL:
-            dismissInAppMessage()
+            let action: InAppMessageAction = .init(isOpenUrlClicked: true)
+            Reteno.inAppStatusHander?(.inAppShouldBeClosed(action: action))
+            dismissInAppMessage(action: action)
             if let payload = scriptMessage.payload as? InAppScriptMessageURLPayload,
                let url = URL(string: payload.urlString) {
                 handleInteraction(
-                    messageId: message.id,
+                    messageId: currentInteractionId ?? message.id,
                     action: .init(
                         type: scriptMessage.type.rawValue,
                         targetComponentId: payload.targetComponentId,
@@ -382,18 +402,28 @@ extension InAppMessages: InAppScriptMessageHandler {
                 )
                 DeepLinksProcessor.processLinks(wrappedUrl: nil, rawURL: url, customData: payload.customData)
             }
+            currentInteractionId = nil
             
         case .click:
-            dismissInAppMessage()
+            let action: InAppMessageAction = .init(isButtonClicked: true)
+            Reteno.inAppStatusHander?(.inAppShouldBeClosed(action: action))
+            dismissInAppMessage(action: action)
             if let payload = scriptMessage.payload as? InAppScriptMessageComponentPayload {
                 handleInteraction(
-                    messageId: message.id,
+                    messageId: currentInteractionId ?? message.id,
                     action: .init(type: scriptMessage.type.rawValue, targetComponentId: payload.targetComponentId)
                 )
             }
+            currentInteractionId = nil
             
         case .unknown:
             Logger.log("Received unknown script message", eventType: .warning)
+            self.inAppService.sendInteraction(
+                with: message,
+                status: .failed,
+                description: "Received unknown script message"
+            )
+            currentInteractionId = nil
         }
     }
     

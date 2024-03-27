@@ -424,7 +424,9 @@ final class EventsSenderScheduler {
     
     private func sendErrorEventsOperation() -> DateOperation? {
         let events = storage.getErrorEvents()
-                        
+        
+        guard !events.isEmpty else { return nil }
+        
         return SendErrorEventsOperation(
             requestService: SendingServiceBuilder.buildServiceWithEmptyURL(),
             storage: storage,
