@@ -14,6 +14,7 @@ struct DeepLinksProcessor {
         wrappedUrl: URL?,
         rawURL: URL?,
         customData: [String: Any]? = nil,
+        isInAppMessageLink: Bool,
         storage: KeyValueStorage = StorageBuilder.build(),
         scheduler: EventsSenderScheduler = Reteno.senderScheduler
     ) {
@@ -23,7 +24,13 @@ struct DeepLinksProcessor {
             storage.appendLink(StorableLink(value: wrappedUrl.absoluteString, date: Date()))
             scheduler.forcePushEvents()
         }
-        Reteno.linkHandler?(url, customData) ?? UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        let linkInfo: LinkHandler = .init(
+            url: url,
+            customData: customData,
+            source: isInAppMessageLink ? .inAppMessage : .pushNotification
+        )
+        
+        Reteno.linkHandler?(linkInfo) ?? UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
 }

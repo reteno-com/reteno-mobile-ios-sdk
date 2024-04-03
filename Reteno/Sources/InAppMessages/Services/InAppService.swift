@@ -267,6 +267,11 @@ final class InAppService {
     }
     
     private func downloadInAppContents(messageInstanceIds: [Int]) {
+        guard messageInstanceIds.isNotEmpty else {
+            self.inAppContents?(self.contents, self.showModels)
+            return
+        }
+        
         requestService.getInAppMessageContent(messageInstanceIds: messageInstanceIds) { [weak self] result in
             guard let self = self else { return }
             
@@ -324,9 +329,13 @@ final class InAppService {
             }
         } else {
             let segments = messages.compactMap { $0.displayRules.async.segment.enabled ? $0.displayRules.async.segment.segmentId : nil }
+
+            guard segments.isNotEmpty else {
+                completion([])
+                return
+            }
             
-            
-            requestService.checkAsyncSegmentRules(ids: segments + [201649357, 201649370]) { [weak self] result in
+            requestService.checkAsyncSegmentRules(ids: segments) { [weak self] result in
                 guard let self = self else { return }
 
                 switch result {
@@ -379,13 +388,13 @@ final class InAppService {
         
         switch retry.unit {
         case .seconds:
-            return TimeInterval(retry.amout)
+            return TimeInterval(retry.amount)
             
         case .minute:
-            return TimeInterval(retry.amout * 60)
+            return TimeInterval(retry.amount * 60)
 
         case .hour:
-            return TimeInterval(retry.amout * 60 * 60)
+            return TimeInterval(retry.amount * 60 * 60)
         
         default:
             return TimeInterval(300)

@@ -14,12 +14,12 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "2.0.1"
+    static var version = "2.0.2"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
     }()
-    static var linkHandler: ((URL, [String:Any]?) -> Void)?
+    static var linkHandler: ((LinkHandler) -> Void)?
     static var inAppStatusHander: ((InAppMessageStatus) -> Void)?
     static var analyticsService: AnalyticsService!
     static let senderScheduler = EventsSenderSchedulerBuilder.build()
@@ -32,7 +32,7 @@ public struct Reteno {
     /// - Parameter isDebugMode: Flag that indicates if `DebugMode` is enabled
     /// - Parameter isPausedInAppMessages: Flag that indicates pause in InAppMessage presenting
     @available(iOSApplicationExtension, unavailable)
-    public static func start(apiKey: String, isAutomaticScreenReportingEnabled: Bool = true, isDebugMode: Bool = false, isPausedInAppMessages: Bool = false) {
+    public static func start(apiKey: String, isAutomaticScreenReportingEnabled: Bool = false, isDebugMode: Bool = false, isPausedInAppMessages: Bool = false) {
         DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
         DebugModeHelper.setIsDebugModeOn(isDebugMode)
@@ -66,7 +66,7 @@ public struct Reteno {
         }
     }
     
-    public static func addLinkHandler(_ handler: @escaping (URL, [String:Any]?) -> Void) {
+    public static func addLinkHandler(_ handler: @escaping (LinkHandler) -> Void) {
         linkHandler = handler
     }
     

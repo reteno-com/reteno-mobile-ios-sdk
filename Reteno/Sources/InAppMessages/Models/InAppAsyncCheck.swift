@@ -22,7 +22,7 @@ struct InAppAsyncCheck: Decodable {
         
         struct RetryAfter: Decodable {
             let unit: UnitValue
-            let amout: Int
+            let amount: Int
         }
     }
     

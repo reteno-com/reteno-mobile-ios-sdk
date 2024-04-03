@@ -40,6 +40,7 @@ enum StorageKeys: String, CaseIterable {
     case inAppMessages = "com.reteno.in-app-messages.key"
     case inAppMessageContents = "com.reteno.in-app-message-contents.key"
     case inAppCacheLastUpdate = "com.reteno.in-app-cache-last-update.key"
+    case sessionId = "com.reteno.session-id.key"
 }
 
 final class KeyValueStorage {

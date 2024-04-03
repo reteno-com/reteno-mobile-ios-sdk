@@ -11,7 +11,7 @@ let package = Package(
         .library(name: "Reteno-Dynamic", type: .dynamic, targets: ["Reteno"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.6.2")
+        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.9.0")
     ],
     targets: [
         .target(

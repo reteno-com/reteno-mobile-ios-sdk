@@ -27,6 +27,7 @@ final class InAppMessages {
     private var inAppPresenters: [InAppMessagePresenter] = []
     
     private var isAlreadySendRequest: Bool = false
+    private var isAlreadyFetchBaseFile: Bool = false
     
     init(
         mobileRequestService: MobileRequestService,
@@ -170,6 +171,10 @@ final class InAppMessages {
         for showModel in showModels {
             let presenter: InAppMessagePresenter = .init(model: showModel, storage: storage) { inApp, canDelete in
                 guard !self.isPausedInApps else {
+                    return
+                }
+                
+                guard self.isAlreadyFetchBaseFile else {
                     return
                 }
                 
@@ -319,6 +324,7 @@ final class InAppMessages {
         
         DispatchQueue.global().async { [weak self] in
             self?.fetchBaseHTML { [weak self] in
+                self?.isAlreadyFetchBaseFile = true
                 guard let currentInAppMessage = self?.currentInAppMessage else { return }
                 
                 DispatchQueue.main.async { [weak self] in
@@ -400,7 +406,7 @@ extension InAppMessages: InAppScriptMessageHandler {
                         url: payload.urlString
                     )
                 )
-                DeepLinksProcessor.processLinks(wrappedUrl: nil, rawURL: url, customData: payload.customData)
+                DeepLinksProcessor.processLinks(wrappedUrl: nil, rawURL: url, customData: payload.customData, isInAppMessageLink: true)
             }
             currentInteractionId = nil
             

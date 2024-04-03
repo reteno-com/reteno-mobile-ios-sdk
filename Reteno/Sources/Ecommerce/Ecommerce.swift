@@ -78,6 +78,8 @@ public final class Ecommerce {
             if let currencyCode = currencyCode {
                 parameters.append(.init(name: "currencyCode", value: currencyCode))
             }
+            let cartUpdatedEvents = storage.getEvents().filter { $0.isValid && $0.eventTypeKey == "cartUpdated"}
+            storage.clearEvents(cartUpdatedEvents)
             event = Event(eventTypeKey: "cartUpdated", date: date, parameters: parameters)
             
         case .orderCreated(let order, let currencyCode):

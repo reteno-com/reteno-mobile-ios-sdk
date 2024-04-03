@@ -95,7 +95,7 @@ public final class UserNotificationService: NSObject {
             Reteno.inAppMessages().presentInApp(by: notification.id)
         } else {
             Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .clicked, date: Date())
-            DeepLinksProcessor.processLinks(wrappedUrl: notification.link, rawURL: notification.rawLink)
+            DeepLinksProcessor.processLinks(wrappedUrl: notification.link, rawURL: notification.rawLink, isInAppMessageLink: false)
         }
     }
     
@@ -119,7 +119,7 @@ public final class UserNotificationService: NSObject {
             
             if let actionButton = notification.actionButtons?.first(where: { $0.actionId == response.actionIdentifier }) {
                 Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .clicked, date: Date())
-                DeepLinksProcessor.processLinks(wrappedUrl: actionButton.link, rawURL: actionButton.rawLink)
+                DeepLinksProcessor.processLinks(wrappedUrl: actionButton.link, rawURL: actionButton.rawLink, isInAppMessageLink: false)
                 let action = RetenoUserNotificationAction(
                     actionId: actionButton.actionId,
                     customData: actionButton.customData,

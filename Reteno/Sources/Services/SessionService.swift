@@ -8,6 +8,10 @@
 import UIKit
 import Foundation
 
+fileprivate let sessionStartedKey = "SessionStarted"
+fileprivate let startDateKey = "startDate"
+fileprivate let sessionIdKey = "sessionId"
+
 final class SessionService {
     
     private let storage = StorageBuilder.build()
@@ -71,17 +75,33 @@ final class SessionService {
     private func checkForActiveSession() {
         let lastActivityDate: Double? = storage.getValue(forKey: StorageKeys.lastActivityDate.rawValue)
         guard let lastActivityDate = lastActivityDate else {
-            storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
+            self.startSession()
             return
         }
         
         let date = Date(timeIntervalSince1970: lastActivityDate)
         if Date().minutes(from: date) >= 5 {
-            storage.clearOncePerSessionEvents()
-            storage.clearNoLimitEvents()
-            storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
+            self.startSession()
         }
         setLastActivityDate()
+    }
+    
+    private func startSession() {
+        storage.clearOncePerSessionEvents()
+        storage.clearNoLimitEvents()
+        storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
+
+        let sessionId = UUID().uuidString
+        let startDate = DateFormatter.baseBEDateFormatter.string(from: Date())
+        storage.set(value: sessionId, forKey: StorageKeys.sessionId.rawValue)
+
+        Reteno.logEvent(
+            eventTypeKey: sessionStartedKey,
+            parameters: [
+                .init(name: startDateKey, value: startDate),
+                .init(name: sessionIdKey, value: sessionId)
+            ]
+        )
     }
     
     // MARK: Handle notifications

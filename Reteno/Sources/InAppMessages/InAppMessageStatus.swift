@@ -16,9 +16,9 @@ public enum InAppMessageStatus {
 }
 
 public struct InAppMessageAction {
-    let isCloseButtonClicked: Bool
-    let isButtonClicked: Bool
-    let isOpenUrlClicked: Bool
+    public let isCloseButtonClicked: Bool
+    public let isButtonClicked: Bool
+    public let isOpenUrlClicked: Bool
     
     init(
         isCloseButtonClicked: Bool = false,

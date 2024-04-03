@@ -70,22 +70,27 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             self?.window?.showInformationAlert(alert)
         }
         
-        Reteno.addLinkHandler { [weak self] url, customData in
+        Reteno.addLinkHandler { [weak self] linkInfo in
             guard
-                let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+                let components = URLComponents(url: linkInfo.url, resolvingAgainstBaseURL: true),
                 components.host == "example-app.esclick.me",
                 let linkItem = UniversalLinkItem(rawValue: components.path)
             else {
-                if customData != nil {
-                    let customDataText = customData.flatMap { "\nWith custom data: - \($0)" } ?? ""
-                    let alert = InformationAlert(text: "Received data - \(customDataText)")
+                let fromInApps = linkInfo.source == .inAppMessage
+                let fromPush = linkInfo.source == .pushNotification
+                
+                if linkInfo.customData != nil {
+                    let customDataText = linkInfo.customData.flatMap { "\nWith custom data: - \($0)" } ?? ""
+                    let alert = InformationAlert(text: "Received data - \(customDataText), fromPush: \(fromPush), fromInApp: \(fromInApps)")
                     self?.window?.showInformationAlert(alert)
                 }
                 // if it's not a deep link, just open Safari
-                application.open(url)
+                application.open(linkInfo.url)
                 return
             }
             
+          
+                        
             self?.applicationFlowCoordinator.handleUniversalLink(linkItem)
         }
         
@@ -98,11 +103,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 print("inAppIsDisplayed")
                 
             case .inAppShouldBeClosed(let action):
-                print("\(action)")
-            
+                print("isButtonClicked:\(action.isButtonClicked)\nisCloseButtonClicked:\(action.isCloseButtonClicked)\nisOpenUrlClicked:\(action.isOpenUrlClicked)")
+                
             case .inAppIsClosed(let action):
-                print("\(action)")
-
+                print("isButtonClicked:\(action.isButtonClicked)\nisCloseButtonClicked:\(action.isCloseButtonClicked)\nisOpenUrlClicked:\(action.isOpenUrlClicked)")
+                
             case .inAppReceivedError(let error):
                 print("inAppReceivedError")
             }
