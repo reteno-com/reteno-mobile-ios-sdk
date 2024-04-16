@@ -109,7 +109,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 print("isButtonClicked:\(action.isButtonClicked)\nisCloseButtonClicked:\(action.isCloseButtonClicked)\nisOpenUrlClicked:\(action.isOpenUrlClicked)")
                 
             case .inAppReceivedError(let error):
-                print("inAppReceivedError")
+                print("inAppReceivedError \(error)")
             }
         }
         

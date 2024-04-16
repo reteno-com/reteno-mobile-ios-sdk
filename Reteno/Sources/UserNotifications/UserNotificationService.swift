@@ -89,13 +89,19 @@ public final class UserNotificationService: NSObject {
     ///
     /// - Parameter notification: The notification to which the user responded.
     public func processOpenedRemoteNotification(_ notification: UNNotification) {
-        guard let notification = RetenoUserNotification(userInfo: notification.request.content.userInfo) else { return }
+        guard let retenoNotification = RetenoUserNotification(userInfo: notification.request.content.userInfo) else { return }
         
-        if notification.isInApp {
-            Reteno.inAppMessages().presentInApp(by: notification.id)
+        if retenoNotification.isInApp {
+            Reteno.inAppMessages().presentInApp(by: retenoNotification.id)
         } else {
-            Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .clicked, date: Date())
-            DeepLinksProcessor.processLinks(wrappedUrl: notification.link, rawURL: notification.rawLink, isInAppMessageLink: false)
+            Reteno.updateNotificationInteractionStatus(interactionId: retenoNotification.id, status: .clicked, date: Date())
+            let customData = notification.request.content.userInfo as? [String: Any]
+            DeepLinksProcessor.processLinks(
+                wrappedUrl: retenoNotification.link,
+                rawURL: retenoNotification.rawLink,
+                customData:  customData,
+                isInAppMessageLink: false
+            )
         }
     }
     
@@ -119,7 +125,12 @@ public final class UserNotificationService: NSObject {
             
             if let actionButton = notification.actionButtons?.first(where: { $0.actionId == response.actionIdentifier }) {
                 Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .clicked, date: Date())
-                DeepLinksProcessor.processLinks(wrappedUrl: actionButton.link, rawURL: actionButton.rawLink, isInAppMessageLink: false)
+                DeepLinksProcessor.processLinks(
+                    wrappedUrl: actionButton.link,
+                    rawURL: actionButton.rawLink,
+                    customData: actionButton.customData,
+                    isInAppMessageLink: false
+                )
                 let action = RetenoUserNotificationAction(
                     actionId: actionButton.actionId,
                     customData: actionButton.customData,

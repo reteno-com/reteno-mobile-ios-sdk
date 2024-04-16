@@ -14,7 +14,7 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "2.0.2"
+    static var version = "2.0.3"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -32,7 +32,13 @@ public struct Reteno {
     /// - Parameter isDebugMode: Flag that indicates if `DebugMode` is enabled
     /// - Parameter isPausedInAppMessages: Flag that indicates pause in InAppMessage presenting
     @available(iOSApplicationExtension, unavailable)
-    public static func start(apiKey: String, isAutomaticScreenReportingEnabled: Bool = false, isDebugMode: Bool = false, isPausedInAppMessages: Bool = false) {
+    public static func start(
+        apiKey: String,
+        isAutomaticScreenReportingEnabled: Bool = false,
+        isDebugMode: Bool = false,
+        isPausedInAppMessages: Bool = false,
+        inAppMessagesPauseBehaviour: PauseBehaviour = .postponeInApps
+    ) {
         DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
         DebugModeHelper.setIsDebugModeOn(isDebugMode)
@@ -43,6 +49,7 @@ public struct Reteno {
         userNotificationService.setNotificationCenterDelegate()
         inApps.subscribeOnNotifications()
         pauseInAppMessages(isPaused: isPausedInAppMessages)
+        setInAppMessagesPauseBehaviour(pauseBehaviour: inAppMessagesPauseBehaviour)
     }
     
     /// Log events
@@ -199,8 +206,13 @@ public struct Reteno {
     
     static func inAppMessages() -> InAppMessages { inApps }
         
+    @available(iOSApplicationExtension, unavailable)
     public static func pauseInAppMessages(isPaused: Bool) {
-        inApps.isPausedInApps = isPaused
+        inApps.setInAppMessagesPause(isPaused: isPaused)
+    }
+    
+    public static func setInAppMessagesPauseBehaviour(pauseBehaviour: PauseBehaviour) {
+        inApps.setInAppMessagesPauseBehaviour(pauseBehaviour: pauseBehaviour)
     }
     
     // MARK: Upsert device

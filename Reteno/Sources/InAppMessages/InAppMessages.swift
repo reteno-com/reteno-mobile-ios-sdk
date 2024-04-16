@@ -9,7 +9,8 @@ import UIKit
 
 final class InAppMessages {
     
-    var isPausedInApps: Bool = false
+    private var isPausedInApps: Bool = false
+    private var inAppMessagesPauseBehaviour: PauseBehaviour = .postponeInApps
     
     private var application: UIApplication?
     private var window: UIWindow?
@@ -25,6 +26,7 @@ final class InAppMessages {
     private let inAppService: InAppService
     
     private var inAppPresenters: [InAppMessagePresenter] = []
+    private var postponeInAppInfo: [(showModel: InAppShowModel, canDelete: Bool, content: InAppContent, segmentId: Int?)] = []
     
     private var isAlreadySendRequest: Bool = false
     private var isAlreadyFetchBaseFile: Bool = false
@@ -78,6 +80,35 @@ final class InAppMessages {
                 }
             }
         }
+    }
+    
+    @available(iOSApplicationExtension, unavailable)
+    func setInAppMessagesPause(isPaused: Bool) {
+        isPausedInApps = isPaused
+        
+        guard !isPaused, inAppMessagesPauseBehaviour == .postponeInApps, let inAppToShow = postponeInAppInfo.first else {
+            return
+        }
+        
+        if let segmentID = inAppToShow.segmentId {
+            self.inAppService.checkAsyncRulesSegment(id: segmentID) { checks in
+                for segment in checks {
+                    if segment.segmentId == segmentID, segment.checkResult {
+                        self.processingInApp(showModel: inAppToShow.showModel, canDelete: inAppToShow.canDelete)
+                        self.presentInApp(by: inAppToShow.content)
+                        break
+                    }
+                }
+            }
+        } else {
+            self.processingInApp(showModel: inAppToShow.showModel, canDelete: inAppToShow.canDelete)
+            self.presentInApp(by: inAppToShow.content)
+        }
+        postponeInAppInfo.removeAll()
+    }
+    
+    func setInAppMessagesPauseBehaviour(pauseBehaviour: PauseBehaviour) {
+        inAppMessagesPauseBehaviour = pauseBehaviour
     }
     
     private func inAppPresentersSelections () {
@@ -171,6 +202,13 @@ final class InAppMessages {
         for showModel in showModels {
             let presenter: InAppMessagePresenter = .init(model: showModel, storage: storage) { inApp, canDelete in
                 guard !self.isPausedInApps else {
+                    
+                    if let content = contents.first(where: { $0.messageInstanceId == inApp.messageInstanceId }) {
+                        let segmentId = inApp.displayRules.async.segment.enabled ? inApp.displayRules.async.segment.segmentId : nil
+                        self.postponeInAppInfo.append((showModel, canDelete, content, segmentId))
+                    }
+                    
+                    
                     return
                 }
                 

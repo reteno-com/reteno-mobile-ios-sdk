@@ -16,6 +16,10 @@
 "main_screen.log_event_button.title" = "Log event";
 "main_screen.subscribe_on_push_button.title" = "Subscribe on push notifications";
 "main_screen.paused_in_app" = "Paused InApps";
+"main_screen.paused_behaviour_in_app" = "InApps Pause Behaviour";
+"main_screen.paused_behaviour_description" = "Postpone InApp";
+
+
 
 // MARK: - Create profile
 

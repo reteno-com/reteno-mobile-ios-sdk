@@ -38,6 +38,11 @@ final class MainViewController: NiblessViewController {
     private func pauseInAppSwitchAction(_ sender: UISwitch) {
         viewModel.pausedInApp(sender.isOn)
     }
+        
+    @objc
+    private func pauseBehaviourInAppSwitchAction(_ sender: UISwitch) {
+        viewModel.setPauseBehaviour(sender.isOn)
+    }
     
     @objc
     private func ecommerceButtonAction(_ sender: UIButton) {
@@ -139,6 +144,7 @@ private extension MainViewController {
         baseSetup(for: recomsButton)
         
         stack.addArrangedSubview(makePauseSwitcher())
+        stack.addArrangedSubview(makePauseBehaviourSwitcher())
     }
     
     func baseSetup(for button: UIButton) {
@@ -192,6 +198,46 @@ private extension MainViewController {
         pauseLabel.textColor = .black
         pauseLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20.0)
+        }
+        
+        return containerView
+    }
+    
+    func makePauseBehaviourSwitcher() -> UIView {
+        let containerView: UIView = .init()
+        containerView.backgroundColor = .systemGreen.withAlphaComponent(0.2)
+        containerView.layer.cornerRadius = 6.0
+        containerView.snp.makeConstraints {
+            $0.height.equalTo(50)
+        }
+        
+        let pauseSwitcher: UISwitch = .init()
+        pauseSwitcher.isOn = true
+        pauseSwitcher.addTarget(self, action: #selector(pauseBehaviourInAppSwitchAction(_:)), for: .valueChanged)
+        containerView.addSubview(pauseSwitcher)
+        pauseSwitcher.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(20.0)
+        }
+        
+        let pauseLabel: UILabel = .init()
+        containerView.addSubview(pauseLabel)
+        pauseLabel.text = NSLocalizedString("main_screen.paused_behaviour_in_app", comment: "")
+        pauseLabel.textColor = .black
+        pauseLabel.font = .systemFont(ofSize: 16)
+        pauseLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(8.0)
+            $0.leading.equalToSuperview().inset(20.0)
+        }
+        
+        let pauseDescriptionLabel: UILabel = .init()
+        containerView.addSubview(pauseDescriptionLabel)
+        pauseDescriptionLabel.text = NSLocalizedString("main_screen.paused_behaviour_description", comment: "")
+        pauseDescriptionLabel.textColor = .black
+        pauseDescriptionLabel.font = .systemFont(ofSize: 14)
+        pauseDescriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(pauseLabel.snp.bottom).offset(2.0)
             $0.leading.equalToSuperview().inset(20.0)
         }
         

@@ -46,6 +46,11 @@ final class MainModel {
         Reteno.pauseInAppMessages(isPaused: isPaused)
     }
     
+    func setPauseBehaviour(_ isPostponeInApp: Bool) {
+        let pauseBehaviour: PauseBehaviour = isPostponeInApp ? .postponeInApps : .skipInApps
+        Reteno.setInAppMessagesPauseBehaviour(pauseBehaviour: pauseBehaviour)
+    }
+    
     func openEcommerce() {
         navigationHandler.openEcommerce()
     }

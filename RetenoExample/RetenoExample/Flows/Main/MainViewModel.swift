@@ -26,6 +26,10 @@ final class MainViewModel {
         model.pausedInApp(isPaused)
     }
     
+    func setPauseBehaviour(_ isPostponeInApp: Bool) {
+        model.setPauseBehaviour(isPostponeInApp)
+    }
+    
     func openEcommerce() {
         model.openEcommerce()
     }

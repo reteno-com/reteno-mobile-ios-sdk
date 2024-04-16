@@ -26,7 +26,7 @@ final class ProfileModel {
         self.navigationHandler = navigationHandler
         
         Reteno.logEvent(
-            eventTypeKey: "custom_android_event",
+            eventTypeKey: "searchRequest",
             parameters: [
                 .init(name: "test", value: "te"),
                 .init(name: "equal", value: "teest"),
