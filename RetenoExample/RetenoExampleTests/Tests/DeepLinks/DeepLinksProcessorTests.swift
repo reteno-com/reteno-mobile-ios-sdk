@@ -40,7 +40,7 @@ final class DeepLinksProcessorTests: XCTestCase {
             
             return HTTPStubsResponse(data: stubData!, statusCode: 400, headers: nil)
         }
-        DeepLinksProcessor.processLinks(wrappedUrl: url, rawURL: rawURL, storage: storage)
+        DeepLinksProcessor.processLinks(wrappedUrl: url, rawURL: rawURL, isInAppMessageLink: true, storage: storage)
         wait(for: [expectation], timeout: 1.0)
         
         let result = storage.getLinks().first(where: { $0.value == url?.absoluteString })

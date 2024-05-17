@@ -16,7 +16,7 @@ final class RetenoNotificationsHelperTests: XCTestCase {
         let result = RetenoNotificationsHelper.isRetenoPushNotification(userInfo)
         XCTAssertTrue(result, "should be true")
     }
-
+    
     func test_isRetenoPushNotification_withoutInteractionId() {
         let userInfo: [AnyHashable: Any] = ["es_title": "Title"]
         let result = RetenoNotificationsHelper.isRetenoPushNotification(userInfo)
@@ -24,3 +24,4 @@ final class RetenoNotificationsHelperTests: XCTestCase {
     }
     
 }
+

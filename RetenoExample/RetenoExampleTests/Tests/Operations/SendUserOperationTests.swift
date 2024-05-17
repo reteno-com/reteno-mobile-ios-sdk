@@ -126,7 +126,7 @@ final class SendUserOperationTests: XCTestCase {
         waitForExpectations(timeout: 1.0)
     }
     
-    func test_sendUserOperation_withExternalUserIdAndFailedDeviceResult_with5xxStatusCode() {
+    func test_sendUserOperation_withExternalUserIdAndFailedDeviceResult_with5xxStatusCode() throws {
         stub(condition: pathEndsWith("v1/device")) { _ in
             let stubData = "OK".data(using: .utf8)
             
@@ -172,7 +172,7 @@ final class SendUserOperationTests: XCTestCase {
         waitForExpectations(timeout: 2.0)
     }
     
-    func test_sendUserOperation_withExternalUserIdAndFailedDeviceResult_with4xxStatusCode() {
+    func test_sendUserOperation_withExternalUserIdAndFailedDeviceResult_with4xxStatusCode() throws {
         stub(condition: pathEndsWith("v1/device")) { _ in
             let stubData = "OK".data(using: .utf8)
             

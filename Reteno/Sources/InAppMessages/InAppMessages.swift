@@ -400,8 +400,8 @@ extension InAppMessages: InAppScriptMessageHandler {
         case .completedLoading:
             presentInAppMessage(in: viewController)
             Reteno.inAppStatusHander?(.inAppIsDisplayed)
+            currentInteractionId = nil
             guard let inAppContent = message as? InAppContent else {
-                currentInteractionId = nil
                 return
             }
             
@@ -410,6 +410,7 @@ extension InAppMessages: InAppScriptMessageHandler {
             self.inAppService.sendInteraction(with: inAppContent, interactionId: intecationId)
             
         case .failedLoading, .runtimeError:
+            currentInteractionId = nil
             Reteno.inAppStatusHander?(.inAppReceivedError(error: "Failed loading in-app"))
             guard let payload = scriptMessage.payload as? InAppScriptMessageErrorPayload else { return }
 
@@ -428,7 +429,6 @@ extension InAppMessages: InAppScriptMessageHandler {
             let action: InAppMessageAction = .init(isCloseButtonClicked: true)
             Reteno.inAppStatusHander?(.inAppShouldBeClosed(action: action))
             dismissInAppMessage(action: action)
-            currentInteractionId = nil
             
         case .openURL:
             let action: InAppMessageAction = .init(isOpenUrlClicked: true)
@@ -446,7 +446,6 @@ extension InAppMessages: InAppScriptMessageHandler {
                 )
                 DeepLinksProcessor.processLinks(wrappedUrl: nil, rawURL: url, customData: payload.customData, isInAppMessageLink: true)
             }
-            currentInteractionId = nil
             
         case .click:
             let action: InAppMessageAction = .init(isButtonClicked: true)
@@ -458,7 +457,6 @@ extension InAppMessages: InAppScriptMessageHandler {
                     action: .init(type: scriptMessage.type.rawValue, targetComponentId: payload.targetComponentId)
                 )
             }
-            currentInteractionId = nil
             
         case .unknown:
             Logger.log("Received unknown script message", eventType: .warning)

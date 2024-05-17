@@ -41,6 +41,13 @@ enum StorageKeys: String, CaseIterable {
     case inAppMessageContents = "com.reteno.in-app-message-contents.key"
     case inAppCacheLastUpdate = "com.reteno.in-app-cache-last-update.key"
     case sessionId = "com.reteno.session-id.key"
+    case applicationOpenedCount = "com.reteno.application-opened-count.key"
+    case applicationBackgroundedCount = "com.reteno.application-backgrounded-count.key"
+    case previousVersion = "com.reteno.previous-version.key"
+    case previousBuild = "com.reteno.previous-build.key"
+    case automaticAppLifecycleReportingEnabled = "com.reteno.automatic-app-lifecycle-reporting.key"
+    case automaticPushSubsriptionReportingEnabled = "com.reteno.automatic-push-subsription-reporting.key"
+    case automaticSessionReportingEnabled = "com.reteno.automatic-session-reporting.key"
 }
 
 final class KeyValueStorage {
@@ -103,6 +110,29 @@ final class KeyValueStorage {
         guard let storage = storageUnwrapper() else { return }
         
         storage.removeObject(forKey: key)
+    }
+    
+    // MARK: Analytics logic
+    
+    func setAnalyticsValues(configuration: RetenoConfiguration) {
+        guard let storage = storageUnwrapper() else { return }
+
+        storage.setValue(
+            configuration.isAutomaticScreenReportingEnabled,
+            forKey: StorageKeys.screenTrackingFlag.rawValue
+        )
+        storage.setValue(
+            configuration.isAutomaticAppLifecycleReportingEnabled,
+            forKey: StorageKeys.automaticAppLifecycleReportingEnabled.rawValue
+        )
+        storage.setValue(
+            configuration.isAutomaticPushSubsriptionReportingEnabled,
+            forKey: StorageKeys.automaticPushSubsriptionReportingEnabled.rawValue
+        )
+        storage.setValue(
+            configuration.isAutomaticSessionReportingEnabled,
+            forKey: StorageKeys.automaticSessionReportingEnabled.rawValue
+        )
     }
     
     // MARK: Events logic

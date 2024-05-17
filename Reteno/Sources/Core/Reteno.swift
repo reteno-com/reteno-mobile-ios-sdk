@@ -14,7 +14,7 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     /// SDK version
-    static var version = "2.0.3"
+    static var version = "2.0.4"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -25,6 +25,27 @@ public struct Reteno {
     static let senderScheduler = EventsSenderSchedulerBuilder.build()
     
     private init() {}
+    
+    /// SDK initialization
+    /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
+    /// - Parameter configs: Flag that indicates if automatic screen view tracking enabled
+    @available(iOSApplicationExtension, unavailable)
+    public static func start(apiKey: String, configuration: RetenoConfiguration = RetenoConfiguration()) {
+        DeviceIdHelper.actualizeDeviceId()
+        ApiKeyHelper.setApiKey(apiKey)
+        DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
+        let storage = StorageBuilder.build()
+        storage.setAnalyticsValues(configuration: configuration)
+        analyticsService = AnalyticsServiceBuilder.build(
+            isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
+            isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled
+        )
+        senderScheduler.subscribeOnNotifications()
+        userNotificationService.setNotificationCenterDelegate()
+        inApps.subscribeOnNotifications()
+        pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
+        setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
+    }
     
     /// SDK initialization
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
@@ -39,17 +60,13 @@ public struct Reteno {
         isPausedInAppMessages: Bool = false,
         inAppMessagesPauseBehaviour: PauseBehaviour = .postponeInApps
     ) {
-        DeviceIdHelper.actualizeDeviceId()
-        ApiKeyHelper.setApiKey(apiKey)
-        DebugModeHelper.setIsDebugModeOn(isDebugMode)
-        let storage = StorageBuilder.build()
-        storage.set(value: isAutomaticScreenReportingEnabled, forKey: StorageKeys.screenTrackingFlag.rawValue)
-        analyticsService = AnalyticsServiceBuilder.build(isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled)
-        senderScheduler.subscribeOnNotifications()
-        userNotificationService.setNotificationCenterDelegate()
-        inApps.subscribeOnNotifications()
-        pauseInAppMessages(isPaused: isPausedInAppMessages)
-        setInAppMessagesPauseBehaviour(pauseBehaviour: inAppMessagesPauseBehaviour)
+        let configuration: RetenoConfiguration = .init(
+            isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled,
+            isPausedInAppMessages: isPausedInAppMessages,
+            inAppMessagesPauseBehaviour: inAppMessagesPauseBehaviour,
+            isDebugMode: isDebugMode
+        )
+        start(apiKey: apiKey, configuration: configuration)
     }
     
     /// Log events
@@ -61,8 +78,11 @@ public struct Reteno {
         if analyticsService.isNone {
             /// Check and initialize `AnalyticsService`. It might be `nil` if is being called from app extension.
             let storage = StorageBuilder.build()
+            let isAutomaticScreenReportingEnabled: Bool = storage.getValue(forKey: StorageKeys.screenTrackingFlag.rawValue)
+            let isAutomaticAppLifecycleReportingEnabled: Bool = storage.getValue(forKey: StorageKeys.automaticAppLifecycleReportingEnabled.rawValue)
             analyticsService = AnalyticsService(
-                isAutomaticScreenReportingEnabled: storage.getValue(forKey: StorageKeys.screenTrackingFlag.rawValue),
+                isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled,
+                isAutomaticAppLifecycleReportingEnabled: isAutomaticAppLifecycleReportingEnabled,
                 storage: storage
             )
         }

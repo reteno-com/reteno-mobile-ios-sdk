@@ -17,10 +17,21 @@ struct AnalyticsService {
     private let isAutomaticScreenReportingEnabled: Bool
     /// Local storage, based on `UserDefaults`
     private let storage: KeyValueStorage
+    private let lifecycleAnalyticsService: AppLifecycleAnalyticsSevice?
     
-    init(isAutomaticScreenReportingEnabled: Bool, storage: KeyValueStorage = StorageBuilder.build()) {
+    init(
+        isAutomaticScreenReportingEnabled: Bool,
+        isAutomaticAppLifecycleReportingEnabled: Bool,
+        storage: KeyValueStorage = StorageBuilder.build()
+    ) {
         self.isAutomaticScreenReportingEnabled = isAutomaticScreenReportingEnabled
         self.storage = storage
+        if isAutomaticAppLifecycleReportingEnabled {
+            self.lifecycleAnalyticsService = AppLifecycleAnalyticsSevice()
+            self.lifecycleAnalyticsService?.subscribeOnNotifications()
+        } else {
+            self.lifecycleAnalyticsService = nil
+        }
         
         if isAutomaticScreenReportingEnabled {
             startSwizzling()

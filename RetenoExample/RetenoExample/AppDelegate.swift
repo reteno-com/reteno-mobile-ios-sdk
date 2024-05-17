@@ -36,7 +36,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         
-        Reteno.start(apiKey: "SDK_API_KEY", isDebugMode: true)
+        let configuration: RetenoConfiguration = .init(isAutomaticAppLifecycleReportingEnabled: true, isDebugMode: true)
+        Reteno.start(apiKey: "SDK_API_KEY", configuration: configuration)
+        
         Reteno.userNotificationService.willPresentNotificationHandler = { [weak self] notification in
             let alert = InformationAlert(text: "Will present notification:\n\(notification.request.content.userInfo)")
             self?.window?.showInformationAlert(alert)

@@ -434,6 +434,21 @@ final class EventsSenderScheduler {
         )
     }
     
+    // MARK: Push subscription event
+    
+    private func sendPushSubscriptionEventIfNeeded(isSubscribed: Bool) {
+        let isPushNotificationEventReportingEnabled: Bool = storage.getValue(forKey: StorageKeys.automaticPushSubsriptionReportingEnabled.rawValue)
+        guard isPushNotificationEventReportingEnabled,
+            isSubscribed != RetenoNotificationsHelper.isPushSubscribed() else {
+            return
+        }
+        let subscribedKey = "PushNotificationsSubscribed"
+        let unsubscribedKey = "PushNotificationsUnsubscribed"
+        let eventTypeKey = isSubscribed ? subscribedKey : unsubscribedKey
+        
+        Reteno.logEvent(eventTypeKey: eventTypeKey, parameters: [])
+    }
+    
     // MARK: Handle notifications
     
     @objc
@@ -451,6 +466,7 @@ final class EventsSenderScheduler {
     @objc
     private func handleApplicationDidBecomeActiveNotification(_ notification: Notification) {
         RetenoNotificationsHelper.isSubscribedOnNotifications { [weak self] isSubscribed in
+            self?.sendPushSubscriptionEventIfNeeded(isSubscribed: isSubscribed)
             StorageBuilder.build().set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
             self?.upsertDevice(Device(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed))
         }

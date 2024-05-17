@@ -8,18 +8,19 @@
 import UIKit
 import Foundation
 
-fileprivate let sessionStartedKey = "SessionStarted"
-fileprivate let startDateKey = "startDate"
-fileprivate let sessionIdKey = "sessionId"
-
 final class SessionService {
-    
+
     private let storage = StorageBuilder.build()
+    private let isSessionEventReportingEnabled: Bool
     
     private var timeInApp: Int = 0
     var timeSpendInApp: ((Int) -> Void)?
     
     private var sesionTimer: Timer?
+    
+    init() {
+        self.isSessionEventReportingEnabled = storage.getValue(forKey: StorageKeys.automaticSessionReportingEnabled.rawValue)
+    }
     
     // MARK: Session duration timer
     
@@ -81,6 +82,7 @@ final class SessionService {
         
         let date = Date(timeIntervalSince1970: lastActivityDate)
         if Date().minutes(from: date) >= 5 {
+            self.sendEndSessionEventIfNeeded()
             self.startSession()
         }
         setLastActivityDate()
@@ -90,24 +92,73 @@ final class SessionService {
         storage.clearOncePerSessionEvents()
         storage.clearNoLimitEvents()
         storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
+        
+        sendStartSessionEventIfNeeded()
+    }
+    
+    private func sendStartSessionEventIfNeeded() {
+        guard isSessionEventReportingEnabled else { return }
+        
+        storage.set(value: 0, forKey: StorageKeys.applicationOpenedCount.rawValue)
+        storage.set(value: 0, forKey: StorageKeys.applicationBackgroundedCount.rawValue)
 
         let sessionId = UUID().uuidString
         let startDate = DateFormatter.baseBEDateFormatter.string(from: Date())
         storage.set(value: sessionId, forKey: StorageKeys.sessionId.rawValue)
 
         Reteno.logEvent(
-            eventTypeKey: sessionStartedKey,
+            eventTypeKey: SessionKeys.sessionStartedKey.rawValue,
             parameters: [
-                .init(name: startDateKey, value: startDate),
-                .init(name: sessionIdKey, value: sessionId)
+                .init(name: SessionKeys.startDateKey.rawValue, value: startDate),
+                .init(name: SessionKeys.sessionIdKey.rawValue, value: sessionId)
             ]
         )
+    }
+    
+    private func sendEndSessionEventIfNeeded() {
+        guard isSessionEventReportingEnabled,
+              let sessionId: String = storage.getValue(forKey: StorageKeys.sessionId.rawValue),
+              let lastActivityTimestamp: Double = storage.getValue(forKey: StorageKeys.lastActivityDate.rawValue)
+        else {
+            return
+        }
+        
+        let endDate = Date(timeIntervalSince1970: lastActivityTimestamp).addingTimeInterval(5*60)
+        let endDateString = DateFormatter.baseBEDateFormatter.string(from: endDate)
+        let duration = String(storage.getValue(forKey: StorageKeys.sessionDuration.rawValue))
+        let openedEventCount = String(storage.getValue(forKey: StorageKeys.applicationOpenedCount.rawValue) ?? 0)
+        let backgroundedEventCount = String(storage.getValue(forKey: StorageKeys.applicationBackgroundedCount.rawValue) ?? 0)
+
+        
+        Reteno.logEvent(
+            eventTypeKey: SessionKeys.sessionEndedKey.rawValue,
+            parameters: [
+                .init(name: SessionKeys.endDateKey.rawValue, value: endDateString),
+                .init(name: SessionKeys.sessionIdKey.rawValue, value: sessionId),
+                .init(name: SessionKeys.durationInSecondsKey.rawValue, value: duration),
+                .init(name: SessionKeys.openedCountKey.rawValue, value: openedEventCount),
+                .init(name: SessionKeys.backgroundedCount.rawValue, value: backgroundedEventCount)
+            ]
+        )
+    }
+    
+    // MARK: Application open counted event
+    
+    private func updateApplicationOpenedEventCount() {
+        let count: Int = storage.getValue(forKey: StorageKeys.applicationOpenedCount.rawValue) ?? 0
+        storage.set(value: count + 1, forKey: StorageKeys.applicationOpenedCount.rawValue)
+    }
+    
+    private func updateApplicationBackgorundedEventCount() {
+        let count: Int = storage.getValue(forKey: StorageKeys.applicationBackgroundedCount.rawValue) ?? 0
+        storage.set(value: count + 1, forKey: StorageKeys.applicationBackgroundedCount.rawValue)
     }
     
     // MARK: Handle notifications
     
     @objc
     private func handleApplicationDidBecomeActiveNotification(_ notification: Notification) {
+        updateApplicationOpenedEventCount()
         checkForActiveSession()
         sessionDurationTimer()
     }
@@ -120,7 +171,19 @@ final class SessionService {
 
     @objc
     private func handleApplicationDidEnterBackgroundNotification(_ notification: Notification) {
+        updateApplicationBackgorundedEventCount()
         setLastActivityDate()
         invalidateTimer()
     }
+}
+
+fileprivate enum SessionKeys: String {
+    case sessionStartedKey = "SessionStarted"
+    case sessionEndedKey = "SessionEnded"
+    case sessionIdKey = "sessionId"
+    case startDateKey = "startTime"
+    case endDateKey = "endTime"
+    case durationInSecondsKey = "durationInSeconds"
+    case openedCountKey = "applicationOpenedCount"
+    case backgroundedCount = "applicationBackgroundedCount"
 }

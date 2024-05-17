@@ -15,10 +15,12 @@ final class AnalyticsServiceTests: XCTestCase {
     private var sut: AnalyticsService!
     private var storage: KeyValueStorage!
     private var userDefaults: UserDefaults!
+    private var notificationCenter: NotificationCenter!
     
     override func setUp() {
         userDefaults = UserDefaults(suiteName: "unit_tests")
         storage = KeyValueStorage(storage: userDefaults)
+        notificationCenter = NotificationCenter.default
     }
     
     override func tearDown() {
@@ -27,7 +29,7 @@ final class AnalyticsServiceTests: XCTestCase {
         sut = nil
     }
     
-    func test_controllerViewDidAppearMethod_sendEvent() throws {
+    func test_AppControllerViewDidAppearMethod_sendEvent() {
         setupService(isAutomaticScreenReportingEnabled: true)
         let viewController = AppInboxViewController(viewModel: AppInboxViewModel(model: AppInboxModel()))
         viewController.viewDidAppear(true)
@@ -51,10 +53,61 @@ final class AnalyticsServiceTests: XCTestCase {
         XCTAssertTrue(events.isEmpty, "shouldn't be tracked")
     }
         
+    func test_appOpened_sendEvent() {
+        setupService(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true)
+        notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        let events = storage.getEvents().filter { $0.eventTypeKey == "ApplicationOpened" }
+        XCTAssertTrue(events.isNotEmpty, "event should exist")
+    }
+    
+    func test_appOpenedDisabledEvent_sendEvent() {
+        setupService(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: false)
+        notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        let events = storage.getEvents().filter { $0.eventTypeKey == "ApplicationOpened" }
+        XCTAssertTrue(events.isEmpty, "event should exist")
+    }
+    
+    func test_appBackgrounded_sendEvent() {
+        setupService(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true)
+        // Application can't be beckgrounded without become active
+        notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        notificationCenter.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        let events = storage.getEvents().filter { $0.eventTypeKey == "ApplicationBackgrounded" }
+        XCTAssertTrue(events.isNotEmpty, "event should exist")
+    }
+    
+    func test_appBackgroundedDisabledEvent_sendEvent() {
+        setupService(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: false)
+        notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        notificationCenter.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        let events = storage.getEvents().filter { $0.eventTypeKey == "ApplicationBackgrounded" }
+        XCTAssertTrue(events.isEmpty, "event should exist")
+    }
+    
+    func test_appLifeCycle_sendEvent() {
+        setupService(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true)
+        notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        notificationCenter.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        let events = storage.getEvents().filter { $0.eventTypeKey == "ApplicationBackgrounded" || $0.eventTypeKey == "ApplicationOpened" }
+        XCTAssertTrue(events.isNotEmpty, "event should exist")
+    }
+    
     // MARK: - Helpers
     
-    private func setupService(isAutomaticScreenReportingEnabled isEnabled: Bool) {
-        sut = AnalyticsService(isAutomaticScreenReportingEnabled: isEnabled, storage: storage)
+    private func setupService(
+        isAutomaticScreenReportingEnabled: Bool = false,
+        isAutomaticAppLifecycleReportingEnabled: Bool = false
+    ) {
+        sut = AnalyticsService(
+            isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled,
+            isAutomaticAppLifecycleReportingEnabled: isAutomaticAppLifecycleReportingEnabled,
+            storage: storage
+        )
         Reteno.analyticsService = sut
     }
 
