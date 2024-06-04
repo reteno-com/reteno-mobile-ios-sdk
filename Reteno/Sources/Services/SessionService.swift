@@ -125,7 +125,8 @@ final class SessionService {
         
         let endDate = Date(timeIntervalSince1970: lastActivityTimestamp).addingTimeInterval(5*60)
         let endDateString = DateFormatter.baseBEDateFormatter.string(from: endDate)
-        let duration = String(storage.getValue(forKey: StorageKeys.sessionDuration.rawValue))
+        let duration = Int(storage.getValue(forKey: StorageKeys.sessionDuration.rawValue) ?? 0)
+        let durationString = String(duration)
         let openedEventCount = String(storage.getValue(forKey: StorageKeys.applicationOpenedCount.rawValue) ?? 0)
         let backgroundedEventCount = String(storage.getValue(forKey: StorageKeys.applicationBackgroundedCount.rawValue) ?? 0)
 
@@ -135,7 +136,7 @@ final class SessionService {
             parameters: [
                 .init(name: SessionKeys.endDateKey.rawValue, value: endDateString),
                 .init(name: SessionKeys.sessionIdKey.rawValue, value: sessionId),
-                .init(name: SessionKeys.durationInSecondsKey.rawValue, value: duration),
+                .init(name: SessionKeys.durationInSecondsKey.rawValue, value: durationString),
                 .init(name: SessionKeys.openedCountKey.rawValue, value: openedEventCount),
                 .init(name: SessionKeys.backgroundedCount.rawValue, value: backgroundedEventCount)
             ]
@@ -180,7 +181,7 @@ final class SessionService {
 fileprivate enum SessionKeys: String {
     case sessionStartedKey = "SessionStarted"
     case sessionEndedKey = "SessionEnded"
-    case sessionIdKey = "sessionId"
+    case sessionIdKey = "sessionID"
     case startDateKey = "startTime"
     case endDateKey = "endTime"
     case durationInSecondsKey = "durationInSeconds"
