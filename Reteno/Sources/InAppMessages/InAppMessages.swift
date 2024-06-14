@@ -111,6 +111,10 @@ final class InAppMessages {
         inAppMessagesPauseBehaviour = pauseBehaviour
     }
     
+    func checkSegments() {
+        self.inAppService.checkAsyncRulesSegment()
+    }
+    
     private func inAppPresentersSelections () {
         sessionService.timeSpendInApp = { [weak self] time in
             guard let self = self else { return }
