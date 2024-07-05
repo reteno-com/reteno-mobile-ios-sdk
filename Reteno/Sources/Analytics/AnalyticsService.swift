@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import UserNotifications
 
 public let ScreenViewEvent = "screenView"
 public let ScreenClass = "screenClass"
@@ -36,6 +37,7 @@ struct AnalyticsService {
         if isAutomaticScreenReportingEnabled {
             startSwizzling()
         }
+        UNUserNotificationCenter.swizzleRequestAuthorizationMethod()
     }
     
     /// Log events

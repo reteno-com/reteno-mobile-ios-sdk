@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FC08B43D5D39F70DEECB099 /* Pods_RetenoExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F50B28825570AAEC8CB350 /* Pods_RetenoExample.framework */; };
 		13693E116F15DF1BD798D197 /* Pods_RetenoExample_NotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9DDF2CDA22128B9EE3FB51 /* Pods_RetenoExample_NotificationServiceExtension.framework */; };
 		16B2B2653254B4CBD33F6BC4 /* Pods_RetenoExample_NotificationContentExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E9BB39873FA2BF8C7D1E55 /* Pods_RetenoExample_NotificationContentExtension.framework */; };
 		181BFDB6290073E0007C5422 /* OptionalExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BFDB5290073E0007C5422 /* OptionalExtensionsTests.swift */; };
@@ -72,7 +73,6 @@
 		8DAF38902BA077D400C2D1F4 /* in_app_messages_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DAF388E2BA077D400C2D1F4 /* in_app_messages_valid.json */; };
 		8DAF38912BA077D400C2D1F4 /* in_app_contents_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DAF388F2BA077D400C2D1F4 /* in_app_contents_valid.json */; };
 		8DAF38952BA1D9D100C2D1F4 /* in_apps_async.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DAF38942BA1D9D100C2D1F4 /* in_apps_async.json */; };
-		A594AB78EF395FB93C3812D1 /* Pods_RetenoExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F50B28825570AAEC8CB350 /* Pods_RetenoExample.framework */; };
 		B51AF01D290E924100D723CD /* MessageCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AF01C290E924100D723CD /* MessageCountTests.swift */; };
 		B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1228DA808C0014ED15 /* MainModel.swift */; };
 		B52C7C1528DA80D10014ED15 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1428DA80D10014ED15 /* MainViewModel.swift */; };
@@ -397,7 +397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5F91E3C290972AE00EA5FBA /* Kingfisher in Frameworks */,
-				A594AB78EF395FB93C3812D1 /* Pods_RetenoExample.framework in Frameworks */,
+				0FC08B43D5D39F70DEECB099 /* Pods_RetenoExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
