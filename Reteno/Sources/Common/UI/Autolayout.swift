@@ -281,7 +281,7 @@ func >=<D: LayoutDimension>(lhs: LayoutAttribute<D>, rhs: CGFloat) -> NSLayoutCo
 extension UIView {
     
     private struct AssociatedKeys {
-        static var layout = "layout"
+        static var layout: Void?
     }
     
     var layout: Layout {

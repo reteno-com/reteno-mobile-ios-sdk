@@ -32,9 +32,14 @@ final class InAppMessageWebViewController: UIViewController {
         self.inAppService = inAppService
         
         let preferences = WKPreferences()
-        preferences.javaScriptEnabled = true
         let configuration = WKWebViewConfiguration()
+        if #available(iOS 14.0, *) {
+            configuration.defaultWebpagePreferences.allowsContentJavaScript = true
+        } else {
+            preferences.javaScriptEnabled = true
+        }
         configuration.preferences = preferences
+
         webView = WKWebView(frame: CGRect.zero, configuration: configuration)
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = .clear

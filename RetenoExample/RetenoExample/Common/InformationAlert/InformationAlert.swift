@@ -8,14 +8,39 @@
 
 import UIKit
 import SnapKit
+import Reteno
+
+extension LinkSource {
+    
+    var toBackground: InformationAlert.BackgroundType {
+        switch self {
+        case .inAppMessage: return .inApp
+        case .pushNotification: return .push
+        }
+    }
+}
 
 final class InformationAlert: UIView {
     
+    enum BackgroundType {
+        case push
+        case inApp
+        
+        var color: UIColor {
+            switch self {
+            case .inApp: return UIColor.cyan
+            case .push: return UIColor.orange
+            }
+        }
+        
+    }
+    
     private let label = UILabel()
     
-    init(text: String) {
+    init(text: String, backgroundType: BackgroundType) {
         super.init(frame: .zero)
         
+        backgroundColor = backgroundType.color
         setupLayout(text: text)
     }
     
@@ -30,7 +55,6 @@ final class InformationAlert: UIView {
 private extension InformationAlert {
     
     func setupLayout(text: String) {
-        backgroundColor = .lightGray
         addSubview(label)
         
         label.snp.makeConstraints {

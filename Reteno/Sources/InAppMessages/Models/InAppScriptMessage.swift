@@ -52,7 +52,7 @@ struct InAppScriptMessage: Decodable {
 
 struct InAppScriptMessageURLPayload: Decodable, InAppScriptMessagePayload {
     
-    let urlString: String
+    let urlString: String?
     let targetComponentId: String?
     let customData: [String: Any]?
     
@@ -62,7 +62,7 @@ struct InAppScriptMessageURLPayload: Decodable, InAppScriptMessagePayload {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.urlString = try container.decode(String.self, forKey: .urlString)
+        self.urlString = try? container.decode(String.self, forKey: .urlString)
         self.targetComponentId = try? container.decode(String.self, forKey: .targetComponentId)
         self.customData = try? container.decode([String:Any].self, forKey: .customData)
     }

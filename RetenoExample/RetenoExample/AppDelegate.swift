@@ -37,10 +37,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         Messaging.messaging().delegate = self
                 
         let configuration: RetenoConfiguration = .init(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true, isDebugMode: true)
-        Reteno.start(apiKey: "SDK_API_KEY", configuration: configuration)
+        Reteno.start(apiKey: "630A66AF-C1D3-4F2A-ACC1-0D51C38D2B05", configuration: configuration)
         
         Reteno.userNotificationService.willPresentNotificationHandler = { [weak self] notification in
-            let alert = InformationAlert(text: "Will present notification:\n\(notification.request.content.userInfo)")
+            let alert = InformationAlert(
+                text: "Will present notification:\n\(notification.request.content.userInfo)",
+                backgroundType: .push
+            )
             self?.window?.showInformationAlert(alert)
             
             let authOptions: UNNotificationPresentationOptions
@@ -63,40 +66,59 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 print(response.actionIdentifier)
             }
             
-            let alert = InformationAlert(text: "Received response - \(response.actionIdentifier)")
+            let alert = InformationAlert(
+                text: "Received response - \(response.actionIdentifier)",
+                backgroundType: .push
+            )
             self?.window?.showInformationAlert(alert)
         }
         Reteno.userNotificationService.notificationActionHandler = { [weak self] userInfo, action in
             let customDataText = action.customData.flatMap { "\nWith custom data: - \($0)" } ?? ""
-            let alert = InformationAlert(text: "Received action - \(action.actionId)\(customDataText)")
+            let alert = InformationAlert(
+                text: "Received action - \(action.actionId)\(customDataText)",
+                backgroundType: .push
+            )
             self?.window?.showInformationAlert(alert)
         }
         
         Reteno.addLinkHandler { [weak self] linkInfo in
             guard
-                let components = URLComponents(url: linkInfo.url, resolvingAgainstBaseURL: true),
+                let url = linkInfo.url,
+                let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
                 components.host == "example-app.esclick.me",
                 let linkItem = UniversalLinkItem(rawValue: components.path)
             else {
-                let fromInApps = linkInfo.source == .inAppMessage
-                let fromPush = linkInfo.source == .pushNotification
-                
                 if linkInfo.customData != nil {
-                    let customDataText = linkInfo.customData.flatMap { "\nWith custom data: - \($0)" } ?? ""
-                    let alert = InformationAlert(text: "Received data - \(customDataText), fromPush: \(fromPush), fromInApp: \(fromInApps)")
+                    var customDataText = linkInfo.customData.flatMap { "\nWith custom data: - \($0)" } ?? ""
+                    switch linkInfo.source {
+                    case .inAppMessage:
+                        customDataText += " - inApp"
+                    case .pushNotification:
+                        customDataText += " - push"
+                    }
+                    let urlString = linkInfo.url?.absoluteString ?? "null"
+                    let alert = InformationAlert(
+                        text: "Url: \(urlString),\nReceived data - \(customDataText)",
+                        backgroundType: linkInfo.source.toBackground
+                    )
                     self?.window?.showInformationAlert(alert)
                 }
-                // if it's not a deep link, just open Safari
-                application.open(linkInfo.url)
+                
+                if let url = linkInfo.url {
+                    // delay for see response alert on device (used for testing)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        // if it's not a deep link, just open Safari
+                        application.open(url)
+                    }
+                }
+
                 return
             }
-            
-          
-                        
+ 
             self?.applicationFlowCoordinator.handleUniversalLink(linkItem)
         }
         
-        Reteno.addInAppStatusHandler { [weak self] inAppMessageStatus in
+        Reteno.addInAppStatusHandler { inAppMessageStatus in
             switch inAppMessageStatus {
             case .inAppShouldBeDisplayed:
                 print("inAppShouldBeDisplayed")
