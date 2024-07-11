@@ -438,18 +438,21 @@ extension InAppMessages: InAppScriptMessageHandler {
             let action: InAppMessageAction = .init(isOpenUrlClicked: true)
             Reteno.inAppStatusHander?(.inAppShouldBeClosed(action: action))
             dismissInAppMessage(action: action)
-            if let payload = scriptMessage.payload as? InAppScriptMessageURLPayload,
-               let url = URL(string: payload.urlString) {
-                handleInteraction(
-                    messageId: currentInteractionId ?? message.id,
-                    action: .init(
-                        type: scriptMessage.type.rawValue,
-                        targetComponentId: payload.targetComponentId,
-                        url: payload.urlString
-                    )
+            let payload = scriptMessage.payload as? InAppScriptMessageURLPayload
+            handleInteraction(
+                messageId: currentInteractionId ?? message.id,
+                action: .init(
+                    type: scriptMessage.type.rawValue,
+                    targetComponentId: payload?.targetComponentId,
+                    url: payload?.urlString
                 )
-                DeepLinksProcessor.processLinks(wrappedUrl: nil, rawURL: url, customData: payload.customData, isInAppMessageLink: true)
-            }
+            )
+            DeepLinksProcessor.processLinks(
+                wrappedUrl: nil,
+                rawURL: payload?.urlString.flatMap { URL(string: $0) },
+                customData: payload?.customData,
+                isInAppMessageLink: true
+            )
             
         case .click:
             let action: InAppMessageAction = .init(isButtonClicked: true)

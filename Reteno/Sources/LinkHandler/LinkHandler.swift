@@ -8,7 +8,7 @@
 import Foundation
 
 public struct LinkHandler {
-    public let url: URL
+    public let url: URL?
     public let customData: [String: Any]?
     public let source: LinkSource
 }

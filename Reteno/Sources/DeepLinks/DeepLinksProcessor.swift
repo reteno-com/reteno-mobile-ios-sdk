@@ -18,19 +18,39 @@ struct DeepLinksProcessor {
         storage: KeyValueStorage = StorageBuilder.build(),
         scheduler: EventsSenderScheduler = Reteno.senderScheduler
     ) {
-        guard let url = rawURL else { return }
-        
         if let wrappedUrl = wrappedUrl {
             storage.appendLink(StorableLink(value: wrappedUrl.absoluteString, date: Date()))
             scheduler.forcePushEvents()
         }
         let linkInfo: LinkHandler = .init(
-            url: url,
+            url: rawURL,
             customData: customData,
             source: isInAppMessageLink ? .inAppMessage : .pushNotification
         )
         
-        Reteno.linkHandler?(linkInfo) ?? UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if let linkHandler = Reteno.linkHandler {
+            linkHandler(linkInfo)
+        } else {
+            Self.openIfAvalable(rawURL)
+        }
     }
     
+    @available(iOSApplicationExtension, unavailable)
+    private static func openIfAvalable(
+        _ url: URL?
+    ) {
+        if let url = url,
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(
+                url,
+                options: [:],
+                completionHandler: nil
+            )
+        } else {
+            Logger.log(
+                "`Reteno.linkHandler` hasn't implemented, parameter: rawURL is empty, event can NOT be handled",
+                eventType: .warning
+            )
+        }
+    }
 }

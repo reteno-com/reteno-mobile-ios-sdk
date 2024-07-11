@@ -34,7 +34,7 @@ extension UIWindow {
             alert.layoutIfNeeded()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             UIView.animate(withDuration: 0.5, animations: hideAnimation) { [weak alert] _ in
                 alert?.removeFromSuperview()
             }
