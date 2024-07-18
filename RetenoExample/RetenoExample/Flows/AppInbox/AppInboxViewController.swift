@@ -132,7 +132,8 @@ extension AppInboxViewController: UITableViewDataSource, UITableViewDelegate {
                 date: message.createdDate,
                 imageURL: message.imageURL,
                 linkURL: message.linkURL,
-                isOpened: !message.isNew
+                isOpened: !message.isNew,
+                customData: message.customData
             )
         )
         (cell as? AppInboxMessageCell)?.delegate = self

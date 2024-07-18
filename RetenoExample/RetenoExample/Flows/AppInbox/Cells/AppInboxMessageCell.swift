@@ -25,6 +25,7 @@ final class AppInboxMessageCell: UITableViewCell {
         let imageURL: URL?
         let linkURL: URL?
         let isOpened: Bool
+        let customData: [String: Any]?
         
     }
     
@@ -35,6 +36,7 @@ final class AppInboxMessageCell: UITableViewCell {
     private let contentLabel = UILabel()
     private let dateLabel = UILabel()
     private let statusView = UIView()
+    private let customData = UILabel()
     private let actionButton = UIButton()
     
     // MARK: Init
@@ -65,6 +67,9 @@ final class AppInboxMessageCell: UITableViewCell {
         dateLabel.text = messageInfo.date.flatMap { DateFormatter.baseDateFormatter.string(from: $0) }
         accessoryType = messageInfo.linkURL != nil ? .disclosureIndicator : .none
         actionButton.isHidden = messageInfo.isOpened
+        customData.text = messageInfo.customData?.reduce(into: "", { partialResult, dict in
+            partialResult += "key: \(dict.key), value: \(dict.value)\n"
+        })
         messageImageView.kf.setImage(with: messageInfo.imageURL)
     }
     
@@ -108,6 +113,13 @@ final class AppInboxMessageCell: UITableViewCell {
         contentLabel.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(8.0)
             $0.leading.trailing.equalTo(titleLabel)
+        }
+        contentView.addSubview(customData)
+        customData.font = UIFont.systemFont(ofSize: 10.0)
+        customData.numberOfLines = 0
+        customData.snp.makeConstraints {
+            $0.top.equalTo(contentLabel.snp.bottom).offset(6.0)
+            $0.leading.equalTo(messageImageView.snp.trailing).offset(4.0)
             $0.bottom.lessThanOrEqualToSuperview().offset(-16.0)
         }
         
@@ -119,7 +131,7 @@ final class AppInboxMessageCell: UITableViewCell {
         actionButton.addTarget(self, action: #selector(handleActionButton), for: .touchUpInside)
         contentView.addSubview(actionButton)
         actionButton.snp.makeConstraints {
-            $0.top.equalTo(contentLabel.snp.bottom).offset(8.0)
+            $0.top.equalTo(customData.snp.bottom).offset(8.0)
             $0.leading.trailing.equalToSuperview().inset(16.0)
             $0.height.equalTo(40.0)
             $0.bottom.equalToSuperview().offset(-16.0)
