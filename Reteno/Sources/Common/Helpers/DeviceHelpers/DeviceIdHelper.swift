@@ -22,7 +22,13 @@ struct DeviceIdHelper {
         storage.set(value: id.uuidString, forKey: StorageKeys.deviceId.rawValue)
         RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
             storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
-            Reteno.upsertDevice(Device(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed))
+            let device = Device(
+                externalUserId: ExternalUserIdHelper.getId(),
+                phone: ExternalUserDataHelper.getPhone(),
+                email: ExternalUserDataHelper.getEmail(),
+                isSubscribedOnPush: isSubscribed
+            )
+            Reteno.upsertDevice(device)
         }
     }
     

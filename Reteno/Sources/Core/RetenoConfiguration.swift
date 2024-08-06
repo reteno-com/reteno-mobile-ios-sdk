@@ -54,3 +54,5 @@ public struct RetenoConfiguration {
         self.isDebugMode = isDebugMode
     }
 }
+
+extension RetenoConfiguration: Codable {}

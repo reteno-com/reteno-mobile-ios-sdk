@@ -61,6 +61,8 @@ final class SendUserOperation: DateOperation {
 
             let infoDeviceRequest = requestService.isEqualDeviceRequest(
                 externalUserId: externalUserId,
+                email: user.userAttributes?.email,
+                phone: user.userAttributes?.phone,
                 isSubscribedOnPush: RetenoNotificationsHelper.isPushSubscribed(),
                 cachedRequestParams: storage.getCachedDevice()
             )
@@ -69,6 +71,8 @@ final class SendUserOperation: DateOperation {
             } else {
                 requestService.upsertDevice(
                     externalUserId: externalUserId,
+                    email: user.userAttributes?.email,
+                    phone: user.userAttributes?.phone,
                     isSubscribedOnPush: RetenoNotificationsHelper.isPushSubscribed()
                 ) { [weak self] result in
                     guard let self = self else { return }

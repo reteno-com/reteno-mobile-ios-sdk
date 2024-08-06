@@ -289,6 +289,8 @@ final class EventsSenderScheduler {
             upsertDevice(
                 Device(
                     externalUserId: ExternalUserIdHelper.getId(),
+                    phone: ExternalUserDataHelper.getPhone(),
+                    email: ExternalUserDataHelper.getEmail(),
                     isSubscribedOnPush: RetenoNotificationsHelper.isPushSubscribed()
                 )
             )
@@ -479,7 +481,13 @@ final class EventsSenderScheduler {
         RetenoNotificationsHelper.isSubscribedOnNotifications { [weak self] isSubscribed in
             self?.sendPushSubscriptionEvent(isSubscribed: isSubscribed)
             StorageBuilder.build().set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
-            self?.upsertDevice(Device(externalUserId: ExternalUserIdHelper.getId(), isSubscribedOnPush: isSubscribed))
+            let device = Device(
+                externalUserId: ExternalUserIdHelper.getId(),
+                phone: ExternalUserDataHelper.getPhone(),
+                email: ExternalUserDataHelper.getEmail(),
+                isSubscribedOnPush: isSubscribed
+            )
+            self?.upsertDevice(device)
         }
     }
 }

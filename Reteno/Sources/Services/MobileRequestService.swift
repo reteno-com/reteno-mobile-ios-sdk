@@ -18,6 +18,8 @@ final class MobileRequestService {
     
     func upsertDevice(
         externalUserId: String? = nil,
+        email: String?,
+        phone: String?,
         isSubscribedOnPush: Bool,
         completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
     ) {
@@ -29,7 +31,9 @@ final class MobileRequestService {
             languageCode: languageCode,
             pushToken: pushToken,
             isSubscribedOnPush: isSubscribedOnPush,
-            externalUserId: externalUserId
+            externalUserId: externalUserId,
+            email: email,
+            phone: phone
         )
         let handler = EmptyResponseHandler()
         
@@ -40,6 +44,8 @@ final class MobileRequestService {
     
     func isEqualDeviceRequest(
         externalUserId: String? = nil,
+        email: String?,
+        phone: String?,
         isSubscribedOnPush: Bool,
         cachedRequestParams: [String: Any]?
     ) -> (isEqual: Bool, paramsToSave: [String: Any]?) {
@@ -51,7 +57,9 @@ final class MobileRequestService {
             languageCode: languageCode,
             pushToken: pushToken,
             isSubscribedOnPush: isSubscribedOnPush,
-            externalUserId: externalUserId
+            externalUserId: externalUserId,
+            email: email,
+            phone: phone
         )
         guard let newParams = request.parameters, let cached = cachedRequestParams else {
             return (false, nil)

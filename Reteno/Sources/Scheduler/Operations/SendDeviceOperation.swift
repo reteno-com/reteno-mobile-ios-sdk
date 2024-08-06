@@ -41,6 +41,8 @@ final class SendDeviceOperation: DateOperation {
         
         requestService.upsertDevice(
             externalUserId: device.externalUserId,
+            email: device.email,
+            phone: device.phone,
             isSubscribedOnPush: device.isSubscribedOnPush
         ) { [weak self] result in
             guard let self = self else { return }

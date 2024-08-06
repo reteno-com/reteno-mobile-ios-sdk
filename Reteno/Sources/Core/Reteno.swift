@@ -13,8 +13,10 @@ public struct Reteno {
     @available(iOSApplicationExtension, unavailable)
     public static let userNotificationService = UserNotificationService.shared
     
+    static let senderScheduler = EventsSenderSchedulerBuilder.build()
+
     /// SDK version
-    static var version = "2.0.9"
+    static var version = "2.0.10"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -22,8 +24,9 @@ public struct Reteno {
     static var linkHandler: ((LinkHandler) -> Void)?
     static var inAppStatusHander: ((InAppMessageStatus) -> Void)?
     static var analyticsService: AnalyticsService!
-    static let senderScheduler = EventsSenderSchedulerBuilder.build()
-    
+    static var storage: KeyValueStorage!
+    static var isInitialized: Bool = false
+        
     private init() {}
     
     /// SDK initialization
@@ -31,10 +34,16 @@ public struct Reteno {
     /// - Parameter configs: Flag that indicates if automatic screen view tracking enabled
     @available(iOSApplicationExtension, unavailable)
     public static func start(apiKey: String, configuration: RetenoConfiguration = RetenoConfiguration()) {
+        guard !isInitialized else {
+            Logger.log("RetenoSDK was already initialized, skipping", eventType: .error)
+            return
+        }
+        
         DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
         DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
-        let storage = StorageBuilder.build()
+        storage = storage ?? StorageBuilder.build()
+        storage.set(isDelayedInitialization: false)
         storage.setAnalyticsValues(configuration: configuration)
         analyticsService = AnalyticsServiceBuilder.build(
             isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
@@ -45,6 +54,46 @@ public struct Reteno {
         inApps.subscribeOnNotifications()
         pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
         setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
+        isInitialized = true
+    }
+    
+    /// SDK delayed initialization
+    @available(iOSApplicationExtension, unavailable)
+    public static func delayedStart() {
+        storage = storage ?? StorageBuilder.build()
+        storage.set(isDelayedInitialization: true)
+        userNotificationService.setNotificationCenterDelegate()
+    }
+    
+    /// SDK delayed  initialization (can be called only after Reteno.delayedStart(configuration:))
+    /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
+    @available(iOSApplicationExtension, unavailable)
+    public static func delayedSetup(apiKey: String, configuration: RetenoConfiguration = RetenoConfiguration()) {
+        guard !isInitialized else {
+            Logger.log("RetenoSDK was already initialized, skipping", eventType: .error)
+            return
+        }
+        
+        storage = storage ?? StorageBuilder.build()
+
+        guard storage.getIsDelayedInitialization() == true else {
+            Logger.log("\(#function) can be called only after Reteno.delayedStart()", eventType: .error)
+            return
+        }
+        
+        storage.setAnalyticsValues(configuration: configuration)
+        DeviceIdHelper.actualizeDeviceId()
+        ApiKeyHelper.setApiKey(apiKey)
+        DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
+        analyticsService = AnalyticsServiceBuilder.build(
+            isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
+            isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled
+        )
+        senderScheduler.subscribeOnNotifications()
+        inApps.subscribeOnNotifications()
+        pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
+        setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
+        isInitialized = true
     }
     
     /// SDK initialization
@@ -77,7 +126,7 @@ public struct Reteno {
     public static func logEvent(eventTypeKey: String, date: Date = Date(), parameters: [Event.Parameter], forcePush: Bool = false) {
         if analyticsService.isNone {
             /// Check and initialize `AnalyticsService`. It might be `nil` if is being called from app extension.
-            let storage = StorageBuilder.build()
+            storage = storage ?? StorageBuilder.build()
             let isAutomaticScreenReportingEnabled: Bool = storage.getValue(forKey: StorageKeys.screenTrackingFlag.rawValue)
             let isAutomaticAppLifecycleReportingEnabled: Bool = storage.getValue(forKey: StorageKeys.automaticAppLifecycleReportingEnabled.rawValue)
             analyticsService = AnalyticsService(
@@ -133,6 +182,16 @@ public struct Reteno {
         if let externalUserId = externalUserId,
             !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             ExternalUserIdHelper.setId(externalUserId)
+        }
+        
+        if let email = userAttributes?.email,
+            !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            ExternalUserDataHelper.setEmail(email)
+        }
+        
+        if let phone = userAttributes?.phone,
+            !phone.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            ExternalUserDataHelper.setPhone(phone)
         }
         
         guard
@@ -240,5 +299,4 @@ public struct Reteno {
     static func upsertDevice(_ device: Device) {
         senderScheduler.upsertDevice(device)
     }
-    
 }

@@ -15,6 +15,8 @@ enum StorageKeys: String, CaseIterable {
     case cachedDevice = "com.reteno.last-sended-device.key"
     case deviceId = "com.reteno.device-id.key"
     case externalUserId = "com.reteno.external-user-id.key"
+    case emailId = "com.reteno.email-id.key"
+    case phoneId = "com.reteno.phone-id.key"
     case apiKey = "com.reteno.api-key.key"
     case events = "com.reteno.events.key"
     case notificationStatuses = "com.reteno.notification-statuses.key"
@@ -48,6 +50,8 @@ enum StorageKeys: String, CaseIterable {
     case automaticAppLifecycleReportingEnabled = "com.reteno.automatic-app-lifecycle-reporting.key"
     case automaticPushSubsriptionReportingEnabled = "com.reteno.automatic-push-subsription-reporting.key"
     case automaticSessionReportingEnabled = "com.reteno.automatic-session-reporting.key"
+    case retenoConfiguration = "com.reteno.reteno-configuration.key"
+    case isDelayedInitialization = "com.reteno.reteno-delayed-initialization.key"
 }
 
 final class KeyValueStorage {
@@ -113,7 +117,7 @@ final class KeyValueStorage {
     }
     
     // MARK: Analytics logic
-    
+
     func setAnalyticsValues(configuration: RetenoConfiguration) {
         guard let storage = storageUnwrapper() else { return }
 
@@ -133,6 +137,23 @@ final class KeyValueStorage {
             configuration.isAutomaticSessionReportingEnabled,
             forKey: StorageKeys.automaticSessionReportingEnabled.rawValue
         )
+    }
+    
+    // MARK: - Delayed initialization
+    
+    func set(isDelayedInitialization: Bool) {
+        guard let storage = storageUnwrapper() else { return }
+
+        storage.setValue(
+            isDelayedInitialization,
+            forKey: StorageKeys.isDelayedInitialization.rawValue
+        )
+    }
+    
+    func getIsDelayedInitialization() -> Bool {
+        guard let storage = storageUnwrapper() else { return false }
+
+        return storage.bool(forKey: StorageKeys.isDelayedInitialization.rawValue)
     }
     
     // MARK: Events logic

@@ -28,7 +28,9 @@ struct DeviceRequest: APIRequest {
         pushToken: String,
         isSubscribedOnPush: Bool,
         appVersion: String? = AppVersionHelper.appVersion(),
-        externalUserId: String? = nil
+        externalUserId: String? = nil,
+        email: String?,
+        phone: String?
     ) {
         path = "v1/device"
         
@@ -45,6 +47,8 @@ struct DeviceRequest: APIRequest {
         tempParameters["advertisingId"] = advertisingId
         tempParameters["appVersion"] = appVersion
         tempParameters["externalUserId"] = externalUserId
+        tempParameters["email"] = email
+        tempParameters["phone"] = phone
                 
         parameters = tempParameters
     }

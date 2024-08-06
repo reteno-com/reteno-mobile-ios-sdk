@@ -22,6 +22,8 @@ final class DeviceRequestTests: XCTestCase {
         let timeZone = "Kyiv/Ukraine"
         let appVersion = "1.0.0"
         let pushToken = "skdnvjklsvdklnvdskvsdknlsvdklnsdbklnsdlknsd"
+        let email = "example@email.com"
+        let phone = "+380681234567"
         
         let request = DeviceRequest(
             category: category,
@@ -33,7 +35,9 @@ final class DeviceRequestTests: XCTestCase {
             timeZone: timeZone,
             pushToken: pushToken,
             isSubscribedOnPush: true,
-            appVersion: appVersion
+            appVersion: appVersion,
+            email: email,
+            phone: phone
         )
         
         XCTAssertEqual(
@@ -63,6 +67,10 @@ final class DeviceRequestTests: XCTestCase {
         XCTAssertEqual(pushTokenString, pushToken, "pushTokenString should be equal to \(pushToken)")
         let isSubscribedOnPush = try XCTUnwrap(parameters["pushSubscribed"] as? Bool, "pushSubscribed shouldn't be nil")
         XCTAssertTrue(isSubscribedOnPush, "pushSubscribed should be true")
+        let emailString = try XCTUnwrap(parameters["email"] as? String, "emailString shouldn't be nil")
+        XCTAssertEqual(emailString, email, "emailString should be equal to \(email)")
+        let phoneString = try XCTUnwrap(parameters["phone"] as? String, "emailString shouldn't be nil")
+        XCTAssertEqual(phoneString, phone, "phoneString be equal to \(phone)")
     }
     
     func test_deviceRequest_withoutOptionalDataAndTabletDeviceCategory() throws {
@@ -72,7 +80,9 @@ final class DeviceRequestTests: XCTestCase {
         let deviceModel = "iPhone 12"
         let timeZone = "Kyiv/Ukraine"
         let pushToken = "skdnvjklsvdklnvdskvsdknlsvdklnsdbklnsdlknsd"
-        
+        let email = "example@email.com"
+        let phone = "+380681234567"
+
         let request = DeviceRequest(
             category: category,
             osType: osType,
@@ -80,7 +90,9 @@ final class DeviceRequestTests: XCTestCase {
             deviceModel: deviceModel,
             timeZone: timeZone,
             pushToken: pushToken,
-            isSubscribedOnPush: true
+            isSubscribedOnPush: true,
+            email: email,
+            phone: phone
         )
         
         XCTAssertEqual(
@@ -88,7 +100,6 @@ final class DeviceRequestTests: XCTestCase {
             request.path,
             "request.path should be equal to v1/device"
         )
-        
         
         let parameters = try XCTUnwrap(request.parameters, "request.parameters shouldn't be nil")
         let categoryString = try XCTUnwrap(parameters["category"] as? String, "categoryString shouldn't be nill")
@@ -107,6 +118,10 @@ final class DeviceRequestTests: XCTestCase {
         XCTAssertEqual(pushTokenString, pushToken, "pushTokenString should be equal to \(pushToken)")
         let isSubscribedOnPush = try XCTUnwrap(parameters["pushSubscribed"] as? Bool, "pushSubscribed shouldn't be nil")
         XCTAssertTrue(isSubscribedOnPush, "pushSubscribed should be true")
+        let emailString = try XCTUnwrap(parameters["email"] as? String, "email shouldn't be nill")
+        XCTAssertEqual(emailString, email, "emailString should be equal to \(email)")
+        let phoneString = try XCTUnwrap(parameters["phone"] as? String, "phone shouldn't be nill")
+        XCTAssertEqual(phoneString, phone, "phoneString should be equal to \(phone)")
     }
     
 }

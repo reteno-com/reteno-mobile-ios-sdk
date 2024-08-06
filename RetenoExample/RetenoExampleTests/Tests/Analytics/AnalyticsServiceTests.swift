@@ -35,10 +35,12 @@ final class AnalyticsServiceTests: XCTestCase {
         viewController.viewDidAppear(true)
                 
         let events = storage.getEvents()
-        XCTAssertEqual(events[0].eventTypeKey, ScreenViewEvent, "should have valid `eventTypeKey`")
-        XCTAssertEqual(events[0].parameters[0].name, ScreenClass, "should have screen class parameter name")
+        let screenViewEvent = events.first(where: { $0.eventTypeKey == ScreenViewEvent })
+        XCTAssertNotNil(screenViewEvent, "screenView event should NOT be nil")
+        XCTAssertEqual(screenViewEvent!.eventTypeKey, ScreenViewEvent, "should have valid `eventTypeKey`")
+        XCTAssertEqual(screenViewEvent!.parameters[0].name, ScreenClass, "should have screen class parameter name")
         XCTAssertEqual(
-            events[0].parameters[0].value,
+            screenViewEvent!.parameters[0].value,
             String(describing: type(of: viewController)),
             "should have screen class parameter value"
         )
@@ -66,7 +68,7 @@ final class AnalyticsServiceTests: XCTestCase {
         notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         
         let events = storage.getEvents().filter { $0.eventTypeKey == "ApplicationOpened" }
-        XCTAssertTrue(events.isEmpty, "event should exist")
+        XCTAssertTrue(events.isEmpty, "event should NOT exist")
     }
     
     func test_appBackgrounded_sendEvent() {

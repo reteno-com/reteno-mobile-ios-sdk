@@ -141,6 +141,7 @@
 		D5F91E342908138F00EA5FBA /* AppInboxMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E332908138E00EA5FBA /* AppInboxMessageCell.swift */; };
 		D5F91E3929096BF800EA5FBA /* BaseDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E3829096BF800EA5FBA /* BaseDateFormatter.swift */; };
 		D5F91E3C290972AE00EA5FBA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D5F91E3B290972AE00EA5FBA /* Kingfisher */; };
+		E0CDD69F2C620E6500ABD8A7 /* RetenoDelayedInitializationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CDD69E2C620E6500ABD8A7 /* RetenoDelayedInitializationTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -369,6 +370,7 @@
 		D5F91E332908138E00EA5FBA /* AppInboxMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessageCell.swift; sourceTree = "<group>"; };
 		D5F91E3829096BF800EA5FBA /* BaseDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDateFormatter.swift; sourceTree = "<group>"; };
 		DBDBC108460239B199E3288F /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
+		E0CDD69E2C620E6500ABD8A7 /* RetenoDelayedInitializationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoDelayedInitializationTest.swift; sourceTree = "<group>"; };
 		E96720BF026F18D0756D553C /* Pods-RetenoExample.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-release.xcconfig"; sourceTree = "<group>"; };
 		EDEE985BB2BB7D8F93B2B035 /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		EFACE9DF4C4585122CF2CBD0 /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 		188DA3A728E1FEB500AAA6EA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				E0CDD69D2C620E5800ABD8A7 /* Reteno */,
 				1875125E28EAD3EA0068B5F4 /* Analytics */,
 				B51AF01B290E920100D723CD /* AppInbox */,
 				188DA3AA28E1FEB500AAA6EA /* Common */,
@@ -1120,6 +1123,14 @@
 			path = DateFormatters;
 			sourceTree = "<group>";
 		};
+		E0CDD69D2C620E5800ABD8A7 /* Reteno */ = {
+			isa = PBXGroup;
+			children = (
+				E0CDD69E2C620E6500ABD8A7 /* RetenoDelayedInitializationTest.swift */,
+			);
+			path = Reteno;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1538,6 +1549,7 @@
 				D5F7075D29969ED50018F304 /* InAppScriptMessageTests.swift in Sources */,
 				D5CBB0DE29463C58009CB2B3 /* ProductTests.swift in Sources */,
 				B57EAB4B28EC7E2000EA1260 /* MobileRequestServiceTests.swift in Sources */,
+				E0CDD69F2C620E6500ABD8A7 /* RetenoDelayedInitializationTest.swift in Sources */,
 				B5A97DB52902E8D30017B2A1 /* SendUserOperationTests.swift in Sources */,
 				188DA3B428E1FEB600AAA6EA /* RequestDecoratorTests.swift in Sources */,
 				D5CBB0D42941EE4D009CB2B3 /* JSONInitableTests.swift in Sources */,
