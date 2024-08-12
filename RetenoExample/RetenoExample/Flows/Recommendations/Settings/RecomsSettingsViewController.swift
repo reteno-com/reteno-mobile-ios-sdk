@@ -58,7 +58,7 @@ final class RecomsSettingsViewController: NiblessViewController {
     
     @objc
     func categoryIdHandler(_ textField: UITextField) {
-        viewModel.updateCategory(textField.text ?? "")
+        viewModel.updateCategory(textField.text)
     }
     
     @objc

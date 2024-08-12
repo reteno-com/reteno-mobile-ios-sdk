@@ -12,9 +12,9 @@ import Reteno
 struct RecommendationsSettings {
     
     var variantId: String
-    var category: String
+    var category: String?
     var productsIds: [String]
-    var filters: [RecomFilter]
+    var filters: [RecomFilter]?
     
     static func defaultSettings() -> RecommendationsSettings {
         RecommendationsSettings(

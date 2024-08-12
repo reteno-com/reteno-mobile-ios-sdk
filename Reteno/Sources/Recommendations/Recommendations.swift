@@ -33,7 +33,7 @@ public final class Recommendations {
     public func getRecoms<T: RecommendableProduct>(
         recomVariantId: String,
         productIds: [String],
-        categoryId: String,
+        categoryId: String?,
         filters: [RecomFilter]?,
         fields: [String]?,
         completionHandler: @escaping (Result<[T], Error>) -> Void

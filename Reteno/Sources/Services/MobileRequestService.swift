@@ -164,7 +164,7 @@ extension MobileRequestService {
     func getRecoms<T: RecommendableProduct>(
         recomVariantId: String,
         productIds: [String],
-        categoryId: String,
+        categoryId: String?,
         filters: [RecomFilter]?,
         fields: [String]?,
         completionHandler: @escaping (Result<[T], Error>) -> Void
@@ -197,10 +197,10 @@ extension MobileRequestService {
     func getInAppMessage(by id: String, completionHandler: @escaping (Result<InAppMessage, Error>) -> Void) {
         let request = InAppMessageRequest(id: id)
         let handler = DecodableResponseHandler<InAppMessage>()
-
+        
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
-
+    
     func getInAppMessages(eTag: String?, completionHandler: @escaping (Result<(list: InAppMessageLists, etag: String?), Error>) -> Void) {
         let request = InAppMessagesRequest(eTag: eTag)
         let handler = DecodableResponseHandler<InAppMessageLists>()
@@ -211,7 +211,7 @@ extension MobileRequestService {
             case .success(let resp):
                 let etag: String? = httpHeaders?.value(for: "ETag")?.replacingOccurrences(of: "\"", with: "")
                 completionHandler(.success((resp, etag)))
-            
+                
             case .failure(let failure):
                 completionHandler(.failure(failure))
             }

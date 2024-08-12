@@ -1,6 +1,6 @@
 //
 //  AppInbox.swift
-//  
+//
 //
 //  Created by Anna Sahaidak on 25.10.2022.
 //
@@ -61,6 +61,23 @@ public final class AppInbox {
         }
     }
     
+    /// Get unread count of App inbox messages
+    ///
+    /// - Parameter completion: Closure which return unread messages count
+    public func getUnreadMessagesCount(
+        completion: @escaping (Result<Int, Error>) -> Void
+    ) {
+        requestService.getInboxMessagesCount { result in
+            switch result {
+            case .success(let item):
+                return completion(.success(item.unreadCount))
+                
+            case .failure(let error):
+                return completion(.failure(error))
+            }
+        }
+    }
+    
     /// Change inbox messages status on `OPENED`
     ///
     /// - Parameter messageIds: Array of message identificators, which statuses should be changes
@@ -94,5 +111,5 @@ public final class AppInbox {
             }
         }
     }
-
+    
 }

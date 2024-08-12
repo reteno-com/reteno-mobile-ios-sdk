@@ -24,7 +24,7 @@ final class RecomsSettingsModel {
         settings.variantId = id
     }
     
-    func updateCategory(_ category: String) {
+    func updateCategory(_ category: String?) {
         settings.category = category
     }
     
@@ -33,12 +33,15 @@ final class RecomsSettingsModel {
     }
     
     func addFilter(name: String, values: [String]) {
+        if settings.filters == nil {
+            settings.filters = []
+        }
         let recomFilter = RecomFilter(name: name, values: values)
-        settings.filters.append(recomFilter)
+        settings.filters?.append(recomFilter)
     }
     
     func clearFilters() {
-        settings.filters = []
+        settings.filters = nil
     }
     
     func getRecoms() {

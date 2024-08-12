@@ -24,7 +24,7 @@ final class RecomsSettingsViewModel {
         model.updateVariantId(id)
     }
     
-    func updateCategory(_ category: String) {
+    func updateCategory(_ category: String?) {
         model.updateCategory(category)
     }
     
