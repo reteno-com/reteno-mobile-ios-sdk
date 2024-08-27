@@ -13,6 +13,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
     var bestAttemptContent: UNMutableNotificationContent?
     
     private let imageCarouselCategoryIdentifier = "ImageCarousel"
+    private let session = URLSession(configuration: .default)
     
     open override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         guard RetenoNotificationsHelper.isRetenoPushNotification(request.content.userInfo) else {
@@ -70,13 +71,11 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
         let dispatchGroup = DispatchGroup()
         urlStrings.forEach { urlString in
             dispatchGroup.enter()
-            let fileType = URL(fileURLWithPath: urlString).pathExtension
-            loadAttachment(by: urlString, fileType: fileType) { attachment in
+            loadAttachment(by: urlString) { attachment in
+                if let attachment = attachment {
+                    attachments.append(attachment)
+                }
                 dispatchGroup.leave()
-                
-                guard let attachment = attachment else { return }
-
-                attachments.append(attachment)
             }
         }
         dispatchGroup.notify(queue: DispatchQueue.global()) {
@@ -84,7 +83,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
         }
     }
     
-    private func loadAttachment(by urlString: String, fileType: String, completionHandler: @escaping (UNNotificationAttachment?) -> Void) {
+    private func loadAttachment(by urlString: String, completionHandler: @escaping (UNNotificationAttachment?) -> Void) {
         guard let url = URL(string: urlString) else {
             ErrorLogger.shared.captureErrorEvent(
                 message: "Couldn't create attachment URL",
@@ -94,14 +93,15 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
             return
         }
         
-        let session = URLSession(configuration: .default)
         session.downloadTask(with: url, completionHandler: { temporaryLocation, response, error in
             if let error = error {
                 ErrorLogger.shared.capture(error: error)
             }
+            var suggestedFilename = response?.suggestedFilename
+            suggestedFilename = suggestedFilename == "unknown" ? UUID().uuidString : suggestedFilename
             
             guard
-                let fileName = response?.suggestedFilename,
+                let fileName = suggestedFilename,
                 let localURL = temporaryLocation
             else {
                 ErrorLogger.shared.captureErrorEvent(
@@ -123,7 +123,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
             }
             // Create the notification attachment from the file
             do {
-                let attachment = try UNNotificationAttachment(identifier: "", url: fileURL, options: nil)
+                let attachment = try UNNotificationAttachment(identifier: fileName, url: fileURL, options: nil)
                 completionHandler(attachment)
             } catch {
                 ErrorLogger.shared.capture(error: error)

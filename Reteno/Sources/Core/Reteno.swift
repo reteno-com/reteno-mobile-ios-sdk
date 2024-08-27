@@ -16,7 +16,7 @@ public struct Reteno {
     static let senderScheduler = EventsSenderSchedulerBuilder.build()
 
     /// SDK version
-    static var version = "2.0.11"
+    static var version = "2.0.12"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
