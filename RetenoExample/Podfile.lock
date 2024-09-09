@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (5.9.0)
   - FirebaseCore (10.23.1):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.12)
@@ -68,8 +67,7 @@ PODS:
   - OHHTTPStubs/Swift (9.1.0):
     - OHHTTPStubs/Default
   - PromisesObjC (2.4.0)
-  - Reteno (2.0.12):
-    - Alamofire (= 5.9.0)
+  - Reteno (2.0.13)
   - SnapKit (5.6.0)
   - Swinject (2.7.1)
 
@@ -82,7 +80,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Alamofire
     - FirebaseCore
     - FirebaseCoreInternal
     - FirebaseInstallations
@@ -100,7 +97,6 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
   FirebaseCore: c43f9f0437b50a965e930cac4ad243200d12a984
   FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
   FirebaseInstallations: 42d6ead4605d6eafb3b6683674e80e18eb6f2c35
@@ -110,7 +106,7 @@ SPEC CHECKSUMS:
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  Reteno: 84ccd0d974c213472f38abc0c1951f01a7d8ff4d
+  Reteno: 08d032fad92a260600a0f17e7e1a95d233602966
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 
