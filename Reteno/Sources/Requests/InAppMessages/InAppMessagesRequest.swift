@@ -6,19 +6,18 @@
 //
 
 import Foundation
-import Alamofire
 
 struct InAppMessagesRequest: APIRequest {
     
-    var headers: HTTPHeaders? = .init()
+    var headers: [String: String]? = .init()
     var parameters: Parameters?
     
     let path: String = "v1/inapp/messages"
     let method = HTTPMethod.get
-    let encoding: ParameterEncoding? = URLEncoding.default
+    let encoding: any ParameterEncoding = URLEncoding.default
 
     init(eTag: String?) {
-        headers?.add(.init(name: "If-None-Match", value: eTag ?? ""))
+        headers?.updateValue(eTag ?? "", forKey: "If-None-Match")
     }
     
 }

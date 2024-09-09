@@ -608,7 +608,7 @@ final class MobileRequestServiceTests: XCTestCase {
                 notModified = false
                 
             case .failure(let error):
-                notModified = error.asAFError?.responseCode == 304
+                notModified = (error as? APIStatusError)?.statusCode == 304
             }
             expectation.fulfill()
         }

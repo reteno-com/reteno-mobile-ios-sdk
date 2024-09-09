@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 
 final class InAppRequestService {
     
@@ -21,10 +20,10 @@ final class InAppRequestService {
         let request = InAppBaseHTMLRequest(path: baseHTMLPath)
         let handler = EmptyResponseHandler()
         
-        requestManager.execute(request: request, responseHandler: handler) { result, headers in
+        requestManager.execute(request: request, responseHandler: handler) { result, dataResponse in
             switch result {
             case .success:
-                completionHandler(.success(headers?.value(for: "x-amz-meta-version")))
+                completionHandler(.success(dataResponse?.headers["x-amz-meta-version"]))
                 
             case .failure(let error):
                 completionHandler(.failure(error))
@@ -38,32 +37,39 @@ final class InAppRequestService {
             return
         }
         
-        AF.download(url).response { response in
-            guard let fileURL = response.fileURL else {
-                completionHandler(.success(false))
-                return
-            }
-            
-            // Move the downloaded file to Documents folder
-            let fileManager = FileManager.default
-            let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let localURL = documentDirectory.appendingPathComponent("index.html")
-            do {
-                let path: String = {
-                    if #available(iOS 16.0, *) {
-                        return localURL.path()
-                    } else {
-                        return localURL.path
-                    }
-                }()
-                if fileManager.fileExists(atPath: path) {
-                    try fileManager.removeItem(at: localURL)
+        requestManager.download(url: url) { result in
+            switch result {
+            case .success(let tempFileUrl):
+                guard let fileURL = tempFileUrl else {
+                    completionHandler(.success(false))
+                    return
                 }
-                try fileManager.moveItem(at: fileURL, to: localURL)
-                completionHandler(.success(true))
-            } catch {
+                
+                // Move the downloaded file to Documents folder
+                let fileManager = FileManager.default
+                let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                let localURL = documentDirectory.appendingPathComponent("index.html")
+                do {
+                    let path: String = {
+                        if #available(iOS 16.0, *) {
+                            return localURL.path()
+                        } else {
+                            return localURL.path
+                        }
+                    }()
+                    if fileManager.fileExists(atPath: path) {
+                        try fileManager.removeItem(at: localURL)
+                    }
+                    try fileManager.moveItem(at: fileURL, to: localURL)
+                    completionHandler(.success(true))
+                } catch {
+                    ErrorLogger.shared.capture(error: error)
+                    Logger.log("Failed to move file: \(error.localizedDescription)", eventType: .error)
+                    completionHandler(.failure(error))
+                }
+                
+            case .failure(let error):
                 ErrorLogger.shared.capture(error: error)
-                Logger.log("Failed to move file: \(error.localizedDescription)", eventType: .error)
                 completionHandler(.failure(error))
             }
         }

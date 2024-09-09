@@ -5,7 +5,6 @@
 //  Created by Serhii Prykhodko on 14.09.2022.
 //
 
-import Alamofire
 import Foundation
 
 final class SendingServices {
@@ -27,7 +26,10 @@ final class SendingServices {
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
     
-    func registerLinkClick(_ link: String, completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }) {
+    func registerLinkClick(
+        _ link: String,
+        completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
+    ) {
         let request = RegisterLinkClickRequest(link: link)
         let handler = EmptyResponseHandler()
         

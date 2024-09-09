@@ -5,17 +5,16 @@
 //  Created by Serhii Prykhodko on 28.09.2022.
 //
 
-import Alamofire
 import UIKit
 
 struct DeviceRequest: APIRequest {
     
-    var headers: HTTPHeaders? = .init()
+    var headers: [String: String]? = .init()
     var parameters: Parameters?
     
     let path: String
     let method = HTTPMethod.post
-    let encoding: ParameterEncoding? = JSONEncoding.default
+    let encoding: any ParameterEncoding = JSONEncoding.default
     
     init(
         category: DeviceCategory,

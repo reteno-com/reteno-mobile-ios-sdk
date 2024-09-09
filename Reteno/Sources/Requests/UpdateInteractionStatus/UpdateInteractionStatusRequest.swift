@@ -6,16 +6,15 @@
 //
 
 import Foundation
-import Alamofire
 
 struct UpdateInteractionStatusRequest: APIRequest {
     
-    var headers: HTTPHeaders? = .init()
+    var headers: [String: String]? = .init()
     var parameters: Parameters?
     
     let path: String
     let method = HTTPMethod.put
-    let encoding: ParameterEncoding? = JSONEncoding.default
+    let encoding: any ParameterEncoding = JSONEncoding.default
     
     init(status: NotificationStatus, token: String? = nil) {
         path = "v1/interactions/\(status.interactionId)/status"

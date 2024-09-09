@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NetworkError {
+struct NetworkError: APIStatusError {
     
     var statusCode: Int?
     let title: String

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 
 final class SendRecomEventsOperation: DateOperation {
     
@@ -39,7 +38,7 @@ final class SendRecomEventsOperation: DateOperation {
                 self.storage.clearRecomEvents(events)
 
             case .failure(let error):
-                if let responseCode = (error as? NetworkError)?.statusCode ?? (error as? AFError)?.responseCode {
+                if let responseCode = (error as? APIStatusError)?.statusCode {
                     switch responseCode {
                     case 400...499:
                         self.storage.clearRecomEvents(events)

@@ -48,6 +48,31 @@ public final class Recommendations {
         )
     }
     
+    /// Get product recommendations (array of dictionaries)
+    ///
+    /// - Parameter recomVariantId: recommendations variant identificator
+    /// - Parameter productIds: product IDs for product-based algorithms
+    /// - Parameter categoryId: product category ID for category-based algorithms
+    /// - Parameter filters: additional algorithm filters array
+    /// - Parameter fields: response model fields keys
+    public func getRecomJSONs(
+        recomVariantId: String,
+        productIds: [String],
+        categoryId: String?,
+        filters: [RecomFilter]?,
+        fields: [String]?,
+        completionHandler: @escaping (Result<[[String: Any]], Error>) -> Void
+    ) {
+        requestService.getRecomJSONs(
+            recomVariantId: recomVariantId,
+            productIds: productIds,
+            categoryId: categoryId,
+            filters: filters,
+            fields: fields,
+            completionHandler: completionHandler
+        )
+    }
+    
     /// Log recommendation event
     ///
     /// - Parameter recomVariantId: recommendation identificator

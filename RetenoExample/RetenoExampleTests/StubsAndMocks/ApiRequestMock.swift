@@ -6,16 +6,15 @@
 //  Copyright © 2022 Yalantis. All rights reserved.
 //
 
-import Alamofire
 @testable import Reteno
 
 struct ApiRequestMock: APIRequest {
     
-    var headers: HTTPHeaders? = .init()
+    var headers: [String: String]? = .init()
     var parameters: Parameters? = Parameters()
     
     let path: String
-    let method = HTTPMethod.post
-    let encoding: ParameterEncoding? = JSONEncoding.default
+    let method: HTTPMethod = HTTPMethod.post
+    let encoding: any ParameterEncoding = JSONEncoding.default
     
 }

@@ -46,7 +46,7 @@ final class InAppService {
                 }
 
             case .failure(let failure):
-                if failure.asAFError?.responseCode == 304 {
+                if (failure as? NetworkError)?.statusCode == 304 {
                     self.messages = storage.getInAppMessages()
                     self.contents = storage.getInAppMessageContents()
                     

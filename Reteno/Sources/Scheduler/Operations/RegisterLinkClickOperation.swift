@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 
 final class RegisterLinkClickOperation: DateOperation {
     
@@ -39,7 +38,7 @@ final class RegisterLinkClickOperation: DateOperation {
                 self.storage.clearLinks([self.link])
                 
             case .failure(let error):
-                if let responseCode = (error as? NetworkError)?.statusCode ?? (error as? AFError)?.responseCode {
+                if let responseCode = (error as? APIStatusError)?.statusCode {
                     switch responseCode {
                     case 400...499:
                         self.storage.clearLinks([self.link])

@@ -11,7 +11,7 @@ struct UnauthorizedAuthNetworkBuilder {
     
     static func build() -> RequestManager {
         let contentTypeDecorator = RequestDecorator { request in
-            request.headers?.add(name: "Content-Type", value: "application/json")
+            request.headers?.updateValue("application/json", forKey: "Content-Type")
         }
         
         return RequestManager(decorators: [contentTypeDecorator])

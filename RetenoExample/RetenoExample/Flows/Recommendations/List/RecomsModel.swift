@@ -42,7 +42,7 @@ final class RecomsModel {
             categoryId: settings.category,
             filters: settings.filters,
             fields: ["productId", "name", "descr", "imageUrl", "price"]
-        ) { [weak self] (result: Result<[Recommendation], Error>)  in
+        ) { [weak self] (result: Result<[Recommendation], Error>) in
             switch result {
             case .success(let recoms):
                 self?.recoms = recoms

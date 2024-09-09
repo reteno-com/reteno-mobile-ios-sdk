@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 
 final class SendUserOperation: DateOperation {
     
@@ -44,7 +43,7 @@ final class SendUserOperation: DateOperation {
                 self.finish()
                 
             case .failure(let failure):
-                if let responseCode = (failure as? NetworkError)?.statusCode ?? (failure as? AFError)?.responseCode {
+                if let responseCode = (failure as? APIStatusError)?.statusCode {
                     switch responseCode {
                     case 400...499:
                         self.storage.clearUser(user)
@@ -92,7 +91,7 @@ final class SendUserOperation: DateOperation {
                         self.storage.updateCachedDevice(infoDeviceRequest.paramsToSave ?? [:])
                         
                     case .failure(let failure):
-                        if let responseCode = (failure as? NetworkError)?.statusCode ?? (failure as? AFError)?.responseCode {
+                        if let responseCode = (failure as? APIStatusError)?.statusCode {
                             switch responseCode {
                             case 400...499:
                                 self.storage.clearUser(self.user)

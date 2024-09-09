@@ -12,7 +12,7 @@ import Foundation
 extension RequestManager {
     
     static var stub: RequestManager {
-        RequestManager(decorators: [], baseURLComponent: "https://test.host/")
+        RequestManager(baseURLComponent: "https://test.host/", decorators: [])
     }
     
 }

@@ -6,16 +6,15 @@
 //
 
 import Foundation
-import Alamofire
 
 struct AppInboxMarkAsOpenedRequest: APIRequest {
     
-    var headers: HTTPHeaders? = .init()
+    var headers: [String: String]? = .init()
     var parameters: Parameters?
     
     let path: String = "v1/appinbox/messages/status"
     let method = HTTPMethod.post
-    let encoding: ParameterEncoding? = JSONEncoding.default
+    let encoding: any ParameterEncoding = JSONEncoding.default
     
     init(ids: [String]?) {
         parameters = ["status": "OPENED"]

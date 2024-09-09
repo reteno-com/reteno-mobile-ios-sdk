@@ -6,16 +6,15 @@
 //
 
 import Foundation
-import Alamofire
 
 struct InAppScriptEventRequest: APIRequest {
     
-    var headers: HTTPHeaders? = .init()
+    var headers: [String: String]? = .init()
     var parameters: Parameters?
     
     let path: String = "https://site-script.reteno.com/site-script/v1/event"
     let method = HTTPMethod.post
-    let encoding: ParameterEncoding? = JSONEncoding.default
+    let encoding: any ParameterEncoding = JSONEncoding.default
     
     init(messageId: String, data: [String: Any]) {
         parameters = [

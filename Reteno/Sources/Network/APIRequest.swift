@@ -5,14 +5,14 @@
 //  Created by Serhii Prykhodko on 12.09.2022.
 //
 
-import Alamofire
+import Foundation
 
-protocol APIRequest {
+public protocol APIRequest {
     
     var path: String { get }
     var method: HTTPMethod { get }
-    var encoding: ParameterEncoding? { get }
-    var parameters: Parameters? { get set }
-    var headers: HTTPHeaders? { get set }
-  
+    var encoding: ParameterEncoding { get }
+    var parameters: [String: Any]? { get set }
+    var headers: [String: String]? { get set }
+    
 }

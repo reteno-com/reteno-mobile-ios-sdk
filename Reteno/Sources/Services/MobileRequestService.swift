@@ -5,7 +5,6 @@
 //  Created by Serhii Prykhodko on 29.09.2022.
 //
 
-import Alamofire
 import Foundation
 
 final class MobileRequestService {
@@ -180,6 +179,35 @@ extension MobileRequestService {
         
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
+        
+    func getRecomJSONs(
+        recomVariantId: String,
+        productIds: [String],
+        categoryId: String?,
+        filters: [RecomFilter]?,
+        fields: [String]?,
+        completionHandler: @escaping (Result<[[String: Any]], Error>) -> Void
+    ) {
+        let request = RecomsRequest(
+            recomVariantId: recomVariantId,
+            productIds: productIds,
+            categoryId: categoryId,
+            filters: filters,
+            fields: fields
+        )
+        let handler = DictionaryResponseHandler()
+
+        requestManager.execute(request: request, responseHandler: handler, completionHandler: { result in
+            switch result {
+            case .success(let dict):
+                let recoms: [[String: Any]]? = dict["recoms"] as? [[String: Any]]
+                completionHandler(.success(recoms ?? []))
+                
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        })
+    }
     
     func sendRecomEvents(_ events: [RecomEvents], completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }) {
         let request = RecomEventsRequest(events: events)
@@ -206,10 +234,10 @@ extension MobileRequestService {
         let handler = DecodableResponseHandler<InAppMessageLists>()
         
         URLCache.shared.removeAllCachedResponses()
-        requestManager.execute(request: request, responseHandler: handler) { result, httpHeaders in
+        requestManager.execute(request: request, responseHandler: handler) { result, dataResponse in
             switch result {
             case .success(let resp):
-                let etag: String? = httpHeaders?.value(for: "ETag")?.replacingOccurrences(of: "\"", with: "")
+                let etag: String? = dataResponse?.headers.getHeaderValue(for: "ETag")?.replacingOccurrences(of: "\"", with: "")
                 completionHandler(.success((resp, etag)))
                 
             case .failure(let failure):

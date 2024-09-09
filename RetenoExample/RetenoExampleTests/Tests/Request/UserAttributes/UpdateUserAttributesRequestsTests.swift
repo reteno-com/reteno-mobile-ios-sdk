@@ -6,7 +6,6 @@
 //
 
 import XCTest
-import Alamofire
 @testable import Reteno
 
 final class UpdateUserAttributesRequestsTests: XCTestCase {

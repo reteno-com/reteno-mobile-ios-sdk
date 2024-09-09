@@ -5,16 +5,14 @@
 //  Created by Serhii Prykhodko on 05.10.2022.
 //
 
-import Alamofire
-
 struct UpdateUserAttributesRequest: APIRequest {
     
-    var headers: HTTPHeaders? = .init()
+    var headers: [String: String]? = .init()
     var parameters: Parameters?
     
     let path: String = "v1/user"
     let method = HTTPMethod.post
-    let encoding: ParameterEncoding? = JSONEncoding.default
+    let encoding: any ParameterEncoding = JSONEncoding.default
     
     init(
         externalUserId: String?,

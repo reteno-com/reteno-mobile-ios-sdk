@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 
 final class SendErrorEventsOperation: DateOperation {
     private let requestService: SendingServices
@@ -38,7 +37,7 @@ final class SendErrorEventsOperation: DateOperation {
                 self.storage.clearErrorEvents(errorEvents)
 
             case .failure(let error):
-                if let responseCode = (error as? NetworkError)?.statusCode ?? (error as? AFError)?.responseCode {
+                if let responseCode = (error as? APIStatusError)?.statusCode {
                     switch responseCode {
                     case 400...499:
                         self.storage.clearErrorEvents(errorEvents)
