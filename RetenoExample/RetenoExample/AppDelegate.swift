@@ -14,12 +14,16 @@ import Reteno
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
     
+    let userDefaults: UserDefaults = .standard
+    
     var window: UIWindow?
     private var applicationFlowCoordinator: ApplicationFlowCoordinator!
     
     private var isRunningTests: Bool {
       NSClassFromString("XCTestCase") != nil
     }
+    
+    var apiKey: String = "SDK_API_KEY"
     
     func application(
         _ application: UIApplication,
@@ -35,10 +39,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-                
-        let configuration: RetenoConfiguration = .init(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true, isDebugMode: true)
-        Reteno.start(apiKey: "SDK_API_KEY", configuration: configuration)
         
+        if isDelayedInitalizationForTest {
+            Reteno.delayedStart()
+        } else {
+            let configuration: RetenoConfiguration = .init(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true, isDebugMode: true)
+            Reteno.start(apiKey: apiKey, configuration: configuration)
+        }
+
         Reteno.userNotificationService.willPresentNotificationHandler = { [weak self] notification in
             let alert = InformationAlert(
                 text: "Will present notification:\n\(notification.request.content.userInfo)",
@@ -193,4 +201,25 @@ extension AppDelegate: MessagingDelegate {
         Reteno.userNotificationService.processRemoteNotificationsToken(fcmToken)
     }
     
+}
+
+extension AppDelegate {
+    
+    var initializationTestDelayDuration: TimeInterval {
+        10.0
+    }
+    
+    // used for testing delayed initialization
+    var isDelayedInitalizationForTest: Bool {
+        userDefaults.bool(forKey: "isDelayedInitalization") 
+    }
+    
+    func set(isDelayedInitalizationForTest: Bool) {
+        userDefaults.setValue(isDelayedInitalizationForTest, forKey: "isDelayedInitalization")
+    }
+    
+    func completeDelayedInitialization() {
+        let configuration: RetenoConfiguration = .init(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true, isDebugMode: true)
+        Reteno.delayedSetup(apiKey: apiKey, configuration: configuration)
+    }
 }

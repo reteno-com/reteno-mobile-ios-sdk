@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class SendNotificationsStatusOperation: DateOperation {
+final class SendNotificationsStatusOperation: DateOperation, @unchecked Sendable {
     
     private let sendingService: SendingServices
     private let storage: KeyValueStorage

@@ -95,6 +95,14 @@ public final class UserNotificationService: NSObject {
     ///
     /// - Parameter notification: The notification to which the user responded.
     public func processOpenedRemoteNotification(_ notification: UNNotification) {
+        // collect notifications while Reteno SDK in delayed initialization process
+        let sdkStateHelper = Reteno.sdkStateHelper
+        guard !sdkStateHelper.shouldCollectNotifications else {
+            sdkStateHelper.collect(notification: notification)
+            return
+        }
+        
+        // fire push notification
         guard let retenoNotification = RetenoUserNotification(userInfo: notification.request.content.userInfo) else { return }
         
         if retenoNotification.isInApp {

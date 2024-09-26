@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class SendUserOperation: DateOperation {
+final class SendUserOperation: DateOperation, @unchecked Sendable {
     
     private let requestService: MobileRequestService
     private let storage: KeyValueStorage

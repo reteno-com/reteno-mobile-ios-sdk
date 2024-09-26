@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class RegisterLinkClickOperation: DateOperation {
+final class RegisterLinkClickOperation: DateOperation, @unchecked Sendable {
     
     private var link: StorableLink
     private let storage: KeyValueStorage

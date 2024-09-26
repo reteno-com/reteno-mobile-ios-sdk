@@ -5,6 +5,7 @@
 //  Created by Anna Sahaidak on 12.09.2022.
 //
 
+import UIKit
 import Foundation
 import UserNotifications
 
@@ -14,9 +15,10 @@ public struct Reteno {
     public static let userNotificationService = UserNotificationService.shared
     
     static let senderScheduler = EventsSenderSchedulerBuilder.build()
+    static let sdkStateHelper = SDKStateHelper(storage: StorageBuilder.build())
 
     /// SDK version
-    static var version = "2.0.12"
+    static var version = "2.0.14"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -25,7 +27,6 @@ public struct Reteno {
     static var inAppStatusHander: ((InAppMessageStatus) -> Void)?
     static var analyticsService: AnalyticsService!
     static var storage: KeyValueStorage!
-    static var isInitialized: Bool = false
         
     private init() {}
     
@@ -34,7 +35,7 @@ public struct Reteno {
     /// - Parameter configs: Flag that indicates if automatic screen view tracking enabled
     @available(iOSApplicationExtension, unavailable)
     public static func start(apiKey: String, configuration: RetenoConfiguration = RetenoConfiguration()) {
-        guard !isInitialized else {
+        guard !sdkStateHelper.isInitialized else {
             Logger.log("RetenoSDK was already initialized, skipping", eventType: .error)
             return
         }
@@ -43,7 +44,6 @@ public struct Reteno {
         ApiKeyHelper.setApiKey(apiKey)
         DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
         storage = storage ?? StorageBuilder.build()
-        storage.set(isDelayedInitialization: false)
         storage.setAnalyticsValues(configuration: configuration)
         analyticsService = AnalyticsServiceBuilder.build(
             isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
@@ -54,14 +54,14 @@ public struct Reteno {
         inApps.subscribeOnNotifications()
         pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
         setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
-        isInitialized = true
+        sdkStateHelper.set(isDelayedInitialization: false)
+        sdkStateHelper.set(isInitialized: true)
     }
     
     /// SDK delayed initialization
     @available(iOSApplicationExtension, unavailable)
     public static func delayedStart() {
-        storage = storage ?? StorageBuilder.build()
-        storage.set(isDelayedInitialization: true)
+        sdkStateHelper.set(isDelayedInitialization: true)
         userNotificationService.setNotificationCenterDelegate()
     }
     
@@ -69,7 +69,7 @@ public struct Reteno {
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
     @available(iOSApplicationExtension, unavailable)
     public static func delayedSetup(apiKey: String, configuration: RetenoConfiguration = RetenoConfiguration()) {
-        guard !isInitialized else {
+        guard !sdkStateHelper.isInitialized else {
             Logger.log("RetenoSDK was already initialized, skipping", eventType: .error)
             return
         }
@@ -93,7 +93,17 @@ public struct Reteno {
         inApps.subscribeOnNotifications()
         pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
         setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
-        isInitialized = true
+        sdkStateHelper.set(isInitialized: true)
+        
+        NotificationCenter.default.post(
+            name: InAppMessages.retenoDidBecomeActive,
+            object: UIApplication.shared
+        )
+        // fire collected push notification on finish delayed initialization
+        if !sdkStateHelper.shouldCollectNotifications,
+           let lastCollectedPushNotification = sdkStateHelper.popLastAndClearNotifications() {
+            userNotificationService.processOpenedRemoteNotification(lastCollectedPushNotification)
+        }
     }
     
     /// SDK initialization

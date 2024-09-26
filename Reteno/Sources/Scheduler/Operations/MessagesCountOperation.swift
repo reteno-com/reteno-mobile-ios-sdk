@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class MessagesCountOperation: NetworkOperation {
+final class MessagesCountOperation: NetworkOperation, @unchecked Sendable {
     
     private var inbox: AppInbox
     

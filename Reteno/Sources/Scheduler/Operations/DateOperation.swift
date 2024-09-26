@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DateOperation: NetworkOperation {
+class DateOperation: NetworkOperation, @unchecked Sendable { 
     
     let date: Date
     

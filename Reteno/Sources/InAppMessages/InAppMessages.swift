@@ -7,6 +7,14 @@
 
 import UIKit
 
+extension InAppMessages {
+    
+    // Notification should be posted by SDK on complete delayed initialization
+    static let retenoDidBecomeActive: Notification.Name = .init(
+        "com.reteno.didBecomeActive.after.delayed.initialization"
+    )
+}
+
 final class InAppMessages {
     
     private var isPausedInApps: Bool = false
@@ -132,6 +140,12 @@ final class InAppMessages {
     @available(iOSApplicationExtension, unavailable)
     func subscribeOnNotifications() {
         self.sessionService.subscribeOnNotifications()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleApplicationDidBecomeActiveNotification),
+            name: InAppMessages.retenoDidBecomeActive,
+            object: nil
+        )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleApplicationDidBecomeActiveNotification),

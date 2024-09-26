@@ -7,7 +7,7 @@
 
 import Foundation
 
-class NetworkOperation: Operation {
+class NetworkOperation: Operation, @unchecked Sendable {
     
     /// State stored as an enum
     private enum State: String {

@@ -9,296 +9,298 @@
 /* Begin PBXBuildFile section */
 		18D02BCD28CA2F02008018F1 /* Reteno.docc in Sources */ = {isa = PBXBuildFile; fileRef = 18D02BCC28CA2F02008018F1 /* Reteno.docc */; };
 		18D02BD928CA2F02008018F1 /* Reteno.h in Headers */ = {isa = PBXBuildFile; fileRef = 18D02BCB28CA2F02008018F1 /* Reteno.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E04C5D6A2C8EF11E00B00D6A /* Analytics+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CAE2C8EF11E00B00D6A /* Analytics+SwiftUI.swift */; };
-		E04C5D6B2C8EF11E00B00D6A /* Analytics+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CAF2C8EF11E00B00D6A /* Analytics+UIViewController.swift */; };
-		E04C5D6C2C8EF11E00B00D6A /* Analytics+UNUserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CB02C8EF11E00B00D6A /* Analytics+UNUserNotificationCenter.swift */; };
-		E04C5D6D2C8EF11E00B00D6A /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CB12C8EF11E00B00D6A /* AnalyticsService.swift */; };
-		E04C5D6E2C8EF11E00B00D6A /* AppLifecycleAnalyticsSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CB22C8EF11E00B00D6A /* AppLifecycleAnalyticsSevice.swift */; };
-		E04C5D6F2C8EF11E00B00D6A /* AppInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CB42C8EF11E00B00D6A /* AppInbox.swift */; };
-		E04C5D702C8EF11E00B00D6A /* AppInboxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CB52C8EF11E00B00D6A /* AppInboxMessage.swift */; };
-		E04C5D712C8EF11E00B00D6A /* AppInboxMessageStorableId.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CB62C8EF11E00B00D6A /* AppInboxMessageStorableId.swift */; };
-		E04C5D722C8EF11E00B00D6A /* AnalyticsServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CB82C8EF11E00B00D6A /* AnalyticsServiceBuilder.swift */; };
-		E04C5D732C8EF11E00B00D6A /* EventsSenderSchedulerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CB92C8EF11E00B00D6A /* EventsSenderSchedulerBuilder.swift */; };
-		E04C5D742C8EF11E00B00D6A /* MobileRequestServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CBA2C8EF11E00B00D6A /* MobileRequestServiceBuilder.swift */; };
-		E04C5D752C8EF11E00B00D6A /* NetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CBB2C8EF11E00B00D6A /* NetworkBuilder.swift */; };
-		E04C5D762C8EF11E00B00D6A /* SendingServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CBC2C8EF11E00B00D6A /* SendingServiceBuilder.swift */; };
-		E04C5D772C8EF11E00B00D6A /* StorageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CBD2C8EF11E00B00D6A /* StorageBuilder.swift */; };
-		E04C5D782C8EF11E00B00D6A /* UnauthorizedAuthNetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CBE2C8EF11E00B00D6A /* UnauthorizedAuthNetworkBuilder.swift */; };
-		E04C5D792C8EF11E00B00D6A /* BaseBEDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CC02C8EF11E00B00D6A /* BaseBEDateFormatter.swift */; };
-		E04C5D7A2C8EF11E00B00D6A /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CC22C8EF11E00B00D6A /* Array+Extensions.swift */; };
-		E04C5D7B2C8EF11E00B00D6A /* Codable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CC32C8EF11E00B00D6A /* Codable+Dictionary.swift */; };
-		E04C5D7C2C8EF11E00B00D6A /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CC42C8EF11E00B00D6A /* Date+Utils.swift */; };
-		E04C5D7D2C8EF11E00B00D6A /* Operation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CC52C8EF11E00B00D6A /* Operation+Extensions.swift */; };
-		E04C5D7E2C8EF11E00B00D6A /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CC62C8EF11E00B00D6A /* Optional+Extensions.swift */; };
-		E04C5D7F2C8EF11E00B00D6A /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CC72C8EF11E00B00D6A /* UIApplication+Extensions.swift */; };
-		E04C5D802C8EF11E00B00D6A /* AdvertisingIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CC92C8EF11E00B00D6A /* AdvertisingIdHelper.swift */; };
-		E04C5D812C8EF11E00B00D6A /* AppVersionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CCA2C8EF11E00B00D6A /* AppVersionHelper.swift */; };
-		E04C5D822C8EF11E00B00D6A /* DeviceCategoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CCB2C8EF11E00B00D6A /* DeviceCategoryHelper.swift */; };
-		E04C5D832C8EF11E00B00D6A /* DeviceIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CCC2C8EF11E00B00D6A /* DeviceIdHelper.swift */; };
-		E04C5D842C8EF11E00B00D6A /* DevicePlatformHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CCD2C8EF11E00B00D6A /* DevicePlatformHelper.swift */; };
-		E04C5D852C8EF11E00B00D6A /* ApiKeyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CCF2C8EF11E00B00D6A /* ApiKeyHelper.swift */; };
-		E04C5D862C8EF11E00B00D6A /* BundleIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CD02C8EF11E00B00D6A /* BundleIdHelper.swift */; };
-		E04C5D872C8EF11E00B00D6A /* DebugModeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CD12C8EF11E00B00D6A /* DebugModeHelper.swift */; };
-		E04C5D882C8EF11E00B00D6A /* ExternalUserDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CD22C8EF11E00B00D6A /* ExternalUserDataHelper.swift */; };
-		E04C5D892C8EF11E00B00D6A /* ExternalUserIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CD32C8EF11E00B00D6A /* ExternalUserIdHelper.swift */; };
-		E04C5D8A2C8EF11E00B00D6A /* JSONConverterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CD42C8EF11E00B00D6A /* JSONConverterHelper.swift */; };
-		E04C5D8B2C8EF11E00B00D6A /* RetenoNotificationsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CD52C8EF11E00B00D6A /* RetenoNotificationsHelper.swift */; };
-		E04C5D8C2C8EF11E00B00D6A /* ErrorLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CD72C8EF11E00B00D6A /* ErrorLogger.swift */; };
-		E04C5D8D2C8EF11E00B00D6A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CD82C8EF11E00B00D6A /* Logger.swift */; };
-		E04C5D8E2C8EF11E00B00D6A /* EventsSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CDA2C8EF11E00B00D6A /* EventsSender.swift */; };
-		E04C5D8F2C8EF11E00B00D6A /* ExpirableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CDB2C8EF11E00B00D6A /* ExpirableData.swift */; };
-		E04C5D902C8EF11E00B00D6A /* Groupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CDC2C8EF11E00B00D6A /* Groupable.swift */; };
-		E04C5D912C8EF11E00B00D6A /* JSONInitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CDD2C8EF11E00B00D6A /* JSONInitable.swift */; };
-		E04C5D922C8EF11E00B00D6A /* DecodableResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CDF2C8EF11E00B00D6A /* DecodableResponseHandler.swift */; };
-		E04C5D932C8EF11E00B00D6A /* DictionaryResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CE02C8EF11E00B00D6A /* DictionaryResponseHandler.swift */; };
-		E04C5D942C8EF11E00B00D6A /* EmptyResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CE12C8EF11E00B00D6A /* EmptyResponseHandler.swift */; };
-		E04C5D952C8EF11E00B00D6A /* RecomsResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CE22C8EF11E00B00D6A /* RecomsResponseHandler.swift */; };
-		E04C5D962C8EF11E00B00D6A /* ResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CE32C8EF11E00B00D6A /* ResponseHandler.swift */; };
-		E04C5D972C8EF11E00B00D6A /* Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CE52C8EF11E00B00D6A /* Autolayout.swift */; };
-		E04C5D982C8EF11E00B00D6A /* Reteno.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CE82C8EF11E00B00D6A /* Reteno.swift */; };
-		E04C5D992C8EF11E00B00D6A /* RetenoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CE92C8EF11E00B00D6A /* RetenoConfiguration.swift */; };
-		E04C5D9A2C8EF11E00B00D6A /* DeepLinksProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CEB2C8EF11E00B00D6A /* DeepLinksProcessor.swift */; };
-		E04C5D9B2C8EF11E00B00D6A /* StorableLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CEC2C8EF11E00B00D6A /* StorableLink.swift */; };
-		E04C5D9C2C8EF11E00B00D6A /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CEE2C8EF11E00B00D6A /* Order.swift */; };
-		E04C5D9D2C8EF11E00B00D6A /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CEF2C8EF11E00B00D6A /* Product.swift */; };
-		E04C5D9E2C8EF11E00B00D6A /* ProductCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CF02C8EF11E00B00D6A /* ProductCategory.swift */; };
-		E04C5D9F2C8EF11E00B00D6A /* ProductInCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CF12C8EF11E00B00D6A /* ProductInCart.swift */; };
-		E04C5DA02C8EF11E00B00D6A /* EcommerceEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CF32C8EF11E00B00D6A /* EcommerceEvent.swift */; };
-		E04C5DA12C8EF11E00B00D6A /* Ecommerce.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CF52C8EF11E00B00D6A /* Ecommerce.swift */; };
-		E04C5DA22C8EF11E00B00D6A /* InAppMessageWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CF72C8EF11E00B00D6A /* InAppMessageWebViewController.swift */; };
-		E04C5DA32C8EF11E00B00D6A /* InApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CF92C8EF11E00B00D6A /* InApp.swift */; };
-		E04C5DA42C8EF11E00B00D6A /* InAppAsyncCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CFA2C8EF11E00B00D6A /* InAppAsyncCheck.swift */; };
-		E04C5DA52C8EF11E00B00D6A /* InAppContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CFB2C8EF11E00B00D6A /* InAppContents.swift */; };
-		E04C5DA62C8EF11E00B00D6A /* InAppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CFC2C8EF11E00B00D6A /* InAppMessage.swift */; };
-		E04C5DA72C8EF11E00B00D6A /* InAppMessageLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CFD2C8EF11E00B00D6A /* InAppMessageLists.swift */; };
-		E04C5DA82C8EF11E00B00D6A /* InAppScriptMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CFE2C8EF11E00B00D6A /* InAppScriptMessage.swift */; };
-		E04C5DA92C8EF11E00B00D6A /* NewInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5CFF2C8EF11E00B00D6A /* NewInteraction.swift */; };
-		E04C5DAA2C8EF11E00B00D6A /* InAppRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D012C8EF11E00B00D6A /* InAppRequestService.swift */; };
-		E04C5DAB2C8EF11E00B00D6A /* InAppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D022C8EF11E00B00D6A /* InAppService.swift */; };
-		E04C5DAC2C8EF11E00B00D6A /* InAppMessagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D042C8EF11E00B00D6A /* InAppMessagePresenter.swift */; };
-		E04C5DAD2C8EF11E00B00D6A /* InAppMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D052C8EF11E00B00D6A /* InAppMessages.swift */; };
-		E04C5DAE2C8EF11E00B00D6A /* InAppMessageStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D062C8EF11E00B00D6A /* InAppMessageStatus.swift */; };
-		E04C5DAF2C8EF11E00B00D6A /* PauseBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D072C8EF11E00B00D6A /* PauseBehavior.swift */; };
-		E04C5DB02C8EF11E00B00D6A /* LinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D092C8EF11E00B00D6A /* LinkHandler.swift */; };
-		E04C5DB12C8EF11E00B00D6A /* APIClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D0B2C8EF11E00B00D6A /* APIClientError.swift */; };
-		E04C5DB22C8EF11E00B00D6A /* APIStatusError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D0C2C8EF11E00B00D6A /* APIStatusError.swift */; };
-		E04C5DB32C8EF11E00B00D6A /* ContainerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D0D2C8EF11E00B00D6A /* ContainerError.swift */; };
-		E04C5DB42C8EF11E00B00D6A /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D0E2C8EF11E00B00D6A /* NetworkError.swift */; };
-		E04C5DB52C8EF11E00B00D6A /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D102C8EF11E00B00D6A /* APIRequest.swift */; };
-		E04C5DB62C8EF11E00B00D6A /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D112C8EF11E00B00D6A /* BaseURL.swift */; };
-		E04C5DB72C8EF11E00B00D6A /* Dictionary+getHeaderValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D122C8EF11E00B00D6A /* Dictionary+getHeaderValue.swift */; };
-		E04C5DB82C8EF11E00B00D6A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D132C8EF11E00B00D6A /* HTTPMethod.swift */; };
-		E04C5DB92C8EF11E00B00D6A /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D142C8EF11E00B00D6A /* ParameterEncoding.swift */; };
-		E04C5DBA2C8EF11E00B00D6A /* RequestDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D152C8EF11E00B00D6A /* RequestDecorator.swift */; };
-		E04C5DBB2C8EF11E00B00D6A /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D162C8EF11E00B00D6A /* RequestManager.swift */; };
-		E04C5DBC2C8EF11E00B00D6A /* ResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D172C8EF11E00B00D6A /* ResponseData.swift */; };
-		E04C5DBD2C8EF11E00B00D6A /* RecommendableProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D192C8EF11E00B00D6A /* RecommendableProduct.swift */; };
-		E04C5DBE2C8EF11E00B00D6A /* RecomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D1B2C8EF11E00B00D6A /* RecomEvent.swift */; };
-		E04C5DBF2C8EF11E00B00D6A /* RecomEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D1C2C8EF11E00B00D6A /* RecomEvents.swift */; };
-		E04C5DC02C8EF11E00B00D6A /* RecomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D1D2C8EF11E00B00D6A /* RecomFilter.swift */; };
-		E04C5DC12C8EF11E00B00D6A /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D1E2C8EF11E00B00D6A /* Recommendations.swift */; };
-		E04C5DC22C8EF11E00B00D6A /* AppInboxMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D202C8EF11E00B00D6A /* AppInboxMessagesRequest.swift */; };
-		E04C5DC32C8EF11E00B00D6A /* AppInboxMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D212C8EF11E00B00D6A /* AppInboxMessagesResponse.swift */; };
-		E04C5DC42C8EF11E00B00D6A /* AppInboxMessagesCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D232C8EF11E00B00D6A /* AppInboxMessagesCountRequest.swift */; };
-		E04C5DC52C8EF11E00B00D6A /* AppInboxMessagesCountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D242C8EF11E00B00D6A /* AppInboxMessagesCountResponse.swift */; };
-		E04C5DC62C8EF11E00B00D6A /* AppInboxMarkAsOpenedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D262C8EF11E00B00D6A /* AppInboxMarkAsOpenedRequest.swift */; };
-		E04C5DC72C8EF11E00B00D6A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D282C8EF11E00B00D6A /* Device.swift */; };
-		E04C5DC82C8EF11E00B00D6A /* DeviceCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D292C8EF11E00B00D6A /* DeviceCategory.swift */; };
-		E04C5DC92C8EF11E00B00D6A /* DeviceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D2A2C8EF11E00B00D6A /* DeviceRequest.swift */; };
-		E04C5DCA2C8EF11E00B00D6A /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D2C2C8EF11E00B00D6A /* EmptyResponse.swift */; };
-		E04C5DCB2C8EF11E00B00D6A /* ErrorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D2E2C8EF11E00B00D6A /* ErrorEvent.swift */; };
-		E04C5DCC2C8EF11E00B00D6A /* ErrorEventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D2F2C8EF11E00B00D6A /* ErrorEventRequest.swift */; };
-		E04C5DCD2C8EF11E00B00D6A /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D312C8EF11E00B00D6A /* Event.swift */; };
-		E04C5DCE2C8EF11E00B00D6A /* EventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D322C8EF11E00B00D6A /* EventRequest.swift */; };
-		E04C5DCF2C8EF11E00B00D6A /* InAppBaseHTMLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D342C8EF11E00B00D6A /* InAppBaseHTMLRequest.swift */; };
-		E04C5DD02C8EF11E00B00D6A /* InAppCheckAsyncRulesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D352C8EF11E00B00D6A /* InAppCheckAsyncRulesRequest.swift */; };
-		E04C5DD12C8EF11E00B00D6A /* InAppMessageContentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D362C8EF11E00B00D6A /* InAppMessageContentRequest.swift */; };
-		E04C5DD22C8EF11E00B00D6A /* InAppMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D372C8EF11E00B00D6A /* InAppMessageRequest.swift */; };
-		E04C5DD32C8EF11E00B00D6A /* InAppMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D382C8EF11E00B00D6A /* InAppMessagesRequest.swift */; };
-		E04C5DD42C8EF11E00B00D6A /* InAppScriptEventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D392C8EF11E00B00D6A /* InAppScriptEventRequest.swift */; };
-		E04C5DD52C8EF11E00B00D6A /* NewInAppInteractionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D3A2C8EF11E00B00D6A /* NewInAppInteractionRequest.swift */; };
-		E04C5DD62C8EF11E00B00D6A /* RecomEventsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D3C2C8EF11E00B00D6A /* RecomEventsRequest.swift */; };
-		E04C5DD72C8EF11E00B00D6A /* RecomsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D3D2C8EF11E00B00D6A /* RecomsRequest.swift */; };
-		E04C5DD82C8EF11E00B00D6A /* RegisterLinkClickRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D3F2C8EF11E00B00D6A /* RegisterLinkClickRequest.swift */; };
-		E04C5DD92C8EF11E00B00D6A /* InteractionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D412C8EF11E00B00D6A /* InteractionStatus.swift */; };
-		E04C5DDA2C8EF11E00B00D6A /* NotificationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D422C8EF11E00B00D6A /* NotificationStatus.swift */; };
-		E04C5DDB2C8EF11E00B00D6A /* UpdateInteractionStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D432C8EF11E00B00D6A /* UpdateInteractionStatusRequest.swift */; };
-		E04C5DDC2C8EF11E00B00D6A /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D452C8EF11E00B00D6A /* Address.swift */; };
-		E04C5DDD2C8EF11E00B00D6A /* AnonymousUserAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D462C8EF11E00B00D6A /* AnonymousUserAttributes.swift */; };
-		E04C5DDE2C8EF11E00B00D6A /* UpdateUserAttributesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D472C8EF11E00B00D6A /* UpdateUserAttributesRequest.swift */; };
-		E04C5DDF2C8EF11E00B00D6A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D482C8EF11E00B00D6A /* User.swift */; };
-		E04C5DE02C8EF11E00B00D6A /* UserAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D492C8EF11E00B00D6A /* UserAttributes.swift */; };
-		E04C5DE12C8EF11E00B00D6A /* UserCustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D4A2C8EF11E00B00D6A /* UserCustomField.swift */; };
-		E04C5DE22C8EF11E00B00D6A /* DateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D4D2C8EF11E00B00D6A /* DateOperation.swift */; };
-		E04C5DE32C8EF11E00B00D6A /* MessagesCountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D4E2C8EF11E00B00D6A /* MessagesCountOperation.swift */; };
-		E04C5DE42C8EF11E00B00D6A /* NetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D4F2C8EF11E00B00D6A /* NetworkOperation.swift */; };
-		E04C5DE52C8EF11E00B00D6A /* RegisterLinkClickOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D502C8EF11E00B00D6A /* RegisterLinkClickOperation.swift */; };
-		E04C5DE62C8EF11E00B00D6A /* SendAppInboxMessagesIdsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D512C8EF11E00B00D6A /* SendAppInboxMessagesIdsOperation.swift */; };
-		E04C5DE72C8EF11E00B00D6A /* SendDeviceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D522C8EF11E00B00D6A /* SendDeviceOperation.swift */; };
-		E04C5DE82C8EF11E00B00D6A /* SendErrorEventsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D532C8EF11E00B00D6A /* SendErrorEventsOperation.swift */; };
-		E04C5DE92C8EF11E00B00D6A /* SendEventsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D542C8EF11E00B00D6A /* SendEventsOperation.swift */; };
-		E04C5DEA2C8EF11E00B00D6A /* SendNotificationsStatusOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D552C8EF11E00B00D6A /* SendNotificationsStatusOperation.swift */; };
-		E04C5DEB2C8EF11E00B00D6A /* SendRecomEventsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D562C8EF11E00B00D6A /* SendRecomEventsOperation.swift */; };
-		E04C5DEC2C8EF11E00B00D6A /* SendUserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D572C8EF11E00B00D6A /* SendUserOperation.swift */; };
-		E04C5DED2C8EF11E00B00D6A /* EventsSenderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D592C8EF11E00B00D6A /* EventsSenderScheduler.swift */; };
-		E04C5DEE2C8EF11E00B00D6A /* MobileRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D5B2C8EF11E00B00D6A /* MobileRequestService.swift */; };
-		E04C5DEF2C8EF11E00B00D6A /* SendingServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D5C2C8EF11E00B00D6A /* SendingServices.swift */; };
-		E04C5DF02C8EF11E00B00D6A /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D5D2C8EF11E00B00D6A /* SessionService.swift */; };
-		E04C5DF12C8EF11E00B00D6A /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D5F2C8EF11E00B00D6A /* KeyValueStorage.swift */; };
-		E04C5DF22C8EF11E00B00D6A /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D612C8EF11E00B00D6A /* ImageCell.swift */; };
-		E04C5DF32C8EF11E00B00D6A /* RetenoCarouselNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D622C8EF11E00B00D6A /* RetenoCarouselNotificationViewController.swift */; };
-		E04C5DF42C8EF11E00B00D6A /* RetenoNotificationServiceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D642C8EF11E00B00D6A /* RetenoNotificationServiceExtension.swift */; };
-		E04C5DF52C8EF11E00B00D6A /* RetenoUserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D652C8EF11E00B00D6A /* RetenoUserNotification.swift */; };
-		E04C5DF62C8EF11E00B00D6A /* RetenoUserNotificationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D662C8EF11E00B00D6A /* RetenoUserNotificationAction.swift */; };
-		E04C5DF72C8EF11E00B00D6A /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04C5D672C8EF11E00B00D6A /* UserNotificationService.swift */; };
+		E0367B462CA4A07700F88784 /* Dictionary+getHeaderValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AEE2CA4A07700F88784 /* Dictionary+getHeaderValue.swift */; };
+		E0367B472CA4A07700F88784 /* BundleIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AAB2CA4A07700F88784 /* BundleIdHelper.swift */; };
+		E0367B482CA4A07700F88784 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A9F2CA4A07700F88784 /* Date+Utils.swift */; };
+		E0367B492CA4A07700F88784 /* MobileRequestServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A952CA4A07700F88784 /* MobileRequestServiceBuilder.swift */; };
+		E0367B4A2CA4A07700F88784 /* BaseBEDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A9B2CA4A07700F88784 /* BaseBEDateFormatter.swift */; };
+		E0367B4B2CA4A07700F88784 /* InAppAsyncCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AD62CA4A07700F88784 /* InAppAsyncCheck.swift */; };
+		E0367B4C2CA4A07700F88784 /* UnauthorizedAuthNetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A992CA4A07700F88784 /* UnauthorizedAuthNetworkBuilder.swift */; };
+		E0367B4D2CA4A07700F88784 /* AppInboxMessagesCountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B002CA4A07700F88784 /* AppInboxMessagesCountResponse.swift */; };
+		E0367B4E2CA4A07700F88784 /* APIStatusError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AE82CA4A07700F88784 /* APIStatusError.swift */; };
+		E0367B4F2CA4A07700F88784 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AEA2CA4A07700F88784 /* NetworkError.swift */; };
+		E0367B502CA4A07700F88784 /* Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AC12CA4A07700F88784 /* Autolayout.swift */; };
+		E0367B512CA4A07700F88784 /* ErrorEventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B0B2CA4A07700F88784 /* ErrorEventRequest.swift */; };
+		E0367B522CA4A07700F88784 /* DevicePlatformHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AA82CA4A07700F88784 /* DevicePlatformHelper.swift */; };
+		E0367B532CA4A07700F88784 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AA22CA4A07700F88784 /* UIApplication+Extensions.swift */; };
+		E0367B542CA4A07700F88784 /* ResponseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF32CA4A07700F88784 /* ResponseData.swift */; };
+		E0367B552CA4A07700F88784 /* DictionaryResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ABC2CA4A07700F88784 /* DictionaryResponseHandler.swift */; };
+		E0367B562CA4A07700F88784 /* AppInboxMessageStorableId.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A912CA4A07700F88784 /* AppInboxMessageStorableId.swift */; };
+		E0367B572CA4A07700F88784 /* APIClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AE72CA4A07700F88784 /* APIClientError.swift */; };
+		E0367B582CA4A07700F88784 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B242CA4A07700F88784 /* User.swift */; };
+		E0367B592CA4A07700F88784 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A9D2CA4A07700F88784 /* Array+Extensions.swift */; };
+		E0367B5A2CA4A07700F88784 /* NetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B2B2CA4A07700F88784 /* NetworkOperation.swift */; };
+		E0367B5B2CA4A07700F88784 /* SendNotificationsStatusOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B312CA4A07700F88784 /* SendNotificationsStatusOperation.swift */; };
+		E0367B5C2CA4A07700F88784 /* EmptyResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ABD2CA4A07700F88784 /* EmptyResponseHandler.swift */; };
+		E0367B5D2CA4A07700F88784 /* AppInboxMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A902CA4A07700F88784 /* AppInboxMessage.swift */; };
+		E0367B5E2CA4A07700F88784 /* ExternalUserDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AAD2CA4A07700F88784 /* ExternalUserDataHelper.swift */; };
+		E0367B5F2CA4A07700F88784 /* ContainerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AE92CA4A07700F88784 /* ContainerError.swift */; };
+		E0367B602CA4A07700F88784 /* MobileRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B372CA4A07700F88784 /* MobileRequestService.swift */; };
+		E0367B612CA4A07700F88784 /* AppInboxMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AFD2CA4A07700F88784 /* AppInboxMessagesResponse.swift */; };
+		E0367B622CA4A07700F88784 /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B432CA4A07700F88784 /* UserNotificationService.swift */; };
+		E0367B632CA4A07700F88784 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B3D2CA4A07700F88784 /* ImageCell.swift */; };
+		E0367B642CA4A07700F88784 /* InAppMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B132CA4A07700F88784 /* InAppMessageRequest.swift */; };
+		E0367B652CA4A07700F88784 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ACA2CA4A07700F88784 /* Order.swift */; };
+		E0367B662CA4A07700F88784 /* ErrorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B0A2CA4A07700F88784 /* ErrorEvent.swift */; };
+		E0367B672CA4A07700F88784 /* InAppMessageContentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B122CA4A07700F88784 /* InAppMessageContentRequest.swift */; };
+		E0367B682CA4A07700F88784 /* ExpirableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB72CA4A07700F88784 /* ExpirableData.swift */; };
+		E0367B692CA4A07700F88784 /* PauseBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AE32CA4A07700F88784 /* PauseBehavior.swift */; };
+		E0367B6A2CA4A07700F88784 /* NewInAppInteractionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B162CA4A07700F88784 /* NewInAppInteractionRequest.swift */; };
+		E0367B6B2CA4A07700F88784 /* RetenoNotificationServiceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B402CA4A07700F88784 /* RetenoNotificationServiceExtension.swift */; };
+		E0367B6C2CA4A07700F88784 /* SendAppInboxMessagesIdsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B2D2CA4A07700F88784 /* SendAppInboxMessagesIdsOperation.swift */; };
+		E0367B6D2CA4A07700F88784 /* InAppMessagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AE02CA4A07700F88784 /* InAppMessagePresenter.swift */; };
+		E0367B6E2CA4A07700F88784 /* AppInboxMarkAsOpenedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B022CA4A07700F88784 /* AppInboxMarkAsOpenedRequest.swift */; };
+		E0367B6F2CA4A07700F88784 /* InAppRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ADD2CA4A07700F88784 /* InAppRequestService.swift */; };
+		E0367B702CA4A07700F88784 /* StorableLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AC82CA4A07700F88784 /* StorableLink.swift */; };
+		E0367B712CA4A07700F88784 /* AppInboxMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AFC2CA4A07700F88784 /* AppInboxMessagesRequest.swift */; };
+		E0367B722CA4A07700F88784 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AEC2CA4A07700F88784 /* APIRequest.swift */; };
+		E0367B732CA4A07700F88784 /* RetenoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AC52CA4A07700F88784 /* RetenoConfiguration.swift */; };
+		E0367B742CA4A07700F88784 /* Analytics+UNUserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A8B2CA4A07700F88784 /* Analytics+UNUserNotificationCenter.swift */; };
+		E0367B752CA4A07700F88784 /* JSONInitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB92CA4A07700F88784 /* JSONInitable.swift */; };
+		E0367B762CA4A07700F88784 /* AnalyticsServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A932CA4A07700F88784 /* AnalyticsServiceBuilder.swift */; };
+		E0367B772CA4A07700F88784 /* InApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AD52CA4A07700F88784 /* InApp.swift */; };
+		E0367B782CA4A07700F88784 /* DecodableResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ABB2CA4A07700F88784 /* DecodableResponseHandler.swift */; };
+		E0367B792CA4A07700F88784 /* RegisterLinkClickRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B1B2CA4A07700F88784 /* RegisterLinkClickRequest.swift */; };
+		E0367B7A2CA4A07700F88784 /* EmptyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B082CA4A07700F88784 /* EmptyResponse.swift */; };
+		E0367B7B2CA4A07700F88784 /* RetenoUserNotificationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B422CA4A07700F88784 /* RetenoUserNotificationAction.swift */; };
+		E0367B7C2CA4A07700F88784 /* Reteno.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AC42CA4A07700F88784 /* Reteno.swift */; };
+		E0367B7D2CA4A07700F88784 /* EventsSenderSchedulerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A942CA4A07700F88784 /* EventsSenderSchedulerBuilder.swift */; };
+		E0367B7E2CA4A07700F88784 /* ResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ABF2CA4A07700F88784 /* ResponseHandler.swift */; };
+		E0367B7F2CA4A07700F88784 /* RegisterLinkClickOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B2C2CA4A07700F88784 /* RegisterLinkClickOperation.swift */; };
+		E0367B802CA4A07700F88784 /* SessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B392CA4A07700F88784 /* SessionService.swift */; };
+		E0367B812CA4A07700F88784 /* NotificationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B1E2CA4A07700F88784 /* NotificationStatus.swift */; };
+		E0367B822CA4A07700F88784 /* EventsSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB62CA4A07700F88784 /* EventsSender.swift */; };
+		E0367B832CA4A07700F88784 /* InAppMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B142CA4A07700F88784 /* InAppMessagesRequest.swift */; };
+		E0367B842CA4A07700F88784 /* SendingServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B382CA4A07700F88784 /* SendingServices.swift */; };
+		E0367B852CA4A07700F88784 /* InAppMessageStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AE22CA4A07700F88784 /* InAppMessageStatus.swift */; };
+		E0367B862CA4A07700F88784 /* RetenoNotificationsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB02CA4A07700F88784 /* RetenoNotificationsHelper.swift */; };
+		E0367B872CA4A07700F88784 /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AED2CA4A07700F88784 /* BaseURL.swift */; };
+		E0367B882CA4A07700F88784 /* AnonymousUserAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B222CA4A07700F88784 /* AnonymousUserAttributes.swift */; };
+		E0367B892CA4A07700F88784 /* UpdateInteractionStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B1F2CA4A07700F88784 /* UpdateInteractionStatusRequest.swift */; };
+		E0367B8A2CA4A07700F88784 /* RecomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF72CA4A07700F88784 /* RecomEvent.swift */; };
+		E0367B8B2CA4A07700F88784 /* ProductInCart.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ACD2CA4A07700F88784 /* ProductInCart.swift */; };
+		E0367B8C2CA4A07700F88784 /* ApiKeyHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AAA2CA4A07700F88784 /* ApiKeyHelper.swift */; };
+		E0367B8D2CA4A07700F88784 /* InteractionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B1D2CA4A07700F88784 /* InteractionStatus.swift */; };
+		E0367B8E2CA4A07700F88784 /* RequestDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF12CA4A07700F88784 /* RequestDecorator.swift */; };
+		E0367B8F2CA4A07700F88784 /* AppInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A8F2CA4A07700F88784 /* AppInbox.swift */; };
+		E0367B902CA4A07700F88784 /* DeviceCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B052CA4A07700F88784 /* DeviceCategory.swift */; };
+		E0367B912CA4A07700F88784 /* InAppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ADE2CA4A07700F88784 /* InAppService.swift */; };
+		E0367B922CA4A07700F88784 /* InAppScriptEventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B152CA4A07700F88784 /* InAppScriptEventRequest.swift */; };
+		E0367B932CA4A07700F88784 /* RecomEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF82CA4A07700F88784 /* RecomEvents.swift */; };
+		E0367B942CA4A07700F88784 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B0D2CA4A07700F88784 /* Event.swift */; };
+		E0367B952CA4A07700F88784 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB42CA4A07700F88784 /* Logger.swift */; };
+		E0367B962CA4A07700F88784 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF02CA4A07700F88784 /* ParameterEncoding.swift */; };
+		E0367B972CA4A07700F88784 /* ExternalUserIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AAE2CA4A07700F88784 /* ExternalUserIdHelper.swift */; };
+		E0367B982CA4A07700F88784 /* InAppCheckAsyncRulesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B112CA4A07700F88784 /* InAppCheckAsyncRulesRequest.swift */; };
+		E0367B992CA4A07700F88784 /* Ecommerce.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AD12CA4A07700F88784 /* Ecommerce.swift */; };
+		E0367B9A2CA4A07700F88784 /* MessagesCountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B2A2CA4A07700F88784 /* MessagesCountOperation.swift */; };
+		E0367B9B2CA4A07700F88784 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B042CA4A07700F88784 /* Device.swift */; };
+		E0367B9C2CA4A07700F88784 /* SendUserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B332CA4A07700F88784 /* SendUserOperation.swift */; };
+		E0367B9D2CA4A07700F88784 /* Operation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AA02CA4A07700F88784 /* Operation+Extensions.swift */; };
+		E0367B9E2CA4A07700F88784 /* ErrorLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB32CA4A07700F88784 /* ErrorLogger.swift */; };
+		E0367B9F2CA4A07700F88784 /* RecomsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B192CA4A07700F88784 /* RecomsRequest.swift */; };
+		E0367BA02CA4A07700F88784 /* EcommerceEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ACF2CA4A07700F88784 /* EcommerceEvent.swift */; };
+		E0367BA12CA4A07700F88784 /* InAppMessageWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AD32CA4A07700F88784 /* InAppMessageWebViewController.swift */; };
+		E0367BA22CA4A07700F88784 /* RecomEventsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B182CA4A07700F88784 /* RecomEventsRequest.swift */; };
+		E0367BA32CA4A07700F88784 /* DeviceCategoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AA62CA4A07700F88784 /* DeviceCategoryHelper.swift */; };
+		E0367BA42CA4A07700F88784 /* SDKStateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB12CA4A07700F88784 /* SDKStateHelper.swift */; };
+		E0367BA52CA4A07700F88784 /* Analytics+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A892CA4A07700F88784 /* Analytics+SwiftUI.swift */; };
+		E0367BA62CA4A07700F88784 /* LinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AE52CA4A07700F88784 /* LinkHandler.swift */; };
+		E0367BA72CA4A07700F88784 /* InAppBaseHTMLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B102CA4A07700F88784 /* InAppBaseHTMLRequest.swift */; };
+		E0367BA82CA4A07700F88784 /* Codable+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A9E2CA4A07700F88784 /* Codable+Dictionary.swift */; };
+		E0367BA92CA4A07700F88784 /* JSONConverterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AAF2CA4A07700F88784 /* JSONConverterHelper.swift */; };
+		E0367BAA2CA4A07700F88784 /* AdvertisingIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AA42CA4A07700F88784 /* AdvertisingIdHelper.swift */; };
+		E0367BAB2CA4A07700F88784 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AFA2CA4A07700F88784 /* Recommendations.swift */; };
+		E0367BAC2CA4A07700F88784 /* RetenoCarouselNotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B3E2CA4A07700F88784 /* RetenoCarouselNotificationViewController.swift */; };
+		E0367BAD2CA4A07700F88784 /* AppVersionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AA52CA4A07700F88784 /* AppVersionHelper.swift */; };
+		E0367BAE2CA4A07700F88784 /* SendEventsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B302CA4A07700F88784 /* SendEventsOperation.swift */; };
+		E0367BAF2CA4A07700F88784 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ACB2CA4A07700F88784 /* Product.swift */; };
+		E0367BB02CA4A07700F88784 /* SendDeviceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B2E2CA4A07700F88784 /* SendDeviceOperation.swift */; };
+		E0367BB12CA4A07700F88784 /* InAppContents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AD72CA4A07700F88784 /* InAppContents.swift */; };
+		E0367BB22CA4A07700F88784 /* StorageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A982CA4A07700F88784 /* StorageBuilder.swift */; };
+		E0367BB32CA4A07700F88784 /* RecommendableProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF52CA4A07700F88784 /* RecommendableProduct.swift */; };
+		E0367BB42CA4A07700F88784 /* RetenoUserNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B412CA4A07700F88784 /* RetenoUserNotification.swift */; };
+		E0367BB52CA4A07700F88784 /* InAppMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AD82CA4A07700F88784 /* InAppMessage.swift */; };
+		E0367BB62CA4A07700F88784 /* NewInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ADB2CA4A07700F88784 /* NewInteraction.swift */; };
+		E0367BB72CA4A07700F88784 /* Optional+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AA12CA4A07700F88784 /* Optional+Extensions.swift */; };
+		E0367BB82CA4A07700F88784 /* UserCustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B262CA4A07700F88784 /* UserCustomField.swift */; };
+		E0367BB92CA4A07700F88784 /* UpdateUserAttributesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B232CA4A07700F88784 /* UpdateUserAttributesRequest.swift */; };
+		E0367BBA2CA4A07700F88784 /* AppInboxMessagesCountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AFF2CA4A07700F88784 /* AppInboxMessagesCountRequest.swift */; };
+		E0367BBB2CA4A07700F88784 /* EventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B0E2CA4A07700F88784 /* EventRequest.swift */; };
+		E0367BBC2CA4A07700F88784 /* AppLifecycleAnalyticsSevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A8D2CA4A07700F88784 /* AppLifecycleAnalyticsSevice.swift */; };
+		E0367BBD2CA4A07700F88784 /* Analytics+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A8A2CA4A07700F88784 /* Analytics+UIViewController.swift */; };
+		E0367BBE2CA4A07700F88784 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AEF2CA4A07700F88784 /* HTTPMethod.swift */; };
+		E0367BBF2CA4A07700F88784 /* EventsSenderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B352CA4A07700F88784 /* EventsSenderScheduler.swift */; };
+		E0367BC02CA4A07700F88784 /* InAppMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AE12CA4A07700F88784 /* InAppMessages.swift */; };
+		E0367BC12CA4A07700F88784 /* DateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B292CA4A07700F88784 /* DateOperation.swift */; };
+		E0367BC22CA4A07700F88784 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B212CA4A07700F88784 /* Address.swift */; };
+		E0367BC32CA4A07700F88784 /* SendingServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A972CA4A07700F88784 /* SendingServiceBuilder.swift */; };
+		E0367BC42CA4A07700F88784 /* DeepLinksProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AC72CA4A07700F88784 /* DeepLinksProcessor.swift */; };
+		E0367BC52CA4A07700F88784 /* DeviceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B062CA4A07700F88784 /* DeviceRequest.swift */; };
+		E0367BC62CA4A07700F88784 /* InAppMessageLists.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AD92CA4A07700F88784 /* InAppMessageLists.swift */; };
+		E0367BC72CA4A07700F88784 /* UserAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B252CA4A07700F88784 /* UserAttributes.swift */; };
+		E0367BC82CA4A07700F88784 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B3B2CA4A07700F88784 /* KeyValueStorage.swift */; };
+		E0367BC92CA4A07700F88784 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A8C2CA4A07700F88784 /* AnalyticsService.swift */; };
+		E0367BCA2CA4A07700F88784 /* SendRecomEventsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B322CA4A07700F88784 /* SendRecomEventsOperation.swift */; };
+		E0367BCB2CA4A07700F88784 /* DebugModeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AAC2CA4A07700F88784 /* DebugModeHelper.swift */; };
+		E0367BCC2CA4A07700F88784 /* RecomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF92CA4A07700F88784 /* RecomFilter.swift */; };
+		E0367BCD2CA4A07700F88784 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF22CA4A07700F88784 /* RequestManager.swift */; };
+		E0367BCE2CA4A07700F88784 /* NetworkBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A962CA4A07700F88784 /* NetworkBuilder.swift */; };
+		E0367BCF2CA4A07700F88784 /* SendErrorEventsOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B2F2CA4A07700F88784 /* SendErrorEventsOperation.swift */; };
+		E0367BD02CA4A07700F88784 /* DeviceIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AA72CA4A07700F88784 /* DeviceIdHelper.swift */; };
+		E0367BD12CA4A07700F88784 /* Groupable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB82CA4A07700F88784 /* Groupable.swift */; };
+		E0367BD22CA4A07700F88784 /* ProductCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ACC2CA4A07700F88784 /* ProductCategory.swift */; };
+		E0367BD32CA4A07700F88784 /* RecomsResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ABE2CA4A07700F88784 /* RecomsResponseHandler.swift */; };
+		E0367BD42CA4A07700F88784 /* InAppScriptMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ADA2CA4A07700F88784 /* InAppScriptMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		18D02BC828CA2F02008018F1 /* Reteno.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reteno.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D02BCB28CA2F02008018F1 /* Reteno.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reteno.h; sourceTree = "<group>"; };
 		18D02BCC28CA2F02008018F1 /* Reteno.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Reteno.docc; sourceTree = "<group>"; };
-		E04C5CAE2C8EF11E00B00D6A /* Analytics+SwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+SwiftUI.swift"; sourceTree = "<group>"; };
-		E04C5CAF2C8EF11E00B00D6A /* Analytics+UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+UIViewController.swift"; sourceTree = "<group>"; };
-		E04C5CB02C8EF11E00B00D6A /* Analytics+UNUserNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+UNUserNotificationCenter.swift"; sourceTree = "<group>"; };
-		E04C5CB12C8EF11E00B00D6A /* AnalyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
-		E04C5CB22C8EF11E00B00D6A /* AppLifecycleAnalyticsSevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLifecycleAnalyticsSevice.swift; sourceTree = "<group>"; };
-		E04C5CB42C8EF11E00B00D6A /* AppInbox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInbox.swift; sourceTree = "<group>"; };
-		E04C5CB52C8EF11E00B00D6A /* AppInboxMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInboxMessage.swift; sourceTree = "<group>"; };
-		E04C5CB62C8EF11E00B00D6A /* AppInboxMessageStorableId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInboxMessageStorableId.swift; sourceTree = "<group>"; };
-		E04C5CB82C8EF11E00B00D6A /* AnalyticsServiceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceBuilder.swift; sourceTree = "<group>"; };
-		E04C5CB92C8EF11E00B00D6A /* EventsSenderSchedulerBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsSenderSchedulerBuilder.swift; sourceTree = "<group>"; };
-		E04C5CBA2C8EF11E00B00D6A /* MobileRequestServiceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileRequestServiceBuilder.swift; sourceTree = "<group>"; };
-		E04C5CBB2C8EF11E00B00D6A /* NetworkBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkBuilder.swift; sourceTree = "<group>"; };
-		E04C5CBC2C8EF11E00B00D6A /* SendingServiceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendingServiceBuilder.swift; sourceTree = "<group>"; };
-		E04C5CBD2C8EF11E00B00D6A /* StorageBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageBuilder.swift; sourceTree = "<group>"; };
-		E04C5CBE2C8EF11E00B00D6A /* UnauthorizedAuthNetworkBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnauthorizedAuthNetworkBuilder.swift; sourceTree = "<group>"; };
-		E04C5CC02C8EF11E00B00D6A /* BaseBEDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseBEDateFormatter.swift; sourceTree = "<group>"; };
-		E04C5CC22C8EF11E00B00D6A /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
-		E04C5CC32C8EF11E00B00D6A /* Codable+Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Dictionary.swift"; sourceTree = "<group>"; };
-		E04C5CC42C8EF11E00B00D6A /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
-		E04C5CC52C8EF11E00B00D6A /* Operation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Operation+Extensions.swift"; sourceTree = "<group>"; };
-		E04C5CC62C8EF11E00B00D6A /* Optional+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Optional+Extensions.swift"; sourceTree = "<group>"; };
-		E04C5CC72C8EF11E00B00D6A /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
-		E04C5CC92C8EF11E00B00D6A /* AdvertisingIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvertisingIdHelper.swift; sourceTree = "<group>"; };
-		E04C5CCA2C8EF11E00B00D6A /* AppVersionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersionHelper.swift; sourceTree = "<group>"; };
-		E04C5CCB2C8EF11E00B00D6A /* DeviceCategoryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCategoryHelper.swift; sourceTree = "<group>"; };
-		E04C5CCC2C8EF11E00B00D6A /* DeviceIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceIdHelper.swift; sourceTree = "<group>"; };
-		E04C5CCD2C8EF11E00B00D6A /* DevicePlatformHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicePlatformHelper.swift; sourceTree = "<group>"; };
-		E04C5CCF2C8EF11E00B00D6A /* ApiKeyHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeyHelper.swift; sourceTree = "<group>"; };
-		E04C5CD02C8EF11E00B00D6A /* BundleIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleIdHelper.swift; sourceTree = "<group>"; };
-		E04C5CD12C8EF11E00B00D6A /* DebugModeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebugModeHelper.swift; sourceTree = "<group>"; };
-		E04C5CD22C8EF11E00B00D6A /* ExternalUserDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalUserDataHelper.swift; sourceTree = "<group>"; };
-		E04C5CD32C8EF11E00B00D6A /* ExternalUserIdHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalUserIdHelper.swift; sourceTree = "<group>"; };
-		E04C5CD42C8EF11E00B00D6A /* JSONConverterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONConverterHelper.swift; sourceTree = "<group>"; };
-		E04C5CD52C8EF11E00B00D6A /* RetenoNotificationsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoNotificationsHelper.swift; sourceTree = "<group>"; };
-		E04C5CD72C8EF11E00B00D6A /* ErrorLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorLogger.swift; sourceTree = "<group>"; };
-		E04C5CD82C8EF11E00B00D6A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		E04C5CDA2C8EF11E00B00D6A /* EventsSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsSender.swift; sourceTree = "<group>"; };
-		E04C5CDB2C8EF11E00B00D6A /* ExpirableData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpirableData.swift; sourceTree = "<group>"; };
-		E04C5CDC2C8EF11E00B00D6A /* Groupable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Groupable.swift; sourceTree = "<group>"; };
-		E04C5CDD2C8EF11E00B00D6A /* JSONInitable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONInitable.swift; sourceTree = "<group>"; };
-		E04C5CDF2C8EF11E00B00D6A /* DecodableResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodableResponseHandler.swift; sourceTree = "<group>"; };
-		E04C5CE02C8EF11E00B00D6A /* DictionaryResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryResponseHandler.swift; sourceTree = "<group>"; };
-		E04C5CE12C8EF11E00B00D6A /* EmptyResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyResponseHandler.swift; sourceTree = "<group>"; };
-		E04C5CE22C8EF11E00B00D6A /* RecomsResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecomsResponseHandler.swift; sourceTree = "<group>"; };
-		E04C5CE32C8EF11E00B00D6A /* ResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseHandler.swift; sourceTree = "<group>"; };
-		E04C5CE52C8EF11E00B00D6A /* Autolayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Autolayout.swift; sourceTree = "<group>"; };
-		E04C5CE82C8EF11E00B00D6A /* Reteno.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reteno.swift; sourceTree = "<group>"; };
-		E04C5CE92C8EF11E00B00D6A /* RetenoConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoConfiguration.swift; sourceTree = "<group>"; };
-		E04C5CEB2C8EF11E00B00D6A /* DeepLinksProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinksProcessor.swift; sourceTree = "<group>"; };
-		E04C5CEC2C8EF11E00B00D6A /* StorableLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorableLink.swift; sourceTree = "<group>"; };
-		E04C5CEE2C8EF11E00B00D6A /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
-		E04C5CEF2C8EF11E00B00D6A /* Product.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
-		E04C5CF02C8EF11E00B00D6A /* ProductCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductCategory.swift; sourceTree = "<group>"; };
-		E04C5CF12C8EF11E00B00D6A /* ProductInCart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductInCart.swift; sourceTree = "<group>"; };
-		E04C5CF32C8EF11E00B00D6A /* EcommerceEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcommerceEvent.swift; sourceTree = "<group>"; };
-		E04C5CF52C8EF11E00B00D6A /* Ecommerce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ecommerce.swift; sourceTree = "<group>"; };
-		E04C5CF72C8EF11E00B00D6A /* InAppMessageWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppMessageWebViewController.swift; sourceTree = "<group>"; };
-		E04C5CF92C8EF11E00B00D6A /* InApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InApp.swift; sourceTree = "<group>"; };
-		E04C5CFA2C8EF11E00B00D6A /* InAppAsyncCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppAsyncCheck.swift; sourceTree = "<group>"; };
-		E04C5CFB2C8EF11E00B00D6A /* InAppContents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppContents.swift; sourceTree = "<group>"; };
-		E04C5CFC2C8EF11E00B00D6A /* InAppMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppMessage.swift; sourceTree = "<group>"; };
-		E04C5CFD2C8EF11E00B00D6A /* InAppMessageLists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppMessageLists.swift; sourceTree = "<group>"; };
-		E04C5CFE2C8EF11E00B00D6A /* InAppScriptMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppScriptMessage.swift; sourceTree = "<group>"; };
-		E04C5CFF2C8EF11E00B00D6A /* NewInteraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewInteraction.swift; sourceTree = "<group>"; };
-		E04C5D012C8EF11E00B00D6A /* InAppRequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppRequestService.swift; sourceTree = "<group>"; };
-		E04C5D022C8EF11E00B00D6A /* InAppService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppService.swift; sourceTree = "<group>"; };
-		E04C5D042C8EF11E00B00D6A /* InAppMessagePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppMessagePresenter.swift; sourceTree = "<group>"; };
-		E04C5D052C8EF11E00B00D6A /* InAppMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppMessages.swift; sourceTree = "<group>"; };
-		E04C5D062C8EF11E00B00D6A /* InAppMessageStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppMessageStatus.swift; sourceTree = "<group>"; };
-		E04C5D072C8EF11E00B00D6A /* PauseBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseBehavior.swift; sourceTree = "<group>"; };
-		E04C5D092C8EF11E00B00D6A /* LinkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkHandler.swift; sourceTree = "<group>"; };
-		E04C5D0B2C8EF11E00B00D6A /* APIClientError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClientError.swift; sourceTree = "<group>"; };
-		E04C5D0C2C8EF11E00B00D6A /* APIStatusError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIStatusError.swift; sourceTree = "<group>"; };
-		E04C5D0D2C8EF11E00B00D6A /* ContainerError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerError.swift; sourceTree = "<group>"; };
-		E04C5D0E2C8EF11E00B00D6A /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		E04C5D102C8EF11E00B00D6A /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
-		E04C5D112C8EF11E00B00D6A /* BaseURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
-		E04C5D122C8EF11E00B00D6A /* Dictionary+getHeaderValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+getHeaderValue.swift"; sourceTree = "<group>"; };
-		E04C5D132C8EF11E00B00D6A /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
-		E04C5D142C8EF11E00B00D6A /* ParameterEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
-		E04C5D152C8EF11E00B00D6A /* RequestDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestDecorator.swift; sourceTree = "<group>"; };
-		E04C5D162C8EF11E00B00D6A /* RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
-		E04C5D172C8EF11E00B00D6A /* ResponseData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseData.swift; sourceTree = "<group>"; };
-		E04C5D192C8EF11E00B00D6A /* RecommendableProduct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecommendableProduct.swift; sourceTree = "<group>"; };
-		E04C5D1B2C8EF11E00B00D6A /* RecomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecomEvent.swift; sourceTree = "<group>"; };
-		E04C5D1C2C8EF11E00B00D6A /* RecomEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecomEvents.swift; sourceTree = "<group>"; };
-		E04C5D1D2C8EF11E00B00D6A /* RecomFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecomFilter.swift; sourceTree = "<group>"; };
-		E04C5D1E2C8EF11E00B00D6A /* Recommendations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
-		E04C5D202C8EF11E00B00D6A /* AppInboxMessagesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInboxMessagesRequest.swift; sourceTree = "<group>"; };
-		E04C5D212C8EF11E00B00D6A /* AppInboxMessagesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInboxMessagesResponse.swift; sourceTree = "<group>"; };
-		E04C5D232C8EF11E00B00D6A /* AppInboxMessagesCountRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInboxMessagesCountRequest.swift; sourceTree = "<group>"; };
-		E04C5D242C8EF11E00B00D6A /* AppInboxMessagesCountResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInboxMessagesCountResponse.swift; sourceTree = "<group>"; };
-		E04C5D262C8EF11E00B00D6A /* AppInboxMarkAsOpenedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInboxMarkAsOpenedRequest.swift; sourceTree = "<group>"; };
-		E04C5D282C8EF11E00B00D6A /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
-		E04C5D292C8EF11E00B00D6A /* DeviceCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCategory.swift; sourceTree = "<group>"; };
-		E04C5D2A2C8EF11E00B00D6A /* DeviceRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceRequest.swift; sourceTree = "<group>"; };
-		E04C5D2C2C8EF11E00B00D6A /* EmptyResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
-		E04C5D2E2C8EF11E00B00D6A /* ErrorEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorEvent.swift; sourceTree = "<group>"; };
-		E04C5D2F2C8EF11E00B00D6A /* ErrorEventRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorEventRequest.swift; sourceTree = "<group>"; };
-		E04C5D312C8EF11E00B00D6A /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		E04C5D322C8EF11E00B00D6A /* EventRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRequest.swift; sourceTree = "<group>"; };
-		E04C5D342C8EF11E00B00D6A /* InAppBaseHTMLRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppBaseHTMLRequest.swift; sourceTree = "<group>"; };
-		E04C5D352C8EF11E00B00D6A /* InAppCheckAsyncRulesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppCheckAsyncRulesRequest.swift; sourceTree = "<group>"; };
-		E04C5D362C8EF11E00B00D6A /* InAppMessageContentRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppMessageContentRequest.swift; sourceTree = "<group>"; };
-		E04C5D372C8EF11E00B00D6A /* InAppMessageRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppMessageRequest.swift; sourceTree = "<group>"; };
-		E04C5D382C8EF11E00B00D6A /* InAppMessagesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppMessagesRequest.swift; sourceTree = "<group>"; };
-		E04C5D392C8EF11E00B00D6A /* InAppScriptEventRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppScriptEventRequest.swift; sourceTree = "<group>"; };
-		E04C5D3A2C8EF11E00B00D6A /* NewInAppInteractionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewInAppInteractionRequest.swift; sourceTree = "<group>"; };
-		E04C5D3C2C8EF11E00B00D6A /* RecomEventsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecomEventsRequest.swift; sourceTree = "<group>"; };
-		E04C5D3D2C8EF11E00B00D6A /* RecomsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecomsRequest.swift; sourceTree = "<group>"; };
-		E04C5D3F2C8EF11E00B00D6A /* RegisterLinkClickRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterLinkClickRequest.swift; sourceTree = "<group>"; };
-		E04C5D412C8EF11E00B00D6A /* InteractionStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractionStatus.swift; sourceTree = "<group>"; };
-		E04C5D422C8EF11E00B00D6A /* NotificationStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationStatus.swift; sourceTree = "<group>"; };
-		E04C5D432C8EF11E00B00D6A /* UpdateInteractionStatusRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateInteractionStatusRequest.swift; sourceTree = "<group>"; };
-		E04C5D452C8EF11E00B00D6A /* Address.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		E04C5D462C8EF11E00B00D6A /* AnonymousUserAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousUserAttributes.swift; sourceTree = "<group>"; };
-		E04C5D472C8EF11E00B00D6A /* UpdateUserAttributesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUserAttributesRequest.swift; sourceTree = "<group>"; };
-		E04C5D482C8EF11E00B00D6A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		E04C5D492C8EF11E00B00D6A /* UserAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributes.swift; sourceTree = "<group>"; };
-		E04C5D4A2C8EF11E00B00D6A /* UserCustomField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCustomField.swift; sourceTree = "<group>"; };
-		E04C5D4D2C8EF11E00B00D6A /* DateOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateOperation.swift; sourceTree = "<group>"; };
-		E04C5D4E2C8EF11E00B00D6A /* MessagesCountOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCountOperation.swift; sourceTree = "<group>"; };
-		E04C5D4F2C8EF11E00B00D6A /* NetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkOperation.swift; sourceTree = "<group>"; };
-		E04C5D502C8EF11E00B00D6A /* RegisterLinkClickOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterLinkClickOperation.swift; sourceTree = "<group>"; };
-		E04C5D512C8EF11E00B00D6A /* SendAppInboxMessagesIdsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendAppInboxMessagesIdsOperation.swift; sourceTree = "<group>"; };
-		E04C5D522C8EF11E00B00D6A /* SendDeviceOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendDeviceOperation.swift; sourceTree = "<group>"; };
-		E04C5D532C8EF11E00B00D6A /* SendErrorEventsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendErrorEventsOperation.swift; sourceTree = "<group>"; };
-		E04C5D542C8EF11E00B00D6A /* SendEventsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEventsOperation.swift; sourceTree = "<group>"; };
-		E04C5D552C8EF11E00B00D6A /* SendNotificationsStatusOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNotificationsStatusOperation.swift; sourceTree = "<group>"; };
-		E04C5D562C8EF11E00B00D6A /* SendRecomEventsOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendRecomEventsOperation.swift; sourceTree = "<group>"; };
-		E04C5D572C8EF11E00B00D6A /* SendUserOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendUserOperation.swift; sourceTree = "<group>"; };
-		E04C5D592C8EF11E00B00D6A /* EventsSenderScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsSenderScheduler.swift; sourceTree = "<group>"; };
-		E04C5D5B2C8EF11E00B00D6A /* MobileRequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MobileRequestService.swift; sourceTree = "<group>"; };
-		E04C5D5C2C8EF11E00B00D6A /* SendingServices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendingServices.swift; sourceTree = "<group>"; };
-		E04C5D5D2C8EF11E00B00D6A /* SessionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
-		E04C5D5F2C8EF11E00B00D6A /* KeyValueStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
-		E04C5D612C8EF11E00B00D6A /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
-		E04C5D622C8EF11E00B00D6A /* RetenoCarouselNotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoCarouselNotificationViewController.swift; sourceTree = "<group>"; };
-		E04C5D642C8EF11E00B00D6A /* RetenoNotificationServiceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoNotificationServiceExtension.swift; sourceTree = "<group>"; };
-		E04C5D652C8EF11E00B00D6A /* RetenoUserNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoUserNotification.swift; sourceTree = "<group>"; };
-		E04C5D662C8EF11E00B00D6A /* RetenoUserNotificationAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetenoUserNotificationAction.swift; sourceTree = "<group>"; };
-		E04C5D672C8EF11E00B00D6A /* UserNotificationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
+		E0367A892CA4A07700F88784 /* Analytics+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+SwiftUI.swift"; sourceTree = "<group>"; };
+		E0367A8A2CA4A07700F88784 /* Analytics+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+UIViewController.swift"; sourceTree = "<group>"; };
+		E0367A8B2CA4A07700F88784 /* Analytics+UNUserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+UNUserNotificationCenter.swift"; sourceTree = "<group>"; };
+		E0367A8C2CA4A07700F88784 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		E0367A8D2CA4A07700F88784 /* AppLifecycleAnalyticsSevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLifecycleAnalyticsSevice.swift; sourceTree = "<group>"; };
+		E0367A8F2CA4A07700F88784 /* AppInbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInbox.swift; sourceTree = "<group>"; };
+		E0367A902CA4A07700F88784 /* AppInboxMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessage.swift; sourceTree = "<group>"; };
+		E0367A912CA4A07700F88784 /* AppInboxMessageStorableId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessageStorableId.swift; sourceTree = "<group>"; };
+		E0367A932CA4A07700F88784 /* AnalyticsServiceBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceBuilder.swift; sourceTree = "<group>"; };
+		E0367A942CA4A07700F88784 /* EventsSenderSchedulerBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSenderSchedulerBuilder.swift; sourceTree = "<group>"; };
+		E0367A952CA4A07700F88784 /* MobileRequestServiceBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileRequestServiceBuilder.swift; sourceTree = "<group>"; };
+		E0367A962CA4A07700F88784 /* NetworkBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkBuilder.swift; sourceTree = "<group>"; };
+		E0367A972CA4A07700F88784 /* SendingServiceBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingServiceBuilder.swift; sourceTree = "<group>"; };
+		E0367A982CA4A07700F88784 /* StorageBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageBuilder.swift; sourceTree = "<group>"; };
+		E0367A992CA4A07700F88784 /* UnauthorizedAuthNetworkBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnauthorizedAuthNetworkBuilder.swift; sourceTree = "<group>"; };
+		E0367A9B2CA4A07700F88784 /* BaseBEDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseBEDateFormatter.swift; sourceTree = "<group>"; };
+		E0367A9D2CA4A07700F88784 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		E0367A9E2CA4A07700F88784 /* Codable+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Codable+Dictionary.swift"; sourceTree = "<group>"; };
+		E0367A9F2CA4A07700F88784 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
+		E0367AA02CA4A07700F88784 /* Operation+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operation+Extensions.swift"; sourceTree = "<group>"; };
+		E0367AA12CA4A07700F88784 /* Optional+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Extensions.swift"; sourceTree = "<group>"; };
+		E0367AA22CA4A07700F88784 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
+		E0367AA42CA4A07700F88784 /* AdvertisingIdHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisingIdHelper.swift; sourceTree = "<group>"; };
+		E0367AA52CA4A07700F88784 /* AppVersionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionHelper.swift; sourceTree = "<group>"; };
+		E0367AA62CA4A07700F88784 /* DeviceCategoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCategoryHelper.swift; sourceTree = "<group>"; };
+		E0367AA72CA4A07700F88784 /* DeviceIdHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdHelper.swift; sourceTree = "<group>"; };
+		E0367AA82CA4A07700F88784 /* DevicePlatformHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePlatformHelper.swift; sourceTree = "<group>"; };
+		E0367AAA2CA4A07700F88784 /* ApiKeyHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeyHelper.swift; sourceTree = "<group>"; };
+		E0367AAB2CA4A07700F88784 /* BundleIdHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleIdHelper.swift; sourceTree = "<group>"; };
+		E0367AAC2CA4A07700F88784 /* DebugModeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugModeHelper.swift; sourceTree = "<group>"; };
+		E0367AAD2CA4A07700F88784 /* ExternalUserDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalUserDataHelper.swift; sourceTree = "<group>"; };
+		E0367AAE2CA4A07700F88784 /* ExternalUserIdHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalUserIdHelper.swift; sourceTree = "<group>"; };
+		E0367AAF2CA4A07700F88784 /* JSONConverterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverterHelper.swift; sourceTree = "<group>"; };
+		E0367AB02CA4A07700F88784 /* RetenoNotificationsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoNotificationsHelper.swift; sourceTree = "<group>"; };
+		E0367AB12CA4A07700F88784 /* SDKStateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKStateHelper.swift; sourceTree = "<group>"; };
+		E0367AB32CA4A07700F88784 /* ErrorLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorLogger.swift; sourceTree = "<group>"; };
+		E0367AB42CA4A07700F88784 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		E0367AB62CA4A07700F88784 /* EventsSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSender.swift; sourceTree = "<group>"; };
+		E0367AB72CA4A07700F88784 /* ExpirableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpirableData.swift; sourceTree = "<group>"; };
+		E0367AB82CA4A07700F88784 /* Groupable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groupable.swift; sourceTree = "<group>"; };
+		E0367AB92CA4A07700F88784 /* JSONInitable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONInitable.swift; sourceTree = "<group>"; };
+		E0367ABB2CA4A07700F88784 /* DecodableResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableResponseHandler.swift; sourceTree = "<group>"; };
+		E0367ABC2CA4A07700F88784 /* DictionaryResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryResponseHandler.swift; sourceTree = "<group>"; };
+		E0367ABD2CA4A07700F88784 /* EmptyResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponseHandler.swift; sourceTree = "<group>"; };
+		E0367ABE2CA4A07700F88784 /* RecomsResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomsResponseHandler.swift; sourceTree = "<group>"; };
+		E0367ABF2CA4A07700F88784 /* ResponseHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseHandler.swift; sourceTree = "<group>"; };
+		E0367AC12CA4A07700F88784 /* Autolayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autolayout.swift; sourceTree = "<group>"; };
+		E0367AC42CA4A07700F88784 /* Reteno.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reteno.swift; sourceTree = "<group>"; };
+		E0367AC52CA4A07700F88784 /* RetenoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoConfiguration.swift; sourceTree = "<group>"; };
+		E0367AC72CA4A07700F88784 /* DeepLinksProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinksProcessor.swift; sourceTree = "<group>"; };
+		E0367AC82CA4A07700F88784 /* StorableLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorableLink.swift; sourceTree = "<group>"; };
+		E0367ACA2CA4A07700F88784 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		E0367ACB2CA4A07700F88784 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		E0367ACC2CA4A07700F88784 /* ProductCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCategory.swift; sourceTree = "<group>"; };
+		E0367ACD2CA4A07700F88784 /* ProductInCart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInCart.swift; sourceTree = "<group>"; };
+		E0367ACF2CA4A07700F88784 /* EcommerceEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcommerceEvent.swift; sourceTree = "<group>"; };
+		E0367AD12CA4A07700F88784 /* Ecommerce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ecommerce.swift; sourceTree = "<group>"; };
+		E0367AD32CA4A07700F88784 /* InAppMessageWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessageWebViewController.swift; sourceTree = "<group>"; };
+		E0367AD52CA4A07700F88784 /* InApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InApp.swift; sourceTree = "<group>"; };
+		E0367AD62CA4A07700F88784 /* InAppAsyncCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppAsyncCheck.swift; sourceTree = "<group>"; };
+		E0367AD72CA4A07700F88784 /* InAppContents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppContents.swift; sourceTree = "<group>"; };
+		E0367AD82CA4A07700F88784 /* InAppMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessage.swift; sourceTree = "<group>"; };
+		E0367AD92CA4A07700F88784 /* InAppMessageLists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessageLists.swift; sourceTree = "<group>"; };
+		E0367ADA2CA4A07700F88784 /* InAppScriptMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppScriptMessage.swift; sourceTree = "<group>"; };
+		E0367ADB2CA4A07700F88784 /* NewInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewInteraction.swift; sourceTree = "<group>"; };
+		E0367ADD2CA4A07700F88784 /* InAppRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppRequestService.swift; sourceTree = "<group>"; };
+		E0367ADE2CA4A07700F88784 /* InAppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppService.swift; sourceTree = "<group>"; };
+		E0367AE02CA4A07700F88784 /* InAppMessagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessagePresenter.swift; sourceTree = "<group>"; };
+		E0367AE12CA4A07700F88784 /* InAppMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessages.swift; sourceTree = "<group>"; };
+		E0367AE22CA4A07700F88784 /* InAppMessageStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessageStatus.swift; sourceTree = "<group>"; };
+		E0367AE32CA4A07700F88784 /* PauseBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseBehavior.swift; sourceTree = "<group>"; };
+		E0367AE52CA4A07700F88784 /* LinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHandler.swift; sourceTree = "<group>"; };
+		E0367AE72CA4A07700F88784 /* APIClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClientError.swift; sourceTree = "<group>"; };
+		E0367AE82CA4A07700F88784 /* APIStatusError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIStatusError.swift; sourceTree = "<group>"; };
+		E0367AE92CA4A07700F88784 /* ContainerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerError.swift; sourceTree = "<group>"; };
+		E0367AEA2CA4A07700F88784 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		E0367AEC2CA4A07700F88784 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		E0367AED2CA4A07700F88784 /* BaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
+		E0367AEE2CA4A07700F88784 /* Dictionary+getHeaderValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+getHeaderValue.swift"; sourceTree = "<group>"; };
+		E0367AEF2CA4A07700F88784 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		E0367AF02CA4A07700F88784 /* ParameterEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
+		E0367AF12CA4A07700F88784 /* RequestDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDecorator.swift; sourceTree = "<group>"; };
+		E0367AF22CA4A07700F88784 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		E0367AF32CA4A07700F88784 /* ResponseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseData.swift; sourceTree = "<group>"; };
+		E0367AF52CA4A07700F88784 /* RecommendableProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendableProduct.swift; sourceTree = "<group>"; };
+		E0367AF72CA4A07700F88784 /* RecomEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomEvent.swift; sourceTree = "<group>"; };
+		E0367AF82CA4A07700F88784 /* RecomEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomEvents.swift; sourceTree = "<group>"; };
+		E0367AF92CA4A07700F88784 /* RecomFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomFilter.swift; sourceTree = "<group>"; };
+		E0367AFA2CA4A07700F88784 /* Recommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
+		E0367AFC2CA4A07700F88784 /* AppInboxMessagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessagesRequest.swift; sourceTree = "<group>"; };
+		E0367AFD2CA4A07700F88784 /* AppInboxMessagesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessagesResponse.swift; sourceTree = "<group>"; };
+		E0367AFF2CA4A07700F88784 /* AppInboxMessagesCountRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessagesCountRequest.swift; sourceTree = "<group>"; };
+		E0367B002CA4A07700F88784 /* AppInboxMessagesCountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessagesCountResponse.swift; sourceTree = "<group>"; };
+		E0367B022CA4A07700F88784 /* AppInboxMarkAsOpenedRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMarkAsOpenedRequest.swift; sourceTree = "<group>"; };
+		E0367B042CA4A07700F88784 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		E0367B052CA4A07700F88784 /* DeviceCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCategory.swift; sourceTree = "<group>"; };
+		E0367B062CA4A07700F88784 /* DeviceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRequest.swift; sourceTree = "<group>"; };
+		E0367B082CA4A07700F88784 /* EmptyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyResponse.swift; sourceTree = "<group>"; };
+		E0367B0A2CA4A07700F88784 /* ErrorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEvent.swift; sourceTree = "<group>"; };
+		E0367B0B2CA4A07700F88784 /* ErrorEventRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEventRequest.swift; sourceTree = "<group>"; };
+		E0367B0D2CA4A07700F88784 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		E0367B0E2CA4A07700F88784 /* EventRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRequest.swift; sourceTree = "<group>"; };
+		E0367B102CA4A07700F88784 /* InAppBaseHTMLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppBaseHTMLRequest.swift; sourceTree = "<group>"; };
+		E0367B112CA4A07700F88784 /* InAppCheckAsyncRulesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppCheckAsyncRulesRequest.swift; sourceTree = "<group>"; };
+		E0367B122CA4A07700F88784 /* InAppMessageContentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessageContentRequest.swift; sourceTree = "<group>"; };
+		E0367B132CA4A07700F88784 /* InAppMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessageRequest.swift; sourceTree = "<group>"; };
+		E0367B142CA4A07700F88784 /* InAppMessagesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessagesRequest.swift; sourceTree = "<group>"; };
+		E0367B152CA4A07700F88784 /* InAppScriptEventRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppScriptEventRequest.swift; sourceTree = "<group>"; };
+		E0367B162CA4A07700F88784 /* NewInAppInteractionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewInAppInteractionRequest.swift; sourceTree = "<group>"; };
+		E0367B182CA4A07700F88784 /* RecomEventsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomEventsRequest.swift; sourceTree = "<group>"; };
+		E0367B192CA4A07700F88784 /* RecomsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecomsRequest.swift; sourceTree = "<group>"; };
+		E0367B1B2CA4A07700F88784 /* RegisterLinkClickRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterLinkClickRequest.swift; sourceTree = "<group>"; };
+		E0367B1D2CA4A07700F88784 /* InteractionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionStatus.swift; sourceTree = "<group>"; };
+		E0367B1E2CA4A07700F88784 /* NotificationStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationStatus.swift; sourceTree = "<group>"; };
+		E0367B1F2CA4A07700F88784 /* UpdateInteractionStatusRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateInteractionStatusRequest.swift; sourceTree = "<group>"; };
+		E0367B212CA4A07700F88784 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		E0367B222CA4A07700F88784 /* AnonymousUserAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousUserAttributes.swift; sourceTree = "<group>"; };
+		E0367B232CA4A07700F88784 /* UpdateUserAttributesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserAttributesRequest.swift; sourceTree = "<group>"; };
+		E0367B242CA4A07700F88784 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E0367B252CA4A07700F88784 /* UserAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributes.swift; sourceTree = "<group>"; };
+		E0367B262CA4A07700F88784 /* UserCustomField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCustomField.swift; sourceTree = "<group>"; };
+		E0367B292CA4A07700F88784 /* DateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateOperation.swift; sourceTree = "<group>"; };
+		E0367B2A2CA4A07700F88784 /* MessagesCountOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesCountOperation.swift; sourceTree = "<group>"; };
+		E0367B2B2CA4A07700F88784 /* NetworkOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkOperation.swift; sourceTree = "<group>"; };
+		E0367B2C2CA4A07700F88784 /* RegisterLinkClickOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterLinkClickOperation.swift; sourceTree = "<group>"; };
+		E0367B2D2CA4A07700F88784 /* SendAppInboxMessagesIdsOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAppInboxMessagesIdsOperation.swift; sourceTree = "<group>"; };
+		E0367B2E2CA4A07700F88784 /* SendDeviceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDeviceOperation.swift; sourceTree = "<group>"; };
+		E0367B2F2CA4A07700F88784 /* SendErrorEventsOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendErrorEventsOperation.swift; sourceTree = "<group>"; };
+		E0367B302CA4A07700F88784 /* SendEventsOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendEventsOperation.swift; sourceTree = "<group>"; };
+		E0367B312CA4A07700F88784 /* SendNotificationsStatusOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNotificationsStatusOperation.swift; sourceTree = "<group>"; };
+		E0367B322CA4A07700F88784 /* SendRecomEventsOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRecomEventsOperation.swift; sourceTree = "<group>"; };
+		E0367B332CA4A07700F88784 /* SendUserOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendUserOperation.swift; sourceTree = "<group>"; };
+		E0367B352CA4A07700F88784 /* EventsSenderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSenderScheduler.swift; sourceTree = "<group>"; };
+		E0367B372CA4A07700F88784 /* MobileRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileRequestService.swift; sourceTree = "<group>"; };
+		E0367B382CA4A07700F88784 /* SendingServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingServices.swift; sourceTree = "<group>"; };
+		E0367B392CA4A07700F88784 /* SessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionService.swift; sourceTree = "<group>"; };
+		E0367B3B2CA4A07700F88784 /* KeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
+		E0367B3D2CA4A07700F88784 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		E0367B3E2CA4A07700F88784 /* RetenoCarouselNotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoCarouselNotificationViewController.swift; sourceTree = "<group>"; };
+		E0367B402CA4A07700F88784 /* RetenoNotificationServiceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoNotificationServiceExtension.swift; sourceTree = "<group>"; };
+		E0367B412CA4A07700F88784 /* RetenoUserNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoUserNotification.swift; sourceTree = "<group>"; };
+		E0367B422CA4A07700F88784 /* RetenoUserNotificationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoUserNotificationAction.swift; sourceTree = "<group>"; };
+		E0367B432CA4A07700F88784 /* UserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -331,518 +333,519 @@
 		18D02BCA28CA2F02008018F1 /* Reteno */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D692C8EF11E00B00D6A /* Sources */,
+				E0367B452CA4A07700F88784 /* Sources */,
 				18D02BCB28CA2F02008018F1 /* Reteno.h */,
 				18D02BCC28CA2F02008018F1 /* Reteno.docc */,
 			);
 			path = Reteno;
 			sourceTree = "<group>";
 		};
-		E04C5CB32C8EF11E00B00D6A /* Analytics */ = {
+		E0367A8E2CA4A07700F88784 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CAE2C8EF11E00B00D6A /* Analytics+SwiftUI.swift */,
-				E04C5CAF2C8EF11E00B00D6A /* Analytics+UIViewController.swift */,
-				E04C5CB02C8EF11E00B00D6A /* Analytics+UNUserNotificationCenter.swift */,
-				E04C5CB12C8EF11E00B00D6A /* AnalyticsService.swift */,
-				E04C5CB22C8EF11E00B00D6A /* AppLifecycleAnalyticsSevice.swift */,
+				E0367A892CA4A07700F88784 /* Analytics+SwiftUI.swift */,
+				E0367A8A2CA4A07700F88784 /* Analytics+UIViewController.swift */,
+				E0367A8B2CA4A07700F88784 /* Analytics+UNUserNotificationCenter.swift */,
+				E0367A8C2CA4A07700F88784 /* AnalyticsService.swift */,
+				E0367A8D2CA4A07700F88784 /* AppLifecycleAnalyticsSevice.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
 		};
-		E04C5CB72C8EF11E00B00D6A /* AppInbox */ = {
+		E0367A922CA4A07700F88784 /* AppInbox */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CB42C8EF11E00B00D6A /* AppInbox.swift */,
-				E04C5CB52C8EF11E00B00D6A /* AppInboxMessage.swift */,
-				E04C5CB62C8EF11E00B00D6A /* AppInboxMessageStorableId.swift */,
+				E0367A8F2CA4A07700F88784 /* AppInbox.swift */,
+				E0367A902CA4A07700F88784 /* AppInboxMessage.swift */,
+				E0367A912CA4A07700F88784 /* AppInboxMessageStorableId.swift */,
 			);
 			path = AppInbox;
 			sourceTree = "<group>";
 		};
-		E04C5CBF2C8EF11E00B00D6A /* Builder */ = {
+		E0367A9A2CA4A07700F88784 /* Builder */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CB82C8EF11E00B00D6A /* AnalyticsServiceBuilder.swift */,
-				E04C5CB92C8EF11E00B00D6A /* EventsSenderSchedulerBuilder.swift */,
-				E04C5CBA2C8EF11E00B00D6A /* MobileRequestServiceBuilder.swift */,
-				E04C5CBB2C8EF11E00B00D6A /* NetworkBuilder.swift */,
-				E04C5CBC2C8EF11E00B00D6A /* SendingServiceBuilder.swift */,
-				E04C5CBD2C8EF11E00B00D6A /* StorageBuilder.swift */,
-				E04C5CBE2C8EF11E00B00D6A /* UnauthorizedAuthNetworkBuilder.swift */,
+				E0367A932CA4A07700F88784 /* AnalyticsServiceBuilder.swift */,
+				E0367A942CA4A07700F88784 /* EventsSenderSchedulerBuilder.swift */,
+				E0367A952CA4A07700F88784 /* MobileRequestServiceBuilder.swift */,
+				E0367A962CA4A07700F88784 /* NetworkBuilder.swift */,
+				E0367A972CA4A07700F88784 /* SendingServiceBuilder.swift */,
+				E0367A982CA4A07700F88784 /* StorageBuilder.swift */,
+				E0367A992CA4A07700F88784 /* UnauthorizedAuthNetworkBuilder.swift */,
 			);
 			path = Builder;
 			sourceTree = "<group>";
 		};
-		E04C5CC12C8EF11E00B00D6A /* DateFormatters */ = {
+		E0367A9C2CA4A07700F88784 /* DateFormatters */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CC02C8EF11E00B00D6A /* BaseBEDateFormatter.swift */,
+				E0367A9B2CA4A07700F88784 /* BaseBEDateFormatter.swift */,
 			);
 			path = DateFormatters;
 			sourceTree = "<group>";
 		};
-		E04C5CC82C8EF11E00B00D6A /* Extensions */ = {
+		E0367AA32CA4A07700F88784 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CC22C8EF11E00B00D6A /* Array+Extensions.swift */,
-				E04C5CC32C8EF11E00B00D6A /* Codable+Dictionary.swift */,
-				E04C5CC42C8EF11E00B00D6A /* Date+Utils.swift */,
-				E04C5CC52C8EF11E00B00D6A /* Operation+Extensions.swift */,
-				E04C5CC62C8EF11E00B00D6A /* Optional+Extensions.swift */,
-				E04C5CC72C8EF11E00B00D6A /* UIApplication+Extensions.swift */,
+				E0367A9D2CA4A07700F88784 /* Array+Extensions.swift */,
+				E0367A9E2CA4A07700F88784 /* Codable+Dictionary.swift */,
+				E0367A9F2CA4A07700F88784 /* Date+Utils.swift */,
+				E0367AA02CA4A07700F88784 /* Operation+Extensions.swift */,
+				E0367AA12CA4A07700F88784 /* Optional+Extensions.swift */,
+				E0367AA22CA4A07700F88784 /* UIApplication+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		E04C5CCE2C8EF11E00B00D6A /* DeviceHelpers */ = {
+		E0367AA92CA4A07700F88784 /* DeviceHelpers */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CC92C8EF11E00B00D6A /* AdvertisingIdHelper.swift */,
-				E04C5CCA2C8EF11E00B00D6A /* AppVersionHelper.swift */,
-				E04C5CCB2C8EF11E00B00D6A /* DeviceCategoryHelper.swift */,
-				E04C5CCC2C8EF11E00B00D6A /* DeviceIdHelper.swift */,
-				E04C5CCD2C8EF11E00B00D6A /* DevicePlatformHelper.swift */,
+				E0367AA42CA4A07700F88784 /* AdvertisingIdHelper.swift */,
+				E0367AA52CA4A07700F88784 /* AppVersionHelper.swift */,
+				E0367AA62CA4A07700F88784 /* DeviceCategoryHelper.swift */,
+				E0367AA72CA4A07700F88784 /* DeviceIdHelper.swift */,
+				E0367AA82CA4A07700F88784 /* DevicePlatformHelper.swift */,
 			);
 			path = DeviceHelpers;
 			sourceTree = "<group>";
 		};
-		E04C5CD62C8EF11E00B00D6A /* Helpers */ = {
+		E0367AB22CA4A07700F88784 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CCE2C8EF11E00B00D6A /* DeviceHelpers */,
-				E04C5CCF2C8EF11E00B00D6A /* ApiKeyHelper.swift */,
-				E04C5CD02C8EF11E00B00D6A /* BundleIdHelper.swift */,
-				E04C5CD12C8EF11E00B00D6A /* DebugModeHelper.swift */,
-				E04C5CD22C8EF11E00B00D6A /* ExternalUserDataHelper.swift */,
-				E04C5CD32C8EF11E00B00D6A /* ExternalUserIdHelper.swift */,
-				E04C5CD42C8EF11E00B00D6A /* JSONConverterHelper.swift */,
-				E04C5CD52C8EF11E00B00D6A /* RetenoNotificationsHelper.swift */,
+				E0367AA92CA4A07700F88784 /* DeviceHelpers */,
+				E0367AAA2CA4A07700F88784 /* ApiKeyHelper.swift */,
+				E0367AAB2CA4A07700F88784 /* BundleIdHelper.swift */,
+				E0367AAC2CA4A07700F88784 /* DebugModeHelper.swift */,
+				E0367AAD2CA4A07700F88784 /* ExternalUserDataHelper.swift */,
+				E0367AAE2CA4A07700F88784 /* ExternalUserIdHelper.swift */,
+				E0367AAF2CA4A07700F88784 /* JSONConverterHelper.swift */,
+				E0367AB02CA4A07700F88784 /* RetenoNotificationsHelper.swift */,
+				E0367AB12CA4A07700F88784 /* SDKStateHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		E04C5CD92C8EF11E00B00D6A /* Logger */ = {
+		E0367AB52CA4A07700F88784 /* Logger */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CD72C8EF11E00B00D6A /* ErrorLogger.swift */,
-				E04C5CD82C8EF11E00B00D6A /* Logger.swift */,
+				E0367AB32CA4A07700F88784 /* ErrorLogger.swift */,
+				E0367AB42CA4A07700F88784 /* Logger.swift */,
 			);
 			path = Logger;
 			sourceTree = "<group>";
 		};
-		E04C5CDE2C8EF11E00B00D6A /* Protocols */ = {
+		E0367ABA2CA4A07700F88784 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CDA2C8EF11E00B00D6A /* EventsSender.swift */,
-				E04C5CDB2C8EF11E00B00D6A /* ExpirableData.swift */,
-				E04C5CDC2C8EF11E00B00D6A /* Groupable.swift */,
-				E04C5CDD2C8EF11E00B00D6A /* JSONInitable.swift */,
+				E0367AB62CA4A07700F88784 /* EventsSender.swift */,
+				E0367AB72CA4A07700F88784 /* ExpirableData.swift */,
+				E0367AB82CA4A07700F88784 /* Groupable.swift */,
+				E0367AB92CA4A07700F88784 /* JSONInitable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		E04C5CE42C8EF11E00B00D6A /* Response */ = {
+		E0367AC02CA4A07700F88784 /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CDF2C8EF11E00B00D6A /* DecodableResponseHandler.swift */,
-				E04C5CE02C8EF11E00B00D6A /* DictionaryResponseHandler.swift */,
-				E04C5CE12C8EF11E00B00D6A /* EmptyResponseHandler.swift */,
-				E04C5CE22C8EF11E00B00D6A /* RecomsResponseHandler.swift */,
-				E04C5CE32C8EF11E00B00D6A /* ResponseHandler.swift */,
+				E0367ABB2CA4A07700F88784 /* DecodableResponseHandler.swift */,
+				E0367ABC2CA4A07700F88784 /* DictionaryResponseHandler.swift */,
+				E0367ABD2CA4A07700F88784 /* EmptyResponseHandler.swift */,
+				E0367ABE2CA4A07700F88784 /* RecomsResponseHandler.swift */,
+				E0367ABF2CA4A07700F88784 /* ResponseHandler.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
 		};
-		E04C5CE62C8EF11E00B00D6A /* UI */ = {
+		E0367AC22CA4A07700F88784 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CE52C8EF11E00B00D6A /* Autolayout.swift */,
+				E0367AC12CA4A07700F88784 /* Autolayout.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
 		};
-		E04C5CE72C8EF11E00B00D6A /* Common */ = {
+		E0367AC32CA4A07700F88784 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CC12C8EF11E00B00D6A /* DateFormatters */,
-				E04C5CC82C8EF11E00B00D6A /* Extensions */,
-				E04C5CD62C8EF11E00B00D6A /* Helpers */,
-				E04C5CD92C8EF11E00B00D6A /* Logger */,
-				E04C5CDE2C8EF11E00B00D6A /* Protocols */,
-				E04C5CE42C8EF11E00B00D6A /* Response */,
-				E04C5CE62C8EF11E00B00D6A /* UI */,
+				E0367A9C2CA4A07700F88784 /* DateFormatters */,
+				E0367AA32CA4A07700F88784 /* Extensions */,
+				E0367AB22CA4A07700F88784 /* Helpers */,
+				E0367AB52CA4A07700F88784 /* Logger */,
+				E0367ABA2CA4A07700F88784 /* Protocols */,
+				E0367AC02CA4A07700F88784 /* Response */,
+				E0367AC22CA4A07700F88784 /* UI */,
 			);
 			path = Common;
 			sourceTree = "<group>";
 		};
-		E04C5CEA2C8EF11E00B00D6A /* Core */ = {
+		E0367AC62CA4A07700F88784 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CE82C8EF11E00B00D6A /* Reteno.swift */,
-				E04C5CE92C8EF11E00B00D6A /* RetenoConfiguration.swift */,
+				E0367AC42CA4A07700F88784 /* Reteno.swift */,
+				E0367AC52CA4A07700F88784 /* RetenoConfiguration.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
 		};
-		E04C5CED2C8EF11E00B00D6A /* DeepLinks */ = {
+		E0367AC92CA4A07700F88784 /* DeepLinks */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CEB2C8EF11E00B00D6A /* DeepLinksProcessor.swift */,
-				E04C5CEC2C8EF11E00B00D6A /* StorableLink.swift */,
+				E0367AC72CA4A07700F88784 /* DeepLinksProcessor.swift */,
+				E0367AC82CA4A07700F88784 /* StorableLink.swift */,
 			);
 			path = DeepLinks;
 			sourceTree = "<group>";
 		};
-		E04C5CF22C8EF11E00B00D6A /* Models */ = {
+		E0367ACE2CA4A07700F88784 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CEE2C8EF11E00B00D6A /* Order.swift */,
-				E04C5CEF2C8EF11E00B00D6A /* Product.swift */,
-				E04C5CF02C8EF11E00B00D6A /* ProductCategory.swift */,
-				E04C5CF12C8EF11E00B00D6A /* ProductInCart.swift */,
+				E0367ACA2CA4A07700F88784 /* Order.swift */,
+				E0367ACB2CA4A07700F88784 /* Product.swift */,
+				E0367ACC2CA4A07700F88784 /* ProductCategory.swift */,
+				E0367ACD2CA4A07700F88784 /* ProductInCart.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		E04C5CF42C8EF11E00B00D6A /* Protocols */ = {
+		E0367AD02CA4A07700F88784 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CF32C8EF11E00B00D6A /* EcommerceEvent.swift */,
+				E0367ACF2CA4A07700F88784 /* EcommerceEvent.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		E04C5CF62C8EF11E00B00D6A /* Ecommerce */ = {
+		E0367AD22CA4A07700F88784 /* Ecommerce */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CF22C8EF11E00B00D6A /* Models */,
-				E04C5CF42C8EF11E00B00D6A /* Protocols */,
-				E04C5CF52C8EF11E00B00D6A /* Ecommerce.swift */,
+				E0367ACE2CA4A07700F88784 /* Models */,
+				E0367AD02CA4A07700F88784 /* Protocols */,
+				E0367AD12CA4A07700F88784 /* Ecommerce.swift */,
 			);
 			path = Ecommerce;
 			sourceTree = "<group>";
 		};
-		E04C5CF82C8EF11E00B00D6A /* Controllers */ = {
+		E0367AD42CA4A07700F88784 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CF72C8EF11E00B00D6A /* InAppMessageWebViewController.swift */,
+				E0367AD32CA4A07700F88784 /* InAppMessageWebViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		E04C5D002C8EF11E00B00D6A /* Models */ = {
+		E0367ADC2CA4A07700F88784 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CF92C8EF11E00B00D6A /* InApp.swift */,
-				E04C5CFA2C8EF11E00B00D6A /* InAppAsyncCheck.swift */,
-				E04C5CFB2C8EF11E00B00D6A /* InAppContents.swift */,
-				E04C5CFC2C8EF11E00B00D6A /* InAppMessage.swift */,
-				E04C5CFD2C8EF11E00B00D6A /* InAppMessageLists.swift */,
-				E04C5CFE2C8EF11E00B00D6A /* InAppScriptMessage.swift */,
-				E04C5CFF2C8EF11E00B00D6A /* NewInteraction.swift */,
+				E0367AD52CA4A07700F88784 /* InApp.swift */,
+				E0367AD62CA4A07700F88784 /* InAppAsyncCheck.swift */,
+				E0367AD72CA4A07700F88784 /* InAppContents.swift */,
+				E0367AD82CA4A07700F88784 /* InAppMessage.swift */,
+				E0367AD92CA4A07700F88784 /* InAppMessageLists.swift */,
+				E0367ADA2CA4A07700F88784 /* InAppScriptMessage.swift */,
+				E0367ADB2CA4A07700F88784 /* NewInteraction.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		E04C5D032C8EF11E00B00D6A /* Services */ = {
+		E0367ADF2CA4A07700F88784 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D012C8EF11E00B00D6A /* InAppRequestService.swift */,
-				E04C5D022C8EF11E00B00D6A /* InAppService.swift */,
+				E0367ADD2CA4A07700F88784 /* InAppRequestService.swift */,
+				E0367ADE2CA4A07700F88784 /* InAppService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		E04C5D082C8EF11E00B00D6A /* InAppMessages */ = {
+		E0367AE42CA4A07700F88784 /* InAppMessages */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CF82C8EF11E00B00D6A /* Controllers */,
-				E04C5D002C8EF11E00B00D6A /* Models */,
-				E04C5D032C8EF11E00B00D6A /* Services */,
-				E04C5D042C8EF11E00B00D6A /* InAppMessagePresenter.swift */,
-				E04C5D052C8EF11E00B00D6A /* InAppMessages.swift */,
-				E04C5D062C8EF11E00B00D6A /* InAppMessageStatus.swift */,
-				E04C5D072C8EF11E00B00D6A /* PauseBehavior.swift */,
+				E0367AD42CA4A07700F88784 /* Controllers */,
+				E0367ADC2CA4A07700F88784 /* Models */,
+				E0367ADF2CA4A07700F88784 /* Services */,
+				E0367AE02CA4A07700F88784 /* InAppMessagePresenter.swift */,
+				E0367AE12CA4A07700F88784 /* InAppMessages.swift */,
+				E0367AE22CA4A07700F88784 /* InAppMessageStatus.swift */,
+				E0367AE32CA4A07700F88784 /* PauseBehavior.swift */,
 			);
 			path = InAppMessages;
 			sourceTree = "<group>";
 		};
-		E04C5D0A2C8EF11E00B00D6A /* LinkHandler */ = {
+		E0367AE62CA4A07700F88784 /* LinkHandler */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D092C8EF11E00B00D6A /* LinkHandler.swift */,
+				E0367AE52CA4A07700F88784 /* LinkHandler.swift */,
 			);
 			path = LinkHandler;
 			sourceTree = "<group>";
 		};
-		E04C5D0F2C8EF11E00B00D6A /* Errors */ = {
+		E0367AEB2CA4A07700F88784 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D0B2C8EF11E00B00D6A /* APIClientError.swift */,
-				E04C5D0C2C8EF11E00B00D6A /* APIStatusError.swift */,
-				E04C5D0D2C8EF11E00B00D6A /* ContainerError.swift */,
-				E04C5D0E2C8EF11E00B00D6A /* NetworkError.swift */,
+				E0367AE72CA4A07700F88784 /* APIClientError.swift */,
+				E0367AE82CA4A07700F88784 /* APIStatusError.swift */,
+				E0367AE92CA4A07700F88784 /* ContainerError.swift */,
+				E0367AEA2CA4A07700F88784 /* NetworkError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
 		};
-		E04C5D182C8EF11E00B00D6A /* Network */ = {
+		E0367AF42CA4A07700F88784 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D0F2C8EF11E00B00D6A /* Errors */,
-				E04C5D102C8EF11E00B00D6A /* APIRequest.swift */,
-				E04C5D112C8EF11E00B00D6A /* BaseURL.swift */,
-				E04C5D122C8EF11E00B00D6A /* Dictionary+getHeaderValue.swift */,
-				E04C5D132C8EF11E00B00D6A /* HTTPMethod.swift */,
-				E04C5D142C8EF11E00B00D6A /* ParameterEncoding.swift */,
-				E04C5D152C8EF11E00B00D6A /* RequestDecorator.swift */,
-				E04C5D162C8EF11E00B00D6A /* RequestManager.swift */,
-				E04C5D172C8EF11E00B00D6A /* ResponseData.swift */,
+				E0367AEB2CA4A07700F88784 /* Errors */,
+				E0367AEC2CA4A07700F88784 /* APIRequest.swift */,
+				E0367AED2CA4A07700F88784 /* BaseURL.swift */,
+				E0367AEE2CA4A07700F88784 /* Dictionary+getHeaderValue.swift */,
+				E0367AEF2CA4A07700F88784 /* HTTPMethod.swift */,
+				E0367AF02CA4A07700F88784 /* ParameterEncoding.swift */,
+				E0367AF12CA4A07700F88784 /* RequestDecorator.swift */,
+				E0367AF22CA4A07700F88784 /* RequestManager.swift */,
+				E0367AF32CA4A07700F88784 /* ResponseData.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
 		};
-		E04C5D1A2C8EF11E00B00D6A /* Protocols */ = {
+		E0367AF62CA4A07700F88784 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D192C8EF11E00B00D6A /* RecommendableProduct.swift */,
+				E0367AF52CA4A07700F88784 /* RecommendableProduct.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		E04C5D1F2C8EF11E00B00D6A /* Recommendations */ = {
+		E0367AFB2CA4A07700F88784 /* Recommendations */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D1A2C8EF11E00B00D6A /* Protocols */,
-				E04C5D1B2C8EF11E00B00D6A /* RecomEvent.swift */,
-				E04C5D1C2C8EF11E00B00D6A /* RecomEvents.swift */,
-				E04C5D1D2C8EF11E00B00D6A /* RecomFilter.swift */,
-				E04C5D1E2C8EF11E00B00D6A /* Recommendations.swift */,
+				E0367AF62CA4A07700F88784 /* Protocols */,
+				E0367AF72CA4A07700F88784 /* RecomEvent.swift */,
+				E0367AF82CA4A07700F88784 /* RecomEvents.swift */,
+				E0367AF92CA4A07700F88784 /* RecomFilter.swift */,
+				E0367AFA2CA4A07700F88784 /* Recommendations.swift */,
 			);
 			path = Recommendations;
 			sourceTree = "<group>";
 		};
-		E04C5D222C8EF11E00B00D6A /* Messages */ = {
+		E0367AFE2CA4A07700F88784 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D202C8EF11E00B00D6A /* AppInboxMessagesRequest.swift */,
-				E04C5D212C8EF11E00B00D6A /* AppInboxMessagesResponse.swift */,
+				E0367AFC2CA4A07700F88784 /* AppInboxMessagesRequest.swift */,
+				E0367AFD2CA4A07700F88784 /* AppInboxMessagesResponse.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
 		};
-		E04C5D252C8EF11E00B00D6A /* MessagesCount */ = {
+		E0367B012CA4A07700F88784 /* MessagesCount */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D232C8EF11E00B00D6A /* AppInboxMessagesCountRequest.swift */,
-				E04C5D242C8EF11E00B00D6A /* AppInboxMessagesCountResponse.swift */,
+				E0367AFF2CA4A07700F88784 /* AppInboxMessagesCountRequest.swift */,
+				E0367B002CA4A07700F88784 /* AppInboxMessagesCountResponse.swift */,
 			);
 			path = MessagesCount;
 			sourceTree = "<group>";
 		};
-		E04C5D272C8EF11E00B00D6A /* AppInbox */ = {
+		E0367B032CA4A07700F88784 /* AppInbox */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D222C8EF11E00B00D6A /* Messages */,
-				E04C5D252C8EF11E00B00D6A /* MessagesCount */,
-				E04C5D262C8EF11E00B00D6A /* AppInboxMarkAsOpenedRequest.swift */,
+				E0367AFE2CA4A07700F88784 /* Messages */,
+				E0367B012CA4A07700F88784 /* MessagesCount */,
+				E0367B022CA4A07700F88784 /* AppInboxMarkAsOpenedRequest.swift */,
 			);
 			path = AppInbox;
 			sourceTree = "<group>";
 		};
-		E04C5D2B2C8EF11E00B00D6A /* Device */ = {
+		E0367B072CA4A07700F88784 /* Device */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D282C8EF11E00B00D6A /* Device.swift */,
-				E04C5D292C8EF11E00B00D6A /* DeviceCategory.swift */,
-				E04C5D2A2C8EF11E00B00D6A /* DeviceRequest.swift */,
+				E0367B042CA4A07700F88784 /* Device.swift */,
+				E0367B052CA4A07700F88784 /* DeviceCategory.swift */,
+				E0367B062CA4A07700F88784 /* DeviceRequest.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
 		};
-		E04C5D2D2C8EF11E00B00D6A /* EmptyResponse */ = {
+		E0367B092CA4A07700F88784 /* EmptyResponse */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D2C2C8EF11E00B00D6A /* EmptyResponse.swift */,
+				E0367B082CA4A07700F88784 /* EmptyResponse.swift */,
 			);
 			path = EmptyResponse;
 			sourceTree = "<group>";
 		};
-		E04C5D302C8EF11E00B00D6A /* ErrorEventRequest */ = {
+		E0367B0C2CA4A07700F88784 /* ErrorEventRequest */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D2E2C8EF11E00B00D6A /* ErrorEvent.swift */,
-				E04C5D2F2C8EF11E00B00D6A /* ErrorEventRequest.swift */,
+				E0367B0A2CA4A07700F88784 /* ErrorEvent.swift */,
+				E0367B0B2CA4A07700F88784 /* ErrorEventRequest.swift */,
 			);
 			path = ErrorEventRequest;
 			sourceTree = "<group>";
 		};
-		E04C5D332C8EF11E00B00D6A /* EventRequest */ = {
+		E0367B0F2CA4A07700F88784 /* EventRequest */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D312C8EF11E00B00D6A /* Event.swift */,
-				E04C5D322C8EF11E00B00D6A /* EventRequest.swift */,
+				E0367B0D2CA4A07700F88784 /* Event.swift */,
+				E0367B0E2CA4A07700F88784 /* EventRequest.swift */,
 			);
 			path = EventRequest;
 			sourceTree = "<group>";
 		};
-		E04C5D3B2C8EF11E00B00D6A /* InAppMessages */ = {
+		E0367B172CA4A07700F88784 /* InAppMessages */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D342C8EF11E00B00D6A /* InAppBaseHTMLRequest.swift */,
-				E04C5D352C8EF11E00B00D6A /* InAppCheckAsyncRulesRequest.swift */,
-				E04C5D362C8EF11E00B00D6A /* InAppMessageContentRequest.swift */,
-				E04C5D372C8EF11E00B00D6A /* InAppMessageRequest.swift */,
-				E04C5D382C8EF11E00B00D6A /* InAppMessagesRequest.swift */,
-				E04C5D392C8EF11E00B00D6A /* InAppScriptEventRequest.swift */,
-				E04C5D3A2C8EF11E00B00D6A /* NewInAppInteractionRequest.swift */,
+				E0367B102CA4A07700F88784 /* InAppBaseHTMLRequest.swift */,
+				E0367B112CA4A07700F88784 /* InAppCheckAsyncRulesRequest.swift */,
+				E0367B122CA4A07700F88784 /* InAppMessageContentRequest.swift */,
+				E0367B132CA4A07700F88784 /* InAppMessageRequest.swift */,
+				E0367B142CA4A07700F88784 /* InAppMessagesRequest.swift */,
+				E0367B152CA4A07700F88784 /* InAppScriptEventRequest.swift */,
+				E0367B162CA4A07700F88784 /* NewInAppInteractionRequest.swift */,
 			);
 			path = InAppMessages;
 			sourceTree = "<group>";
 		};
-		E04C5D3E2C8EF11E00B00D6A /* Recommendations */ = {
+		E0367B1A2CA4A07700F88784 /* Recommendations */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D3C2C8EF11E00B00D6A /* RecomEventsRequest.swift */,
-				E04C5D3D2C8EF11E00B00D6A /* RecomsRequest.swift */,
+				E0367B182CA4A07700F88784 /* RecomEventsRequest.swift */,
+				E0367B192CA4A07700F88784 /* RecomsRequest.swift */,
 			);
 			path = Recommendations;
 			sourceTree = "<group>";
 		};
-		E04C5D402C8EF11E00B00D6A /* RegisterLinkClickRequest */ = {
+		E0367B1C2CA4A07700F88784 /* RegisterLinkClickRequest */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D3F2C8EF11E00B00D6A /* RegisterLinkClickRequest.swift */,
+				E0367B1B2CA4A07700F88784 /* RegisterLinkClickRequest.swift */,
 			);
 			path = RegisterLinkClickRequest;
 			sourceTree = "<group>";
 		};
-		E04C5D442C8EF11E00B00D6A /* UpdateInteractionStatus */ = {
+		E0367B202CA4A07700F88784 /* UpdateInteractionStatus */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D412C8EF11E00B00D6A /* InteractionStatus.swift */,
-				E04C5D422C8EF11E00B00D6A /* NotificationStatus.swift */,
-				E04C5D432C8EF11E00B00D6A /* UpdateInteractionStatusRequest.swift */,
+				E0367B1D2CA4A07700F88784 /* InteractionStatus.swift */,
+				E0367B1E2CA4A07700F88784 /* NotificationStatus.swift */,
+				E0367B1F2CA4A07700F88784 /* UpdateInteractionStatusRequest.swift */,
 			);
 			path = UpdateInteractionStatus;
 			sourceTree = "<group>";
 		};
-		E04C5D4B2C8EF11E00B00D6A /* UpdateUserAttributes */ = {
+		E0367B272CA4A07700F88784 /* UpdateUserAttributes */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D452C8EF11E00B00D6A /* Address.swift */,
-				E04C5D462C8EF11E00B00D6A /* AnonymousUserAttributes.swift */,
-				E04C5D472C8EF11E00B00D6A /* UpdateUserAttributesRequest.swift */,
-				E04C5D482C8EF11E00B00D6A /* User.swift */,
-				E04C5D492C8EF11E00B00D6A /* UserAttributes.swift */,
-				E04C5D4A2C8EF11E00B00D6A /* UserCustomField.swift */,
+				E0367B212CA4A07700F88784 /* Address.swift */,
+				E0367B222CA4A07700F88784 /* AnonymousUserAttributes.swift */,
+				E0367B232CA4A07700F88784 /* UpdateUserAttributesRequest.swift */,
+				E0367B242CA4A07700F88784 /* User.swift */,
+				E0367B252CA4A07700F88784 /* UserAttributes.swift */,
+				E0367B262CA4A07700F88784 /* UserCustomField.swift */,
 			);
 			path = UpdateUserAttributes;
 			sourceTree = "<group>";
 		};
-		E04C5D4C2C8EF11E00B00D6A /* Requests */ = {
+		E0367B282CA4A07700F88784 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D272C8EF11E00B00D6A /* AppInbox */,
-				E04C5D2B2C8EF11E00B00D6A /* Device */,
-				E04C5D2D2C8EF11E00B00D6A /* EmptyResponse */,
-				E04C5D302C8EF11E00B00D6A /* ErrorEventRequest */,
-				E04C5D332C8EF11E00B00D6A /* EventRequest */,
-				E04C5D3B2C8EF11E00B00D6A /* InAppMessages */,
-				E04C5D3E2C8EF11E00B00D6A /* Recommendations */,
-				E04C5D402C8EF11E00B00D6A /* RegisterLinkClickRequest */,
-				E04C5D442C8EF11E00B00D6A /* UpdateInteractionStatus */,
-				E04C5D4B2C8EF11E00B00D6A /* UpdateUserAttributes */,
+				E0367B032CA4A07700F88784 /* AppInbox */,
+				E0367B072CA4A07700F88784 /* Device */,
+				E0367B092CA4A07700F88784 /* EmptyResponse */,
+				E0367B0C2CA4A07700F88784 /* ErrorEventRequest */,
+				E0367B0F2CA4A07700F88784 /* EventRequest */,
+				E0367B172CA4A07700F88784 /* InAppMessages */,
+				E0367B1A2CA4A07700F88784 /* Recommendations */,
+				E0367B1C2CA4A07700F88784 /* RegisterLinkClickRequest */,
+				E0367B202CA4A07700F88784 /* UpdateInteractionStatus */,
+				E0367B272CA4A07700F88784 /* UpdateUserAttributes */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
 		};
-		E04C5D582C8EF11E00B00D6A /* Operations */ = {
+		E0367B342CA4A07700F88784 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D4D2C8EF11E00B00D6A /* DateOperation.swift */,
-				E04C5D4E2C8EF11E00B00D6A /* MessagesCountOperation.swift */,
-				E04C5D4F2C8EF11E00B00D6A /* NetworkOperation.swift */,
-				E04C5D502C8EF11E00B00D6A /* RegisterLinkClickOperation.swift */,
-				E04C5D512C8EF11E00B00D6A /* SendAppInboxMessagesIdsOperation.swift */,
-				E04C5D522C8EF11E00B00D6A /* SendDeviceOperation.swift */,
-				E04C5D532C8EF11E00B00D6A /* SendErrorEventsOperation.swift */,
-				E04C5D542C8EF11E00B00D6A /* SendEventsOperation.swift */,
-				E04C5D552C8EF11E00B00D6A /* SendNotificationsStatusOperation.swift */,
-				E04C5D562C8EF11E00B00D6A /* SendRecomEventsOperation.swift */,
-				E04C5D572C8EF11E00B00D6A /* SendUserOperation.swift */,
+				E0367B292CA4A07700F88784 /* DateOperation.swift */,
+				E0367B2A2CA4A07700F88784 /* MessagesCountOperation.swift */,
+				E0367B2B2CA4A07700F88784 /* NetworkOperation.swift */,
+				E0367B2C2CA4A07700F88784 /* RegisterLinkClickOperation.swift */,
+				E0367B2D2CA4A07700F88784 /* SendAppInboxMessagesIdsOperation.swift */,
+				E0367B2E2CA4A07700F88784 /* SendDeviceOperation.swift */,
+				E0367B2F2CA4A07700F88784 /* SendErrorEventsOperation.swift */,
+				E0367B302CA4A07700F88784 /* SendEventsOperation.swift */,
+				E0367B312CA4A07700F88784 /* SendNotificationsStatusOperation.swift */,
+				E0367B322CA4A07700F88784 /* SendRecomEventsOperation.swift */,
+				E0367B332CA4A07700F88784 /* SendUserOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
 		};
-		E04C5D5A2C8EF11E00B00D6A /* Scheduler */ = {
+		E0367B362CA4A07700F88784 /* Scheduler */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D582C8EF11E00B00D6A /* Operations */,
-				E04C5D592C8EF11E00B00D6A /* EventsSenderScheduler.swift */,
+				E0367B342CA4A07700F88784 /* Operations */,
+				E0367B352CA4A07700F88784 /* EventsSenderScheduler.swift */,
 			);
 			path = Scheduler;
 			sourceTree = "<group>";
 		};
-		E04C5D5E2C8EF11E00B00D6A /* Services */ = {
+		E0367B3A2CA4A07700F88784 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D5B2C8EF11E00B00D6A /* MobileRequestService.swift */,
-				E04C5D5C2C8EF11E00B00D6A /* SendingServices.swift */,
-				E04C5D5D2C8EF11E00B00D6A /* SessionService.swift */,
+				E0367B372CA4A07700F88784 /* MobileRequestService.swift */,
+				E0367B382CA4A07700F88784 /* SendingServices.swift */,
+				E0367B392CA4A07700F88784 /* SessionService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		E04C5D602C8EF11E00B00D6A /* Storage */ = {
+		E0367B3C2CA4A07700F88784 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D5F2C8EF11E00B00D6A /* KeyValueStorage.swift */,
+				E0367B3B2CA4A07700F88784 /* KeyValueStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
 		};
-		E04C5D632C8EF11E00B00D6A /* NotificationContentExtension */ = {
+		E0367B3F2CA4A07700F88784 /* NotificationContentExtension */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D612C8EF11E00B00D6A /* ImageCell.swift */,
-				E04C5D622C8EF11E00B00D6A /* RetenoCarouselNotificationViewController.swift */,
+				E0367B3D2CA4A07700F88784 /* ImageCell.swift */,
+				E0367B3E2CA4A07700F88784 /* RetenoCarouselNotificationViewController.swift */,
 			);
 			path = NotificationContentExtension;
 			sourceTree = "<group>";
 		};
-		E04C5D682C8EF11E00B00D6A /* UserNotifications */ = {
+		E0367B442CA4A07700F88784 /* UserNotifications */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5D632C8EF11E00B00D6A /* NotificationContentExtension */,
-				E04C5D642C8EF11E00B00D6A /* RetenoNotificationServiceExtension.swift */,
-				E04C5D652C8EF11E00B00D6A /* RetenoUserNotification.swift */,
-				E04C5D662C8EF11E00B00D6A /* RetenoUserNotificationAction.swift */,
-				E04C5D672C8EF11E00B00D6A /* UserNotificationService.swift */,
+				E0367B3F2CA4A07700F88784 /* NotificationContentExtension */,
+				E0367B402CA4A07700F88784 /* RetenoNotificationServiceExtension.swift */,
+				E0367B412CA4A07700F88784 /* RetenoUserNotification.swift */,
+				E0367B422CA4A07700F88784 /* RetenoUserNotificationAction.swift */,
+				E0367B432CA4A07700F88784 /* UserNotificationService.swift */,
 			);
 			path = UserNotifications;
 			sourceTree = "<group>";
 		};
-		E04C5D692C8EF11E00B00D6A /* Sources */ = {
+		E0367B452CA4A07700F88784 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				E04C5CB32C8EF11E00B00D6A /* Analytics */,
-				E04C5CB72C8EF11E00B00D6A /* AppInbox */,
-				E04C5CBF2C8EF11E00B00D6A /* Builder */,
-				E04C5CE72C8EF11E00B00D6A /* Common */,
-				E04C5CEA2C8EF11E00B00D6A /* Core */,
-				E04C5CED2C8EF11E00B00D6A /* DeepLinks */,
-				E04C5CF62C8EF11E00B00D6A /* Ecommerce */,
-				E04C5D082C8EF11E00B00D6A /* InAppMessages */,
-				E04C5D0A2C8EF11E00B00D6A /* LinkHandler */,
-				E04C5D182C8EF11E00B00D6A /* Network */,
-				E04C5D1F2C8EF11E00B00D6A /* Recommendations */,
-				E04C5D4C2C8EF11E00B00D6A /* Requests */,
-				E04C5D5A2C8EF11E00B00D6A /* Scheduler */,
-				E04C5D5E2C8EF11E00B00D6A /* Services */,
-				E04C5D602C8EF11E00B00D6A /* Storage */,
-				E04C5D682C8EF11E00B00D6A /* UserNotifications */,
+				E0367A8E2CA4A07700F88784 /* Analytics */,
+				E0367A922CA4A07700F88784 /* AppInbox */,
+				E0367A9A2CA4A07700F88784 /* Builder */,
+				E0367AC32CA4A07700F88784 /* Common */,
+				E0367AC62CA4A07700F88784 /* Core */,
+				E0367AC92CA4A07700F88784 /* DeepLinks */,
+				E0367AD22CA4A07700F88784 /* Ecommerce */,
+				E0367AE42CA4A07700F88784 /* InAppMessages */,
+				E0367AE62CA4A07700F88784 /* LinkHandler */,
+				E0367AF42CA4A07700F88784 /* Network */,
+				E0367AFB2CA4A07700F88784 /* Recommendations */,
+				E0367B282CA4A07700F88784 /* Requests */,
+				E0367B362CA4A07700F88784 /* Scheduler */,
+				E0367B3A2CA4A07700F88784 /* Services */,
+				E0367B3C2CA4A07700F88784 /* Storage */,
+				E0367B442CA4A07700F88784 /* UserNotifications */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -931,149 +934,150 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E04C5D8A2C8EF11E00B00D6A /* JSONConverterHelper.swift in Sources */,
-				E04C5DE32C8EF11E00B00D6A /* MessagesCountOperation.swift in Sources */,
-				E04C5DB32C8EF11E00B00D6A /* ContainerError.swift in Sources */,
-				E04C5DDE2C8EF11E00B00D6A /* UpdateUserAttributesRequest.swift in Sources */,
-				E04C5DEF2C8EF11E00B00D6A /* SendingServices.swift in Sources */,
-				E04C5D962C8EF11E00B00D6A /* ResponseHandler.swift in Sources */,
-				E04C5D9A2C8EF11E00B00D6A /* DeepLinksProcessor.swift in Sources */,
-				E04C5DA92C8EF11E00B00D6A /* NewInteraction.swift in Sources */,
-				E04C5D722C8EF11E00B00D6A /* AnalyticsServiceBuilder.swift in Sources */,
-				E04C5D7A2C8EF11E00B00D6A /* Array+Extensions.swift in Sources */,
-				E04C5DA82C8EF11E00B00D6A /* InAppScriptMessage.swift in Sources */,
-				E04C5D842C8EF11E00B00D6A /* DevicePlatformHelper.swift in Sources */,
-				E04C5DBA2C8EF11E00B00D6A /* RequestDecorator.swift in Sources */,
-				E04C5D6F2C8EF11E00B00D6A /* AppInbox.swift in Sources */,
-				E04C5DBE2C8EF11E00B00D6A /* RecomEvent.swift in Sources */,
-				E04C5DC92C8EF11E00B00D6A /* DeviceRequest.swift in Sources */,
-				E04C5D942C8EF11E00B00D6A /* EmptyResponseHandler.swift in Sources */,
-				E04C5D922C8EF11E00B00D6A /* DecodableResponseHandler.swift in Sources */,
-				E04C5D822C8EF11E00B00D6A /* DeviceCategoryHelper.swift in Sources */,
-				E04C5D9C2C8EF11E00B00D6A /* Order.swift in Sources */,
-				E04C5D6E2C8EF11E00B00D6A /* AppLifecycleAnalyticsSevice.swift in Sources */,
-				E04C5DE22C8EF11E00B00D6A /* DateOperation.swift in Sources */,
-				E04C5D742C8EF11E00B00D6A /* MobileRequestServiceBuilder.swift in Sources */,
-				E04C5DCF2C8EF11E00B00D6A /* InAppBaseHTMLRequest.swift in Sources */,
-				E04C5D952C8EF11E00B00D6A /* RecomsResponseHandler.swift in Sources */,
-				E04C5DE42C8EF11E00B00D6A /* NetworkOperation.swift in Sources */,
-				E04C5DB02C8EF11E00B00D6A /* LinkHandler.swift in Sources */,
-				E04C5DB92C8EF11E00B00D6A /* ParameterEncoding.swift in Sources */,
-				E04C5DF02C8EF11E00B00D6A /* SessionService.swift in Sources */,
-				E04C5DCA2C8EF11E00B00D6A /* EmptyResponse.swift in Sources */,
-				E04C5D8F2C8EF11E00B00D6A /* ExpirableData.swift in Sources */,
-				E04C5D812C8EF11E00B00D6A /* AppVersionHelper.swift in Sources */,
-				E04C5DF62C8EF11E00B00D6A /* RetenoUserNotificationAction.swift in Sources */,
-				E04C5DBC2C8EF11E00B00D6A /* ResponseData.swift in Sources */,
-				E04C5DC02C8EF11E00B00D6A /* RecomFilter.swift in Sources */,
-				E04C5D7C2C8EF11E00B00D6A /* Date+Utils.swift in Sources */,
-				E04C5D972C8EF11E00B00D6A /* Autolayout.swift in Sources */,
-				E04C5DA32C8EF11E00B00D6A /* InApp.swift in Sources */,
-				E04C5D902C8EF11E00B00D6A /* Groupable.swift in Sources */,
-				E04C5DC82C8EF11E00B00D6A /* DeviceCategory.swift in Sources */,
-				E04C5DA42C8EF11E00B00D6A /* InAppAsyncCheck.swift in Sources */,
-				E04C5D7D2C8EF11E00B00D6A /* Operation+Extensions.swift in Sources */,
-				E04C5DB22C8EF11E00B00D6A /* APIStatusError.swift in Sources */,
-				E04C5DDA2C8EF11E00B00D6A /* NotificationStatus.swift in Sources */,
-				E04C5DD32C8EF11E00B00D6A /* InAppMessagesRequest.swift in Sources */,
-				E04C5DDC2C8EF11E00B00D6A /* Address.swift in Sources */,
-				E04C5DAB2C8EF11E00B00D6A /* InAppService.swift in Sources */,
-				E04C5DDF2C8EF11E00B00D6A /* User.swift in Sources */,
-				E04C5DB82C8EF11E00B00D6A /* HTTPMethod.swift in Sources */,
-				E04C5D782C8EF11E00B00D6A /* UnauthorizedAuthNetworkBuilder.swift in Sources */,
-				E04C5DB52C8EF11E00B00D6A /* APIRequest.swift in Sources */,
-				E04C5DE92C8EF11E00B00D6A /* SendEventsOperation.swift in Sources */,
-				E04C5DC62C8EF11E00B00D6A /* AppInboxMarkAsOpenedRequest.swift in Sources */,
-				E04C5DEA2C8EF11E00B00D6A /* SendNotificationsStatusOperation.swift in Sources */,
-				E04C5D732C8EF11E00B00D6A /* EventsSenderSchedulerBuilder.swift in Sources */,
-				E04C5DE72C8EF11E00B00D6A /* SendDeviceOperation.swift in Sources */,
-				E04C5DE82C8EF11E00B00D6A /* SendErrorEventsOperation.swift in Sources */,
-				E04C5DED2C8EF11E00B00D6A /* EventsSenderScheduler.swift in Sources */,
-				E04C5DBD2C8EF11E00B00D6A /* RecommendableProduct.swift in Sources */,
-				E04C5D982C8EF11E00B00D6A /* Reteno.swift in Sources */,
-				E04C5DB12C8EF11E00B00D6A /* APIClientError.swift in Sources */,
-				E04C5DE62C8EF11E00B00D6A /* SendAppInboxMessagesIdsOperation.swift in Sources */,
-				E04C5D6C2C8EF11E00B00D6A /* Analytics+UNUserNotificationCenter.swift in Sources */,
-				E04C5DF12C8EF11E00B00D6A /* KeyValueStorage.swift in Sources */,
-				E04C5DA62C8EF11E00B00D6A /* InAppMessage.swift in Sources */,
-				E04C5DA22C8EF11E00B00D6A /* InAppMessageWebViewController.swift in Sources */,
-				E04C5DF22C8EF11E00B00D6A /* ImageCell.swift in Sources */,
-				E04C5DDD2C8EF11E00B00D6A /* AnonymousUserAttributes.swift in Sources */,
-				E04C5D7B2C8EF11E00B00D6A /* Codable+Dictionary.swift in Sources */,
-				E04C5D6D2C8EF11E00B00D6A /* AnalyticsService.swift in Sources */,
-				E04C5DB42C8EF11E00B00D6A /* NetworkError.swift in Sources */,
-				E04C5D752C8EF11E00B00D6A /* NetworkBuilder.swift in Sources */,
-				E04C5DC32C8EF11E00B00D6A /* AppInboxMessagesResponse.swift in Sources */,
-				E04C5DD72C8EF11E00B00D6A /* RecomsRequest.swift in Sources */,
-				E04C5DCB2C8EF11E00B00D6A /* ErrorEvent.swift in Sources */,
-				E04C5D8B2C8EF11E00B00D6A /* RetenoNotificationsHelper.swift in Sources */,
-				E04C5DAC2C8EF11E00B00D6A /* InAppMessagePresenter.swift in Sources */,
-				E04C5D8C2C8EF11E00B00D6A /* ErrorLogger.swift in Sources */,
-				E04C5DAF2C8EF11E00B00D6A /* PauseBehavior.swift in Sources */,
-				E04C5DC52C8EF11E00B00D6A /* AppInboxMessagesCountResponse.swift in Sources */,
-				E04C5DC42C8EF11E00B00D6A /* AppInboxMessagesCountRequest.swift in Sources */,
-				E04C5DD52C8EF11E00B00D6A /* NewInAppInteractionRequest.swift in Sources */,
-				E04C5D872C8EF11E00B00D6A /* DebugModeHelper.swift in Sources */,
-				E04C5DE12C8EF11E00B00D6A /* UserCustomField.swift in Sources */,
-				E04C5D862C8EF11E00B00D6A /* BundleIdHelper.swift in Sources */,
-				E04C5D9D2C8EF11E00B00D6A /* Product.swift in Sources */,
-				E04C5DAA2C8EF11E00B00D6A /* InAppRequestService.swift in Sources */,
-				E04C5D992C8EF11E00B00D6A /* RetenoConfiguration.swift in Sources */,
-				E04C5DA52C8EF11E00B00D6A /* InAppContents.swift in Sources */,
-				E04C5DE52C8EF11E00B00D6A /* RegisterLinkClickOperation.swift in Sources */,
-				E04C5DEB2C8EF11E00B00D6A /* SendRecomEventsOperation.swift in Sources */,
-				E04C5D832C8EF11E00B00D6A /* DeviceIdHelper.swift in Sources */,
-				E04C5D882C8EF11E00B00D6A /* ExternalUserDataHelper.swift in Sources */,
-				E04C5DC12C8EF11E00B00D6A /* Recommendations.swift in Sources */,
-				E04C5DE02C8EF11E00B00D6A /* UserAttributes.swift in Sources */,
-				E04C5DF72C8EF11E00B00D6A /* UserNotificationService.swift in Sources */,
-				E04C5D762C8EF11E00B00D6A /* SendingServiceBuilder.swift in Sources */,
-				E04C5DDB2C8EF11E00B00D6A /* UpdateInteractionStatusRequest.swift in Sources */,
-				E04C5D6A2C8EF11E00B00D6A /* Analytics+SwiftUI.swift in Sources */,
-				E04C5DCE2C8EF11E00B00D6A /* EventRequest.swift in Sources */,
 				18D02BCD28CA2F02008018F1 /* Reteno.docc in Sources */,
-				E04C5D8D2C8EF11E00B00D6A /* Logger.swift in Sources */,
-				E04C5DCD2C8EF11E00B00D6A /* Event.swift in Sources */,
-				E04C5DB62C8EF11E00B00D6A /* BaseURL.swift in Sources */,
-				E04C5D702C8EF11E00B00D6A /* AppInboxMessage.swift in Sources */,
-				E04C5D802C8EF11E00B00D6A /* AdvertisingIdHelper.swift in Sources */,
-				E04C5DD22C8EF11E00B00D6A /* InAppMessageRequest.swift in Sources */,
-				E04C5D7F2C8EF11E00B00D6A /* UIApplication+Extensions.swift in Sources */,
-				E04C5DAD2C8EF11E00B00D6A /* InAppMessages.swift in Sources */,
-				E04C5DEE2C8EF11E00B00D6A /* MobileRequestService.swift in Sources */,
-				E04C5DA72C8EF11E00B00D6A /* InAppMessageLists.swift in Sources */,
-				E04C5DF42C8EF11E00B00D6A /* RetenoNotificationServiceExtension.swift in Sources */,
-				E04C5D852C8EF11E00B00D6A /* ApiKeyHelper.swift in Sources */,
-				E04C5D912C8EF11E00B00D6A /* JSONInitable.swift in Sources */,
-				E04C5DC22C8EF11E00B00D6A /* AppInboxMessagesRequest.swift in Sources */,
-				E04C5DD02C8EF11E00B00D6A /* InAppCheckAsyncRulesRequest.swift in Sources */,
-				E04C5D9B2C8EF11E00B00D6A /* StorableLink.swift in Sources */,
-				E04C5DBF2C8EF11E00B00D6A /* RecomEvents.swift in Sources */,
-				E04C5DD82C8EF11E00B00D6A /* RegisterLinkClickRequest.swift in Sources */,
-				E04C5DD12C8EF11E00B00D6A /* InAppMessageContentRequest.swift in Sources */,
-				E04C5DD62C8EF11E00B00D6A /* RecomEventsRequest.swift in Sources */,
-				E04C5D8E2C8EF11E00B00D6A /* EventsSender.swift in Sources */,
-				E04C5D892C8EF11E00B00D6A /* ExternalUserIdHelper.swift in Sources */,
-				E04C5DBB2C8EF11E00B00D6A /* RequestManager.swift in Sources */,
-				E04C5DF32C8EF11E00B00D6A /* RetenoCarouselNotificationViewController.swift in Sources */,
-				E04C5D6B2C8EF11E00B00D6A /* Analytics+UIViewController.swift in Sources */,
-				E04C5D9F2C8EF11E00B00D6A /* ProductInCart.swift in Sources */,
-				E04C5DA02C8EF11E00B00D6A /* EcommerceEvent.swift in Sources */,
-				E04C5D772C8EF11E00B00D6A /* StorageBuilder.swift in Sources */,
-				E04C5DA12C8EF11E00B00D6A /* Ecommerce.swift in Sources */,
-				E04C5D9E2C8EF11E00B00D6A /* ProductCategory.swift in Sources */,
-				E04C5D7E2C8EF11E00B00D6A /* Optional+Extensions.swift in Sources */,
-				E04C5DC72C8EF11E00B00D6A /* Device.swift in Sources */,
-				E04C5DD92C8EF11E00B00D6A /* InteractionStatus.swift in Sources */,
-				E04C5DEC2C8EF11E00B00D6A /* SendUserOperation.swift in Sources */,
-				E04C5DF52C8EF11E00B00D6A /* RetenoUserNotification.swift in Sources */,
-				E04C5DB72C8EF11E00B00D6A /* Dictionary+getHeaderValue.swift in Sources */,
-				E04C5D792C8EF11E00B00D6A /* BaseBEDateFormatter.swift in Sources */,
-				E04C5D712C8EF11E00B00D6A /* AppInboxMessageStorableId.swift in Sources */,
-				E04C5DD42C8EF11E00B00D6A /* InAppScriptEventRequest.swift in Sources */,
-				E04C5DAE2C8EF11E00B00D6A /* InAppMessageStatus.swift in Sources */,
-				E04C5D932C8EF11E00B00D6A /* DictionaryResponseHandler.swift in Sources */,
-				E04C5DCC2C8EF11E00B00D6A /* ErrorEventRequest.swift in Sources */,
+				E0367B462CA4A07700F88784 /* Dictionary+getHeaderValue.swift in Sources */,
+				E0367B472CA4A07700F88784 /* BundleIdHelper.swift in Sources */,
+				E0367B482CA4A07700F88784 /* Date+Utils.swift in Sources */,
+				E0367B492CA4A07700F88784 /* MobileRequestServiceBuilder.swift in Sources */,
+				E0367B4A2CA4A07700F88784 /* BaseBEDateFormatter.swift in Sources */,
+				E0367B4B2CA4A07700F88784 /* InAppAsyncCheck.swift in Sources */,
+				E0367B4C2CA4A07700F88784 /* UnauthorizedAuthNetworkBuilder.swift in Sources */,
+				E0367B4D2CA4A07700F88784 /* AppInboxMessagesCountResponse.swift in Sources */,
+				E0367B4E2CA4A07700F88784 /* APIStatusError.swift in Sources */,
+				E0367B4F2CA4A07700F88784 /* NetworkError.swift in Sources */,
+				E0367B502CA4A07700F88784 /* Autolayout.swift in Sources */,
+				E0367B512CA4A07700F88784 /* ErrorEventRequest.swift in Sources */,
+				E0367B522CA4A07700F88784 /* DevicePlatformHelper.swift in Sources */,
+				E0367B532CA4A07700F88784 /* UIApplication+Extensions.swift in Sources */,
+				E0367B542CA4A07700F88784 /* ResponseData.swift in Sources */,
+				E0367B552CA4A07700F88784 /* DictionaryResponseHandler.swift in Sources */,
+				E0367B562CA4A07700F88784 /* AppInboxMessageStorableId.swift in Sources */,
+				E0367B572CA4A07700F88784 /* APIClientError.swift in Sources */,
+				E0367B582CA4A07700F88784 /* User.swift in Sources */,
+				E0367B592CA4A07700F88784 /* Array+Extensions.swift in Sources */,
+				E0367B5A2CA4A07700F88784 /* NetworkOperation.swift in Sources */,
+				E0367B5B2CA4A07700F88784 /* SendNotificationsStatusOperation.swift in Sources */,
+				E0367B5C2CA4A07700F88784 /* EmptyResponseHandler.swift in Sources */,
+				E0367B5D2CA4A07700F88784 /* AppInboxMessage.swift in Sources */,
+				E0367B5E2CA4A07700F88784 /* ExternalUserDataHelper.swift in Sources */,
+				E0367B5F2CA4A07700F88784 /* ContainerError.swift in Sources */,
+				E0367B602CA4A07700F88784 /* MobileRequestService.swift in Sources */,
+				E0367B612CA4A07700F88784 /* AppInboxMessagesResponse.swift in Sources */,
+				E0367B622CA4A07700F88784 /* UserNotificationService.swift in Sources */,
+				E0367B632CA4A07700F88784 /* ImageCell.swift in Sources */,
+				E0367B642CA4A07700F88784 /* InAppMessageRequest.swift in Sources */,
+				E0367B652CA4A07700F88784 /* Order.swift in Sources */,
+				E0367B662CA4A07700F88784 /* ErrorEvent.swift in Sources */,
+				E0367B672CA4A07700F88784 /* InAppMessageContentRequest.swift in Sources */,
+				E0367B682CA4A07700F88784 /* ExpirableData.swift in Sources */,
+				E0367B692CA4A07700F88784 /* PauseBehavior.swift in Sources */,
+				E0367B6A2CA4A07700F88784 /* NewInAppInteractionRequest.swift in Sources */,
+				E0367B6B2CA4A07700F88784 /* RetenoNotificationServiceExtension.swift in Sources */,
+				E0367B6C2CA4A07700F88784 /* SendAppInboxMessagesIdsOperation.swift in Sources */,
+				E0367B6D2CA4A07700F88784 /* InAppMessagePresenter.swift in Sources */,
+				E0367B6E2CA4A07700F88784 /* AppInboxMarkAsOpenedRequest.swift in Sources */,
+				E0367B6F2CA4A07700F88784 /* InAppRequestService.swift in Sources */,
+				E0367B702CA4A07700F88784 /* StorableLink.swift in Sources */,
+				E0367B712CA4A07700F88784 /* AppInboxMessagesRequest.swift in Sources */,
+				E0367B722CA4A07700F88784 /* APIRequest.swift in Sources */,
+				E0367B732CA4A07700F88784 /* RetenoConfiguration.swift in Sources */,
+				E0367B742CA4A07700F88784 /* Analytics+UNUserNotificationCenter.swift in Sources */,
+				E0367B752CA4A07700F88784 /* JSONInitable.swift in Sources */,
+				E0367B762CA4A07700F88784 /* AnalyticsServiceBuilder.swift in Sources */,
+				E0367B772CA4A07700F88784 /* InApp.swift in Sources */,
+				E0367B782CA4A07700F88784 /* DecodableResponseHandler.swift in Sources */,
+				E0367B792CA4A07700F88784 /* RegisterLinkClickRequest.swift in Sources */,
+				E0367B7A2CA4A07700F88784 /* EmptyResponse.swift in Sources */,
+				E0367B7B2CA4A07700F88784 /* RetenoUserNotificationAction.swift in Sources */,
+				E0367B7C2CA4A07700F88784 /* Reteno.swift in Sources */,
+				E0367B7D2CA4A07700F88784 /* EventsSenderSchedulerBuilder.swift in Sources */,
+				E0367B7E2CA4A07700F88784 /* ResponseHandler.swift in Sources */,
+				E0367B7F2CA4A07700F88784 /* RegisterLinkClickOperation.swift in Sources */,
+				E0367B802CA4A07700F88784 /* SessionService.swift in Sources */,
+				E0367B812CA4A07700F88784 /* NotificationStatus.swift in Sources */,
+				E0367B822CA4A07700F88784 /* EventsSender.swift in Sources */,
+				E0367B832CA4A07700F88784 /* InAppMessagesRequest.swift in Sources */,
+				E0367B842CA4A07700F88784 /* SendingServices.swift in Sources */,
+				E0367B852CA4A07700F88784 /* InAppMessageStatus.swift in Sources */,
+				E0367B862CA4A07700F88784 /* RetenoNotificationsHelper.swift in Sources */,
+				E0367B872CA4A07700F88784 /* BaseURL.swift in Sources */,
+				E0367B882CA4A07700F88784 /* AnonymousUserAttributes.swift in Sources */,
+				E0367B892CA4A07700F88784 /* UpdateInteractionStatusRequest.swift in Sources */,
+				E0367B8A2CA4A07700F88784 /* RecomEvent.swift in Sources */,
+				E0367B8B2CA4A07700F88784 /* ProductInCart.swift in Sources */,
+				E0367B8C2CA4A07700F88784 /* ApiKeyHelper.swift in Sources */,
+				E0367B8D2CA4A07700F88784 /* InteractionStatus.swift in Sources */,
+				E0367B8E2CA4A07700F88784 /* RequestDecorator.swift in Sources */,
+				E0367B8F2CA4A07700F88784 /* AppInbox.swift in Sources */,
+				E0367B902CA4A07700F88784 /* DeviceCategory.swift in Sources */,
+				E0367B912CA4A07700F88784 /* InAppService.swift in Sources */,
+				E0367B922CA4A07700F88784 /* InAppScriptEventRequest.swift in Sources */,
+				E0367B932CA4A07700F88784 /* RecomEvents.swift in Sources */,
+				E0367B942CA4A07700F88784 /* Event.swift in Sources */,
+				E0367B952CA4A07700F88784 /* Logger.swift in Sources */,
+				E0367B962CA4A07700F88784 /* ParameterEncoding.swift in Sources */,
+				E0367B972CA4A07700F88784 /* ExternalUserIdHelper.swift in Sources */,
+				E0367B982CA4A07700F88784 /* InAppCheckAsyncRulesRequest.swift in Sources */,
+				E0367B992CA4A07700F88784 /* Ecommerce.swift in Sources */,
+				E0367B9A2CA4A07700F88784 /* MessagesCountOperation.swift in Sources */,
+				E0367B9B2CA4A07700F88784 /* Device.swift in Sources */,
+				E0367B9C2CA4A07700F88784 /* SendUserOperation.swift in Sources */,
+				E0367B9D2CA4A07700F88784 /* Operation+Extensions.swift in Sources */,
+				E0367B9E2CA4A07700F88784 /* ErrorLogger.swift in Sources */,
+				E0367B9F2CA4A07700F88784 /* RecomsRequest.swift in Sources */,
+				E0367BA02CA4A07700F88784 /* EcommerceEvent.swift in Sources */,
+				E0367BA12CA4A07700F88784 /* InAppMessageWebViewController.swift in Sources */,
+				E0367BA22CA4A07700F88784 /* RecomEventsRequest.swift in Sources */,
+				E0367BA32CA4A07700F88784 /* DeviceCategoryHelper.swift in Sources */,
+				E0367BA42CA4A07700F88784 /* SDKStateHelper.swift in Sources */,
+				E0367BA52CA4A07700F88784 /* Analytics+SwiftUI.swift in Sources */,
+				E0367BA62CA4A07700F88784 /* LinkHandler.swift in Sources */,
+				E0367BA72CA4A07700F88784 /* InAppBaseHTMLRequest.swift in Sources */,
+				E0367BA82CA4A07700F88784 /* Codable+Dictionary.swift in Sources */,
+				E0367BA92CA4A07700F88784 /* JSONConverterHelper.swift in Sources */,
+				E0367BAA2CA4A07700F88784 /* AdvertisingIdHelper.swift in Sources */,
+				E0367BAB2CA4A07700F88784 /* Recommendations.swift in Sources */,
+				E0367BAC2CA4A07700F88784 /* RetenoCarouselNotificationViewController.swift in Sources */,
+				E0367BAD2CA4A07700F88784 /* AppVersionHelper.swift in Sources */,
+				E0367BAE2CA4A07700F88784 /* SendEventsOperation.swift in Sources */,
+				E0367BAF2CA4A07700F88784 /* Product.swift in Sources */,
+				E0367BB02CA4A07700F88784 /* SendDeviceOperation.swift in Sources */,
+				E0367BB12CA4A07700F88784 /* InAppContents.swift in Sources */,
+				E0367BB22CA4A07700F88784 /* StorageBuilder.swift in Sources */,
+				E0367BB32CA4A07700F88784 /* RecommendableProduct.swift in Sources */,
+				E0367BB42CA4A07700F88784 /* RetenoUserNotification.swift in Sources */,
+				E0367BB52CA4A07700F88784 /* InAppMessage.swift in Sources */,
+				E0367BB62CA4A07700F88784 /* NewInteraction.swift in Sources */,
+				E0367BB72CA4A07700F88784 /* Optional+Extensions.swift in Sources */,
+				E0367BB82CA4A07700F88784 /* UserCustomField.swift in Sources */,
+				E0367BB92CA4A07700F88784 /* UpdateUserAttributesRequest.swift in Sources */,
+				E0367BBA2CA4A07700F88784 /* AppInboxMessagesCountRequest.swift in Sources */,
+				E0367BBB2CA4A07700F88784 /* EventRequest.swift in Sources */,
+				E0367BBC2CA4A07700F88784 /* AppLifecycleAnalyticsSevice.swift in Sources */,
+				E0367BBD2CA4A07700F88784 /* Analytics+UIViewController.swift in Sources */,
+				E0367BBE2CA4A07700F88784 /* HTTPMethod.swift in Sources */,
+				E0367BBF2CA4A07700F88784 /* EventsSenderScheduler.swift in Sources */,
+				E0367BC02CA4A07700F88784 /* InAppMessages.swift in Sources */,
+				E0367BC12CA4A07700F88784 /* DateOperation.swift in Sources */,
+				E0367BC22CA4A07700F88784 /* Address.swift in Sources */,
+				E0367BC32CA4A07700F88784 /* SendingServiceBuilder.swift in Sources */,
+				E0367BC42CA4A07700F88784 /* DeepLinksProcessor.swift in Sources */,
+				E0367BC52CA4A07700F88784 /* DeviceRequest.swift in Sources */,
+				E0367BC62CA4A07700F88784 /* InAppMessageLists.swift in Sources */,
+				E0367BC72CA4A07700F88784 /* UserAttributes.swift in Sources */,
+				E0367BC82CA4A07700F88784 /* KeyValueStorage.swift in Sources */,
+				E0367BC92CA4A07700F88784 /* AnalyticsService.swift in Sources */,
+				E0367BCA2CA4A07700F88784 /* SendRecomEventsOperation.swift in Sources */,
+				E0367BCB2CA4A07700F88784 /* DebugModeHelper.swift in Sources */,
+				E0367BCC2CA4A07700F88784 /* RecomFilter.swift in Sources */,
+				E0367BCD2CA4A07700F88784 /* RequestManager.swift in Sources */,
+				E0367BCE2CA4A07700F88784 /* NetworkBuilder.swift in Sources */,
+				E0367BCF2CA4A07700F88784 /* SendErrorEventsOperation.swift in Sources */,
+				E0367BD02CA4A07700F88784 /* DeviceIdHelper.swift in Sources */,
+				E0367BD12CA4A07700F88784 /* Groupable.swift in Sources */,
+				E0367BD22CA4A07700F88784 /* ProductCategory.swift in Sources */,
+				E0367BD32CA4A07700F88784 /* RecomsResponseHandler.swift in Sources */,
+				E0367BD42CA4A07700F88784 /* InAppScriptMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class SendErrorEventsOperation: DateOperation {
+final class SendErrorEventsOperation: DateOperation, @unchecked Sendable {
     private let requestService: SendingServices
     private let storage: KeyValueStorage
     private let errorEvents: [ErrorEvent]

@@ -8,16 +8,36 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 final class MainViewController: NiblessViewController {
     
     private let viewModel: MainViewModel
     private let countLabel = UILabel()
+    private let retenoInitialization = UIButton(type: .custom)
+    private var timer: Timer?
     
     init(viewModel: MainViewModel) {
         self.viewModel = viewModel
         
         super.init()
+    }
+    
+    private lazy var timerCounter: TimeInterval = appDelegate.initializationTestDelayDuration
+    @objc
+    private func handleTimer(_ timer: Timer) {
+        timerCounter -= 0.1
+        if timerCounter <= 0 {
+            retenoInitialization.setTitle("Reteno initialized", for: .normal)
+            self.timer?.invalidate()
+            self.timer = nil
+            appDelegate.completeDelayedInitialization()
+        } else {
+            retenoInitialization.setTitle(
+                "Reteno delayed initialization, \(String(format: "%.1f", timerCounter)) sec to fire",
+                for: .normal
+            )
+        }
     }
     
     override func viewDidLoad() {
@@ -29,6 +49,16 @@ final class MainViewController: NiblessViewController {
             
             countLabel.text = "\(count)"
             countLabel.backgroundColor = count > 0 ? .systemOrange : .gray
+        }
+        
+        if appDelegate.isDelayedInitalizationForTest {
+            timer = Timer.scheduledTimer(
+                timeInterval: 0.1,
+                target: self,
+                selector: #selector(handleTimer),
+                userInfo: nil,
+                repeats: true
+            )
         }
     }
     
@@ -74,11 +104,35 @@ final class MainViewController: NiblessViewController {
         viewModel.subscribeOnPushNotifications()
     }
     
+    @objc
+    private func setInitializationState(_ sender: UIButton) {
+        let message = appDelegate.isDelayedInitalizationForTest
+        ? "turn *OFF* delayed initialization, will change on next launch, app will be killed"
+        : "turn *ON* delayed initialization, will change on next launch, app will be killed"
+        let alert = UIAlertController(
+            title: "Initialization State will change",
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "Change", style: .destructive, handler: { [unowned self] _ in
+            self.appDelegate.set(isDelayedInitalizationForTest: !self.appDelegate.isDelayedInitalizationForTest)
+            exit(-1)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(alert, animated: true)
+    }
+    
 }
 
 // MARK: - Layout
 
 private extension MainViewController {
+    
+    var appDelegate: AppDelegate! {
+        UIApplication.shared.delegate as? AppDelegate
+    }
     
     func setuplayout() {
         view.backgroundColor = .white
@@ -103,6 +157,15 @@ private extension MainViewController {
             $0.leading.trailing.equalToSuperview().inset(12.0)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12.0)
         }
+        
+        let initializationTitle: String = appDelegate.isDelayedInitalizationForTest
+        ? "Reteno delayed initialization, \(appDelegate.initializationTestDelayDuration) sec to fire"
+        : "Reteno initialized"
+        retenoInitialization.setTitle(initializationTitle, for: .normal)
+        retenoInitialization.addTarget(self, action: #selector(setInitializationState(_:)), for: .touchUpInside)
+        stack.addArrangedSubview(retenoInitialization)
+        baseSetup(for: retenoInitialization)
+        retenoInitialization.backgroundColor = .systemPink
         
         let subscribeOnPushButton = UIButton(type: .system)
         subscribeOnPushButton.setTitle(NSLocalizedString("main_screen.subscribe_on_push_button.title", comment: ""), for: .normal)

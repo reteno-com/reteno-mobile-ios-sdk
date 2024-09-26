@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class SendAppInboxMessagesIdsOperation: DateOperation {
+final class SendAppInboxMessagesIdsOperation: DateOperation, @unchecked Sendable {
     
     private let requestService: MobileRequestService
     private let storage: KeyValueStorage

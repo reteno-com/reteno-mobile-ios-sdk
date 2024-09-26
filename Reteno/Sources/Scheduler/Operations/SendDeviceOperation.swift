@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class SendDeviceOperation: DateOperation {
+final class SendDeviceOperation: DateOperation, @unchecked Sendable {
 
     let uuid: String
     let device: Device
