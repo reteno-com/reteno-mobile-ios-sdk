@@ -40,6 +40,8 @@ public struct Reteno {
             return
         }
         
+        sdkStateHelper.set(isDelayedInitialization: false)
+        sdkStateHelper.set(isInitialized: true)
         DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
         DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
@@ -54,8 +56,6 @@ public struct Reteno {
         inApps.subscribeOnNotifications()
         pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
         setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
-        sdkStateHelper.set(isDelayedInitialization: false)
-        sdkStateHelper.set(isInitialized: true)
     }
     
     /// SDK delayed initialization
@@ -76,11 +76,13 @@ public struct Reteno {
         
         storage = storage ?? StorageBuilder.build()
 
-        guard storage.getIsDelayedInitialization() == true else {
+        guard sdkStateHelper.getIsDelayedInitialization() == true else {
             Logger.log("\(#function) can be called only after Reteno.delayedStart()", eventType: .error)
             return
         }
         
+        sdkStateHelper.set(isInitialized: true)
+        userNotificationService.forceUpsertDevice()
         storage.setAnalyticsValues(configuration: configuration)
         DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
@@ -93,7 +95,6 @@ public struct Reteno {
         inApps.subscribeOnNotifications()
         pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
         setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
-        sdkStateHelper.set(isInitialized: true)
         
         NotificationCenter.default.post(
             name: InAppMessages.retenoDidBecomeActive,
@@ -104,6 +105,7 @@ public struct Reteno {
            let lastCollectedPushNotification = sdkStateHelper.popLastAndClearNotifications() {
             userNotificationService.processOpenedRemoteNotification(lastCollectedPushNotification)
         }
+        senderScheduler.scheduleTask()
     }
     
     /// SDK initialization

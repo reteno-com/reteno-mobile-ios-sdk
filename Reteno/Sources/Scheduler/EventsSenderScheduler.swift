@@ -12,7 +12,7 @@ final class EventsSenderScheduler {
     
     weak var messagesCountInbox: AppInbox? {
         didSet {
-            if messagesCountInbox.isSome {
+            if messagesCountInbox.isSome && sdkStateHelper.isInitialized {
                 forceFetchMessagesCount()
             }
         }
@@ -40,6 +40,8 @@ final class EventsSenderScheduler {
     private let sendingService: SendingServices
     /// Local storage, based on `UserDefaults`
     private let storage: KeyValueStorage
+    /// storage for sdk state
+    private let sdkStateHelper: SDKStateHelper
     
     // MARK: Lifecycle
     
@@ -51,18 +53,22 @@ final class EventsSenderScheduler {
     
     init(
         mobileRequestService: MobileRequestService,
+        sdkStateHelper: SDKStateHelper,
         storage: KeyValueStorage = StorageBuilder.build(),
         sendingService: SendingServices = SendingServiceBuilder.build(),
         timeIntervalResolver: @escaping () -> TimeInterval = { Reteno.eventsSendingTimeInterval },
         randomOffsetResolver: @escaping () -> TimeInterval = { TimeInterval((0...10).randomElement() ?? 1) }
     ) {
         self.mobileRequestService = mobileRequestService
+        self.sdkStateHelper = sdkStateHelper
         self.storage = storage
         self.sendingService = sendingService
         self.timeIntervalResolver = timeIntervalResolver
         self.randomOffsetResolver = randomOffsetResolver
         
-        subscribeOnNotifications()
+        if sdkStateHelper.isInitialized {
+            subscribeOnNotifications()
+        }
     }
     
     func upsertDevice(_ device: Device, date: Date = Date()) {

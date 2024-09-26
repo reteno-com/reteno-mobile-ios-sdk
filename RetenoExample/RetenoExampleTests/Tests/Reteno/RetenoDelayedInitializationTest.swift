@@ -17,7 +17,7 @@ final class RetenoDelayedInitializationTest: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        Reteno.isInitialized = false
+        Reteno.sdkStateHelper.set(isInitialized: false)
         userDefaults = UserDefaults(suiteName: "unit_tests")
         Reteno.storage = KeyValueStorage(storage: userDefaults)
     }
@@ -32,22 +32,22 @@ final class RetenoDelayedInitializationTest: XCTestCase {
     func test_setInitializedBoolValueOnStart() {
         Reteno.start(apiKey: "SDK_API_KEY")
         
-        XCTAssert(Reteno.isInitialized, "Should be true")
-        XCTAssert(!Reteno.storage.getIsDelayedInitialization(), "getIsDelayedInitialization should be false")
+        XCTAssert(Reteno.sdkStateHelper.isInitialized, "Should be true")
+        XCTAssert(!Reteno.sdkStateHelper.getIsDelayedInitialization(), "getIsDelayedInitialization should be false")
     }
     
     func test_doNotSetInitializedBoolValueOnDelayedStart() throws {
         Reteno.delayedStart()
         
-        XCTAssert(!Reteno.isInitialized, "isInitialized should be false")
-        XCTAssert(Reteno.storage.getIsDelayedInitialization(), "getIsDelayedInitialization should be true")
+        XCTAssert(!Reteno.sdkStateHelper.isInitialized, "isInitialized should be false")
+        XCTAssert(Reteno.sdkStateHelper.getIsDelayedInitialization(), "getIsDelayedInitialization should be true")
     }
     
     func test_setInitializedBoolValueOnDelayedStartAndContinue() {
         Reteno.delayedStart()
         Reteno.delayedSetup(apiKey: "SDK_API_KEY")
         
-        XCTAssert(Reteno.isInitialized, "isInitialized should be true")
-        XCTAssert(Reteno.storage.getIsDelayedInitialization(), "getIsDelayedInitialization should be true")
+        XCTAssert(Reteno.sdkStateHelper.isInitialized, "isInitialized should be true")
+        XCTAssert(Reteno.sdkStateHelper.getIsDelayedInitialization(), "getIsDelayedInitialization should be true")
     }
 }

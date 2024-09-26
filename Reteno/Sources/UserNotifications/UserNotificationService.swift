@@ -28,7 +28,11 @@ public final class UserNotificationService: NSObject {
     public var notificationActionHandler: ((_ userInfo: [AnyHashable: Any], _ action: RetenoUserNotificationAction) -> Void)?
     
     public static let shared = UserNotificationService()
-        
+    
+    var sdkStateHelper: SDKStateHelper {
+        Reteno.sdkStateHelper
+    }
+            
     private override init() {}
     
     // MARK: Notifications register/unregister logic
@@ -77,16 +81,10 @@ public final class UserNotificationService: NSObject {
             storage.set(value: deviceToken, forKey: StorageKeys.pushToken.rawValue)
         }
         
-        RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
-            storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
-            let device = Device(
-                externalUserId: ExternalUserIdHelper.getId(),
-                phone: ExternalUserDataHelper.getPhone(),
-                email: ExternalUserDataHelper.getEmail(),
-                isSubscribedOnPush: isSubscribed
-            )
-            Reteno.upsertDevice(device)
-        }
+        // device data have to be sended on complete RetenoSDK initialization
+        guard sdkStateHelper.isInitialized else { return }
+        
+        forceUpsertDevice()
     }
     
     /// Processing opened remote notification
@@ -164,6 +162,19 @@ public final class UserNotificationService: NSObject {
         UNUserNotificationCenter.current().delegate = self
     }
     
+    func forceUpsertDevice() {
+        let storage = StorageBuilder.build()
+        RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
+            storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
+            let device = Device(
+                externalUserId: ExternalUserIdHelper.getId(),
+                phone: ExternalUserDataHelper.getPhone(),
+                email: ExternalUserDataHelper.getEmail(),
+                isSubscribedOnPush: isSubscribed
+            )
+            Reteno.upsertDevice(device)
+        }
+    }
 }
 
 @available(iOSApplicationExtension, unavailable)
