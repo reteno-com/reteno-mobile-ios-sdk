@@ -16,8 +16,7 @@ final class MessageCountTests: XCTestCase {
     private var userDefaults: UserDefaults!
     private var scheduler: EventsSenderScheduler!
     private var storage: KeyValueStorage!
-    private var sdkStateHelper: SDKStateHelper!
-
+    
     private var sut: AppInbox!
     
     override func setUp() {
@@ -25,9 +24,9 @@ final class MessageCountTests: XCTestCase {
         
         requestService = MobileRequestService(requestManager: .stub)
         storage = KeyValueStorage(storage: userDefaults)
-        sdkStateHelper = SDKStateHelper(storage: storage)
         buildScheduler()
         sut = AppInbox(requestService: requestService, scheduler: scheduler, storage: storage)
+        Reteno.sdkStateHelper.set(isInitialized: true)
     }
     
     override func tearDown() {
@@ -37,6 +36,7 @@ final class MessageCountTests: XCTestCase {
         sut = nil
         userDefaults.removeSuite(named: "unit_tests_operations")
         HTTPStubs.removeAllStubs()
+        Reteno.sdkStateHelper.set(isInitialized: false)
     }
     
     private func buildScheduler() {
@@ -45,7 +45,6 @@ final class MessageCountTests: XCTestCase {
         let sendingService = SendingServices(requestManager: .stub)
         scheduler = EventsSenderScheduler(
             mobileRequestService: requestService,
-            sdkStateHelper: sdkStateHelper,
             storage: storage,
             sendingService: sendingService,
             timeIntervalResolver: { 1.0 },
@@ -55,7 +54,6 @@ final class MessageCountTests: XCTestCase {
     }
     
     func test_messageCountChange_withMessagesCount2AndPositiveResponse() {
-        sdkStateHelper.set(isInitialized: true)
         let unreadCount = 2
         stub(condition: pathEndsWith("v1/appinbox/messages/count")) { _ in
             let jsonObject = ["unreadCount": unreadCount]

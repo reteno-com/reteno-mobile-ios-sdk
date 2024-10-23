@@ -15,15 +15,12 @@ final class EventsSenderSchedulerTests: XCTestCase {
     private var sut: EventsSenderScheduler!
     private var storage: KeyValueStorage!
     private var userDefaults: UserDefaults!
-    private var sdkStateHelper: SDKStateHelper!
     
     override func setUp() {
         userDefaults = UserDefaults(suiteName: "unit_tests")
         storage = KeyValueStorage(storage: userDefaults)
-        sdkStateHelper = SDKStateHelper(storage: storage)
         sut = EventsSenderScheduler(
             mobileRequestService: MobileRequestServiceBuilder.build(),
-            sdkStateHelper: sdkStateHelper,
             storage: storage,
             sendingService: SendingServiceBuilder.build()
         )

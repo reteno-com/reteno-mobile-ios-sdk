@@ -9,16 +9,24 @@ import UIKit
 import Foundation
 import UserNotifications
 
+extension Reteno {
+    
+    // Notification should be posted by SDK on complete delayed initialization
+    static let retenoDidBecomeActive: Notification.Name = .init(
+        "com.reteno.didBecomeActive.after.delayed.initialization"
+    )
+}
+
 public struct Reteno {
     
     @available(iOSApplicationExtension, unavailable)
     public static let userNotificationService = UserNotificationService.shared
     
     static let senderScheduler = EventsSenderSchedulerBuilder.build()
-    static let sdkStateHelper = SDKStateHelper(storage: StorageBuilder.build())
+    static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.0.14"
+    static var version = "2.0.15"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -40,10 +48,8 @@ public struct Reteno {
             return
         }
         
-        sdkStateHelper.set(isDelayedInitialization: false)
-        sdkStateHelper.set(isInitialized: true)
-        DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
+        DeviceIdHelper.actualizeDeviceId()
         DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
         storage = storage ?? StorageBuilder.build()
         storage.setAnalyticsValues(configuration: configuration)
@@ -56,6 +62,8 @@ public struct Reteno {
         inApps.subscribeOnNotifications()
         pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
         setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
+        sdkStateHelper.set(isDelayedInitialization: false)
+        sdkStateHelper.set(isInitialized: true)
     }
     
     /// SDK delayed initialization
@@ -76,17 +84,16 @@ public struct Reteno {
         
         storage = storage ?? StorageBuilder.build()
 
-        guard sdkStateHelper.getIsDelayedInitialization() == true else {
+        guard sdkStateHelper.IsDelayedInitialization else {
             Logger.log("\(#function) can be called only after Reteno.delayedStart()", eventType: .error)
             return
         }
         
         sdkStateHelper.set(isInitialized: true)
-        userNotificationService.forceUpsertDevice()
-        storage.setAnalyticsValues(configuration: configuration)
-        DeviceIdHelper.actualizeDeviceId()
         ApiKeyHelper.setApiKey(apiKey)
+        DeviceIdHelper.actualizeDeviceId()
         DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
+        storage.setAnalyticsValues(configuration: configuration)
         analyticsService = AnalyticsServiceBuilder.build(
             isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
             isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled
@@ -97,7 +104,7 @@ public struct Reteno {
         setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
         
         NotificationCenter.default.post(
-            name: InAppMessages.retenoDidBecomeActive,
+            name: Reteno.retenoDidBecomeActive,
             object: UIApplication.shared
         )
         // fire collected push notification on finish delayed initialization
@@ -105,7 +112,6 @@ public struct Reteno {
            let lastCollectedPushNotification = sdkStateHelper.popLastAndClearNotifications() {
             userNotificationService.processOpenedRemoteNotification(lastCollectedPushNotification)
         }
-        senderScheduler.scheduleTask()
     }
     
     /// SDK initialization
@@ -183,6 +189,14 @@ public struct Reteno {
         groupNamesInclude: [String] = [],
         groupNamesExclude: [String] = []
     ) {
+        guard sdkStateHelper.isInitialized else {
+            Logger.log(
+                "\(#function) could be called only after complete initialization Reteno, finish it.",
+                eventType: .error
+            )
+            return
+        }
+        
         guard
             (externalUserId.isSome && externalUserId?.isEmpty == false)
                 || userAttributes.isSome
@@ -235,6 +249,14 @@ public struct Reteno {
         groupNamesInclude: [String] = [],
         groupNamesExclude: [String] = []
     ) {
+        guard sdkStateHelper.isInitialized else {
+            Logger.log(
+                "\(#function) could be called only after complete initialization Reteno, finish it.",
+                eventType: .error
+            )
+            return
+        }
+        
         senderScheduler.updateUserAttributes(
             externalUserId: nil,
             userAttributes: UserAttributes(
@@ -299,6 +321,14 @@ public struct Reteno {
         
     @available(iOSApplicationExtension, unavailable)
     public static func pauseInAppMessages(isPaused: Bool) {
+        guard sdkStateHelper.isInitialized else {
+            Logger.log(
+                "\(#function) could be called only after complete initialization Reteno, finish it.",
+                eventType: .error
+            )
+            return
+        }
+        
         inApps.setInAppMessagesPause(isPaused: isPaused)
     }
     
@@ -309,6 +339,14 @@ public struct Reteno {
     // MARK: Upsert device
     
     static func upsertDevice(_ device: Device) {
+        guard sdkStateHelper.isInitialized else {
+            Logger.log(
+                "\(#function) could be called only after complete initialization Reteno, finish it.",
+                eventType: .error
+            )
+            return
+        }
+        
         senderScheduler.upsertDevice(device)
     }
 }

@@ -138,24 +138,7 @@ final class KeyValueStorage {
             forKey: StorageKeys.automaticSessionReportingEnabled.rawValue
         )
     }
-    
-    // MARK: - Delayed initialization
-    
-    func set(isDelayedInitialization: Bool) {
-        guard let storage = storageUnwrapper() else { return }
 
-        storage.setValue(
-            isDelayedInitialization,
-            forKey: StorageKeys.isDelayedInitialization.rawValue
-        )
-    }
-    
-    func getIsDelayedInitialization() -> Bool {
-        guard let storage = storageUnwrapper() else { return false }
-
-        return storage.bool(forKey: StorageKeys.isDelayedInitialization.rawValue)
-    }
-    
     // MARK: Events logic
     
     func addEvent(_ event: Event) {

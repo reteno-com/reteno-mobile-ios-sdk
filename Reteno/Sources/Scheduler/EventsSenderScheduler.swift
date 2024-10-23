@@ -12,7 +12,7 @@ final class EventsSenderScheduler {
     
     weak var messagesCountInbox: AppInbox? {
         didSet {
-            if messagesCountInbox.isSome && sdkStateHelper.isInitialized {
+            if messagesCountInbox.isSome {
                 forceFetchMessagesCount()
             }
         }
@@ -40,8 +40,10 @@ final class EventsSenderScheduler {
     private let sendingService: SendingServices
     /// Local storage, based on `UserDefaults`
     private let storage: KeyValueStorage
-    /// storage for sdk state
-    private let sdkStateHelper: SDKStateHelper
+    
+    private var sdkStateHelper: SDKStateHelper {
+        Reteno.sdkStateHelper
+    }
     
     // MARK: Lifecycle
     
@@ -53,22 +55,18 @@ final class EventsSenderScheduler {
     
     init(
         mobileRequestService: MobileRequestService,
-        sdkStateHelper: SDKStateHelper,
         storage: KeyValueStorage = StorageBuilder.build(),
         sendingService: SendingServices = SendingServiceBuilder.build(),
         timeIntervalResolver: @escaping () -> TimeInterval = { Reteno.eventsSendingTimeInterval },
         randomOffsetResolver: @escaping () -> TimeInterval = { TimeInterval((0...10).randomElement() ?? 1) }
     ) {
         self.mobileRequestService = mobileRequestService
-        self.sdkStateHelper = sdkStateHelper
         self.storage = storage
         self.sendingService = sendingService
         self.timeIntervalResolver = timeIntervalResolver
         self.randomOffsetResolver = randomOffsetResolver
         
-        if sdkStateHelper.isInitialized {
-            subscribeOnNotifications()
-        }
+        subscribeOnNotifications()
     }
     
     func upsertDevice(_ device: Device, date: Date = Date()) {
@@ -195,6 +193,11 @@ final class EventsSenderScheduler {
     }
     
     func forcePushEvents() {
+        guard sdkStateHelper.isInitialized else {
+            Logger.log("Events could be logged only by initialized Reteno, finish it.", eventType: .warning)
+            return
+        }
+        
         if let lastForcePushTimestamp = lastForcePushTimestamp, Date().timeIntervalSince(lastForcePushTimestamp) < 1 {
             return
         }
@@ -204,6 +207,8 @@ final class EventsSenderScheduler {
     }
     
     func forceFetchMessagesCount() {
+        guard sdkStateHelper.isInitialized else { return }
+        
         guard let messagesOperation = messagesCountOperation() else { return }
         
         operationQueue.addOperation(messagesOperation)
@@ -230,6 +235,12 @@ final class EventsSenderScheduler {
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleApplicationDidBecomeActiveNotification(_:)),
+            name: Reteno.retenoDidBecomeActive,
+            object: nil
+        )
     }
     
     // MARK: Task scheduling
@@ -247,6 +258,8 @@ final class EventsSenderScheduler {
     }
     
     private func sendCollectedData() {
+        guard Reteno.sdkStateHelper.isInitialized else { return }
+
         if backgroundTaskIdentifier != .invalid {
             self.endTask()
         }
@@ -484,6 +497,8 @@ final class EventsSenderScheduler {
     
     @objc
     private func handleApplicationDidBecomeActiveNotification(_ notification: Notification) {
+        guard sdkStateHelper.isInitialized else { return }
+        
         RetenoNotificationsHelper.isSubscribedOnNotifications { [weak self] isSubscribed in
             self?.sendPushSubscriptionEvent(isSubscribed: isSubscribed)
             StorageBuilder.build().set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)

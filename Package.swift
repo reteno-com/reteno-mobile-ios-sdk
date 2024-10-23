@@ -13,7 +13,8 @@ let package = Package(
     targets: [
         .target(
             name: "Reteno",
-            path: "Reteno/Sources"
+            path: "Reteno/Sources",
+            resources: [.process("PrivacyInfo.xcprivacy")]
         )
     ],
     swiftLanguageVersions: [.v5]

@@ -9,30 +9,24 @@ import Foundation
 import UserNotifications
 
 class SDKStateHelper {
+    
+    static var shared: SDKStateHelper = .init()
         
     var shouldCollectNotifications: Bool {
-        !isInitialized && getIsDelayedInitialization()
+        !isInitialized && IsDelayedInitialization
     }
     private(set) var collectedNotifications: [UNNotification] = []
     private(set) var isInitialized: Bool = false
+    private(set) var IsDelayedInitialization: Bool = false
 
-    
-    private let storage: KeyValueStorage
-    
-    init(storage: KeyValueStorage) {
-        self.storage = storage
-    }
+    private init() {}
     
     func set(isInitialized: Bool) {
         self.isInitialized = isInitialized
     }
     
-    func getIsDelayedInitialization() -> Bool {
-        storage.getIsDelayedInitialization()
-    }
-    
     func set(isDelayedInitialization: Bool) {
-        storage.set(isDelayedInitialization: isDelayedInitialization)
+        self.IsDelayedInitialization = isDelayedInitialization
     }
     
     func collect(notification: UNNotification) {

@@ -26,13 +26,12 @@ public final class UserNotificationService: NSObject {
     public var didReceiveNotificationUserInfo: ((_ userInfo: [AnyHashable: Any]) -> Void)?
     
     public var notificationActionHandler: ((_ userInfo: [AnyHashable: Any], _ action: RetenoUserNotificationAction) -> Void)?
-    
-    public static let shared = UserNotificationService()
-    
-    var sdkStateHelper: SDKStateHelper {
+    private var sdkStateHelper: SDKStateHelper {
         Reteno.sdkStateHelper
     }
-            
+    
+    public static let shared = UserNotificationService()
+        
     private override init() {}
     
     // MARK: Notifications register/unregister logic
@@ -81,10 +80,18 @@ public final class UserNotificationService: NSObject {
             storage.set(value: deviceToken, forKey: StorageKeys.pushToken.rawValue)
         }
         
-        // device data have to be sended on complete RetenoSDK initialization
         guard sdkStateHelper.isInitialized else { return }
         
-        forceUpsertDevice()
+        RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
+            storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
+            let device = Device(
+                externalUserId: ExternalUserIdHelper.getId(),
+                phone: ExternalUserDataHelper.getPhone(),
+                email: ExternalUserDataHelper.getEmail(),
+                isSubscribedOnPush: isSubscribed
+            )
+            Reteno.upsertDevice(device)
+        }
     }
     
     /// Processing opened remote notification
@@ -162,19 +169,6 @@ public final class UserNotificationService: NSObject {
         UNUserNotificationCenter.current().delegate = self
     }
     
-    func forceUpsertDevice() {
-        let storage = StorageBuilder.build()
-        RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
-            storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
-            let device = Device(
-                externalUserId: ExternalUserIdHelper.getId(),
-                phone: ExternalUserDataHelper.getPhone(),
-                email: ExternalUserDataHelper.getEmail(),
-                isSubscribedOnPush: isSubscribed
-            )
-            Reteno.upsertDevice(device)
-        }
-    }
 }
 
 @available(iOSApplicationExtension, unavailable)

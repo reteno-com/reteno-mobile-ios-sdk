@@ -7,14 +7,6 @@
 
 import UIKit
 
-extension InAppMessages {
-    
-    // Notification should be posted by SDK on complete delayed initialization
-    static let retenoDidBecomeActive: Notification.Name = .init(
-        "com.reteno.didBecomeActive.after.delayed.initialization"
-    )
-}
-
 final class InAppMessages {
     
     private var isPausedInApps: Bool = false
@@ -38,6 +30,10 @@ final class InAppMessages {
     
     private var isAlreadySendRequest: Bool = false
     private var isAlreadyFetchBaseFile: Bool = false
+    
+    private var sdkStateHelper: SDKStateHelper {
+        Reteno.sdkStateHelper
+    }
     
     init(
         mobileRequestService: MobileRequestService,
@@ -143,7 +139,7 @@ final class InAppMessages {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleApplicationDidBecomeActiveNotification),
-            name: InAppMessages.retenoDidBecomeActive,
+            name: Reteno.retenoDidBecomeActive,
             object: nil
         )
         NotificationCenter.default.addObserver(
@@ -376,6 +372,8 @@ final class InAppMessages {
     @available(iOSApplicationExtension, unavailable)
     @objc
     private func handleApplicationDidBecomeActiveNotification(_ notification: Notification) {
+        guard sdkStateHelper.isInitialized else { return }
+        
         application = notification.object as? UIApplication
         
         DispatchQueue.global().async { [weak self] in

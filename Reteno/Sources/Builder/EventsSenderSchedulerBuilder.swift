@@ -12,10 +12,7 @@ struct EventsSenderSchedulerBuilder {
     private init() {}
     
     static func build() -> EventsSenderScheduler {
-        EventsSenderScheduler(
-            mobileRequestService: MobileRequestServiceBuilder.build(),
-            sdkStateHelper: Reteno.sdkStateHelper
-        )
+        EventsSenderScheduler(mobileRequestService: MobileRequestServiceBuilder.build())
     }
 
 }

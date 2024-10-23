@@ -11,36 +11,31 @@ import XCTest
 @testable import Reteno
 
 final class RetenoDelayedInitializationTest: XCTestCase {
-    
-    private var userDefaults: UserDefaults!
-    
+        
     override func setUp() {
         super.setUp()
         
         Reteno.sdkStateHelper.set(isInitialized: false)
-        userDefaults = UserDefaults(suiteName: "unit_tests")
-        Reteno.storage = KeyValueStorage(storage: userDefaults)
     }
     
     override func tearDown() {
         super.tearDown()
         
-        Reteno.storage.set(isDelayedInitialization: false)
-        userDefaults.removeSuite(named: "unit_tests")
+        Reteno.sdkStateHelper.set(isDelayedInitialization: false)
     }
     
     func test_setInitializedBoolValueOnStart() {
         Reteno.start(apiKey: "SDK_API_KEY")
         
         XCTAssert(Reteno.sdkStateHelper.isInitialized, "Should be true")
-        XCTAssert(!Reteno.sdkStateHelper.getIsDelayedInitialization(), "getIsDelayedInitialization should be false")
+        XCTAssert(!Reteno.sdkStateHelper.IsDelayedInitialization, "IsDelayedInitialization should be false")
     }
     
     func test_doNotSetInitializedBoolValueOnDelayedStart() throws {
         Reteno.delayedStart()
         
         XCTAssert(!Reteno.sdkStateHelper.isInitialized, "isInitialized should be false")
-        XCTAssert(Reteno.sdkStateHelper.getIsDelayedInitialization(), "getIsDelayedInitialization should be true")
+        XCTAssert(Reteno.sdkStateHelper.IsDelayedInitialization, "IsDelayedInitialization should be true")
     }
     
     func test_setInitializedBoolValueOnDelayedStartAndContinue() {
@@ -48,6 +43,6 @@ final class RetenoDelayedInitializationTest: XCTestCase {
         Reteno.delayedSetup(apiKey: "SDK_API_KEY")
         
         XCTAssert(Reteno.sdkStateHelper.isInitialized, "isInitialized should be true")
-        XCTAssert(Reteno.sdkStateHelper.getIsDelayedInitialization(), "getIsDelayedInitialization should be true")
+        XCTAssert(Reteno.sdkStateHelper.IsDelayedInitialization, "IsDelayedInitialization should be true")
     }
 }

@@ -590,11 +590,9 @@ final class EcommerceTests: XCTestCase {
     private func buildScheduler() -> EventsSenderScheduler {
         let storage = KeyValueStorage(storage: userDefaults)
         let sendingService = SendingServices(requestManager: .stub)
-        let sdkStateHelper = SDKStateHelper(storage: storage)
         
         return EventsSenderScheduler(
             mobileRequestService: requestService,
-            sdkStateHelper: sdkStateHelper,
             storage: storage,
             sendingService: sendingService,
             timeIntervalResolver: { 1.0 },

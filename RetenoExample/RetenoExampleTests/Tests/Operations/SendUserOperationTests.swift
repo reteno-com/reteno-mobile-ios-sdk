@@ -127,6 +127,7 @@ final class SendUserOperationTests: XCTestCase {
     }
     
     func test_sendUserOperation_withExternalUserIdAndFailedDeviceResult_with5xxStatusCode() throws {
+        storage.clearCachedDevice()
         stub(condition: pathEndsWith("v1/device")) { _ in
             let stubData = "OK".data(using: .utf8)
             
@@ -163,7 +164,7 @@ final class SendUserOperationTests: XCTestCase {
         
         operation.completionBlock = { [unowned storage] in
             XCTAssertTrue(operation.isFinished, "operation should be finished")
-            XCTAssertTrue(storage!.getUsers().isEmpty, "array of users from storage should be empty")
+            XCTAssertFalse(storage!.getUsers().isEmpty, "array of users from storage shouldn't be empty")
             
             expectation.fulfill()
         }
