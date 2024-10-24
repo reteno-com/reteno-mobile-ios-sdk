@@ -66,6 +66,7 @@ final class MainViewController: NiblessViewController {
     
     @objc
     private func pauseInAppSwitchAction(_ sender: UISwitch) {
+        // need to call only after Reteno has been initialized
         viewModel.pausedInApp(sender.isOn)
     }
         

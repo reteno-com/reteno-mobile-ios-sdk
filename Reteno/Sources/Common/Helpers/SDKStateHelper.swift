@@ -15,7 +15,7 @@ class SDKStateHelper {
     var shouldCollectNotifications: Bool {
         !isInitialized && IsDelayedInitialization
     }
-    private(set) var collectedNotifications: [UNNotification] = []
+    private(set) var collectedNotifications: [UNNotificationResponse] = []
     private(set) var isInitialized: Bool = false
     private(set) var IsDelayedInitialization: Bool = false
 
@@ -29,11 +29,11 @@ class SDKStateHelper {
         self.IsDelayedInitialization = isDelayedInitialization
     }
     
-    func collect(notification: UNNotification) {
-        collectedNotifications.append(notification)
+    func collect(notificationResponse: UNNotificationResponse) {
+        collectedNotifications.append(notificationResponse)
     }
     
-    func popLastAndClearNotifications() -> UNNotification? {
+    func popLastAndClearNotificationResponses() -> UNNotificationResponse? {
         let last = collectedNotifications.last
         collectedNotifications = []
         

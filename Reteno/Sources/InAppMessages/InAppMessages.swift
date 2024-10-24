@@ -77,11 +77,11 @@ final class InAppMessages {
     }
     
     func logEventTrigger(eventTypeKey: String, parameters: [Event.Parameter]) {
-        if parameters.first(where: { $0.name == ScreenClass })?.value != "InAppMessageWebViewController" {
-            for inApp in inAppPresenters {
-                if inApp.isHasEventConditions() {
-                    inApp.checkEvent(eventTypeName: eventTypeKey, parameters: parameters)
-                }
+        guard !isInAppWebViewController(parameters: parameters) else { return }
+        
+        for inAppPresenter in inAppPresenters {
+            if inAppPresenter.isHasEventConditions() {
+                inAppPresenter.checkEvent(eventTypeName: eventTypeKey, parameters: parameters)
             }
         }
     }
@@ -129,6 +129,10 @@ final class InAppMessages {
                 }
             }
         }
+    }
+    
+    private func isInAppWebViewController(parameters: [Event.Parameter]) -> Bool {
+        parameters.first(where: { $0.name == ScreenClass })?.value == "InAppMessageWebViewController"
     }
     
     // MARK: Subscribe on notifications
@@ -247,9 +251,30 @@ final class InAppMessages {
                     }
                 }
             }
-            self.inAppPresenters.append(presenter)
+            
+            self.updateAllPresenters(
+                newPresenter: presenter,
+                isExistMessageId: { messageId in
+                    messageId == showModel.message.messageId
+                }
+            )
         }
         self.inAppPresentersSelections()
+    }
+    
+    private func updateAllPresenters(
+        newPresenter: InAppMessagePresenter,
+        isExistMessageId: (Int) -> Bool
+    ) {
+        self.inAppPresenters.removeAll(where: {
+            let isExist = isExistMessageId($0.model.message.messageId)
+            if isExist {
+                Logger.log("inApp messageId: \($0.model.message.messageId) deleted", eventType: .verbose)
+            }
+            return isExist
+        })
+        self.inAppPresenters.append(newPresenter)
+        Logger.log("inApp messageId: \(newPresenter.model.message.messageId) added", eventType: .verbose)
     }
     
     private func sendInteraction(with inApp: InApp, status: NewInteractionStatus = .opened, description: String? = nil) {

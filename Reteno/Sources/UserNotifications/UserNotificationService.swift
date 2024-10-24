@@ -100,14 +100,6 @@ public final class UserNotificationService: NSObject {
     ///
     /// - Parameter notification: The notification to which the user responded.
     public func processOpenedRemoteNotification(_ notification: UNNotification) {
-        // collect notifications while Reteno SDK in delayed initialization process
-        let sdkStateHelper = Reteno.sdkStateHelper
-        guard !sdkStateHelper.shouldCollectNotifications else {
-            sdkStateHelper.collect(notification: notification)
-            return
-        }
-        
-        // fire push notification
         guard let retenoNotification = RetenoUserNotification(userInfo: notification.request.content.userInfo) else { return }
         
         if retenoNotification.isInApp {
@@ -118,7 +110,7 @@ public final class UserNotificationService: NSObject {
             DeepLinksProcessor.processLinks(
                 wrappedUrl: retenoNotification.link,
                 rawURL: retenoNotification.rawLink,
-                customData:  customData,
+                customData: customData,
                 isInAppMessageLink: false
             )
         }
@@ -129,6 +121,14 @@ public final class UserNotificationService: NSObject {
     public func processRemoteNotificationResponse(_ response: UNNotificationResponse) {
         guard let notification = RetenoUserNotification(userInfo: response.notification.request.content.userInfo) else { return }
         
+        // collect notifications while Reteno SDK in delayed initialization process
+        let sdkStateHelper = Reteno.sdkStateHelper
+        guard !sdkStateHelper.shouldCollectNotifications else {
+            sdkStateHelper.collect(notificationResponse: response)
+            return
+        }
+        
+        // fire push notification
         switch response.actionIdentifier {
         case UNNotificationDefaultActionIdentifier:
             processOpenedRemoteNotification(response.notification)

@@ -26,7 +26,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.0.15"
+    static var version = "2.0.16"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -109,8 +109,8 @@ public struct Reteno {
         )
         // fire collected push notification on finish delayed initialization
         if !sdkStateHelper.shouldCollectNotifications,
-           let lastCollectedPushNotification = sdkStateHelper.popLastAndClearNotifications() {
-            userNotificationService.processOpenedRemoteNotification(lastCollectedPushNotification)
+           let lastCollectedPushNotificationResponse = sdkStateHelper.popLastAndClearNotificationResponses() {
+            userNotificationService.processRemoteNotificationResponse(lastCollectedPushNotificationResponse)
         }
     }
     
