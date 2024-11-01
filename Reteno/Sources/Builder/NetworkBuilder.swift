@@ -23,12 +23,12 @@ struct NetworkBuilder {
     }
     
     static func buildMobileApiManager(
-        apiKey: String = ApiKeyHelper.getApiKey(),
+        apiKey: @escaping @autoclosure () -> String = ApiKeyHelper.getApiKey(),
         isExternalIdRequired: Bool = true
     ) -> RequestManager {
         let headersDecorator = RequestDecorator { request in
             request.headers?.updateValue("application/json", forKey: "Content-Type")
-            request.headers?.updateValue(apiKey, forKey: "X-Reteno-Access-Key")
+            request.headers?.updateValue(apiKey(), forKey: "X-Reteno-Access-Key")
             request.headers?.updateValue(DevicePlatformHelper.getDevicePlatform(), forKey: "X-Reteno-SDK-Version")
             if DebugModeHelper.isDebugModeOn() {
                 request.headers?.updateValue("true", forKey: "X-Reteno-Debug")
@@ -51,10 +51,10 @@ struct NetworkBuilder {
         buildMobileApiManager(isExternalIdRequired: false)
     }
     
-    static func buildApiManagerWithDeviceIdInHeaders(apiKey: String = ApiKeyHelper.getApiKey()) -> RequestManager {
+    static func buildApiManagerWithDeviceIdInHeaders(apiKey: @escaping @autoclosure () -> String = ApiKeyHelper.getApiKey()) -> RequestManager {
         let headersDecorator = RequestDecorator { request in
             request.headers?.updateValue("application/json", forKey: "Content-Type")
-            request.headers?.updateValue(apiKey, forKey: "X-Reteno-Access-Key")
+            request.headers?.updateValue(apiKey(), forKey: "X-Reteno-Access-Key")
             request.headers?.updateValue(DevicePlatformHelper.getDevicePlatform(), forKey: "X-Reteno-SDK-Version")
             if let deviceId = DeviceIdHelper.deviceId() {
                 request.headers?.updateValue(deviceId, forKey: "X-Reteno-Device-ID")
