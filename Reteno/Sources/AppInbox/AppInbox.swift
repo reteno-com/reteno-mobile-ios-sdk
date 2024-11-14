@@ -44,13 +44,15 @@ public final class AppInbox {
     ///
     /// - Parameter page: order number of requested page.  If `nil` will be rurned all messages.
     /// - Parameter perPage: messages count per page. If `nil` will be rurned all messages.
+    /// - Parameter status: message status to filter. If `nil` messages with all statuses will be returned. 
     /// - Parameter completion: completion handler `(Result<([AppInboxMessage], Int), Error>) -> Void`
     public func downloadMessages(
         page: Int? = nil,
         pageSize: Int? = nil,
+        status: AppInboxMessagesStatus? = nil,
         completion: @escaping (Result<(messages: [AppInboxMessage], totalPages: Int?), Error>) -> Void
     ) {
-        requestService.getInboxMessages(page: page, pageSize: pageSize) { result in
+        requestService.getInboxMessages(page: page, pageSize: pageSize, status: status) { result in
             switch result {
             case .success(let response):
                 completion(.success((response.messages, response.totalPages)))

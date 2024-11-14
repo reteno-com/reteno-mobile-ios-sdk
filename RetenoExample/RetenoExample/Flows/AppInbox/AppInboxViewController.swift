@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Reteno
 
 final class AppInboxViewController: NiblessViewController, AlertPresentable {
     
@@ -23,6 +24,8 @@ final class AppInboxViewController: NiblessViewController, AlertPresentable {
     private let viewModel: AppInboxViewModel
     private let tableView = UITableView()
     private let refreshControl = UIRefreshControl()
+    private var segmentedControl: UISegmentedControl!
+    private var selectedSegment: Int = 0
     
     // MARK: Lifecycle
     
@@ -36,12 +39,20 @@ final class AppInboxViewController: NiblessViewController, AlertPresentable {
         super.viewDidLoad()
         
         title = NSLocalizedString("inbox_screen.title", comment: "")
+        view.backgroundColor = .white
+        setupSegmentedControl()
         setupLayout()
         loadMessages()
     }
     
+    private func setupSegmentedControl() {
+        segmentedControl = UISegmentedControl(items: ["All", "Opened", "Unopened"])
+        segmentedControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+        segmentedControl.selectedSegmentIndex = 0
+    }
+    
     private func loadMessages() {
-        viewModel.loadMessages { [weak self] result in
+        viewModel.loadMessages(with: applyInboxStatus()) { [weak self] result in
             guard let self = self else { return }
             
             self.refreshControl.endRefreshing()
@@ -94,6 +105,19 @@ final class AppInboxViewController: NiblessViewController, AlertPresentable {
         }
     }
     
+    @objc
+    func segmentChanged(_ sender: UISegmentedControl) {
+        selectedSegment = sender.selectedSegmentIndex
+        loadMessages()
+    }
+    
+    private func applyInboxStatus() -> AppInboxMessagesStatus? {
+        switch selectedSegment {
+        case 1: .opened
+        case 2: .unopened
+        default: nil
+        }
+    }
 }
 
 // MARK: Setup layout
@@ -106,9 +130,18 @@ extension AppInboxViewController {
         tableView.separatorStyle = .none
         tableView.register(AppInboxMessageCell.self, forCellReuseIdentifier: String(describing: AppInboxMessageCell.self))
         tableView.refreshControl = refreshControl
+        
+        view.addSubview(segmentedControl)
+        segmentedControl.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().inset(30)
+        }
+        
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(25)
         }
         
         refreshControl.addTarget(self, action: #selector(handleRefreshAction), for: .valueChanged)

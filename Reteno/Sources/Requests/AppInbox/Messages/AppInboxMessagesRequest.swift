@@ -16,10 +16,17 @@ struct AppInboxMessagesRequest: APIRequest {
     let method = HTTPMethod.get
     let encoding: any ParameterEncoding = URLEncoding.default
     
-    init(page: Int?, pageSize: Int?) {
-        guard let page = page, let pageSize = pageSize else { return }
+    init(page: Int?, pageSize: Int?, status: AppInboxMessagesStatus?) {
+        var params: [String: Any] = [:]
+        if let status {
+            params["status"] = status.rawValue
+        }
         
-        parameters = ["page": page, "pageSize": pageSize]
+        if let page = page, let pageSize = pageSize {
+            params["page"] =  page
+            params["pageSize"] = pageSize
+        }
+        parameters = params.isEmpty ? nil : params
     }
 
 }

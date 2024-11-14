@@ -29,8 +29,8 @@ final class AppInboxViewModel {
         model.message(at: index)
     }
     
-    func loadMessages(completion: @escaping (Result<Void, Error>) -> Void) {
-        model.loadMessages(completion: completion)
+    func loadMessages(with status: AppInboxMessagesStatus?, completion: @escaping (Result<Void, Error>) -> Void) {
+        model.loadMessages(status: status, completion: completion)
     }
     
     func markMessageAsOpened(at index: Int, completion: @escaping (Result<Void, Error>) -> Void) {

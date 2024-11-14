@@ -25,8 +25,8 @@ final class AppInboxModel {
         messages[index]
     }
     
-    func loadMessages(completion: @escaping (Result<Void, Error>) -> Void) {
-        Reteno.inbox().downloadMessages { [weak self] result in
+    func loadMessages(status: AppInboxMessagesStatus?, completion: @escaping (Result<Void, Error>) -> Void) {
+        Reteno.inbox().downloadMessages(status: status) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.messages = response.messages

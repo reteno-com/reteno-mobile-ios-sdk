@@ -132,9 +132,15 @@ extension MobileRequestService {
     func getInboxMessages(
         page: Int?,
         pageSize: Int?,
+        status: AppInboxMessagesStatus?,
         completion: @escaping (Result<AppInboxMessagesResponse, Error>) -> Void
     ) {
-        let request = AppInboxMessagesRequest(page: page, pageSize: pageSize)
+        let request = AppInboxMessagesRequest(
+            page: page,
+            pageSize: pageSize,
+            status: status
+        )
+        
         let handler = DecodableResponseHandler<AppInboxMessagesResponse>()
         
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completion)

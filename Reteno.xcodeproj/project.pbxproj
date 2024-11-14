@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		18D02BCD28CA2F02008018F1 /* Reteno.docc in Sources */ = {isa = PBXBuildFile; fileRef = 18D02BCC28CA2F02008018F1 /* Reteno.docc */; };
 		18D02BD928CA2F02008018F1 /* Reteno.h in Headers */ = {isa = PBXBuildFile; fileRef = 18D02BCB28CA2F02008018F1 /* Reteno.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5EC5B6632CDE2BE400219220 /* AppInboxMessageStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC5B6622CDE2BE400219220 /* AppInboxMessageStatus.swift */; };
 		E0367B462CA4A07700F88784 /* Dictionary+getHeaderValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AEE2CA4A07700F88784 /* Dictionary+getHeaderValue.swift */; };
 		E0367B472CA4A07700F88784 /* BundleIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AAB2CA4A07700F88784 /* BundleIdHelper.swift */; };
 		E0367B482CA4A07700F88784 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A9F2CA4A07700F88784 /* Date+Utils.swift */; };
@@ -158,6 +159,7 @@
 		18D02BC828CA2F02008018F1 /* Reteno.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Reteno.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D02BCB28CA2F02008018F1 /* Reteno.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reteno.h; sourceTree = "<group>"; };
 		18D02BCC28CA2F02008018F1 /* Reteno.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Reteno.docc; sourceTree = "<group>"; };
+		5EC5B6622CDE2BE400219220 /* AppInboxMessageStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessageStatus.swift; sourceTree = "<group>"; };
 		E0367A892CA4A07700F88784 /* Analytics+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+SwiftUI.swift"; sourceTree = "<group>"; };
 		E0367A8A2CA4A07700F88784 /* Analytics+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+UIViewController.swift"; sourceTree = "<group>"; };
 		E0367A8B2CA4A07700F88784 /* Analytics+UNUserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+UNUserNotificationCenter.swift"; sourceTree = "<group>"; };
@@ -631,6 +633,7 @@
 			children = (
 				E0367AFC2CA4A07700F88784 /* AppInboxMessagesRequest.swift */,
 				E0367AFD2CA4A07700F88784 /* AppInboxMessagesResponse.swift */,
+				5EC5B6622CDE2BE400219220 /* AppInboxMessageStatus.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -941,6 +944,7 @@
 				E0367B492CA4A07700F88784 /* MobileRequestServiceBuilder.swift in Sources */,
 				E0367B4A2CA4A07700F88784 /* BaseBEDateFormatter.swift in Sources */,
 				E0367B4B2CA4A07700F88784 /* InAppAsyncCheck.swift in Sources */,
+				5EC5B6632CDE2BE400219220 /* AppInboxMessageStatus.swift in Sources */,
 				E0367B4C2CA4A07700F88784 /* UnauthorizedAuthNetworkBuilder.swift in Sources */,
 				E0367B4D2CA4A07700F88784 /* AppInboxMessagesCountResponse.swift in Sources */,
 				E0367B4E2CA4A07700F88784 /* APIStatusError.swift in Sources */,

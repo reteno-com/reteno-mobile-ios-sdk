@@ -255,7 +255,7 @@ final class MobileRequestServiceTests: XCTestCase {
         var expectedSuccess: Bool?
         var expectedResponse: AppInboxMessagesResponse?
         let expectation = expectation(description: "Request")
-        sut.getInboxMessages(page: nil, pageSize: nil) { result in
+        sut.getInboxMessages(page: nil, pageSize: nil, status: nil) { result in
             switch result {
             case .success(let response):
                 expectedSuccess = true
@@ -280,7 +280,7 @@ final class MobileRequestServiceTests: XCTestCase {
         }
         var expectedSuccess: Bool?
         let expectation = expectation(description: "Request")
-        sut.getInboxMessages(page: nil, pageSize: nil) { result in
+        sut.getInboxMessages(page: nil, pageSize: nil, status: nil) { result in
             switch result {
             case .success:
                 expectedSuccess = true

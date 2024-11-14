@@ -26,7 +26,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.0.17"
+    static var version = "2.0.18"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -60,10 +60,10 @@ public struct Reteno {
         senderScheduler.subscribeOnNotifications()
         userNotificationService.setNotificationCenterDelegate()
         inApps.subscribeOnNotifications()
-        pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
-        setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
         sdkStateHelper.set(isDelayedInitialization: false)
         sdkStateHelper.set(isInitialized: true)
+        pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
+        setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
     }
     
     /// SDK delayed initialization

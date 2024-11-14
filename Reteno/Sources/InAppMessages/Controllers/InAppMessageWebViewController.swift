@@ -43,7 +43,7 @@ final class InAppMessageWebViewController: UIViewController {
         webView = WKWebView(frame: CGRect.zero, configuration: configuration)
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = .clear
-        
+        webView.isOpaque = false
         super.init(nibName: nil, bundle: nil)
         
         view.backgroundColor = .clear
