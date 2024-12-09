@@ -37,7 +37,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
             return
         }
         
-        Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .delivered, date: Date())
+        Reteno.markNotificationAsDelivered(interactionId: notification.id, date: Date())
 
         addActionButtons(from: notification, to: bestAttemptContent)
         

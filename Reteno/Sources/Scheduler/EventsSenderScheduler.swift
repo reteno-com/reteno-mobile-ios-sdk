@@ -86,6 +86,43 @@ final class EventsSenderScheduler {
         operationQueue.addOperation(operation)
     }
     
+    func forceUpdateNotificationInteractionStatus(interactionId: String, status: InteractionStatus, date: Date) {
+        let notificationStatus = NotificationStatus(interactionId: interactionId, status: status, date: date)
+        let token = RetenoNotificationsHelper.deviceToken() ?? ""
+        if token.isEmpty {
+            ErrorLogger.shared.captureWarningEvent(
+                message: "Sending interaction status with empty token",
+                tags: [
+                    "reteno.interaction_id": notificationStatus.interactionId,
+                    "reteno.interaction_status": notificationStatus.status.rawValue
+                ]
+            )
+        }
+        sendingService.updateInteractionStatus(
+            status: notificationStatus,
+            token: token
+        ) { [weak self] result in
+            switch result {
+            case .success:
+                break
+            case .failure(let error):
+                if let responseCode = (error as? APIStatusError)?.statusCode {
+                    switch responseCode {
+                    case 400...499:
+                        self?.updateNotificationInteractionStatus(
+                            interactionId: notificationStatus.interactionId,
+                            status: notificationStatus.status,
+                            date: notificationStatus.date
+                        )
+                        break
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+    }
+    
     func updateNotificationInteractionStatus(interactionId: String, status: InteractionStatus, date: Date) {
         let status = NotificationStatus(interactionId: interactionId, status: status, date: date)
         storage.addNotificationStatus(status)

@@ -26,7 +26,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.0.18"
+    static var version = "2.0.19"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -348,5 +348,11 @@ public struct Reteno {
         }
         
         senderScheduler.upsertDevice(device)
+    }
+    
+    // MARK: - Mark notification as delivered
+    
+    static func markNotificationAsDelivered(interactionId: String, date: Date = Date()) {
+        senderScheduler.forceUpdateNotificationInteractionStatus(interactionId: interactionId, status: .delivered, date: date)
     }
 }
