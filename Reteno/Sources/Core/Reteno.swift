@@ -15,6 +15,14 @@ extension Reteno {
     static let retenoDidBecomeActive: Notification.Name = .init(
         "com.reteno.didBecomeActive.after.delayed.initialization"
     )
+    
+    static let userUpdateInitiated: Notification.Name = .init(
+        "com.reteno.userUpdateInitiated"
+    )
+    
+    static let userUpdateCompleted: Notification.Name = .init(
+        "com.reteno.userUpdateCompleted"
+    )
 }
 
 public struct Reteno {
@@ -26,7 +34,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.0.19"
+    static var version = "2.0.20"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -207,6 +215,8 @@ public struct Reteno {
         
         if let externalUserId = externalUserId,
             !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            NotificationCenter.default.post(name: Reteno.userUpdateInitiated, object: nil)
+            
             ExternalUserIdHelper.setId(externalUserId)
         }
         
@@ -224,6 +234,7 @@ public struct Reteno {
             let userId = ExternalUserIdHelper.getId(),
             !userId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         else {
+            NotificationCenter.default.post(name: Reteno.userUpdateCompleted, object: nil)
             Logger.log("Trying to update user with empty ID. This operation won't be completed.", eventType: .error)
             return
         }

@@ -36,7 +36,7 @@ final class SendUserOperation: DateOperation, @unchecked Sendable {
         
         let updateAttributesResult: (Result<Bool, Error>) -> Void = { [user, weak self] result in
             guard let self = self else { return }
-            
+            NotificationCenter.default.post(name: Reteno.userUpdateCompleted, object: nil)
             switch result {
             case .success:
                 self.storage.clearUser(user)

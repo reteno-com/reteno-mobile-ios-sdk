@@ -30,6 +30,12 @@ public final class AppInbox {
     private let scheduler: EventsSenderScheduler
     private let storage: KeyValueStorage
     
+    private var messagesCountResponseHandler: ((Result<Int, Error>) -> Void)?
+    private var messagesResponseHandler: ((Result<(messages: [AppInboxMessage], totalPages: Int?), Error>) -> Void)?
+    private var messagesRequestParams: InboxMessagesParams?
+    
+    private var isUserUpdateInProcess: Bool = false
+    
     init(
         requestService: MobileRequestService,
         scheduler: EventsSenderScheduler = Reteno.senderScheduler,
@@ -38,6 +44,7 @@ public final class AppInbox {
         self.requestService = requestService
         self.scheduler = scheduler
         self.storage = storage
+        addObservers()
     }
     
     /// Download inbox messages
@@ -52,13 +59,18 @@ public final class AppInbox {
         status: AppInboxMessagesStatus? = nil,
         completion: @escaping (Result<(messages: [AppInboxMessage], totalPages: Int?), Error>) -> Void
     ) {
-        requestService.getInboxMessages(page: page, pageSize: pageSize, status: status) { result in
-            switch result {
-            case .success(let response):
-                completion(.success((response.messages, response.totalPages)))
-                
-            case .failure(let error):
-                completion(.failure(error))
+        if isUserUpdateInProcess {
+            messagesRequestParams = InboxMessagesParams(page: page, pageSize: pageSize, status: status)
+            messagesResponseHandler = completion
+        } else {
+            requestService.getInboxMessages(page: page, pageSize: pageSize, status: status) { result in
+                switch result {
+                case .success(let response):
+                    completion(.success((response.messages, response.totalPages)))
+                    
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -69,13 +81,17 @@ public final class AppInbox {
     public func getUnreadMessagesCount(
         completion: @escaping (Result<Int, Error>) -> Void
     ) {
-        requestService.getInboxMessagesCount { result in
-            switch result {
-            case .success(let item):
-                return completion(.success(item.unreadCount))
-                
-            case .failure(let error):
-                return completion(.failure(error))
+        if isUserUpdateInProcess {
+            messagesCountResponseHandler = completion
+        } else {
+            requestService.getInboxMessagesCount { result in
+                switch result {
+                case .success(let item):
+                    return completion(.success(item.unreadCount))
+                    
+                case .failure(let error):
+                    return completion(.failure(error))
+                }
             }
         }
     }
@@ -114,4 +130,54 @@ public final class AppInbox {
         }
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+
+private extension AppInbox {
+    struct InboxMessagesParams {
+        let page: Int?
+        let pageSize: Int?
+        let status: AppInboxMessagesStatus?
+    }
+}
+
+private extension AppInbox {
+    private func addObservers() {
+        NotificationCenter.default.addObserver(forName: Reteno.userUpdateInitiated, object: nil, queue: nil) { [weak self] _ in
+            self?.isUserUpdateInProcess = true
+        }
+        
+        NotificationCenter.default.addObserver(forName: Reteno.userUpdateCompleted, object: nil, queue: nil) { [weak self] _ in
+            self?.isUserUpdateInProcess = false
+            self?.handleUserUpdatedNotification()
+            self?.clearData()
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { [weak self] _ in
+            self?.isUserUpdateInProcess = false
+            self?.clearData()
+        }
+    }
+    
+    private func clearData() {
+        messagesResponseHandler = nil
+        messagesCountResponseHandler = nil
+        messagesRequestParams = nil
+    }
+    
+    private func handleUserUpdatedNotification() {
+        if let responseHandler = messagesCountResponseHandler {
+            getUnreadMessagesCount(completion: responseHandler)
+        }
+        
+        if let requestParams = messagesRequestParams,
+           let responseHandler = messagesResponseHandler {
+            downloadMessages(page: requestParams.page,
+                             pageSize: requestParams.pageSize,
+                             status: requestParams.status,
+                             completion: responseHandler)
+        }
+    }
 }

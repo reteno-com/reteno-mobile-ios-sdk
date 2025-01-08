@@ -47,4 +47,25 @@ final class ProfileViewModel {
         model.saveUser()
     }
     
+    func getUnreadMessagesCount(completion: @escaping (Int) -> Void) {
+        model.getUnreadMessagesCount { res in
+            switch res {
+            case .success(let count):
+                completion(count)
+            case .failure(let failure):
+                print("Error fetching uread count: \(failure)")
+            }
+        }
+    }
+    
+    func getMessages() {
+        model.getMessages { res in
+            switch res {
+            case .success(let success):
+                print(success.messages)
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
 }

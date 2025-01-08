@@ -17,8 +17,12 @@ final class ProfileViewController: NiblessViewController {
     private let emailTextField = CommonTextField()
     private let isAnonymousSwitch = UISwitch()
     
+    private let unreadMessagesCountLabel = UILabel()
+    
     private let generateIdButton = UIButton()
     private let saveButton = UIButton()
+    
+    private let unreadMessagesCount: Int = 0
     
     private let viewModel: ProfileViewModel
     
@@ -90,6 +94,10 @@ final class ProfileViewController: NiblessViewController {
     @objc
     func saveAction(_ button: UIButton) {
         viewModel.saveUser()
+        viewModel.getUnreadMessagesCount { [weak self] number in
+            self?.unreadMessagesCountLabel.text = "\(number)"
+        }
+        viewModel.getMessages()
     }
     
 }
@@ -159,6 +167,17 @@ private extension ProfileViewController {
         isAnonymousStackView.addArrangedSubview(isAnonymousLabel)
         
         stack.addArrangedSubview(isAnonymousStackView)
+        
+        let messagesCountStackView = UIStackView()
+        messagesCountStackView.axis = .horizontal
+        messagesCountStackView.distribution = .equalSpacing
+        let unreadMessagesTextLabel = UILabel()
+        unreadMessagesTextLabel.text = "Unread messages count:"
+        messagesCountStackView.addArrangedSubview(unreadMessagesTextLabel)
+        messagesCountStackView.addArrangedSubview(unreadMessagesCountLabel)
+        
+        stack.addArrangedSubview(messagesCountStackView)
+        
         
         view.addSubview(saveButton)
         saveButton.snp.makeConstraints {

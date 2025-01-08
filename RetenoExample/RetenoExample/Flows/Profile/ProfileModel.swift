@@ -89,7 +89,14 @@ final class ProfileModel {
             Reteno.updateUserAttributes(externalUserId: user.id, userAttributes: attributes)
         }
         
-        navigationHandler.backToMain()
+//        navigationHandler.backToMain()
     }
     
+    func getUnreadMessagesCount(completion: @escaping (Result<Int, Error>) -> Void) {
+        Reteno.inbox().getUnreadMessagesCount(completion: completion)
+    }
+    
+    func getMessages(completion: @escaping (Result<(messages: [AppInboxMessage], totalPages: Int?), Error>) -> Void) {
+        Reteno.inbox().downloadMessages(completion: completion)
+    }
 }
