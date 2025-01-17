@@ -74,6 +74,7 @@ class InAppMessagePresenter {
     }
     
     func updateTimeSpendInApp(time: Int) {
+        guard events.isEmpty else { return }
         if model.frequency == .minInterval || model.frequency == .timesPerTimeUnit {
             if fireTime == 0 {
                 self.procesignInApp(isTimeCondition: true)
