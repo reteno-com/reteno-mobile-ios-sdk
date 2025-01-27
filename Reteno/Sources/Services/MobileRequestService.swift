@@ -22,7 +22,7 @@ final class MobileRequestService {
         isSubscribedOnPush: Bool,
         completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }
     ) {
-        let languageCode = Locale.current.languageCode
+        let languageCode = Locale.preferredLanguages.first ?? "en"
         let pushToken = RetenoNotificationsHelper.deviceToken() ?? ""
         let category = try? DeviceCategoryHelper.deviceType()
         let request = DeviceRequest(

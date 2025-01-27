@@ -20,7 +20,7 @@ The Reteno iOS SDK for Mobile Customer Engagement and Analytics solutions
 [CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Reteno into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-pod 'Reteno', '2.0.22'
+pod 'Reteno', '2.0.23'
 ```
 
 ### Swift Package Manager
@@ -31,7 +31,7 @@ Once you have your Swift package set up, adding Reteno as a dependency is as eas
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/reteno-com/reteno-mobile-ios-sdk.git", .upToNextMajor(from: "2.0.22"))
+    .package(url: "https://github.com/reteno-com/reteno-mobile-ios-sdk.git", .upToNextMajor(from: "2.0.23"))
 ]
 ```
 
