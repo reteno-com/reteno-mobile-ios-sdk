@@ -11,6 +11,8 @@ protocol InApp: Codable {
     var id: String { get }
     var model: String { get }
     var personalisation: String? { get }
+    var layoutType: LayoutType { get }
+    var layoutParams: LayoutParams? { get }
 }
 
 extension InApp {

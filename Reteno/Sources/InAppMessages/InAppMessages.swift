@@ -14,6 +14,7 @@ final class InAppMessages {
     
     private var application: UIApplication?
     private var window: UIWindow?
+    private var slideUpVC: SlideUpMessageViewController?
     
     private var currentInAppMessage: InApp?
     private var currentInteractionId: String?
@@ -30,6 +31,7 @@ final class InAppMessages {
     
     private var isAlreadySendRequest: Bool = false
     private var isAlreadyFetchBaseFile: Bool = false
+    private var slideUpTransitioningDelegate: SlideUpTransitioningDelegate?
     
     private var sdkStateHelper: SDKStateHelper {
         Reteno.sdkStateHelper
@@ -51,7 +53,7 @@ final class InAppMessages {
     }
     
     @available(iOSApplicationExtension, unavailable)
-    func presentInApp(by id: String) {
+    func presentInApp(by id: String, isPushInApp: Bool = false) {
         mobileRequestService.getInAppMessage(by: id) { [weak self] result in
             switch result {
             case .success(let message):
@@ -59,7 +61,7 @@ final class InAppMessages {
                 
                 if self.application?.isActive == true {
                     Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
-                    self.setupWebView(with: message)
+                    self.setupWebView(with: message, isPushInApp: isPushInApp)
                 } else {
                     self.currentInAppMessage = message
                 }
@@ -293,13 +295,32 @@ final class InAppMessages {
     }
         
     @available(iOSApplicationExtension, unavailable)
-    private func setupWebView(with message: InApp) {
-        let viewController = InAppMessageWebViewController(
-            with: message,
-            inAppService: inAppService
-        )
-        viewController.delegate = self
-        viewController.view.layoutIfNeeded()
+    private func setupWebView(with message: InApp, isPushInApp: Bool = false) {
+        if isPushInApp {
+            if window.isSome {
+                dismissInAppMessage(animated: false)
+            } else if slideUpVC.isSome {
+                dismissSlideUp(animated: false)
+            }
+        }
+        guard slideUpVC.isNone && window.isNone else { return }
+        if message.layoutType == .slideUp || message.layoutType == .bottomBar {
+            let viewController = SlideUpMessageViewController(
+                inApp: message,
+                inAppService: inAppService
+            )
+            viewController.delegate = self
+            viewController.view.layoutIfNeeded()
+            slideUpVC = viewController
+        } else {
+            let viewController = InAppMessageWebViewController(
+                with: message,
+                inAppService: inAppService
+            )
+            viewController.delegate = self
+            viewController.view.layoutIfNeeded()
+            self.window = UIWindow()
+        }
     }
     
     private func presentInAppMessage(animated: Bool = true, in viewController: UIViewController) {
@@ -345,6 +366,26 @@ final class InAppMessages {
         }
     }
     
+    @available(iOSApplicationExtension, unavailable)
+    private func presentSlideUpMessage(_ inApp: InApp,
+                                       in viewController: UIViewController,
+                                       height: CGFloat,
+                                       animated: Bool = true) {
+        guard let rootVC = UIApplication.shared.keyWindow?.rootViewController, let slideUpVC = viewController as?    SlideUpMessageViewController else { return }
+        switch inApp.layoutType {
+        case .bottomBar:
+            slideUpTransitioningDelegate = SlideUpTransitioningDelegate(slidePosition: .bottom)
+            slideUpVC.setupBottomBar(height: height)
+        case .slideUp:
+            slideUpTransitioningDelegate = SlideUpTransitioningDelegate(slidePosition: inApp.layoutParams?.position ?? .top)
+            slideUpVC.setWebViewLayout(position: inApp.layoutParams?.position ?? .top, height: height)
+        default: break
+        }
+        slideUpVC.modalPresentationStyle = .custom
+        slideUpVC.transitioningDelegate = slideUpTransitioningDelegate
+        rootVC.present(slideUpVC, animated: true)
+    }
+    
     private func dismissInAppMessage(action: InAppMessageAction? = nil, animated: Bool = true) {
         func hide() {
             window?.removeFromSuperview()
@@ -362,6 +403,20 @@ final class InAppMessages {
             )
         } else {
             hide()
+        }
+    }
+    
+    private func dismissSlideUp(animated: Bool = true,
+                                swipeDirection: UISwipeGestureRecognizer.Direction = .left,
+                                action: InAppMessageAction? = nil) {
+        if let vc = slideUpVC {
+            slideUpTransitioningDelegate?.swipeDirection = swipeDirection
+            vc.dismiss(animated: animated) {
+                if let action {
+                    Reteno.inAppStatusHander?(.inAppIsClosed(action: action))
+                }
+            }
+            slideUpVC = nil
         }
     }
     
@@ -439,7 +494,13 @@ extension InAppMessages: InAppScriptMessageHandler {
     ) {
         switch scriptMessage.type {
         case .completedLoading:
-            presentInAppMessage(in: viewController)
+            if let slideUpVC = viewController as? SlideUpMessageViewController,
+               let payload = scriptMessage.payload as? SlideAppContentHeightPayload,
+               message.layoutType == .slideUp || message.layoutType == .bottomBar {
+                presentSlideUpMessage(message, in: slideUpVC, height: payload.contentHeight, animated: true)
+            } else {
+                presentInAppMessage(in: viewController)
+            }
             Reteno.inAppStatusHander?(.inAppIsDisplayed)
             currentInteractionId = nil
             guard let inAppContent = message as? InAppContent else {
@@ -449,7 +510,6 @@ extension InAppMessages: InAppScriptMessageHandler {
             let intecationId = UUID().uuidString
             currentInteractionId = intecationId
             self.inAppService.sendInteraction(with: inAppContent, interactionId: intecationId)
-            
         case .failedLoading, .runtimeError:
             currentInteractionId = nil
             Reteno.inAppStatusHander?(.inAppReceivedError(error: "Failed loading in-app"))
@@ -469,12 +529,21 @@ extension InAppMessages: InAppScriptMessageHandler {
         case .close:
             let action: InAppMessageAction = .init(isCloseButtonClicked: true)
             Reteno.inAppStatusHander?(.inAppShouldBeClosed(action: action))
-            dismissInAppMessage(action: action)
+            if message.layoutType == .slideUp || message.layoutType == .bottomBar {
+                dismissSlideUp(swipeDirection: (scriptMessage.payload as? DismissSlideUpPayload)?.swipeDirection ?? .left,
+                               action: action)
+            } else {
+                dismissInAppMessage(action: action)
+            }
             
         case .openURL:
             let action: InAppMessageAction = .init(isOpenUrlClicked: true)
             Reteno.inAppStatusHander?(.inAppShouldBeClosed(action: action))
-            dismissInAppMessage(action: action)
+            if message.layoutType == .slideUp || message.layoutType == .bottomBar {
+                dismissSlideUp(action: action)
+            } else {
+                dismissInAppMessage(action: action)
+            }
             let payload = scriptMessage.payload as? InAppScriptMessageURLPayload
             handleInteraction(
                 messageId: currentInteractionId ?? message.id,
@@ -494,7 +563,11 @@ extension InAppMessages: InAppScriptMessageHandler {
         case .click:
             let action: InAppMessageAction = .init(isButtonClicked: true)
             Reteno.inAppStatusHander?(.inAppShouldBeClosed(action: action))
-            dismissInAppMessage(action: action)
+            if message.layoutType == .slideUp || message.layoutType == .bottomBar {
+                dismissSlideUp(action: action)
+            } else {
+                dismissInAppMessage(action: action)
+            }
             if let payload = scriptMessage.payload as? InAppScriptMessageComponentPayload {
                 handleInteraction(
                     messageId: currentInteractionId ?? message.id,

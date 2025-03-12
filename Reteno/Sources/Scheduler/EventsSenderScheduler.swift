@@ -41,6 +41,10 @@ final class EventsSenderScheduler {
     /// Local storage, based on `UserDefaults`
     private let storage: KeyValueStorage
     
+    private let pushNotificationEventsQueue = DispatchQueue(label: "com.reteno.sendPushNotificationEventsQueue", attributes: .concurrent)
+    private var lastPushNotificationEvent: (eventName: String, date: Date)?
+    private let sendPushNotificationDelay: TimeInterval = 3
+    
     private var sdkStateHelper: SDKStateHelper {
         Reteno.sdkStateHelper
     }
@@ -507,15 +511,18 @@ final class EventsSenderScheduler {
     // MARK: Push subscription event
     
     private func sendPushSubscriptionEvent(isSubscribed: Bool) {
-        let subscribedKey = "PushNotificationsSubscribed"
-        let unsubscribedKey = "PushNotificationsUnsubscribed"
-        let eventTypeKey = isSubscribed ? subscribedKey : unsubscribedKey
-        
-        let dublicateEvents = storage.getEvents().filter { $0.isValid && ($0.eventTypeKey == subscribedKey || $0.eventTypeKey == unsubscribedKey) }
-        if dublicateEvents.isNotEmpty {
-            storage.clearEvents(dublicateEvents)
+        pushNotificationEventsQueue.async(flags: .barrier) { [weak self] in
+            guard let self else { return }
+            let subscribedKey = "PushNotificationsSubscribed"
+            let unsubscribedKey = "PushNotificationsUnsubscribed"
+            let eventTypeKey = isSubscribed ? subscribedKey : unsubscribedKey
+            let now = Date()
+            if let lastPushNotificationEvent, lastPushNotificationEvent.eventName == eventTypeKey, now.timeIntervalSince(lastPushNotificationEvent.date) < sendPushNotificationDelay {
+                return
+            }
+            self.lastPushNotificationEvent = (eventName: eventTypeKey, date: now)
+            Reteno.logEvent(eventTypeKey: eventTypeKey, parameters: [], forcePush: true)
         }
-        Reteno.logEvent(eventTypeKey: eventTypeKey, parameters: [])
     }
     
     // MARK: Handle notifications

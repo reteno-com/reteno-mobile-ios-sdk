@@ -18,11 +18,11 @@ protocol InAppScriptMessageHandler: AnyObject {
     
 }
 
-final class InAppMessageWebViewController: UIViewController {
+class InAppMessageWebViewController: UIViewController {
     weak var delegate: InAppScriptMessageHandler?
     
     private let message: InApp
-    private let webView: WKWebView
+    let webView: WKWebView
     private let inAppService: InAppService
     
     // MARK: Init
@@ -57,9 +57,9 @@ final class InAppMessageWebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         do {
-            let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("index.html")
+            let baseFileName: String = "index.html"
+            let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(baseFileName)
             let htmlContent = try String(contentsOf: url, encoding: .utf8)
             let htmlString = htmlContent
                 .replacingOccurrences(of: "${documentModel}", with: message.model)
@@ -81,10 +81,30 @@ final class InAppMessageWebViewController: UIViewController {
         webView.stopLoading()
         webView.configuration.userContentController.removeScriptMessageHandler(forName: "retenoHandler")
     }
-
+    
+    func disableScrolling() {
+        webView.scrollView.isScrollEnabled = false
+        webView.allowsBackForwardNavigationGestures = false
+    }
+    
+    func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+        webView.addGestureRecognizer(gestureRecognizer)
+    }
 }
 
 extension InAppMessageWebViewController: WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping @MainActor (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated,
+           let url = navigationAction.request.url {
+            let payload = InAppScriptMessageURLPayload(url: url.absoluteString)
+            let scriptMessage = InAppScriptMessage(type: .openURL, payload: payload)
+            delegate?.inAppMessageWebViewController(self, didReceive: scriptMessage, in: message)
+            decisionHandler(.cancel)
+            return
+        }
+        decisionHandler(.allow)
+    }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         Logger.log("Load finished", eventType: .info)

@@ -103,7 +103,7 @@ public final class UserNotificationService: NSObject {
         guard let retenoNotification = RetenoUserNotification(userInfo: notification.request.content.userInfo) else { return }
         
         if retenoNotification.isInApp {
-            Reteno.inAppMessages().presentInApp(by: retenoNotification.id)
+            Reteno.inAppMessages().presentInApp(by: retenoNotification.id, isPushInApp: true)
         } else {
             Reteno.updateNotificationInteractionStatus(interactionId: retenoNotification.id, status: .clicked, date: Date())
             let customData = notification.request.content.userInfo as? [String: Any]
@@ -138,7 +138,7 @@ public final class UserNotificationService: NSObject {
             
         default:
             guard !notification.isInApp else {
-                Reteno.inAppMessages().presentInApp(by: notification.id)
+                Reteno.inAppMessages().presentInApp(by: notification.id, isPushInApp: true)
                 return
             }
             

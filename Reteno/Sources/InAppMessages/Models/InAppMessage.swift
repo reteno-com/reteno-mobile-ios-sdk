@@ -10,18 +10,20 @@ import Foundation
 struct InAppMessage: InApp {
     let id: String
     let layoutType: LayoutType
+    let layoutParams: LayoutParams?
     let model: String
     let personalisation: String?
     
     enum CodingKeys: String, CodingKey {
-        case id = "iid", layoutType, model, personalisation
+        case id = "iid", layoutType, layoutParams, model, personalisation
     }
     
-    init(id: String, layoutType: LayoutType = .full, model: String, personalisation: String?) {
+    init(id: String, layoutType: LayoutType = .full, model: String, personalisation: String?, layoutParams: LayoutParams? = nil) {
         self.id = id
         self.layoutType = layoutType
         self.model = model
         self.personalisation = personalisation
+        self.layoutParams = layoutParams
     }
     
     init(from decoder: Decoder) throws {
@@ -39,10 +41,24 @@ struct InAppMessage: InApp {
         } else {
             self.personalisation = nil
         }
+        
+        self.layoutParams = try? container.decodeIfPresent(LayoutParams.self, forKey: .layoutParams)
     }
 
 }
 
 enum LayoutType: String, Codable {
     case full = "FULL"
+    case slideUp = "SLIDE_UP"
+    case bottomBar = "BOTTOM_BAR"
+    case popup = "POP_UP"
+}
+
+struct LayoutParams: Codable {
+    let position: LayoutPosition
+}
+
+enum LayoutPosition: String, Codable {
+    case top = "TOP"
+    case bottom = "BOTTOM"
 }

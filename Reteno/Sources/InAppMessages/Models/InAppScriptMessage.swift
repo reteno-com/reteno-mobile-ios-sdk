@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol InAppScriptMessagePayload {}
 
@@ -34,7 +35,7 @@ struct InAppScriptMessage: Decodable {
         type = MessageType(rawValue: typeRawValue) ?? .unknown
         
         switch type {
-        case .unknown, .close, .completedLoading:
+        case .unknown, .close:
             payload = nil
             
         case .failedLoading, .runtimeError:
@@ -45,6 +46,8 @@ struct InAppScriptMessage: Decodable {
             
         case .click:
             payload = try? container.decode(InAppScriptMessageComponentPayload.self, forKey: .payload)
+        case .completedLoading:
+            payload = try? container.decodeIfPresent(SlideAppContentHeightPayload.self, forKey: .payload)
         }
     }
 
@@ -66,6 +69,12 @@ struct InAppScriptMessageURLPayload: Decodable, InAppScriptMessagePayload {
         self.targetComponentId = try? container.decode(String.self, forKey: .targetComponentId)
         self.customData = try? container.decode([String:Any].self, forKey: .customData)
     }
+    
+    init(url: String?) {
+        self.urlString = url
+        self.targetComponentId = nil
+        self.customData = nil
+    }
 }
 
 struct InAppScriptMessageErrorPayload: Decodable, InAppScriptMessagePayload {
@@ -78,4 +87,28 @@ struct InAppScriptMessageComponentPayload: Decodable, InAppScriptMessagePayload 
     
     let targetComponentId: String
     
+}
+
+struct SlideAppContentHeightPayload: Decodable, InAppScriptMessagePayload {
+    let contentHeight: CGFloat
+    
+    enum CodingKeys: CodingKey {
+        case contentHeight
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let heightString = try container.decode(String.self, forKey: .contentHeight)
+        let scanner = Scanner(string: heightString)
+        var value: Float = 0
+        if scanner.scanFloat(&value) {
+            self.contentHeight = CGFloat(value)
+        } else {
+            self.contentHeight = 0
+        }
+    }
+}
+
+struct DismissSlideUpPayload: InAppScriptMessagePayload {
+    let swipeDirection: UISwipeGestureRecognizer.Direction
 }

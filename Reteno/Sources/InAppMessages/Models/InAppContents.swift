@@ -18,10 +18,11 @@ struct InAppContent: InApp {
     
     let messageInstanceId: Int
     let layoutType: LayoutType
+    let layoutParams: LayoutParams?
     let model: String
     
     enum CodingKeys: String, CodingKey {
-        case messageInstanceId, layoutType, model
+        case messageInstanceId, layoutType, model, layoutParams
     }
     
     init(from decoder: Decoder) throws {
@@ -29,6 +30,7 @@ struct InAppContent: InApp {
         self.messageInstanceId = try container.decode(Int.self, forKey: .messageInstanceId)
         self.id = String(messageInstanceId)
         self.layoutType = LayoutType(rawValue: try container.decode(String.self, forKey: .layoutType)) ?? .full
+        self.layoutParams = try? container.decodeIfPresent(LayoutParams.self, forKey: .layoutParams)
         
         let modelPayload = try container.decode([String: Any].self, forKey: .model)
         let modelData = try JSONSerialization.data(withJSONObject: modelPayload)
@@ -39,6 +41,7 @@ struct InAppContent: InApp {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(self.messageInstanceId, forKey: .messageInstanceId)
         try container.encode(self.layoutType, forKey: .layoutType)
+        try container.encodeIfPresent(self.layoutParams, forKey: .layoutParams)
         
         if let data = self.model.data(using: .utf8) {
             let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
