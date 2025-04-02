@@ -139,7 +139,8 @@ final class SessionService {
                 .init(name: SessionKeys.durationInSecondsKey.rawValue, value: durationString),
                 .init(name: SessionKeys.openedCountKey.rawValue, value: openedEventCount),
                 .init(name: SessionKeys.backgroundedCount.rawValue, value: backgroundedEventCount)
-            ]
+            ],
+            forcePush: true
         )
     }
     

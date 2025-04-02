@@ -156,7 +156,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         Messaging.messaging().setAPNSToken(deviceToken, type: .unknown)
+        
+        Reteno.userNotificationService.registerForRemoteNotifications()
     }
     
     func application(

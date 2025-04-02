@@ -43,7 +43,7 @@ final class EventsSenderScheduler {
     
     private let pushNotificationEventsQueue = DispatchQueue(label: "com.reteno.sendPushNotificationEventsQueue", attributes: .concurrent)
     private var lastPushNotificationEvent: (eventName: String, date: Date)?
-    private let sendPushNotificationDelay: TimeInterval = 3
+    private let sendPushNotificationDelay: TimeInterval = 5
     
     private var sdkStateHelper: SDKStateHelper {
         Reteno.sdkStateHelper

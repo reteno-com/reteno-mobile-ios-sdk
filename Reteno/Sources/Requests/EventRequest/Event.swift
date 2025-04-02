@@ -36,7 +36,7 @@ public struct Event: Codable {
     func toJSON() -> [String: Any] {
         var json: [String: Any] = [:]
         json["eventTypeKey"] = eventTypeKey
-        json["occurred"] = DateFormatter.baseBEDateFormatter.string(from: date)
+        json["occurred"] = DateFormatter.eventsDateFormatter.string(from: date)
         if !parameters.isEmpty {
             json["params"] = parameters.map { ["name": $0.name, "value": $0.value] }
         }
