@@ -238,8 +238,23 @@ final class InAppService {
 
                             if timeFrom == "00:00", timeTo == "23:59" {
                                 isValidPredicate = true
-                            } else if let time = timeFormatter.date(from: currentTime), let timeFrom = timeFormatter.date(from: timeFrom), let timeTo = timeFormatter.date(from: timeTo), time >= timeFrom, time <= timeTo {
-                                isValidPredicate = true
+                            } else if let time = timeFormatter.date(from: currentTime),
+                                      let timeFrom = timeFormatter.date(from: timeFrom),
+                                      let timeTo = timeFormatter.date(from: timeTo) {
+                                if time >= timeFrom, time <= timeTo {
+                                    isValidPredicate = true
+                                } else if timeTo < timeFrom,
+                                          let toDate = Calendar.current.date(byAdding: .day, value: 1, to: timeTo) {
+                                    if (time >= timeFrom && time <= toDate) || time <= timeTo {
+                                        isValidPredicate = true
+                                    } else {
+                                        isValidPredicate = false
+                                        break
+                                    }
+                                } else {
+                                    isValidPredicate = false
+                                    break
+                                }
                             } else {
                                 isValidPredicate = false
                                 break
