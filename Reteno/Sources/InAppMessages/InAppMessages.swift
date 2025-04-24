@@ -60,8 +60,10 @@ final class InAppMessages {
                 guard let self = self else { return }
                 
                 if self.application?.isActive == true {
-                    Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
-                    self.setupWebView(with: message, isPushInApp: isPushInApp)
+                    DispatchQueue.main.async {
+                        Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
+                        self.setupWebView(with: message, isPushInApp: isPushInApp)
+                    }
                 } else {
                     self.currentInAppMessage = message
                 }
@@ -74,8 +76,11 @@ final class InAppMessages {
     
     @available(iOSApplicationExtension, unavailable)
     func presentInApp(by content: InAppContent) {
-        Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
-        self.setupWebView(with: content)
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
+            self.setupWebView(with: content)
+        }
     }
     
     func logEventTrigger(eventTypeKey: String, parameters: [Event.Parameter]) {
@@ -97,7 +102,8 @@ final class InAppMessages {
         }
         
         if let segmentID = inAppToShow.segmentId {
-            self.inAppService.checkAsyncRulesSegment(id: segmentID) { checks in
+            self.inAppService.checkAsyncRulesSegment(id: segmentID) { [weak self] checks in
+                guard let self else { return }
                 for segment in checks {
                     if segment.segmentId == segmentID, segment.checkResult {
                         self.processingInApp(showModel: inAppToShow.showModel, canDelete: inAppToShow.canDelete)
