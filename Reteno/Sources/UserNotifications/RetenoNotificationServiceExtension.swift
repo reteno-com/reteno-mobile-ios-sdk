@@ -13,6 +13,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
     var bestAttemptContent: UNMutableNotificationContent?
     
     private let imageCarouselCategoryIdentifier = "ImageCarousel"
+    private let imageGifCategoryIdentifier = "ImageGif"
     private let session = URLSession(configuration: .default)
     
     open override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
@@ -49,6 +50,15 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
         } else if let mediaURLString = notification.imageURLString {
             buildAttachments(by: [mediaURLString]) { attachments in
                 bestAttemptContent.attachments = attachments
+                if mediaURLString.components(separatedBy: ".").last == "gif" {
+                    let category = UNNotificationCategory(
+                        identifier: self.imageGifCategoryIdentifier,
+                        actions: [],
+                        intentIdentifiers: []
+                    )
+                    bestAttemptContent.categoryIdentifier = self.imageGifCategoryIdentifier
+                    self.updateNotificationCategories(with: category)
+                }
                 contentHandler(bestAttemptContent)
             }
         } else {
@@ -174,7 +184,7 @@ open class RetenoNotificationServiceExtension: UNNotificationServiceExtension {
         var existingCategories = getAllNotificationCategories()
         if !existingCategories.contains(where: { $0.identifier == category.identifier }) {
             existingCategories.append(category)
-        } else if category.identifier == imageCarouselCategoryIdentifier {
+        } else if category.identifier == imageCarouselCategoryIdentifier || category.identifier == imageGifCategoryIdentifier {
             existingCategories.removeAll(where: { $0.identifier == category.identifier })
             existingCategories.append(category)
         }

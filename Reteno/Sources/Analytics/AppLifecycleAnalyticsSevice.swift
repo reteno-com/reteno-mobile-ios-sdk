@@ -122,7 +122,8 @@ final class AppLifecycleAnalyticsSevice {
             parameters: [
                 .init(name: AppLifecycleEventKeys.applicationOpenedTimeKey.rawValue, value: openedTime),
                 .init(name: AppLifecycleEventKeys.secondsInForegroundKey.rawValue, value: String(secondInForeground))
-            ]
+            ],
+            forcePush: true
         )
     }
 }
