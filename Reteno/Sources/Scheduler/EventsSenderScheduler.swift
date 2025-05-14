@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Combine
 
 final class EventsSenderScheduler {
     
@@ -41,9 +42,7 @@ final class EventsSenderScheduler {
     /// Local storage, based on `UserDefaults`
     private let storage: KeyValueStorage
     
-    private let pushNotificationEventsQueue = DispatchQueue(label: "com.reteno.sendPushNotificationEventsQueue", attributes: .concurrent)
-    private var lastPushNotificationEvent: (eventName: String, date: Date)?
-    private let sendPushNotificationDelay: TimeInterval = 5
+    private var pendingWorkItem: DispatchWorkItem?
     
     private var sdkStateHelper: SDKStateHelper {
         Reteno.sdkStateHelper
@@ -511,18 +510,16 @@ final class EventsSenderScheduler {
     // MARK: Push subscription event
     
     private func sendPushSubscriptionEvent(isSubscribed: Bool) {
-        pushNotificationEventsQueue.async(flags: .barrier) { [weak self] in
-            guard let self else { return }
+        pendingWorkItem?.cancel()
+        
+        pendingWorkItem = DispatchWorkItem {
             let subscribedKey = "PushNotificationsSubscribed"
             let unsubscribedKey = "PushNotificationsUnsubscribed"
             let eventTypeKey = isSubscribed ? subscribedKey : unsubscribedKey
-            let now = Date()
-            if let lastPushNotificationEvent, lastPushNotificationEvent.eventName == eventTypeKey, now.timeIntervalSince(lastPushNotificationEvent.date) < sendPushNotificationDelay {
-                return
-            }
-            self.lastPushNotificationEvent = (eventName: eventTypeKey, date: now)
             Reteno.logEvent(eventTypeKey: eventTypeKey, parameters: [], forcePush: true)
         }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: pendingWorkItem!)
     }
     
     // MARK: Handle notifications

@@ -117,11 +117,11 @@ public final class Ecommerce {
             }
             event = Event(eventTypeKey: "searchRequest", date: date, parameters: parameters)
         }
-        storage.addEvent(event)
-        
-        if forcePush {
-            scheduler.forcePushEvents()
-        }
+
+        Reteno.logEvent(eventTypeKey: event.eventTypeKey,
+                        date: date,
+                        parameters: event.parameters,
+                        forcePush: forcePush)
     }
     
 }
