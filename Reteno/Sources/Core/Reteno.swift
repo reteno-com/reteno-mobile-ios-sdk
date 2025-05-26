@@ -34,7 +34,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.5.5"
+    static var version = "2.5.6"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -55,7 +55,8 @@ public struct Reteno {
             Logger.log("RetenoSDK was already initialized, skipping", eventType: .error)
             return
         }
-        
+        sdkStateHelper.set(isDelayedInitialization: false)
+        sdkStateHelper.set(isInitialized: true)
         ApiKeyHelper.setApiKey(apiKey)
         DeviceIdHelper.actualizeDeviceId()
         DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
@@ -68,8 +69,6 @@ public struct Reteno {
         senderScheduler.subscribeOnNotifications()
         userNotificationService.setNotificationCenterDelegate()
         inApps.subscribeOnNotifications()
-        sdkStateHelper.set(isDelayedInitialization: false)
-        sdkStateHelper.set(isInitialized: true)
         pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
         setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
     }
