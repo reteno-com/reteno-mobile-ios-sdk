@@ -74,8 +74,9 @@ final class EventsSenderScheduler {
     
     func upsertDevice(_ device: Device, date: Date = Date()) {
         guard !pendingSendDeviceOperations.contains(where: { $0.device == device }) else { return }
-        
-        sendPushSubscriptionEvent(isSubscribed: device.isSubscribedOnPush)
+        if device.isSubscribedOnPush != StorageBuilder.build().getValue(forKey: StorageKeys.isPushSubscribed.rawValue) {
+            sendPushSubscriptionEvent(isSubscribed: device.isSubscribedOnPush)
+        }
         let operation = SendDeviceOperation(
             requestService: mobileRequestService,
             storage: storage,
@@ -165,6 +166,7 @@ final class EventsSenderScheduler {
             )
             
             guard userUpdates != cachedLastUser else {
+                NotificationCenter.default.post(name: Reteno.userUpdateCompleted, object: nil)
                 return
             }
             
@@ -191,6 +193,7 @@ final class EventsSenderScheduler {
             let attributes = userToSend.userAttributes
             guard attributes?.phone != nil || attributes?.email != nil || attributes?.firstName != nil || attributes?.lastName != nil || attributes?.languageCode != nil || attributes?.timeZone != nil || attributes?.address != nil || attributes?.fields.isNotEmpty ?? false || userToSend.subscriptionKeys.isNotEmpty || userToSend.groupNamesInclude.isNotEmpty || userToSend.groupNamesExclude.isNotEmpty  else {
                 /// Not store, and not send request if all fields are same
+                NotificationCenter.default.post(name: Reteno.userUpdateCompleted, object: nil)
                 return
             }
             
@@ -541,15 +544,17 @@ final class EventsSenderScheduler {
         guard sdkStateHelper.isInitialized else { return }
         
         RetenoNotificationsHelper.isSubscribedOnNotifications { [weak self] isSubscribed in
-            self?.sendPushSubscriptionEvent(isSubscribed: isSubscribed)
-            StorageBuilder.build().set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
-            let device = Device(
-                externalUserId: ExternalUserIdHelper.getId(),
-                phone: ExternalUserDataHelper.getPhone(),
-                email: ExternalUserDataHelper.getEmail(),
-                isSubscribedOnPush: isSubscribed
-            )
-            self?.upsertDevice(device)
+            if isSubscribed != StorageBuilder.build().getValue(forKey: StorageKeys.isPushSubscribed.rawValue) {
+                self?.sendPushSubscriptionEvent(isSubscribed: isSubscribed)
+                StorageBuilder.build().set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
+                let device = Device(
+                    externalUserId: ExternalUserIdHelper.getId(),
+                    phone: ExternalUserDataHelper.getPhone(),
+                    email: ExternalUserDataHelper.getEmail(),
+                    isSubscribedOnPush: isSubscribed
+                )
+                self?.upsertDevice(device)
+            }
         }
     }
 }
