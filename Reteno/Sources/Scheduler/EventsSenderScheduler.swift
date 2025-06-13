@@ -27,6 +27,8 @@ final class EventsSenderScheduler {
         return queue
     }()
     
+    private let pendingDeviceOperationsAccessQueue: DispatchQueue = DispatchQueue(label: "com.reteno.pendingDeviceOperationsAccessQueue")
+    
     private var pendingSendDeviceOperations: [SendDeviceOperation] = []
     private var backgroundTaskIdentifier: UIBackgroundTaskIdentifier = .invalid
     private var sendingTimer: Timer?
@@ -73,21 +75,27 @@ final class EventsSenderScheduler {
     }
     
     func upsertDevice(_ device: Device, date: Date = Date()) {
-        guard !pendingSendDeviceOperations.contains(where: { $0.device == device }) else { return }
-        if device.isSubscribedOnPush != StorageBuilder.build().getValue(forKey: StorageKeys.isPushSubscribed.rawValue) {
-            sendPushSubscriptionEvent(isSubscribed: device.isSubscribedOnPush)
+        pendingDeviceOperationsAccessQueue.async { [weak self] in
+            guard let self else { return }
+            if !pendingSendDeviceOperations.contains(where: { $0.device == device }) {
+                if device.isSubscribedOnPush != StorageBuilder.build().getValue(forKey: StorageKeys.isPushSubscribed.rawValue) {
+                    sendPushSubscriptionEvent(isSubscribed: device.isSubscribedOnPush)
+                }
+                let operation = SendDeviceOperation(
+                    requestService: mobileRequestService,
+                    storage: storage,
+                    device: device,
+                    date: date
+                )
+                operation.completionBlock = {
+                    self.pendingDeviceOperationsAccessQueue.async {
+                        self.pendingSendDeviceOperations.removeAll(where: { $0.uuid == operation.uuid })
+                    }
+                }
+                self.pendingSendDeviceOperations.append(operation)
+                operationQueue.addOperation(operation)
+            }
         }
-        let operation = SendDeviceOperation(
-            requestService: mobileRequestService,
-            storage: storage,
-            device: device,
-            date: date
-        )
-        operation.completionBlock = { [weak self] in
-            self?.pendingSendDeviceOperations.removeAll(where: { $0.uuid == operation.uuid })
-        }
-        pendingSendDeviceOperations.append(operation)
-        operationQueue.addOperation(operation)
     }
     
     func forceUpdateNotificationInteractionStatus(interactionId: String, status: InteractionStatus, date: Date) {
