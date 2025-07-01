@@ -106,6 +106,11 @@ final class MainViewController: NiblessViewController {
     }
     
     @objc
+    private func customDeviceIdAction(_ sender: UIButton) {
+        viewModel.openCustomDeviceId()
+    }
+    
+    @objc
     private func setInitializationState(_ sender: UIButton) {
         let message = appDelegate.isDelayedInitalizationForTest
         ? "turn *OFF* delayed initialization, will change on next launch, app will be killed"
@@ -186,6 +191,12 @@ private extension MainViewController {
         profileButton.addTarget(self, action: #selector(profileButtonAction(_:)), for: .touchUpInside)
         stack.addArrangedSubview(profileButton)
         baseSetup(for: profileButton)
+        
+        let customDeviceIdButton = UIButton(type: .system)
+        customDeviceIdButton.setTitle("Custom Device Id", for: .normal)
+        customDeviceIdButton.addTarget(self, action: #selector(customDeviceIdAction(_:)), for: .touchUpInside)
+        stack.addArrangedSubview(customDeviceIdButton)
+        baseSetup(for: customDeviceIdButton)
         
         let logEventButton = UIButton(type: .system)
         logEventButton.setTitle(NSLocalizedString("main_screen.log_event_button.title", comment: ""), for: .normal)

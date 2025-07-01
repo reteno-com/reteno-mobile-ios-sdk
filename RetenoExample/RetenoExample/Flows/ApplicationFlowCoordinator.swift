@@ -109,6 +109,10 @@ extension ApplicationFlowCoordinator: MainModelNavigationHandler {
         navigationController?.pushViewController(flowCoordinator.createFlow(), animated: true)
     }
     
+    func openCustomDeviceId() {
+        let controller = container.resolve(CustomDeviceIdViewController.self)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 // MARK: ProfileModelNavigationHandler

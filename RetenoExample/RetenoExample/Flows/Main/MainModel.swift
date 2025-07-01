@@ -15,7 +15,7 @@ protocol MainModelNavigationHandler {
     func createProfile()
     func openAppInbox()
     func openRecoms()
-    
+    func openCustomDeviceId()
 }
 
 final class MainModel {
@@ -69,6 +69,10 @@ final class MainModel {
     
     func subscribeOnPushNotifications() {
         Reteno.userNotificationService.registerForRemoteNotifications(with: [.sound, .alert, .badge])
+    }
+    
+    func openCustomDeviceId() {
+        navigationHandler.openCustomDeviceId()
     }
     
 }

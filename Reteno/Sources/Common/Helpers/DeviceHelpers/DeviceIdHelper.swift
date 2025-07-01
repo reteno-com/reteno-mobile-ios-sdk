@@ -13,13 +13,13 @@ struct DeviceIdHelper {
     private init() {}
     
     @available(iOSApplicationExtension, unavailable)
-    static func actualizeDeviceId() {
-        guard let id = UIDevice.current.identifierForVendor, id.uuidString != deviceId() else {
+    static func actualizeDeviceId(providedDeviceId: String) {
+        guard providedDeviceId != deviceId() else {
             return
         }
         
         let storage = StorageBuilder.build()
-        storage.set(value: id.uuidString, forKey: StorageKeys.deviceId.rawValue)
+        storage.set(value: providedDeviceId, forKey: StorageKeys.deviceId.rawValue)
         RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
             storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
             let device = Device(

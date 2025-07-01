@@ -29,12 +29,13 @@ public struct Reteno {
     
     @available(iOSApplicationExtension, unavailable)
     public static let userNotificationService = UserNotificationService.shared
+    public static let customDeviceIdProvider = CustomDeviceIdProvider()
     
     static let senderScheduler = EventsSenderSchedulerBuilder.build()
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.5.9"
+    static var version = "2.5.10"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -49,28 +50,32 @@ public struct Reteno {
     /// SDK initialization
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
     /// - Parameter configs: Flag that indicates if automatic screen view tracking enabled
+    /// - Parameter customDevieIdProvider: Custom Device Id provider
     @available(iOSApplicationExtension, unavailable)
     public static func start(apiKey: String, configuration: RetenoConfiguration = RetenoConfiguration()) {
         guard !sdkStateHelper.isInitialized else {
             Logger.log("RetenoSDK was already initialized, skipping", eventType: .error)
             return
         }
-        sdkStateHelper.set(isDelayedInitialization: false)
-        sdkStateHelper.set(isInitialized: true)
-        ApiKeyHelper.setApiKey(apiKey)
-        DeviceIdHelper.actualizeDeviceId()
-        DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
-        storage = storage ?? StorageBuilder.build()
-        storage.setAnalyticsValues(configuration: configuration)
-        analyticsService = AnalyticsServiceBuilder.build(
-            isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
-            isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled
-        )
-        senderScheduler.subscribeOnNotifications()
-        userNotificationService.setNotificationCenterDelegate()
-        inApps.subscribeOnNotifications()
-        pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
-        setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
+        let deviceIdProvider: DeviceIdProvider = configuration.useCustomDeviceId ? customDeviceIdProvider : DefaultDeviceIdProvider()
+        deviceIdProvider.setDeviceIdCompletionHandler { deviceId in
+            sdkStateHelper.set(isDelayedInitialization: false)
+            sdkStateHelper.set(isInitialized: true)
+            ApiKeyHelper.setApiKey(apiKey)
+            DeviceIdHelper.actualizeDeviceId(providedDeviceId: deviceId)
+            DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
+            storage = storage ?? StorageBuilder.build()
+            storage.setAnalyticsValues(configuration: configuration)
+            analyticsService = AnalyticsServiceBuilder.build(
+                isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
+                isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled
+            )
+            senderScheduler.subscribeOnNotifications()
+            userNotificationService.setNotificationCenterDelegate()
+            inApps.subscribeOnNotifications()
+            pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
+            setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
+        }
     }
     
     /// SDK delayed initialization
@@ -82,6 +87,7 @@ public struct Reteno {
     
     /// SDK delayed  initialization (can be called only after Reteno.delayedStart(configuration:))
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
+    /// - Parameter customDevieIdProvider: Custom Device Id provider
     @available(iOSApplicationExtension, unavailable)
     public static func delayedSetup(apiKey: String, configuration: RetenoConfiguration = RetenoConfiguration()) {
         guard !sdkStateHelper.isInitialized else {
@@ -96,28 +102,32 @@ public struct Reteno {
             return
         }
         
-        sdkStateHelper.set(isInitialized: true)
-        ApiKeyHelper.setApiKey(apiKey)
-        DeviceIdHelper.actualizeDeviceId()
-        DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
-        storage.setAnalyticsValues(configuration: configuration)
-        analyticsService = AnalyticsServiceBuilder.build(
-            isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
-            isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled
-        )
-        senderScheduler.subscribeOnNotifications()
-        inApps.subscribeOnNotifications()
-        pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
-        setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
+        let deviceIdProvider: DeviceIdProvider = configuration.useCustomDeviceId ? customDeviceIdProvider : DefaultDeviceIdProvider()
         
-        NotificationCenter.default.post(
-            name: Reteno.retenoDidBecomeActive,
-            object: UIApplication.shared
-        )
-        // fire collected push notification on finish delayed initialization
-        if !sdkStateHelper.shouldCollectNotifications,
-           let lastCollectedPushNotificationResponse = sdkStateHelper.popLastAndClearNotificationResponses() {
-            userNotificationService.processRemoteNotificationResponse(lastCollectedPushNotificationResponse)
+        deviceIdProvider.setDeviceIdCompletionHandler { deviceId in
+            sdkStateHelper.set(isInitialized: true)
+            ApiKeyHelper.setApiKey(apiKey)
+            DeviceIdHelper.actualizeDeviceId(providedDeviceId : deviceId)
+            DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
+            storage.setAnalyticsValues(configuration: configuration)
+            analyticsService = AnalyticsServiceBuilder.build(
+                isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
+                isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled
+            )
+            senderScheduler.subscribeOnNotifications()
+            inApps.subscribeOnNotifications()
+            pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
+            setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
+            
+            NotificationCenter.default.post(
+                name: Reteno.retenoDidBecomeActive,
+                object: UIApplication.shared
+            )
+            // fire collected push notification on finish delayed initialization
+            if !sdkStateHelper.shouldCollectNotifications,
+               let lastCollectedPushNotificationResponse = sdkStateHelper.popLastAndClearNotificationResponses() {
+                userNotificationService.processRemoteNotificationResponse(lastCollectedPushNotificationResponse)
+            }
         }
     }
     

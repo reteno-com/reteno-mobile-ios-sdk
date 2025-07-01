@@ -61,6 +61,9 @@
 		27FACDAB295C495F001B34D1 /* RecommendationsFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FACDAA295C495F001B34D1 /* RecommendationsFlowAssembly.swift */; };
 		27FACDAD295C5080001B34D1 /* RecommendationsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FACDAC295C5080001B34D1 /* RecommendationsCoordinator.swift */; };
 		515AF47B14A52DD9C1F62832 /* Pods_RetenoExample_RetenoExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DFA28B3CB6E5EB4AB39F93E /* Pods_RetenoExample_RetenoExampleTests.framework */; };
+		5E1F313D2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F313C2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift */; };
+		5E1F313F2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F313E2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift */; };
+		5E1F31412E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F31402E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift */; };
 		7004E8AB236C85060003EBCB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7004E8A9236C85060003EBCB /* Localizable.strings */; };
 		700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700D24DA236C6D3300918E21 /* MainFlowAssembly.swift */; };
 		7071CE18238305C700D34895 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7071CE17238305C700D34895 /* LaunchScreen.storyboard */; };
@@ -252,6 +255,9 @@
 		27FACDAC295C5080001B34D1 /* RecommendationsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsCoordinator.swift; sourceTree = "<group>"; };
 		4B42EA5B809137504A64951C /* Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
 		505FCBED2052E6B0006CF982 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5E1F313C2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceIdModel.swift; sourceTree = "<group>"; };
+		5E1F313E2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceIdViewController.swift; sourceTree = "<group>"; };
+		5E1F31402E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceIdViewModel.swift; sourceTree = "<group>"; };
 		5E4B1CE60F7AC9A5F0ACBC28 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; sourceTree = "<group>"; };
 		5E9DDF2CDA22128B9EE3FB51 /* Pods_RetenoExample_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3CC8726E37E00505AB16C2 /* Pods-RetenoExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.release.xcconfig"; sourceTree = "<group>"; };
@@ -686,6 +692,24 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		5E1F31332E0BE786000E6AE7 /* CustomDeviceId */ = {
+			isa = PBXGroup;
+			children = (
+				5E1F31422E0D5239000E6AE7 /* Models */,
+				5E1F313C2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift */,
+				5E1F31402E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift */,
+				5E1F313E2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift */,
+			);
+			path = CustomDeviceId;
+			sourceTree = "<group>";
+		};
+		5E1F31422E0D5239000E6AE7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		7075EC13236C2E6E00327FF9 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
@@ -745,6 +769,7 @@
 				187BD95228E5F1F300699C42 /* Ecommerce */,
 				B57EAB6428EE0CDC00EA1260 /* Profile */,
 				D5F91E2B29080C2700EA5FBA /* AppInbox */,
+				5E1F31332E0BE786000E6AE7 /* CustomDeviceId */,
 				D545923B291D219300E589A9 /* Recommendations */,
 			);
 			path = Flows;
@@ -1236,14 +1261,10 @@
 					};
 					B52C7C1B28DA83220014ED15 = {
 						CreatedOnToolsVersion = 14.0;
-						DevelopmentTeam = X9JJR3XKX7;
-						ProvisioningStyle = Manual;
 					};
 					C52110291DAB85BC006CEBCE = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = X9JJR3XKX7;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Manual;
 					};
 					D5CBB0F529701BAE009CB2B3 = {
 						CreatedOnToolsVersion = 14.0.1;
@@ -1579,6 +1600,8 @@
 				2752B3DD294E435900CB2DFC /* CartUpdatedViewModel.swift in Sources */,
 				700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */,
 				27B05B77296DB1B4006302A4 /* CommonButton.swift in Sources */,
+				5E1F31412E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift in Sources */,
+				5E1F313D2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift in Sources */,
 				D5459241291D227300E589A9 /* RecomsModel.swift in Sources */,
 				D5CBB0E82952F654009CB2B3 /* CreateOrderItemViewModel.swift in Sources */,
 				27B05B79296DB78C006302A4 /* CommonTextField.swift in Sources */,
@@ -1630,6 +1653,7 @@
 				2752B3F1294E443500CB2DFC /* OrderDeliveredModel.swift in Sources */,
 				B5E67AEB28DDEF510093C7FB /* InformationAlert.swift in Sources */,
 				B52C7C1728DA818B0014ED15 /* MainViewController.swift in Sources */,
+				5E1F313F2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift in Sources */,
 				27F60CAD29489B5A009E70EF /* EcommerceModel.swift in Sources */,
 				B52C7C1528DA80D10014ED15 /* MainViewModel.swift in Sources */,
 				B5EEC30D28EEF916005D0314 /* NiblessViewController.swift in Sources */,
@@ -1941,6 +1965,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1965,9 +1990,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1978,7 +2004,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app";
 				SKIP_INSTALL = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2020,6 +2045,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2044,9 +2070,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -2057,7 +2084,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app";
 				SKIP_INSTALL = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2099,6 +2125,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2121,10 +2148,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -2135,7 +2162,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app";
 				SKIP_INSTALL = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2177,6 +2203,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2199,10 +2226,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -2213,7 +2240,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app";
 				SKIP_INSTALL = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2231,8 +2257,10 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -2247,7 +2275,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2264,8 +2292,10 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -2279,7 +2309,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2296,8 +2326,10 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -2311,7 +2343,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2328,9 +2360,10 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -2344,7 +2377,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2361,9 +2394,10 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -2377,7 +2411,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2394,9 +2428,10 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = NotificationServiceExtension/NotificationServiceExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
@@ -2410,7 +2445,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationServiceExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationServiceExtension";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2451,6 +2486,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2502,6 +2538,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -2524,9 +2561,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -2537,7 +2575,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app";
 				SKIP_INSTALL = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2552,10 +2589,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -2566,7 +2603,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app";
 				SKIP_INSTALL = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2584,9 +2620,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -2604,7 +2642,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationContentExtension";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2623,9 +2660,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
@@ -2641,7 +2680,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationContentExtension";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2661,9 +2699,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
@@ -2679,7 +2719,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.reteno.example-app.NotificationContentExtension";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2699,11 +2738,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
@@ -2719,7 +2758,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationContentExtension";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2738,11 +2776,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X9JJR3XKX7;
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
@@ -2758,7 +2796,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationContentExtension";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -2777,10 +2814,11 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 386;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
@@ -2796,7 +2834,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.reteno.example-app.NotificationContentExtension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.reteno.example-app.NotificationContentExtension";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

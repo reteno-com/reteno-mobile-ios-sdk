@@ -43,8 +43,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         if isDelayedInitalizationForTest {
             Reteno.delayedStart()
         } else {
-            let configuration: RetenoConfiguration = .init(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true, isDebugMode: true)
-            Reteno.start(apiKey: apiKey, configuration: configuration)
+            let configuration: RetenoConfiguration = .init(isAutomaticScreenReportingEnabled: true,
+                                                           isAutomaticAppLifecycleReportingEnabled: true,
+                                                           isDebugMode: true,
+                                                           useCustomDeviceId: isCustomDeviceIdProviderEnabled)
+            Reteno.start(apiKey: apiKey,
+                         configuration: configuration)
+            if isCustomDeviceIdProviderEnabled {
+                provideCustomDeviceId()
+            }
         }
 
         Reteno.userNotificationService.willPresentNotificationHandler = { [weak self] notification in
@@ -193,6 +200,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         application.applicationIconBadgeNumber = 0
     }
     
+    private func provideCustomDeviceId() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            Reteno.customDeviceIdProvider.setDeviceId(self?.customDeviceId ?? "")
+        }
+    }
 }
 
 extension AppDelegate: MessagingDelegate {
@@ -215,6 +227,14 @@ extension AppDelegate {
     // used for testing delayed initialization
     var isDelayedInitalizationForTest: Bool {
         userDefaults.bool(forKey: "isDelayedInitalization") 
+    }
+    
+    var isCustomDeviceIdProviderEnabled: Bool {
+        userDefaults.bool(forKey: "IsCustomDeviceId")
+    }
+    
+    var customDeviceId: String? {
+        userDefaults.string(forKey: "CustomDeviceId")
     }
     
     func set(isDelayedInitalizationForTest: Bool) {

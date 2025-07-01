@@ -54,4 +54,8 @@ final class MainViewModel {
         model.subscribeOnPushNotifications()
     }
     
+    func openCustomDeviceId() {
+        model.openCustomDeviceId()
+    }
+    
 }

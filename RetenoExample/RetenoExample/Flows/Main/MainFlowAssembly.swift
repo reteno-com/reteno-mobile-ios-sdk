@@ -23,6 +23,13 @@ final class MainFlowAssembly: Assembly {
             
             return AppInboxViewController(viewModel: viewModel)
         }.inObjectScope(.transient)
+        
+        container.register(CustomDeviceIdViewController.self) { _ in
+            let model = CustomDeviceIdModel()
+            let viewModel = CustomDeviceIdViewModel(model: model)
+            
+            return CustomDeviceIdViewController(viewModel: viewModel)
+        }
     }
     
 }

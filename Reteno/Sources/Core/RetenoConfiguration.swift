@@ -36,6 +36,10 @@ public struct RetenoConfiguration {
     /// `false` by default
     public let isDebugMode: Bool
     
+    ///  Flag that indicates if SDK should use`CustomDeviceIdProvider`
+    /// `false` by default
+    public let useCustomDeviceId: Bool
+    
     public init(
         isAutomaticScreenReportingEnabled: Bool = false,
         isAutomaticAppLifecycleReportingEnabled: Bool = true,
@@ -43,7 +47,8 @@ public struct RetenoConfiguration {
         isAutomaticSessionReportingEnabled: Bool = true,
         isPausedInAppMessages: Bool = false,
         inAppMessagesPauseBehaviour: PauseBehaviour = .postponeInApps,
-        isDebugMode: Bool = false
+        isDebugMode: Bool = false,
+        useCustomDeviceId: Bool = false
     ) {
         self.isAutomaticScreenReportingEnabled = isAutomaticScreenReportingEnabled
         self.isAutomaticAppLifecycleReportingEnabled = isAutomaticAppLifecycleReportingEnabled
@@ -52,6 +57,7 @@ public struct RetenoConfiguration {
         self.isPausedInAppMessages = isPausedInAppMessages
         self.inAppMessagesPauseBehaviour = inAppMessagesPauseBehaviour
         self.isDebugMode = isDebugMode
+        self.useCustomDeviceId = useCustomDeviceId
     }
 }
 
