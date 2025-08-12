@@ -16,6 +16,7 @@ protocol MainModelNavigationHandler {
     func openAppInbox()
     func openRecoms()
     func openCustomDeviceId()
+    func openCustomInAppURL()
 }
 
 final class MainModel {
@@ -75,4 +76,7 @@ final class MainModel {
         navigationHandler.openCustomDeviceId()
     }
     
+    func openCustomInAppURL() {
+        navigationHandler.openCustomInAppURL()
+    }
 }

@@ -35,7 +35,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.5.10"
+    static var version = "2.5.11"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -44,6 +44,8 @@ public struct Reteno {
     static var inAppStatusHander: ((InAppMessageStatus) -> Void)?
     static var analyticsService: AnalyticsService!
     static var storage: KeyValueStorage!
+    
+    static var isUpdatingMultiAccount: Bool = false
         
     private init() {}
     
@@ -193,6 +195,49 @@ public struct Reteno {
         senderScheduler.updateNotificationInteractionStatus(interactionId: interactionId, status: status, date: date)
     }
     
+    @available(iOSApplicationExtension, unavailable)
+    /// Update MultiAccount User attributes
+    /// - Parameter externalUserId: Id for identify user in a system (optional)
+    /// - Parameter userAttributes: user specific attributes in format `UserAttributes` (firstName, phone, email, etc.) (optional)
+    /// - Parameter subscriptionKeys: list of subscription categories keys, can be empty
+    /// - Parameter groupNamesInclude: list of group ID to add a contact to, can be empty
+    /// - Parameter groupNamesExclude: list of group ID to remove a contact from, can be empty
+    /// - Parameter accountSuffix: account suffix which will be used in deviceId. Usually accepts external user ID
+    public static func updateMultiAccountUserAttributes(
+        externalUserId: String? = nil,
+        userAttributes: UserAttributes? = nil,
+        subscriptionKeys: [String] = [],
+        groupNamesInclude: [String] = [],
+        groupNamesExclude: [String] = [],
+        accountSuffix: String? = nil
+    ) {
+        if let accountSuffix,
+           let currentDeviceId = DeviceIdHelper.deviceId() {
+            var newDeviceId: String = ""
+            if let baseDeviceId = DeviceIdHelper.baseDeviceID() {
+                newDeviceId = baseDeviceId + accountSuffix
+            } else {
+                newDeviceId = currentDeviceId + accountSuffix
+                DeviceIdHelper.saveBaseDeviceId(currentDeviceId)
+            }
+            resetDeviceId(newDeviceId)
+        } else {
+            if let baseDeviceId = DeviceIdHelper.baseDeviceID(), let deviceId = DeviceIdHelper.deviceId() {
+                if baseDeviceId != deviceId {
+                    resetDeviceId(deviceId)
+                }
+            }
+        }
+        updateUserAttributes(
+            externalUserId: externalUserId,
+            userAttributes: userAttributes,
+            subscriptionKeys: subscriptionKeys,
+            groupNamesInclude: groupNamesInclude,
+            groupNamesExclude: groupNamesExclude
+        )
+    }
+    
+    @available(iOSApplicationExtension, unavailable)
     /// Update User attributes
     /// - Parameter externalUserId: Id for identify user in a system (optional)
     /// - Parameter userAttributes: user specific attributes in format `UserAttributes` (firstName, phone, email, etc.) (optional)
@@ -337,6 +382,14 @@ public struct Reteno {
         )
     }()
     
+    public static func accountSuffix() -> String? {
+        guard let currentDeviceId = DeviceIdHelper.deviceId(),
+              let baseDeviceId = DeviceIdHelper.baseDeviceID(),
+              currentDeviceId.hasPrefix(baseDeviceId) else { return nil }
+        
+        return String(currentDeviceId.dropFirst(baseDeviceId.count))
+    }
+    
     static func inAppMessages() -> InAppMessages { inApps }
         
     @available(iOSApplicationExtension, unavailable)
@@ -374,5 +427,15 @@ public struct Reteno {
     
     static func markNotificationAsDelivered(interactionId: String, date: Date = Date()) {
         senderScheduler.forceUpdateNotificationInteractionStatus(interactionId: interactionId, status: .delivered, date: date)
+    }
+    
+    @available(iOSApplicationExtension, unavailable)
+    private static func resetDeviceId(_ newId: String) {
+        inApps.endSession()
+        inApps.clearInApps()
+        Thread.sleep(forTimeInterval: 1.0)
+        DeviceIdHelper.actualizeDeviceId(providedDeviceId: newId)
+        inApps.startSession()
+        Thread.sleep(forTimeInterval: 2.0)
     }
 }

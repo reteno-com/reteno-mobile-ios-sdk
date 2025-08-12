@@ -9,7 +9,13 @@ import Foundation
 
 final class InAppRequestService {
     
-    private let baseHTMLPath = BaseURL.retenoStatics.rawValue + "in-app/base.latest.html"
+    private var baseHTMLPath: String {
+        if UserDefaults.standard.bool(forKey: "IsCustomInAppURL"),
+           let customURL = UserDefaults.standard.string(forKey: "CustomInAppURL") {
+            return BaseURL.retenoStatics.rawValue + customURL
+        }
+        return BaseURL.retenoStatics.rawValue + "in-app/base.latest.html"
+    }
     private let requestManager: RequestManager
     
     init(requestManager: RequestManager) {

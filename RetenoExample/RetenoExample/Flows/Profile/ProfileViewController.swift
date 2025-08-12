@@ -15,6 +15,7 @@ final class ProfileViewController: NiblessViewController {
     private let lastNameTextField = CommonTextField()
     private let phoneTextField = CommonTextField()
     private let emailTextField = CommonTextField()
+    private let accountSuffixField = CommonTextField()
     private let isAnonymousSwitch = UISwitch()
     
     private let unreadMessagesCountLabel = UILabel()
@@ -43,6 +44,7 @@ final class ProfileViewController: NiblessViewController {
         externalIdTextField.addTarget(self, action: #selector(externalIdHandler), for: .editingChanged)
         firstNameTextField.addTarget(self, action: #selector(firstNameHandler), for: .editingChanged)
         lastNameTextField.addTarget(self, action: #selector(lastNameHandler), for: .editingChanged)
+        accountSuffixField.addTarget(self, action: #selector(accountSuffixHandler), for: .editingChanged)
         phoneTextField.addTarget(self, action: #selector(phoneHandler), for: .editingChanged)
         emailTextField.addTarget(self, action: #selector(emailHandler), for: .editingChanged)
         isAnonymousSwitch.addTarget(self, action: #selector(isAnonymousSwitchHandler), for: .valueChanged)
@@ -58,6 +60,11 @@ final class ProfileViewController: NiblessViewController {
     @objc
     func firstNameHandler(_ textField: UITextField) {
         viewModel.updateFirstName(textField.text ?? "")
+    }
+    
+    @objc
+    func accountSuffixHandler(_ textField: UITextField) {
+        viewModel.updateAccountSuffix(textField.text?.replacingOccurrences(of: " ", with: "-") ?? "")
     }
     
     @objc
@@ -157,6 +164,10 @@ private extension ProfileViewController {
         stack.addArrangedSubview(emailTextField)
         emailTextField.keyboardType = .emailAddress
         emailTextField.placeholder = NSLocalizedString("createProfile_screen.fields.email", comment: "")
+        
+        stack.addArrangedSubview(accountSuffixField)
+        accountSuffixField.placeholder = "Account suffix"
+        
 
         let isAnonymousStackView = UIStackView()
         isAnonymousStackView.axis = .horizontal

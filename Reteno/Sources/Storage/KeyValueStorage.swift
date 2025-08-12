@@ -14,6 +14,7 @@ enum StorageKeys: String, CaseIterable {
     case isUpdatedDevice = "com.reteno.is-updated-device.key"
     case cachedDevice = "com.reteno.last-sended-device.key"
     case deviceId = "com.reteno.device-id.key"
+    case baseDeviceId = "com.reteno.base-device-id.key"
     case externalUserId = "com.reteno.external-user-id.key"
     case emailId = "com.reteno.email-id.key"
     case phoneId = "com.reteno.phone-id.key"
@@ -28,6 +29,7 @@ enum StorageKeys: String, CaseIterable {
     case wrappedLinks = "com.reteno.wrapped-links.key"
     case screenTrackingFlag = "com.reteno.screen-tracking-flag.key"
     case inAppMessageBaseHTMLVersion = "com.reteno.in-app_message_base_html.key"
+    case slideUpBaseHTMLVersion = "com.reteno.slide_up_base_html.key"
     case errorEvents = "com.reteno.error_events.key"
     case devicePlatform = "com.reteno.device_platform.key"
     case inAppMessagePauseFlag = "com.reteno.in-app-message-pause-flag.key"
@@ -767,6 +769,12 @@ final class KeyValueStorage {
         }
     }
 
+    func clearInApps() {
+        guard let storage = storageUnwrapper() else { return }
+        storage.set([], forKey: StorageKeys.inAppMessages.rawValue)
+        storage.set([], forKey: StorageKeys.inAppMessageContents.rawValue)
+    }
+    
     // MARK: In App Message Contents
     
     func getInAppMessageContents() -> [InAppContent] {

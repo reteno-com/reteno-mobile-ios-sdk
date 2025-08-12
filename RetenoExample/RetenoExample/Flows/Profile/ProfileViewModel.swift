@@ -35,6 +35,10 @@ final class ProfileViewModel {
         model.updateEmail(email)
     }
     
+    func updateAccountSuffix(_ firstName: String) {
+        model.updateAccountSuffix(firstName)
+    }
+    
     func updateIsAnonymous(_ isAnonymous: Bool) {
         model.updateIsAnonymous(isAnonymous)
     }

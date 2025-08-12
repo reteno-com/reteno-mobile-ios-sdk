@@ -51,7 +51,6 @@ final class SendDeviceOperation: DateOperation, @unchecked Sendable {
             case .success:
                 self.storage.set(value: true, forKey: StorageKeys.isUpdatedDevice.rawValue)
                 Reteno.inAppMessages().getInAppMessages()
-                
             case .failure:
                 self.storage.set(value: false, forKey: StorageKeys.isUpdatedDevice.rawValue)
             }

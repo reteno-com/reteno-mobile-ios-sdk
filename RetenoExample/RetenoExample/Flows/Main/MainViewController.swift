@@ -111,6 +111,11 @@ final class MainViewController: NiblessViewController {
     }
     
     @objc
+    private func customInAppURLAction(_ sender: UIButton) {
+        viewModel.openCustomInAppURL()
+    }
+    
+    @objc
     private func setInitializationState(_ sender: UIButton) {
         let message = appDelegate.isDelayedInitalizationForTest
         ? "turn *OFF* delayed initialization, will change on next launch, app will be killed"
@@ -198,6 +203,12 @@ private extension MainViewController {
         stack.addArrangedSubview(customDeviceIdButton)
         baseSetup(for: customDeviceIdButton)
         
+        let customInAppButton = UIButton(type: .system)
+        customInAppButton.setTitle("Custom In-App URL", for: .normal)
+        customInAppButton.addTarget(self, action: #selector(customInAppURLAction(_:)), for: .touchUpInside)
+        stack.addArrangedSubview(customInAppButton)
+        baseSetup(for: customInAppButton)
+        
         let logEventButton = UIButton(type: .system)
         logEventButton.setTitle(NSLocalizedString("main_screen.log_event_button.title", comment: ""), for: .normal)
         logEventButton.addTarget(self, action: #selector(logEventButtonAction(_:)), for: .touchUpInside)
@@ -224,7 +235,7 @@ private extension MainViewController {
     
     func baseSetup(for button: UIButton) {
         button.snp.makeConstraints {
-            $0.height.equalTo(50.0)
+            $0.height.equalTo(45.0)
         }
         
         button.backgroundColor = .systemGray

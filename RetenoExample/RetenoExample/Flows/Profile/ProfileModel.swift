@@ -19,6 +19,8 @@ final class ProfileModel {
     private var user: User
     private var isAnonymous = false
     
+    private var accountSuffix: String?
+    
     private let navigationHandler: ProfileModelNavigationHandler
     
     init(user: User = User(), navigationHandler: ProfileModelNavigationHandler) {
@@ -47,6 +49,10 @@ final class ProfileModel {
     
     func updateLastName(_ lastName: String) {
         user.lastName = lastName
+    }
+    
+    func updateAccountSuffix(_ suffix: String?) {
+        self.accountSuffix = suffix
     }
     
     func updatePhone(_ phone: String) {
@@ -86,10 +92,12 @@ final class ProfileModel {
                 
                 return .init(phone: user.phone, email: user.email, firstName: user.firstName, lastName: user.lastName)
             }()
-            Reteno.updateUserAttributes(externalUserId: user.id, userAttributes: attributes)
+            Reteno.updateMultiAccountUserAttributes(externalUserId: user.id,
+                                        userAttributes: attributes,
+                                        accountSuffix: accountSuffix)
         }
         
-//        navigationHandler.backToMain()
+        navigationHandler.backToMain()
     }
     
     func getUnreadMessagesCount(completion: @escaping (Result<Int, Error>) -> Void) {

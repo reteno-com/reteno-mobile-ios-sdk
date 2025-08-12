@@ -64,6 +64,9 @@
 		5E1F313D2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F313C2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift */; };
 		5E1F313F2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F313E2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift */; };
 		5E1F31412E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F31402E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift */; };
+		5E87CF462E15AACD0073B6C5 /* CustomInAppURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E87CF452E15AACD0073B6C5 /* CustomInAppURLViewController.swift */; };
+		5E87CF482E15AAE00073B6C5 /* CustomInAppURLViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E87CF472E15AAE00073B6C5 /* CustomInAppURLViewModel.swift */; };
+		5E87CF4A2E15AAED0073B6C5 /* CustomInAppURLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E87CF492E15AAED0073B6C5 /* CustomInAppURLModel.swift */; };
 		7004E8AB236C85060003EBCB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7004E8A9236C85060003EBCB /* Localizable.strings */; };
 		700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700D24DA236C6D3300918E21 /* MainFlowAssembly.swift */; };
 		7071CE18238305C700D34895 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7071CE17238305C700D34895 /* LaunchScreen.storyboard */; };
@@ -259,6 +262,9 @@
 		5E1F313E2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceIdViewController.swift; sourceTree = "<group>"; };
 		5E1F31402E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceIdViewModel.swift; sourceTree = "<group>"; };
 		5E4B1CE60F7AC9A5F0ACBC28 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; sourceTree = "<group>"; };
+		5E87CF452E15AACD0073B6C5 /* CustomInAppURLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInAppURLViewController.swift; sourceTree = "<group>"; };
+		5E87CF472E15AAE00073B6C5 /* CustomInAppURLViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInAppURLViewModel.swift; sourceTree = "<group>"; };
+		5E87CF492E15AAED0073B6C5 /* CustomInAppURLModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInAppURLModel.swift; sourceTree = "<group>"; };
 		5E9DDF2CDA22128B9EE3FB51 /* Pods_RetenoExample_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3CC8726E37E00505AB16C2 /* Pods-RetenoExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.release.xcconfig"; sourceTree = "<group>"; };
 		616AE0470A7C66DC8475FDA3 /* Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.production-release.xcconfig"; sourceTree = "<group>"; };
@@ -710,6 +716,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		5E87CF442E15AA6F0073B6C5 /* CustomInAppURL */ = {
+			isa = PBXGroup;
+			children = (
+				5E87CF452E15AACD0073B6C5 /* CustomInAppURLViewController.swift */,
+				5E87CF472E15AAE00073B6C5 /* CustomInAppURLViewModel.swift */,
+				5E87CF492E15AAED0073B6C5 /* CustomInAppURLModel.swift */,
+			);
+			path = CustomInAppURL;
+			sourceTree = "<group>";
+		};
 		7075EC13236C2E6E00327FF9 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
@@ -765,6 +781,7 @@
 			isa = PBXGroup;
 			children = (
 				70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */,
+				5E87CF442E15AA6F0073B6C5 /* CustomInAppURL */,
 				70BF67952045A6AD00803C08 /* Main */,
 				187BD95228E5F1F300699C42 /* Ecommerce */,
 				B57EAB6428EE0CDC00EA1260 /* Profile */,
@@ -1591,6 +1608,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5C96C2A29224F4F0049109A /* RecomsSettingsViewController.swift in Sources */,
+				5E87CF4A2E15AAED0073B6C5 /* CustomInAppURLModel.swift in Sources */,
 				D5C96C1B291E926B0049109A /* Recommendation.swift in Sources */,
 				2752B3DB294E434300CB2DFC /* CartUpdatedModel.swift in Sources */,
 				D5F91E2D29080C5500EA5FBA /* AppInboxModel.swift in Sources */,
@@ -1625,6 +1643,7 @@
 				70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */,
 				2752B403294E44E900CB2DFC /* SearchRequestViewController.swift in Sources */,
 				D5F91E3929096BF800EA5FBA /* BaseDateFormatter.swift in Sources */,
+				5E87CF482E15AAE00073B6C5 /* CustomInAppURLViewModel.swift in Sources */,
 				D5C96C2629224B6D0049109A /* RecommendationsSettings.swift in Sources */,
 				27821B49295AFAEF007AFA7E /* EcommerceFlowCoordinator.swift in Sources */,
 				27FACDAB295C495F001B34D1 /* RecommendationsFlowAssembly.swift in Sources */,
@@ -1632,6 +1651,7 @@
 				27ACBCF82954C320009C761A /* ReusableViews.swift in Sources */,
 				B5EEC30F28EF2136005D0314 /* ProfileViewModel.swift in Sources */,
 				2752B3D4294E430700CB2DFC /* ProductAddedToWishlistModel.swift in Sources */,
+				5E87CF462E15AACD0073B6C5 /* CustomInAppURLViewController.swift in Sources */,
 				2752B3D6294E431000CB2DFC /* ProductAddedToWishlistViewModel.swift in Sources */,
 				2752B3F5294E444200CB2DFC /* OrderDeliveredViewController.swift in Sources */,
 				2752B3F8294E446600CB2DFC /* OrderCancelledModel.swift in Sources */,
@@ -1992,7 +2012,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 386;
+				CURRENT_PROJECT_VERSION = 389;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2072,7 +2092,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 386;
+				CURRENT_PROJECT_VERSION = 389;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2150,7 +2170,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 386;
+				CURRENT_PROJECT_VERSION = 389;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2228,7 +2248,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 386;
+				CURRENT_PROJECT_VERSION = 389;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2563,7 +2583,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 386;
+				CURRENT_PROJECT_VERSION = 389;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2591,7 +2611,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 386;
+				CURRENT_PROJECT_VERSION = 389;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;

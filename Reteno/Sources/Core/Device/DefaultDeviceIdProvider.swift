@@ -5,6 +5,10 @@ class DefaultDeviceIdProvider: DeviceIdProvider {
     func setDeviceId(_ deviceId: String) {}
     
     func setDeviceIdCompletionHandler(_ completion: @escaping (String) -> Void) {
-        completion(UIDevice.current.identifierForVendor?.uuidString ?? "")
+        if let deviceId = DeviceIdHelper.deviceId() {
+            completion(deviceId)
+        } else {
+            completion(UIDevice.current.identifierForVendor?.uuidString ?? "")
+        }
     }
 }

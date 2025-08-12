@@ -58,4 +58,8 @@ final class MainViewModel {
         model.openCustomDeviceId()
     }
     
+    func openCustomInAppURL() {
+        model.openCustomInAppURL()
+    }
+    
 }

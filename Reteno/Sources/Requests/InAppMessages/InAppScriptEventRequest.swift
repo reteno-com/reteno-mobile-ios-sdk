@@ -17,13 +17,18 @@ struct InAppScriptEventRequest: APIRequest {
     let encoding: any ParameterEncoding = JSONEncoding.default
     
     init(messageId: String, data: [String: Any]) {
+        var url = "https://statics.reteno.com/in-app/base.latest.html"
+        if UserDefaults.standard.bool(forKey: "IsCustomInAppURL"),
+           let customURL = UserDefaults.standard.string(forKey: "CustomInAppURL") {
+            url = "https://statics.reteno.com/" + customURL
+        }
         parameters = [
             "scriptVersion": "latest",
             "orgId": 0,
             "siteId": 0,
             "tenantId": messageId,
             "guid": "null",
-            "url": "https://statics.reteno.com/in-app/base.latest.html",
+            "url": url,
             "message": "IN_APP_IOS",
             "log_level": "ERROR",
             "data": JSONConverterHelper.convertJSONToString(data) ?? ""

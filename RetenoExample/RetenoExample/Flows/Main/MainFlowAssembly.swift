@@ -30,6 +30,13 @@ final class MainFlowAssembly: Assembly {
             
             return CustomDeviceIdViewController(viewModel: viewModel)
         }
+        
+        container.register(CustomInAppURLViewController.self) { _ in
+            let model = CustomInAppURLModel()
+            let viewModel = CustomInAppURLViewModel(model: model)
+            
+            return CustomInAppURLViewController(viewModel: viewModel)
+        }
     }
     
 }

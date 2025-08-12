@@ -24,7 +24,7 @@ final class SessionService {
     
     // MARK: Session duration timer
     
-    private func sessionDurationTimer() {
+    func sessionDurationTimer() {
         invalidateTimer()
         timeInApp = Int(storage.getValue(forKey: StorageKeys.sessionDuration.rawValue) ?? 0)
         sesionTimer = Timer.scheduledTimer(
@@ -40,7 +40,7 @@ final class SessionService {
         )
     }
     
-    private func invalidateTimer() {
+    func invalidateTimer() {
         sesionTimer?.invalidate()
         sesionTimer = nil
         timeInApp = 0
@@ -88,7 +88,7 @@ final class SessionService {
         setLastActivityDate()
     }
     
-    private func startSession() {
+    func startSession() {
         storage.clearOncePerSessionEvents()
         storage.clearNoLimitEvents()
         storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
@@ -96,7 +96,7 @@ final class SessionService {
         sendStartSessionEventIfNeeded()
     }
     
-    private func sendStartSessionEventIfNeeded() {
+    func sendStartSessionEventIfNeeded() {
         guard isSessionEventReportingEnabled else { return }
         
         storage.set(value: 0, forKey: StorageKeys.applicationOpenedCount.rawValue)
@@ -111,11 +111,12 @@ final class SessionService {
             parameters: [
                 .init(name: SessionKeys.startDateKey.rawValue, value: startDate),
                 .init(name: SessionKeys.sessionIdKey.rawValue, value: sessionId)
-            ]
+            ],
+            forcePush: true
         )
     }
     
-    private func sendEndSessionEventIfNeeded() {
+    func sendEndSessionEventIfNeeded() {
         guard isSessionEventReportingEnabled,
               let sessionId: String = storage.getValue(forKey: StorageKeys.sessionId.rawValue),
               let lastActivityTimestamp: Double = storage.getValue(forKey: StorageKeys.lastActivityDate.rawValue)

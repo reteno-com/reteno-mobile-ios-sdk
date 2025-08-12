@@ -119,6 +119,25 @@ final class InAppMessages {
         postponeInAppInfo.removeAll()
     }
     
+    func endSession() {
+        sessionService.sendEndSessionEventIfNeeded()
+        sessionService.invalidateTimer()
+        storage.clearOncePerSessionEvents()
+        storage.clearNoLimitEvents()
+        storage.clearEventsCache()
+        storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
+    }
+    
+    func clearInApps() {
+        inAppService.clearInApps()
+        inAppPresenters = []
+    }
+    
+    func startSession() {
+        sessionService.sendStartSessionEventIfNeeded()
+        sessionService.sessionDurationTimer()
+    }
+    
     func setInAppMessagesPauseBehaviour(pauseBehaviour: PauseBehaviour) {
         inAppMessagesPauseBehaviour = pauseBehaviour
     }

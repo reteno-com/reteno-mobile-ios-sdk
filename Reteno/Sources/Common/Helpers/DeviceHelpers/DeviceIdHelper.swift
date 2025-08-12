@@ -36,4 +36,12 @@ struct DeviceIdHelper {
         StorageBuilder.build().getValue(forKey: StorageKeys.deviceId.rawValue)
     }
     
+    static func baseDeviceID() -> String? {
+        StorageBuilder.build().getValue(forKey: StorageKeys.baseDeviceId.rawValue)
+    }
+    
+    static func saveBaseDeviceId(_ id: String) {
+        StorageBuilder.build().set(value: id, forKey: StorageKeys.baseDeviceId.rawValue)
+    }
+    
 }

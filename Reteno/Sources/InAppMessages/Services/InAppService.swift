@@ -77,6 +77,14 @@ final class InAppService {
         )
     }
     
+    func clearInApps() {
+        storage.clearInApps()
+        contents = []
+        showModels = []
+        storage.removeValue(forKey: StorageKeys.eTag.rawValue)
+        storage.removeValue(forKey: StorageKeys.inAppCacheLastUpdate.rawValue)
+    }
+    
     private func processingInApps(messages: [Message], isNeedDownloadContent: Bool = true) {
         self.checkAsyncRulesSegment()
         var messageInstanceIds: [Int] = []

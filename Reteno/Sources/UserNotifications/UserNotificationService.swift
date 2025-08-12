@@ -48,18 +48,20 @@ public final class UserNotificationService: NSObject {
         application: UIApplication = UIApplication.shared,
         userResponse: ((_ granted: Bool) -> Void)? = nil
     ) {
-        let notificationsCenter = UNUserNotificationCenter.current()
-        notificationsCenter.requestAuthorization(options: options) { [weak self] granted, error in
-            if let error = error {
-                Logger.log(error, eventType: .error)
-            }
-            if granted {
-                notificationsCenter.delegate = self
-            }
-            
-            DispatchQueue.main.async {
-                application.registerForRemoteNotifications()
-                userResponse?(granted)
+        DispatchQueue.main.async {
+            let notificationsCenter = UNUserNotificationCenter.current()
+            notificationsCenter.requestAuthorization(options: options) { [weak self] granted, error in
+                if let error = error {
+                    Logger.log(error, eventType: .error)
+                }
+                if granted {
+                    notificationsCenter.delegate = self
+                }
+                
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                    userResponse?(granted)
+                }
             }
         }
     }
