@@ -14,7 +14,13 @@ final class SessionService {
     private let isSessionEventReportingEnabled: Bool
     
     private var timeInApp: Int = 0
-    var timeSpendInApp: ((Int) -> Void)?
+    var timeSpendInApp: ((Int) -> Void)? {
+        didSet {
+            guard timeSpendInApp != nil else { return }
+            storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
+            sessionDurationTimer()
+        }
+    }
     
     private var sesionTimer: Timer?
     

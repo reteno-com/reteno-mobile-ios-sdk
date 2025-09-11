@@ -146,7 +146,7 @@ final class InAppMessages {
         self.inAppService.checkAsyncRulesSegment()
     }
     
-    private func inAppPresentersSelections () {
+    private func inAppPresentersSelections() {
         sessionService.timeSpendInApp = { [weak self] time in
             guard let self = self else { return }
 
