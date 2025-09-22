@@ -15,6 +15,7 @@ struct DeviceIdHelper {
     @available(iOSApplicationExtension, unavailable)
     static func actualizeDeviceId(providedDeviceId: String) {
         guard providedDeviceId != deviceId() else {
+            Reteno.inAppMessages().getInAppMessages()
             return
         }
         
