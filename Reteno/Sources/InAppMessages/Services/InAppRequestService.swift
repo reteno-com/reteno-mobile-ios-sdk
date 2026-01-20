@@ -92,4 +92,10 @@ final class InAppRequestService {
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
     
+    func baseHTMLExists() -> Bool {
+        let fileManager = FileManager.default
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return false }
+        let fileURL = documentsURL.appendingPathComponent("index.html")
+        return fileManager.fileExists(atPath: fileURL.path)
+    }
 }

@@ -198,9 +198,10 @@ final class InAppMessages {
             switch result {
             case .success(let version):
                 guard
-                    let self = self,
-                    let version = version,
-                    self.storage.getValue(forKey: StorageKeys.inAppMessageBaseHTMLVersion.rawValue) != version
+                    let self, let version,
+                    (self.storage.getValue(forKey: StorageKeys.inAppMessageBaseHTMLVersion.rawValue) != version
+                     ||
+                     !self.inAppRequestService.baseHTMLExists())
                 else {
                     completion()
                     return
