@@ -40,6 +40,8 @@ public struct RetenoConfiguration {
     /// `false` by default
     public let useCustomDeviceId: Bool
     
+    public let deviceTokenHandlingMode: DeviceTokenHandlingMode
+    
     public init(
         isAutomaticScreenReportingEnabled: Bool = false,
         isAutomaticAppLifecycleReportingEnabled: Bool = true,
@@ -48,7 +50,8 @@ public struct RetenoConfiguration {
         isPausedInAppMessages: Bool = false,
         inAppMessagesPauseBehaviour: PauseBehaviour = .postponeInApps,
         isDebugMode: Bool = false,
-        useCustomDeviceId: Bool = false
+        useCustomDeviceId: Bool = false,
+        deviceTokenHandlingMode: DeviceTokenHandlingMode = .automatic
     ) {
         self.isAutomaticScreenReportingEnabled = isAutomaticScreenReportingEnabled
         self.isAutomaticAppLifecycleReportingEnabled = isAutomaticAppLifecycleReportingEnabled
@@ -58,6 +61,7 @@ public struct RetenoConfiguration {
         self.inAppMessagesPauseBehaviour = inAppMessagesPauseBehaviour
         self.isDebugMode = isDebugMode
         self.useCustomDeviceId = useCustomDeviceId
+        self.deviceTokenHandlingMode = deviceTokenHandlingMode
     }
 }
 

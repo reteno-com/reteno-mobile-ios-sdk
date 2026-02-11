@@ -67,7 +67,7 @@ PODS:
   - OHHTTPStubs/Swift (9.1.0):
     - OHHTTPStubs/Default
   - PromisesObjC (2.4.0)
-  - Reteno (2.5.10)
+  - Reteno (2.5.14)
   - SnapKit (5.6.0)
   - Swinject (2.7.1)
 
@@ -106,7 +106,7 @@ SPEC CHECKSUMS:
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  Reteno: 23f127eb6008e8fee0e96967efba2db01c05df9e
+  Reteno: ce1673f35b2e2be88f1249a384c55a36216fb827
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
 

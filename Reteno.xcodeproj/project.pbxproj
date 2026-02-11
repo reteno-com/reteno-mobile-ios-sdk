@@ -13,6 +13,8 @@
 		5E1F311A2E09CE1F000E6AE7 /* DefaultDeviceIdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F31192E09CE1F000E6AE7 /* DefaultDeviceIdProvider.swift */; };
 		5E1F31AA2E13D9B6000E6AE7 /* CustomDeviceIdProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F31A92E13D9B6000E6AE7 /* CustomDeviceIdProvider.swift */; };
 		5E3EF8A12D9BD4490064E980 /* EventsDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3EF8A02D9BD4490064E980 /* EventsDateFormatter.swift */; };
+		5E43F2112F02CBCF00788F35 /* PushNotificationsSwizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E43F2102F02CBCF00788F35 /* PushNotificationsSwizzler.swift */; };
+		5E43F2132F02E13800788F35 /* DeviceTokenHandlingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E43F2122F02E13800788F35 /* DeviceTokenHandlingMode.swift */; };
 		5E70CA582D5A00340001F62D /* SlideUpMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70CA572D5A00340001F62D /* SlideUpMessageViewController.swift */; };
 		5E70CA5D2D5A16FB0001F62D /* SlideUpTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E70CA5C2D5A16FB0001F62D /* SlideUpTransitioningDelegate.swift */; };
 		5E9B14E72D7203CF0068B734 /* SlideUpPresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E9B14E62D7203CF0068B734 /* SlideUpPresentationAnimator.swift */; };
@@ -171,6 +173,8 @@
 		5E1F31192E09CE1F000E6AE7 /* DefaultDeviceIdProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDeviceIdProvider.swift; sourceTree = "<group>"; };
 		5E1F31A92E13D9B6000E6AE7 /* CustomDeviceIdProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceIdProvider.swift; sourceTree = "<group>"; };
 		5E3EF8A02D9BD4490064E980 /* EventsDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsDateFormatter.swift; sourceTree = "<group>"; };
+		5E43F2102F02CBCF00788F35 /* PushNotificationsSwizzler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationsSwizzler.swift; sourceTree = "<group>"; };
+		5E43F2122F02E13800788F35 /* DeviceTokenHandlingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTokenHandlingMode.swift; sourceTree = "<group>"; };
 		5E70CA572D5A00340001F62D /* SlideUpMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUpMessageViewController.swift; sourceTree = "<group>"; };
 		5E70CA5C2D5A16FB0001F62D /* SlideUpTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUpTransitioningDelegate.swift; sourceTree = "<group>"; };
 		5E9B14E62D7203CF0068B734 /* SlideUpPresentationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideUpPresentationAnimator.swift; sourceTree = "<group>"; };
@@ -866,6 +870,8 @@
 				E0367B412CA4A07700F88784 /* RetenoUserNotification.swift */,
 				E0367B422CA4A07700F88784 /* RetenoUserNotificationAction.swift */,
 				E0367B432CA4A07700F88784 /* UserNotificationService.swift */,
+				5E43F2102F02CBCF00788F35 /* PushNotificationsSwizzler.swift */,
+				5E43F2122F02E13800788F35 /* DeviceTokenHandlingMode.swift */,
 			);
 			path = UserNotifications;
 			sourceTree = "<group>";
@@ -1077,8 +1083,10 @@
 				E0367BA22CA4A07700F88784 /* RecomEventsRequest.swift in Sources */,
 				E0367BA32CA4A07700F88784 /* DeviceCategoryHelper.swift in Sources */,
 				E0367BA42CA4A07700F88784 /* SDKStateHelper.swift in Sources */,
+				5E43F2112F02CBCF00788F35 /* PushNotificationsSwizzler.swift in Sources */,
 				E0367BA52CA4A07700F88784 /* Analytics+SwiftUI.swift in Sources */,
 				E0367BA62CA4A07700F88784 /* LinkHandler.swift in Sources */,
+				5E43F2132F02E13800788F35 /* DeviceTokenHandlingMode.swift in Sources */,
 				E0367BA72CA4A07700F88784 /* InAppBaseHTMLRequest.swift in Sources */,
 				E0367BA82CA4A07700F88784 /* Codable+Dictionary.swift in Sources */,
 				5E70CA582D5A00340001F62D /* SlideUpMessageViewController.swift in Sources */,

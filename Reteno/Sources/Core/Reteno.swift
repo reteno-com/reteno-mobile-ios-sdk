@@ -35,7 +35,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.5.15"
+    static var version = "2.6.0"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -59,6 +59,7 @@ public struct Reteno {
             Logger.log("RetenoSDK was already initialized, skipping", eventType: .error)
             return
         }
+        userNotificationService.setDeviceTokenHandlingMode(configuration.deviceTokenHandlingMode)
         let deviceIdProvider: DeviceIdProvider = configuration.useCustomDeviceId ? customDeviceIdProvider : DefaultDeviceIdProvider()
         deviceIdProvider.setDeviceIdCompletionHandler { deviceId in
             sdkStateHelper.set(isDelayedInitialization: false)
@@ -98,6 +99,7 @@ public struct Reteno {
         }
         
         storage = storage ?? StorageBuilder.build()
+        userNotificationService.setDeviceTokenHandlingMode(configuration.deviceTokenHandlingMode)
 
         guard sdkStateHelper.IsDelayedInitialization else {
             Logger.log("\(#function) can be called only after Reteno.delayedStart()", eventType: .error)
@@ -177,6 +179,16 @@ public struct Reteno {
         if forcePush {
             senderScheduler.forcePushEvents()
         }
+    }
+    
+    /// Log events
+    /// - Parameter eventTypeKey: Event type ID
+    /// - Parameter date: Time when event occurred
+    /// - Parameter jsonParameters: JSON Dictionary of event parameters of "key" - "value" pairs. Parameter keys are arbitrary. Used in campaigns and for dynamic content creation in messages.
+    /// - Parameter forcePush: indicates if event should be send immediately or in the next scheduled batch.
+    public static func logEvent(eventTypeKey: String, date: Date = Date(), jsonParameters: [String: String], forcePush: Bool = false) {
+        let params = jsonParameters.map({ Event.Parameter(name: $0.key, value: $0.value) })
+        logEvent(eventTypeKey: eventTypeKey, date: date, parameters: params, forcePush: forcePush)
     }
     
     public static func addLinkHandler(_ handler: @escaping (LinkHandler) -> Void) {

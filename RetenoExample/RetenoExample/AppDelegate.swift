@@ -46,7 +46,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             let configuration: RetenoConfiguration = .init(isAutomaticScreenReportingEnabled: true,
                                                            isAutomaticAppLifecycleReportingEnabled: true,
                                                            isDebugMode: true,
-                                                           useCustomDeviceId: isCustomDeviceIdProviderEnabled)
+                                                           useCustomDeviceId: isCustomDeviceIdProviderEnabled,
+                                                           deviceTokenHandlingMode: .manual)
             Reteno.start(apiKey: apiKey,
                          configuration: configuration)
             if isCustomDeviceIdProviderEnabled {

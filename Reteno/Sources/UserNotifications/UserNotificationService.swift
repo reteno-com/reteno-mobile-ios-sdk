@@ -34,6 +34,8 @@ public final class UserNotificationService: NSObject {
     private var sdkStateHelper: SDKStateHelper {
         Reteno.sdkStateHelper
     }
+    
+    private var deviceTokenHandlingMode: DeviceTokenHandlingMode = .automatic
         
     private override init() {}
     
@@ -48,6 +50,9 @@ public final class UserNotificationService: NSObject {
         application: UIApplication = UIApplication.shared,
         userResponse: ((_ granted: Bool) -> Void)? = nil
     ) {
+        if deviceTokenHandlingMode == .automatic {
+            PushNotificationSwizzler.swizzle()
+        }
         DispatchQueue.main.async {
             let notificationsCenter = UNUserNotificationCenter.current()
             notificationsCenter.requestAuthorization(options: options) { [weak self] granted, error in
@@ -174,6 +179,9 @@ public final class UserNotificationService: NSObject {
         UNUserNotificationCenter.current().delegate = self
     }
     
+    func setDeviceTokenHandlingMode(_ mode: DeviceTokenHandlingMode) {
+        deviceTokenHandlingMode = mode
+    }
 }
 
 @available(iOSApplicationExtension, unavailable)
