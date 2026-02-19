@@ -52,27 +52,7 @@ final class InAppRequestService {
                 }
                 
                 // Move the downloaded file to Documents folder
-                let fileManager = FileManager.default
-                let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                let localURL = documentDirectory.appendingPathComponent("index.html")
-                do {
-                    let path: String = {
-                        if #available(iOS 16.0, *) {
-                            return localURL.path()
-                        } else {
-                            return localURL.path
-                        }
-                    }()
-                    if fileManager.fileExists(atPath: path) {
-                        try fileManager.removeItem(at: localURL)
-                    }
-                    try fileManager.moveItem(at: fileURL, to: localURL)
-                    completionHandler(.success(true))
-                } catch {
-                    ErrorLogger.shared.capture(error: error)
-                    Logger.log("Failed to move file: \(error.localizedDescription)", eventType: .error)
-                    completionHandler(.failure(error))
-                }
+                FileStorage.shared.saveBaseHtml(fileURL, completion: completionHandler)
                 
             case .failure(let error):
                 ErrorLogger.shared.capture(error: error)
@@ -93,9 +73,6 @@ final class InAppRequestService {
     }
     
     func baseHTMLExists() -> Bool {
-        let fileManager = FileManager.default
-        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else { return false }
-        let fileURL = documentsURL.appendingPathComponent("index.html")
-        return fileManager.fileExists(atPath: fileURL.path)
+        FileStorage.shared.baseHTMLExists()
     }
 }

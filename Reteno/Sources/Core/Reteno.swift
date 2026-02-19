@@ -35,7 +35,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.6.0"
+    static var version = "2.6.1"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -64,6 +64,7 @@ public struct Reteno {
         deviceIdProvider.setDeviceIdCompletionHandler { deviceId in
             sdkStateHelper.set(isDelayedInitialization: false)
             sdkStateHelper.set(isInitialized: true)
+            FileStorage.shared.configure()
             ApiKeyHelper.setApiKey(apiKey)
             DeviceIdHelper.actualizeDeviceId(providedDeviceId: deviceId)
             DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
@@ -110,6 +111,7 @@ public struct Reteno {
         
         deviceIdProvider.setDeviceIdCompletionHandler { deviceId in
             sdkStateHelper.set(isInitialized: true)
+            FileStorage.shared.configure()
             ApiKeyHelper.setApiKey(apiKey)
             DeviceIdHelper.actualizeDeviceId(providedDeviceId : deviceId)
             DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)

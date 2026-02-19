@@ -43,14 +43,12 @@ internal class PushNotificationSwizzler: NSObject {
         
         // Check if the app delegate implements the method
         if let originalMethod = class_getInstanceMethod(cls, originalSelector) {
-            Logger.log("Reteno: Found original implementation of didRegisterForRemoteNotifications", eventType: .info)
             // App delegate has the method - exchange implementations
             let swizzledMethod = class_getInstanceMethod(PushNotificationSwizzler.self, swizzledSelector)!
             originalDidRegisterImpl = method_getImplementation(originalMethod)
             method_setImplementation(originalMethod, method_getImplementation(swizzledMethod))
             Logger.log("Reteno: Swizzled didRegisterForRemoteNotifications", eventType: .info)
         } else {
-            Logger.log("Reteno: Original implementation of didRegisterForRemoteNotifications not found, adding method", eventType: .info)
             // App delegate doesn't implement it - add our method
             let swizzledMethod = class_getInstanceMethod(PushNotificationSwizzler.self, swizzledSelector)!
             let types = method_getTypeEncoding(swizzledMethod)
@@ -64,13 +62,11 @@ internal class PushNotificationSwizzler: NSObject {
         let swizzledSelector = #selector(swizzled_didFailToRegister(_:error:))
         
         if let originalMethod = class_getInstanceMethod(cls, originalSelector) {
-            Logger.log("Reteno: Found original implementation of didFailToRegisterForRemoteNotifications", eventType: .info)
             let swizzledMethod = class_getInstanceMethod(PushNotificationSwizzler.self, swizzledSelector)!
             originalDidFailImpl = method_getImplementation(originalMethod)
             method_setImplementation(originalMethod, method_getImplementation(swizzledMethod))
             Logger.log("Reteno: Swizzled didFailToRegisterForRemoteNotifications", eventType: .info)
         } else {
-            Logger.log("Reteno: Original implementation of didFailToRegisterForRemoteNotifications not found, adding method", eventType: .info)
             let swizzledMethod = class_getInstanceMethod(PushNotificationSwizzler.self, swizzledSelector)!
             let types = method_getTypeEncoding(swizzledMethod)
             class_addMethod(cls, originalSelector, method_getImplementation(swizzledMethod), types)

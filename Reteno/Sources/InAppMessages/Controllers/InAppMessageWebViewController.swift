@@ -57,21 +57,23 @@ class InAppMessageWebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        do {
-            let baseFileName: String = "index.html"
-            let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent(baseFileName)
-            let htmlContent = try String(contentsOf: url, encoding: .utf8)
-            let htmlString = htmlContent
-                .replacingOccurrences(of: "${documentModel}", with: message.model)
-                .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")
-            webView.layout(in: view)
-            webView.scrollView.bounces = false
-            webView.navigationDelegate = self
-            webView.configuration.userContentController.add(self, name: "retenoHandler")
-            webView.loadHTMLString(htmlString, baseURL: nil)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            Logger.log(error.localizedDescription, eventType: .error)
+        if let url = FileStorage.shared.getBaseHtmlURL() {
+            do {
+                let htmlContent = try String(contentsOf: url, encoding: .utf8)
+                let htmlString = htmlContent
+                    .replacingOccurrences(of: "${documentModel}", with: message.model)
+                    .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")
+                webView.layout(in: view)
+                webView.scrollView.bounces = false
+                webView.navigationDelegate = self
+                webView.configuration.userContentController.add(self, name: "retenoHandler")
+                webView.loadHTMLString(htmlString, baseURL: nil)
+            } catch {
+                ErrorLogger.shared.capture(error: error)
+                Logger.log(error.localizedDescription, eventType: .error)
+            }
+        } else {
+            Logger.log("Reteno: No base HTML file found", eventType: .error)
         }
     }
     
