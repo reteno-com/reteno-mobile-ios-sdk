@@ -37,6 +37,8 @@ final class InAppMessages {
         Reteno.sdkStateHelper
     }
     
+    private static let baseHTMLFetchThreshold: TimeInterval = 4 * 60 * 60
+    
     init(
         mobileRequestService: MobileRequestService,
         inAppRequestService: InAppRequestService,
@@ -57,20 +59,23 @@ final class InAppMessages {
         mobileRequestService.getInAppMessage(by: id) { [weak self] result in
             switch result {
             case .success(let message):
-                guard let self = self else { return }
-                
-                if self.application?.isActive == true {
-                    DispatchQueue.main.async {
-                        Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
-                        self.setupWebView(with: message, isPushInApp: isPushInApp)
-                    }
-                } else {
-                    self.currentInAppMessage = message
-                }
+                self?.handleInAppMessage(message, isPushInApp: isPushInApp)
                 
             case .failure(let error):
                 Logger.log(error.localizedDescription, eventType: .error)
             }
+        }
+    }
+    
+    @available(iOSApplicationExtension, unavailable)
+    private func handleInAppMessage(_ message: InAppMessage, isPushInApp: Bool) {
+        if application?.isActive == true {
+            DispatchQueue.main.async {
+                Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
+                self.setupWebView(with: message, isPushInApp: isPushInApp)
+            }
+        } else {
+            currentInAppMessage = message
         }
     }
     
@@ -166,6 +171,7 @@ final class InAppMessages {
     
     @available(iOSApplicationExtension, unavailable)
     func subscribeOnNotifications() {
+        InAppWebViewPool.shared.warmUp()
         self.sessionService.subscribeOnNotifications()
         NotificationCenter.default.addObserver(
             self,
@@ -194,6 +200,15 @@ final class InAppMessages {
     }
     
     private func fetchBaseHTML(completion: @escaping () -> Void = {}) {
+        if let lastFetchTimestamp: Double = storage.getValue(forKey: StorageKeys.lastBaseHTMLFetchDate.rawValue),
+           lastFetchTimestamp > 0 {
+            let elapsed = Date().timeIntervalSince1970 - lastFetchTimestamp
+            if elapsed < Self.baseHTMLFetchThreshold {
+                completion()
+                return
+            }
+        }
+        
         inAppRequestService.fetchBaseHTML { [weak self] result in
             switch result {
             case .success(let version):
@@ -203,6 +218,7 @@ final class InAppMessages {
                      ||
                      !self.inAppRequestService.baseHTMLExists())
                 else {
+                    self?.storage.set(value: Date().timeIntervalSince1970, forKey: StorageKeys.lastBaseHTMLFetchDate.rawValue)
                     completion()
                     return
                 }
@@ -211,6 +227,7 @@ final class InAppMessages {
                     switch result {
                     case .success:
                         self.storage.set(value: version, forKey: StorageKeys.inAppMessageBaseHTMLVersion.rawValue)
+                        self.storage.set(value: Date().timeIntervalSince1970, forKey: StorageKeys.lastBaseHTMLFetchDate.rawValue)
                         
                     case .failure(let error):
                         ErrorLogger.shared.capture(error: error)
@@ -336,7 +353,6 @@ final class InAppMessages {
                 inAppService: inAppService
             )
             viewController.delegate = self
-            viewController.view.layoutIfNeeded()
             slideUpVC = viewController
         } else {
             let viewController = InAppMessageWebViewController(
@@ -344,7 +360,6 @@ final class InAppMessages {
                 inAppService: inAppService
             )
             viewController.delegate = self
-            viewController.view.layoutIfNeeded()
             self.window = UIWindow()
         }
     }

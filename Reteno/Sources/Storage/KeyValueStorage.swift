@@ -54,6 +54,7 @@ enum StorageKeys: String, CaseIterable {
     case automaticSessionReportingEnabled = "com.reteno.automatic-session-reporting.key"
     case retenoConfiguration = "com.reteno.reteno-configuration.key"
     case isDelayedInitialization = "com.reteno.reteno-delayed-initialization.key"
+    case lastBaseHTMLFetchDate = "com.reteno.last-base-html-fetch-date.key"
 }
 
 final class KeyValueStorage {

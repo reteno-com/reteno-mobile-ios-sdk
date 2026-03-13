@@ -44,6 +44,23 @@ struct InAppMessage: InApp {
         
         self.layoutParams = try? container.decodeIfPresent(LayoutParams.self, forKey: .layoutParams)
     }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(layoutType, forKey: .layoutType)
+        try container.encodeIfPresent(layoutParams, forKey: .layoutParams)
+        
+        if let data = model.data(using: .utf8) {
+            let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            try container.encode(json, forKey: .model)
+        }
+        
+        if let personalisation = personalisation, let data = personalisation.data(using: .utf8) {
+            let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            try container.encode(json, forKey: .personalisation)
+        }
+    }
 
 }
 

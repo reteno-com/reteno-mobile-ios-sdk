@@ -30,20 +30,8 @@ class InAppMessageWebViewController: UIViewController {
     init(with message: InApp, inAppService: InAppService) {
         self.message = message
         self.inAppService = inAppService
+        self.webView = InAppWebViewPool.shared.dequeueWebView()
         
-        let preferences = WKPreferences()
-        let configuration = WKWebViewConfiguration()
-        if #available(iOS 14.0, *) {
-            configuration.defaultWebpagePreferences.allowsContentJavaScript = true
-        } else {
-            preferences.javaScriptEnabled = true
-        }
-        configuration.preferences = preferences
-
-        webView = WKWebView(frame: CGRect.zero, configuration: configuration)
-        webView.backgroundColor = .clear
-        webView.scrollView.backgroundColor = .clear
-        webView.isOpaque = false
         super.init(nibName: nil, bundle: nil)
         
         view.backgroundColor = .clear
@@ -57,24 +45,21 @@ class InAppMessageWebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let url = FileStorage.shared.getBaseHtmlURL() {
-            do {
-                let htmlContent = try String(contentsOf: url, encoding: .utf8)
-                let htmlString = htmlContent
-                    .replacingOccurrences(of: "${documentModel}", with: message.model)
-                    .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")
-                webView.layout(in: view)
-                webView.scrollView.bounces = false
-                webView.navigationDelegate = self
-                webView.configuration.userContentController.add(self, name: "retenoHandler")
-                webView.loadHTMLString(htmlString, baseURL: nil)
-            } catch {
-                ErrorLogger.shared.capture(error: error)
-                Logger.log(error.localizedDescription, eventType: .error)
-            }
-        } else {
+        guard let htmlContent = FileStorage.shared.getBaseHtmlContent() else {
             Logger.log("Reteno: No base HTML file found", eventType: .error)
+            return
         }
+        
+        let htmlString = htmlContent
+            .replacingOccurrences(of: "${documentModel}", with: message.model)
+            .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")
+        
+        webView.layout(in: view)
+        webView.scrollView.bounces = false
+        webView.navigationDelegate = self
+        webView.configuration.userContentController.add(self, name: "retenoHandler")
+        
+        webView.loadHTMLString(htmlString, baseURL: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

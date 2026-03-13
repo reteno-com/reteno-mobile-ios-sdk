@@ -12,6 +12,7 @@ internal final class FileStorage {
     static var shared: FileStorage = .init()
     
     private let baseFileName: String = "index.html"
+    private var cachedBaseHTML: String?
     
     func configure() {
         moveBaseHtmlIfNeeded()
@@ -24,6 +25,30 @@ internal final class FileStorage {
             return url
         }
         return nil
+    }
+    
+    func getBaseHtmlContent() -> String? {
+        if let cached = cachedBaseHTML {
+            return cached
+        }
+        guard let url = getBaseHtmlURL() else { return nil }
+        do {
+            let content = try String(contentsOf: url, encoding: .utf8)
+            cachedBaseHTML = content
+            return content
+        } catch {
+            ErrorLogger.shared.capture(error: error)
+            Logger.log(error.localizedDescription, eventType: .error)
+            return nil
+        }
+    }
+    
+    func invalidateBaseHtmlCache() {
+        cachedBaseHTML = nil
+    }
+    
+    func baseHtmlDirectory() -> URL? {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
     }
     
     func saveBaseHtml(_ fileURL: URL, completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -42,6 +67,7 @@ internal final class FileStorage {
                 try fileManager.removeItem(at: localURL)
             }
             try fileManager.moveItem(at: fileURL, to: localURL)
+            invalidateBaseHtmlCache()
             completion(.success(true))
         } catch {
             ErrorLogger.shared.capture(error: error)
