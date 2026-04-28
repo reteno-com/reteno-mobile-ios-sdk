@@ -11,7 +11,9 @@ import Foundation
 final class SessionService {
 
     private let storage = StorageBuilder.build()
-    private let isSessionEventReportingEnabled: Bool
+    private var isSessionStartEventReportingEnabled: Bool
+    private var isSessionEndEventReportingEnabled: Bool
+    private var sessionInactivityDuration: TimeInterval
     
     private var timeInApp: Int = 0
     var timeSpendInApp: ((Int) -> Void)? {
@@ -25,7 +27,52 @@ final class SessionService {
     private var sesionTimer: Timer?
     
     init() {
-        self.isSessionEventReportingEnabled = storage.getValue(forKey: StorageKeys.automaticSessionReportingEnabled.rawValue)
+        self.isSessionStartEventReportingEnabled = storage.getValue(forKey: StorageKeys.automaticSessionReportingEnabled.rawValue)
+        self.isSessionEndEventReportingEnabled = storage.getValue(forKey: StorageKeys.automaticSessionEndReportingEnabled.rawValue)
+        let storedDuration: Double? = storage.getValue(forKey: StorageKeys.sessionInactivityDuration.rawValue)
+        self.sessionInactivityDuration = storedDuration ?? RetenoSessionConfiguration.default.sessionDuration
+    }
+
+    func reconfigure(
+        previous: RetenoSessionConfiguration?,
+        new configuration: RetenoSessionConfiguration
+    ) {
+        guard let previous = previous else {
+            applyInMemoryConfiguration(configuration)
+            return
+        }
+
+        guard !isConfiguration(previous, equalTo: configuration) else {
+            applyInMemoryConfiguration(configuration)
+            return
+        }
+
+        sendEndSessionEventIfNeeded(
+            inactivityDuration: previous.sessionDuration,
+            isReportingEnabled: previous.isSessionEndReportingEnabled
+        )
+        invalidateTimer()
+
+        applyInMemoryConfiguration(configuration)
+
+        setLastActivityDate()
+        startSession()
+        sessionDurationTimer()
+    }
+
+    private func applyInMemoryConfiguration(_ configuration: RetenoSessionConfiguration) {
+        isSessionStartEventReportingEnabled = configuration.isSessionStartReportingEnabled
+        isSessionEndEventReportingEnabled = configuration.isSessionEndReportingEnabled
+        sessionInactivityDuration = configuration.sessionDuration
+    }
+
+    private func isConfiguration(
+        _ lhs: RetenoSessionConfiguration,
+        equalTo rhs: RetenoSessionConfiguration
+    ) -> Bool {
+        lhs.sessionDuration == rhs.sessionDuration
+            && lhs.isSessionStartReportingEnabled == rhs.isSessionStartReportingEnabled
+            && lhs.isSessionEndReportingEnabled == rhs.isSessionEndReportingEnabled
     }
     
     // MARK: Session duration timer
@@ -42,8 +89,27 @@ final class SessionService {
                 self.timeInApp += 1
                 self.timeSpendInApp?(self.timeInApp)
                 self.storage.set(value: self.timeInApp, forKey: StorageKeys.sessionDuration.rawValue)
+                self.restartSessionNeeded()
             }
         )
+    }
+
+    private func restartSessionNeeded() {
+        guard sessionInactivityDuration > 0,
+              TimeInterval(timeInApp) >= sessionInactivityDuration
+        else { return }
+
+        let now = Date()
+        sendEndSessionEventIfNeeded(
+            inactivityDuration: sessionInactivityDuration,
+            isReportingEnabled: isSessionEndEventReportingEnabled,
+            endDate: now
+        )
+
+        timeInApp = 0
+        storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
+        storage.set(value: now.timeIntervalSince1970, forKey: StorageKeys.lastActivityDate.rawValue)
+        startSession()
     }
     
     func invalidateTimer() {
@@ -87,7 +153,7 @@ final class SessionService {
         }
         
         let date = Date(timeIntervalSince1970: lastActivityDate)
-        if Date().minutes(from: date) >= 5 {
+        if Date().timeIntervalSince(date) >= sessionInactivityDuration {
             self.sendEndSessionEventIfNeeded()
             self.startSession()
         }
@@ -103,7 +169,7 @@ final class SessionService {
     }
     
     func sendStartSessionEventIfNeeded() {
-        guard isSessionEventReportingEnabled else { return }
+        guard isSessionStartEventReportingEnabled else { return }
         
         storage.set(value: 0, forKey: StorageKeys.applicationOpenedCount.rawValue)
         storage.set(value: 0, forKey: StorageKeys.applicationBackgroundedCount.rawValue)
@@ -123,15 +189,27 @@ final class SessionService {
     }
     
     func sendEndSessionEventIfNeeded() {
-        guard isSessionEventReportingEnabled,
+        sendEndSessionEventIfNeeded(
+            inactivityDuration: sessionInactivityDuration,
+            isReportingEnabled: isSessionEndEventReportingEnabled
+        )
+    }
+
+    private func sendEndSessionEventIfNeeded(
+        inactivityDuration: TimeInterval,
+        isReportingEnabled: Bool,
+        endDate: Date? = nil
+    ) {
+        guard isReportingEnabled,
               let sessionId: String = storage.getValue(forKey: StorageKeys.sessionId.rawValue),
               let lastActivityTimestamp: Double = storage.getValue(forKey: StorageKeys.lastActivityDate.rawValue)
         else {
             return
         }
         
-        let endDate = Date(timeIntervalSince1970: lastActivityTimestamp).addingTimeInterval(5*60)
-        let endDateString = DateFormatter.baseBEDateFormatter.string(from: endDate)
+        let resolvedEndDate = endDate
+            ?? Date(timeIntervalSince1970: lastActivityTimestamp).addingTimeInterval(inactivityDuration)
+        let endDateString = DateFormatter.baseBEDateFormatter.string(from: resolvedEndDate)
         let duration = Int(storage.getValue(forKey: StorageKeys.sessionDuration.rawValue) ?? 0)
         let durationString = String(duration)
         let openedEventCount = String(storage.getValue(forKey: StorageKeys.applicationOpenedCount.rawValue) ?? 0)

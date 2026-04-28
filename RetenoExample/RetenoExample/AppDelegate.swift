@@ -40,11 +40,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         
+        registerSessionConfigDefaults()
+        
         if isDelayedInitalizationForTest {
             Reteno.delayedStart()
         } else {
             let configuration: RetenoConfiguration = .init(isAutomaticScreenReportingEnabled: true,
                                                            isAutomaticAppLifecycleReportingEnabled: true,
+                                                           isApplicationForegroundLifecycleReportingEnabled: applicationForegroundLifecycleReportingEnabled(),
+                                                           sessionConfiguration: sessionConfiguration(),
                                                            isDebugMode: true,
                                                            useCustomDeviceId: isCustomDeviceIdProviderEnabled,
                                                            deviceTokenHandlingMode: .manual)
@@ -211,8 +215,6 @@ extension AppDelegate: MessagingDelegate {
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         guard let fcmToken = fcmToken else { return }
-        
-        print("Device token: ", fcmToken)
         Reteno.userNotificationService.processRemoteNotificationsToken(fcmToken)
     }
     
@@ -242,7 +244,36 @@ extension AppDelegate {
     }
     
     func completeDelayedInitialization() {
-        let configuration: RetenoConfiguration = .init(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true, isDebugMode: true)
+        let configuration: RetenoConfiguration = .init(
+            isAutomaticScreenReportingEnabled: true,
+            isAutomaticAppLifecycleReportingEnabled: true,
+            isApplicationForegroundLifecycleReportingEnabled: applicationForegroundLifecycleReportingEnabled(),
+            sessionConfiguration: sessionConfiguration(),
+            isDebugMode: true
+        )
         Reteno.delayedSetup(apiKey: apiKey, configuration: configuration)
+    }
+    
+    // MARK: - Session configuration
+    
+    private func registerSessionConfigDefaults() {
+        userDefaults.register(defaults: [
+            SessionConfigUserDefaultsKey.sessionDuration: RetenoSessionConfiguration.default.sessionDuration,
+            SessionConfigUserDefaultsKey.isSessionStartReportingEnabled: RetenoSessionConfiguration.default.isSessionStartReportingEnabled,
+            SessionConfigUserDefaultsKey.isSessionEndReportingEnabled: RetenoSessionConfiguration.default.isSessionEndReportingEnabled,
+            SessionConfigUserDefaultsKey.isApplicationForegroundLifecycleReportingEnabled: false
+        ])
+    }
+    
+    private func sessionConfiguration() -> RetenoSessionConfiguration {
+        RetenoSessionConfiguration(
+            sessionDuration: userDefaults.double(forKey: SessionConfigUserDefaultsKey.sessionDuration),
+            isSessionStartReportingEnabled: userDefaults.bool(forKey: SessionConfigUserDefaultsKey.isSessionStartReportingEnabled),
+            isSessionEndReportingEnabled: userDefaults.bool(forKey: SessionConfigUserDefaultsKey.isSessionEndReportingEnabled)
+        )
+    }
+    
+    private func applicationForegroundLifecycleReportingEnabled() -> Bool {
+        userDefaults.bool(forKey: SessionConfigUserDefaultsKey.isApplicationForegroundLifecycleReportingEnabled)
     }
 }

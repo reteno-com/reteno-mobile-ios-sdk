@@ -11,9 +11,17 @@ import UIKit
 final class AppLifecycleAnalyticsSevice {
     private let storage = StorageBuilder.build()
 
+    private let isApplicationForegroundLifecycleReportingEnabled: Bool
+
     var isLaunchedFromForeground: Bool = false
     var applicationOpenTime: Date?
-    
+
+    private var wasInBackground: Bool = true
+
+    init(isApplicationForegroundLifecycleReportingEnabled: Bool) {
+        self.isApplicationForegroundLifecycleReportingEnabled = isApplicationForegroundLifecycleReportingEnabled
+    }
+
     // MARK: Subscribe on notifications
     
     func subscribeOnNotifications() {
@@ -99,21 +107,33 @@ final class AppLifecycleAnalyticsSevice {
     
     @objc
     private func handleApplicationDidBecomeActiveNotification(_ notification: Notification) {
+        guard wasInBackground else { return }
+
+        let fromBackground = applicationOpenTime != nil
         applicationOpenTime = Date()
+        isLaunchedFromForeground = !fromBackground
+        wasInBackground = false
+
+        guard isApplicationForegroundLifecycleReportingEnabled else { return }
+
         Reteno.logEvent(
             eventTypeKey: AppLifecycleEventKeys.applicationOpenedKey.rawValue,
             parameters: [
-                .init(name: AppLifecycleEventKeys.fromBackgroundKey.rawValue, value: "\(!self.isLaunchedFromForeground)")
+                .init(name: AppLifecycleEventKeys.fromBackgroundKey.rawValue, value: "\(fromBackground)")
             ]
         )
     }
 
     @objc
     private func handleApplicationDidEnterBackgroundNotification(_ notification: Notification) {
+        wasInBackground = true
+
         guard let applicationOpenTime = applicationOpenTime else {
             return
         }
-        
+
+        guard isApplicationForegroundLifecycleReportingEnabled else { return }
+
         let openedTime = DateFormatter.baseBEDateFormatter.string(from: applicationOpenTime)
         let secondInForeground = Date().timeIntervalSince1970 - applicationOpenTime.timeIntervalSince1970
         

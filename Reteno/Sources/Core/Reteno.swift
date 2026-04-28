@@ -35,7 +35,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.6.2"
+    static var version = "2.7.0"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -69,14 +69,20 @@ public struct Reteno {
             DeviceIdHelper.actualizeDeviceId(providedDeviceId: deviceId)
             DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
             storage = storage ?? StorageBuilder.build()
+            let previousSessionConfiguration = storage.getStoredSessionConfiguration()
             storage.setAnalyticsValues(configuration: configuration)
             analyticsService = AnalyticsServiceBuilder.build(
                 isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
-                isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled
+                isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled,
+                isApplicationForegroundLifecycleReportingEnabled: configuration.isApplicationForegroundLifecycleReportingEnabled
             )
             senderScheduler.subscribeOnNotifications()
             userNotificationService.setNotificationCenterDelegate()
             inApps.subscribeOnNotifications()
+            inApps.updateSessionConfiguration(
+                previous: previousSessionConfiguration,
+                new: configuration.sessionConfiguration
+            )
             pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
             setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
         }
@@ -115,13 +121,19 @@ public struct Reteno {
             ApiKeyHelper.setApiKey(apiKey)
             DeviceIdHelper.actualizeDeviceId(providedDeviceId : deviceId)
             DebugModeHelper.setIsDebugModeOn(configuration.isDebugMode)
+            let previousSessionConfiguration = storage.getStoredSessionConfiguration()
             storage.setAnalyticsValues(configuration: configuration)
             analyticsService = AnalyticsServiceBuilder.build(
                 isAutomaticScreenReportingEnabled: configuration.isAutomaticScreenReportingEnabled,
-                isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled
+                isAutomaticAppLifecycleReportingEnabled: configuration.isAutomaticAppLifecycleReportingEnabled,
+                isApplicationForegroundLifecycleReportingEnabled: configuration.isApplicationForegroundLifecycleReportingEnabled
             )
             senderScheduler.subscribeOnNotifications()
             inApps.subscribeOnNotifications()
+            inApps.updateSessionConfiguration(
+                previous: previousSessionConfiguration,
+                new: configuration.sessionConfiguration
+            )
             pauseInAppMessages(isPaused: configuration.isPausedInAppMessages)
             setInAppMessagesPauseBehaviour(pauseBehaviour: configuration.inAppMessagesPauseBehaviour)
             
@@ -170,9 +182,11 @@ public struct Reteno {
             storage = storage ?? StorageBuilder.build()
             let isAutomaticScreenReportingEnabled: Bool = storage.getValue(forKey: StorageKeys.screenTrackingFlag.rawValue)
             let isAutomaticAppLifecycleReportingEnabled: Bool = storage.getValue(forKey: StorageKeys.automaticAppLifecycleReportingEnabled.rawValue)
+            let isApplicationForegroundLifecycleReportingEnabled: Bool = storage.getValue(forKey: StorageKeys.applicationForegroundLifecycleReportingEnabled.rawValue)
             analyticsService = AnalyticsService(
                 isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled,
                 isAutomaticAppLifecycleReportingEnabled: isAutomaticAppLifecycleReportingEnabled,
+                isApplicationForegroundLifecycleReportingEnabled: isApplicationForegroundLifecycleReportingEnabled,
                 storage: storage
             )
         }

@@ -37,6 +37,13 @@ final class MainFlowAssembly: Assembly {
             
             return CustomInAppURLViewController(viewModel: viewModel)
         }
+        
+        container.register(SessionConfigViewController.self) { _ in
+            let model = SessionConfigModel()
+            let viewModel = SessionConfigViewModel(model: model)
+            
+            return SessionConfigViewController(viewModel: viewModel)
+        }
     }
     
 }

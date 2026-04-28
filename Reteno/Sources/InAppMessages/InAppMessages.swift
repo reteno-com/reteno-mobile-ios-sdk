@@ -142,6 +142,13 @@ final class InAppMessages {
         sessionService.sendStartSessionEventIfNeeded()
         sessionService.sessionDurationTimer()
     }
+
+    func updateSessionConfiguration(
+        previous: RetenoSessionConfiguration?,
+        new configuration: RetenoSessionConfiguration
+    ) {
+        sessionService.reconfigure(previous: previous, new: configuration)
+    }
     
     func setInAppMessagesPauseBehaviour(pauseBehaviour: PauseBehaviour) {
         inAppMessagesPauseBehaviour = pauseBehaviour

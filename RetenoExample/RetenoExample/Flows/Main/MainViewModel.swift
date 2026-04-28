@@ -62,4 +62,8 @@ final class MainViewModel {
         model.openCustomInAppURL()
     }
     
+    func openSessionConfig() {
+        model.openSessionConfig()
+    }
+    
 }

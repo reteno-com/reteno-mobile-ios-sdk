@@ -50,8 +50,11 @@ enum StorageKeys: String, CaseIterable {
     case previousVersion = "com.reteno.previous-version.key"
     case previousBuild = "com.reteno.previous-build.key"
     case automaticAppLifecycleReportingEnabled = "com.reteno.automatic-app-lifecycle-reporting.key"
+    case applicationForegroundLifecycleReportingEnabled = "com.reteno.application-foreground-lifecycle-reporting.key"
     case automaticPushSubsriptionReportingEnabled = "com.reteno.automatic-push-subsription-reporting.key"
     case automaticSessionReportingEnabled = "com.reteno.automatic-session-reporting.key"
+    case automaticSessionEndReportingEnabled = "com.reteno.automatic-session-end-reporting.key"
+    case sessionInactivityDuration = "com.reteno.session-inactivity-duration.key"
     case retenoConfiguration = "com.reteno.reteno-configuration.key"
     case isDelayedInitialization = "com.reteno.reteno-delayed-initialization.key"
     case lastBaseHTMLFetchDate = "com.reteno.last-base-html-fetch-date.key"
@@ -121,6 +124,19 @@ final class KeyValueStorage {
     
     // MARK: Analytics logic
 
+    func getStoredSessionConfiguration() -> RetenoSessionConfiguration? {
+        guard let storage = storageUnwrapper() else { return nil }
+        guard storage.object(forKey: StorageKeys.sessionInactivityDuration.rawValue) != nil else {
+            return nil
+        }
+        
+        return RetenoSessionConfiguration(
+            sessionDuration: storage.double(forKey: StorageKeys.sessionInactivityDuration.rawValue),
+            isSessionStartReportingEnabled: storage.bool(forKey: StorageKeys.automaticSessionReportingEnabled.rawValue),
+            isSessionEndReportingEnabled: storage.bool(forKey: StorageKeys.automaticSessionEndReportingEnabled.rawValue)
+        )
+    }
+
     func setAnalyticsValues(configuration: RetenoConfiguration) {
         guard let storage = storageUnwrapper() else { return }
 
@@ -133,12 +149,24 @@ final class KeyValueStorage {
             forKey: StorageKeys.automaticAppLifecycleReportingEnabled.rawValue
         )
         storage.setValue(
+            configuration.isApplicationForegroundLifecycleReportingEnabled,
+            forKey: StorageKeys.applicationForegroundLifecycleReportingEnabled.rawValue
+        )
+        storage.setValue(
             configuration.isAutomaticPushSubsriptionReportingEnabled,
             forKey: StorageKeys.automaticPushSubsriptionReportingEnabled.rawValue
         )
         storage.setValue(
-            configuration.isAutomaticSessionReportingEnabled,
+            configuration.sessionConfiguration.isSessionStartReportingEnabled,
             forKey: StorageKeys.automaticSessionReportingEnabled.rawValue
+        )
+        storage.setValue(
+            configuration.sessionConfiguration.isSessionEndReportingEnabled,
+            forKey: StorageKeys.automaticSessionEndReportingEnabled.rawValue
+        )
+        storage.set(
+            configuration.sessionConfiguration.sessionDuration,
+            forKey: StorageKeys.sessionInactivityDuration.rawValue
         )
     }
 

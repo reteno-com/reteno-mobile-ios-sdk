@@ -23,12 +23,15 @@ struct AnalyticsService {
     init(
         isAutomaticScreenReportingEnabled: Bool,
         isAutomaticAppLifecycleReportingEnabled: Bool,
+        isApplicationForegroundLifecycleReportingEnabled: Bool,
         storage: KeyValueStorage = StorageBuilder.build()
     ) {
         self.isAutomaticScreenReportingEnabled = isAutomaticScreenReportingEnabled
         self.storage = storage
         if isAutomaticAppLifecycleReportingEnabled {
-            self.lifecycleAnalyticsService = AppLifecycleAnalyticsSevice()
+            self.lifecycleAnalyticsService = AppLifecycleAnalyticsSevice(
+                isApplicationForegroundLifecycleReportingEnabled: isApplicationForegroundLifecycleReportingEnabled
+            )
             self.lifecycleAnalyticsService?.subscribeOnNotifications()
         } else {
             self.lifecycleAnalyticsService = nil

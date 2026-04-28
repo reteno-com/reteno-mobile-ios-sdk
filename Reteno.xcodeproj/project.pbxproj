@@ -68,6 +68,7 @@
 		E0367B712CA4A07700F88784 /* AppInboxMessagesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AFC2CA4A07700F88784 /* AppInboxMessagesRequest.swift */; };
 		E0367B722CA4A07700F88784 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AEC2CA4A07700F88784 /* APIRequest.swift */; };
 		E0367B732CA4A07700F88784 /* RetenoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AC52CA4A07700F88784 /* RetenoConfiguration.swift */; };
+		E0367FF12CA4A07700F88784 /* RetenoSessionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367FF02CA4A07700F88784 /* RetenoSessionConfiguration.swift */; };
 		E0367B742CA4A07700F88784 /* Analytics+UNUserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A8B2CA4A07700F88784 /* Analytics+UNUserNotificationCenter.swift */; };
 		E0367B752CA4A07700F88784 /* JSONInitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB92CA4A07700F88784 /* JSONInitable.swift */; };
 		E0367B762CA4A07700F88784 /* AnalyticsServiceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A932CA4A07700F88784 /* AnalyticsServiceBuilder.swift */; };
@@ -233,6 +234,7 @@
 		E0367AC12CA4A07700F88784 /* Autolayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Autolayout.swift; sourceTree = "<group>"; };
 		E0367AC42CA4A07700F88784 /* Reteno.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reteno.swift; sourceTree = "<group>"; };
 		E0367AC52CA4A07700F88784 /* RetenoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoConfiguration.swift; sourceTree = "<group>"; };
+		E0367FF02CA4A07700F88784 /* RetenoSessionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoSessionConfiguration.swift; sourceTree = "<group>"; };
 		E0367AC72CA4A07700F88784 /* DeepLinksProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinksProcessor.swift; sourceTree = "<group>"; };
 		E0367AC82CA4A07700F88784 /* StorableLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorableLink.swift; sourceTree = "<group>"; };
 		E0367ACA2CA4A07700F88784 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 				5E1F31162E09CDE3000E6AE7 /* Device */,
 				E0367AC42CA4A07700F88784 /* Reteno.swift */,
 				E0367AC52CA4A07700F88784 /* RetenoConfiguration.swift */,
+				E0367FF02CA4A07700F88784 /* RetenoSessionConfiguration.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1034,6 +1037,7 @@
 				E0367B712CA4A07700F88784 /* AppInboxMessagesRequest.swift in Sources */,
 				E0367B722CA4A07700F88784 /* APIRequest.swift in Sources */,
 				E0367B732CA4A07700F88784 /* RetenoConfiguration.swift in Sources */,
+				E0367FF12CA4A07700F88784 /* RetenoSessionConfiguration.swift in Sources */,
 				E0367B742CA4A07700F88784 /* Analytics+UNUserNotificationCenter.swift in Sources */,
 				E0367B752CA4A07700F88784 /* JSONInitable.swift in Sources */,
 				E0367B762CA4A07700F88784 /* AnalyticsServiceBuilder.swift in Sources */,

@@ -17,6 +17,7 @@ protocol MainModelNavigationHandler {
     func openRecoms()
     func openCustomDeviceId()
     func openCustomInAppURL()
+    func openSessionConfig()
 }
 
 final class MainModel {
@@ -78,5 +79,9 @@ final class MainModel {
     
     func openCustomInAppURL() {
         navigationHandler.openCustomInAppURL()
+    }
+    
+    func openSessionConfig() {
+        navigationHandler.openSessionConfig()
     }
 }

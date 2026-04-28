@@ -9,6 +9,7 @@
 "common.error.title" = "Error";
 "common.ok" = "Ok";
 "common.create" = "Create";
+"common.cancel" = "Cancel";
 
 // MARK: - Main
 
@@ -18,6 +19,18 @@
 "main_screen.paused_in_app" = "Paused InApps";
 "main_screen.paused_behaviour_in_app" = "InApps Pause Behaviour";
 "main_screen.paused_behaviour_description" = "Postpone InApp";
+"main_screen.config_button.title" = "Config";
+"main_screen.config_menu.title" = "Config";
+
+// MARK: - Session configuration
+
+"session_config_screen.title" = "Session config";
+"session_config_screen.session_duration" = "Session duration (seconds)";
+"session_config_screen.start_reporting" = "Session start reporting enabled";
+"session_config_screen.end_reporting" = "Session end reporting enabled";
+"session_config_screen.application_foreground_lifecycle_reporting" = "Application foreground lifecycle reporting enabled";
+"session_config_screen.restart_alert.title" = "Restart required";
+"session_config_screen.restart_alert.message" = "The app should be closed and relaunched to apply the new session configuration.";
 
 
 

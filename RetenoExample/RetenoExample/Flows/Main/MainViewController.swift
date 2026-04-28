@@ -44,6 +44,7 @@ final class MainViewController: NiblessViewController {
         super.viewDidLoad()
         
         setuplayout()
+        setupConfigBarButton()
         viewModel.updateCountHandler = { [weak countLabel] count in
             guard let countLabel = countLabel else { return }
             
@@ -113,6 +114,51 @@ final class MainViewController: NiblessViewController {
     @objc
     private func customInAppURLAction(_ sender: UIButton) {
         viewModel.openCustomInAppURL()
+    }
+    
+    @objc
+    private func configBarButtonAction(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(
+            title: NSLocalizedString("main_screen.config_menu.title", comment: ""),
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("session_config_screen.title", comment: ""),
+            style: .default,
+            handler: { [weak viewModel] _ in
+                viewModel?.openSessionConfig()
+            }
+        ))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("common.cancel", comment: ""), style: .cancel))
+        alert.popoverPresentationController?.barButtonItem = sender
+        present(alert, animated: true)
+    }
+    
+    private func setupConfigBarButton() {
+        let configItem = UIBarButtonItem(
+            title: NSLocalizedString("main_screen.config_button.title", comment: ""),
+            style: .plain,
+            target: nil,
+            action: nil
+        )
+        if #available(iOS 14.0, *) {
+            configItem.menu = UIMenu(
+                title: NSLocalizedString("main_screen.config_menu.title", comment: ""),
+                children: [
+                    UIAction(
+                        title: NSLocalizedString("session_config_screen.title", comment: ""),
+                        handler: { [weak viewModel] _ in
+                            viewModel?.openSessionConfig()
+                        }
+                    )
+                ]
+            )
+        } else {
+            configItem.target = self
+            configItem.action = #selector(configBarButtonAction(_:))
+        }
+        navigationItem.leftBarButtonItem = configItem
     }
     
     @objc

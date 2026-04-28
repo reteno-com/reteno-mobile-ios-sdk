@@ -13,11 +13,13 @@ struct AnalyticsServiceBuilder {
     
     static func build(
         isAutomaticScreenReportingEnabled: Bool,
-        isAutomaticAppLifecycleReportingEnabled: Bool
+        isAutomaticAppLifecycleReportingEnabled: Bool,
+        isApplicationForegroundLifecycleReportingEnabled: Bool
     ) -> AnalyticsService {
         AnalyticsService(
             isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled,
-            isAutomaticAppLifecycleReportingEnabled: isAutomaticAppLifecycleReportingEnabled
+            isAutomaticAppLifecycleReportingEnabled: isAutomaticAppLifecycleReportingEnabled,
+            isApplicationForegroundLifecycleReportingEnabled: isApplicationForegroundLifecycleReportingEnabled
         )
     }
 

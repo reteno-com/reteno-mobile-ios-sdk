@@ -16,13 +16,26 @@ public struct RetenoConfiguration {
     /// `true` by default
     public let isAutomaticAppLifecycleReportingEnabled: Bool
     
+    /// Flag that indicates whether the SDK reports foreground app lifecycle events
+    /// (`ApplicationOpened` and `ApplicationBackgrounded`).
+    ///
+    /// When `true`, the SDK emits an `ApplicationOpened` event each time the app is opened
+    /// (either a cold launch or a return from the background) and an `ApplicationBackgrounded`
+    /// event whenever the app moves to the background.
+    ///
+    /// When `false`, neither of these two events is sent. Install/Update lifecycle events are
+    /// unaffected and continue to be controlled by `isAutomaticAppLifecycleReportingEnabled`.
+    ///
+    /// `false` by default.
+    public let isApplicationForegroundLifecycleReportingEnabled: Bool
+    
     /// Flag that indicates if automatic push subsription status tracking enabled
     /// `true` by default
     public let isAutomaticPushSubsriptionReportingEnabled: Bool
     
-    /// Flag that indicates if automatic session tracking events enabled
-    /// `true` by default
-    public let isAutomaticSessionReportingEnabled: Bool
+    /// Configuration that controls automatic session tracking and reporting.
+    /// `RetenoSessionConfiguration.default` by default.
+    public let sessionConfiguration: RetenoSessionConfiguration
     
     /// Flag that indicates pause in InAppMessage presenting
     /// `false` by default
@@ -45,8 +58,9 @@ public struct RetenoConfiguration {
     public init(
         isAutomaticScreenReportingEnabled: Bool = false,
         isAutomaticAppLifecycleReportingEnabled: Bool = true,
+        isApplicationForegroundLifecycleReportingEnabled: Bool = false,
         isAutomaticPushSubsriptionReportingEnabled: Bool = true,
-        isAutomaticSessionReportingEnabled: Bool = true,
+        sessionConfiguration: RetenoSessionConfiguration = .default,
         isPausedInAppMessages: Bool = false,
         inAppMessagesPauseBehaviour: PauseBehaviour = .postponeInApps,
         isDebugMode: Bool = false,
@@ -55,8 +69,9 @@ public struct RetenoConfiguration {
     ) {
         self.isAutomaticScreenReportingEnabled = isAutomaticScreenReportingEnabled
         self.isAutomaticAppLifecycleReportingEnabled = isAutomaticAppLifecycleReportingEnabled
+        self.isApplicationForegroundLifecycleReportingEnabled = isApplicationForegroundLifecycleReportingEnabled
         self.isAutomaticPushSubsriptionReportingEnabled = isAutomaticPushSubsriptionReportingEnabled
-        self.isAutomaticSessionReportingEnabled = isAutomaticSessionReportingEnabled
+        self.sessionConfiguration = sessionConfiguration
         self.isPausedInAppMessages = isPausedInAppMessages
         self.inAppMessagesPauseBehaviour = inAppMessagesPauseBehaviour
         self.isDebugMode = isDebugMode

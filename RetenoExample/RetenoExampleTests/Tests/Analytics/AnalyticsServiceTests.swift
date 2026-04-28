@@ -56,7 +56,11 @@ final class AnalyticsServiceTests: XCTestCase {
     }
         
     func test_appOpened_sendEvent() {
-        setupService(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true)
+        setupService(
+            isAutomaticScreenReportingEnabled: true,
+            isAutomaticAppLifecycleReportingEnabled: true,
+            isApplicationForegroundLifecycleReportingEnabled: true
+        )
         notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         
         let events = storage.getEvents().filter { $0.eventTypeKey == "ApplicationOpened" }
@@ -71,8 +75,24 @@ final class AnalyticsServiceTests: XCTestCase {
         XCTAssertTrue(events.isEmpty, "event should NOT exist")
     }
     
+    func test_appOpenedForegroundLifecycleReportingDisabled_doesNotSendEvent() {
+        setupService(
+            isAutomaticScreenReportingEnabled: true,
+            isAutomaticAppLifecycleReportingEnabled: true,
+            isApplicationForegroundLifecycleReportingEnabled: false
+        )
+        notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        let events = storage.getEvents().filter { $0.eventTypeKey == "ApplicationOpened" }
+        XCTAssertTrue(events.isEmpty, "event should NOT exist when foreground lifecycle reporting is disabled")
+    }
+    
     func test_appBackgrounded_sendEvent() {
-        setupService(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true)
+        setupService(
+            isAutomaticScreenReportingEnabled: true,
+            isAutomaticAppLifecycleReportingEnabled: true,
+            isApplicationForegroundLifecycleReportingEnabled: true
+        )
         // Application can't be beckgrounded without become active
         notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         notificationCenter.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -90,8 +110,25 @@ final class AnalyticsServiceTests: XCTestCase {
         XCTAssertTrue(events.isEmpty, "event should exist")
     }
     
+    func test_appBackgroundedForegroundLifecycleReportingDisabled_doesNotSendEvent() {
+        setupService(
+            isAutomaticScreenReportingEnabled: true,
+            isAutomaticAppLifecycleReportingEnabled: true,
+            isApplicationForegroundLifecycleReportingEnabled: false
+        )
+        notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        notificationCenter.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        let events = storage.getEvents().filter { $0.eventTypeKey == "ApplicationBackgrounded" }
+        XCTAssertTrue(events.isEmpty, "event should NOT exist when foreground lifecycle reporting is disabled")
+    }
+    
     func test_appLifeCycle_sendEvent() {
-        setupService(isAutomaticScreenReportingEnabled: true, isAutomaticAppLifecycleReportingEnabled: true)
+        setupService(
+            isAutomaticScreenReportingEnabled: true,
+            isAutomaticAppLifecycleReportingEnabled: true,
+            isApplicationForegroundLifecycleReportingEnabled: true
+        )
         notificationCenter.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         notificationCenter.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
         
@@ -103,11 +140,13 @@ final class AnalyticsServiceTests: XCTestCase {
     
     private func setupService(
         isAutomaticScreenReportingEnabled: Bool = false,
-        isAutomaticAppLifecycleReportingEnabled: Bool = false
+        isAutomaticAppLifecycleReportingEnabled: Bool = false,
+        isApplicationForegroundLifecycleReportingEnabled: Bool = false
     ) {
         sut = AnalyticsService(
             isAutomaticScreenReportingEnabled: isAutomaticScreenReportingEnabled,
             isAutomaticAppLifecycleReportingEnabled: isAutomaticAppLifecycleReportingEnabled,
+            isApplicationForegroundLifecycleReportingEnabled: isApplicationForegroundLifecycleReportingEnabled,
             storage: storage
         )
         Reteno.analyticsService = sut
