@@ -14,13 +14,22 @@ struct User {
     var lastName: String?
     var phone: String?
     var email: String?
+    var marketId: String?
     
-    init(id: String = "", firstName: String? = nil, lastName: String? = nil, phone: String? = nil, email: String? = nil) {
+    init(
+        id: String = "",
+        firstName: String? = nil,
+        lastName: String? = nil,
+        phone: String? = nil,
+        email: String? = nil,
+        marketId: String? = nil
+    ) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
         self.phone = phone
         self.email = email
+        self.marketId = marketId
     }
     
 }

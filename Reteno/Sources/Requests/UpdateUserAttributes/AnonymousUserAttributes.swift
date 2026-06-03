@@ -13,6 +13,7 @@ public struct AnonymousUserAttributes: Codable {
     let lastName: String?
     let languageCode: String?
     let timeZone: String?
+    let marketId: String?
     let address: Address?
     let fields: [UserCustomField]
     
@@ -21,6 +22,7 @@ public struct AnonymousUserAttributes: Codable {
         lastName: String? = nil,
         languageCode: String? = nil,
         timeZone: String? = TimeZone.current.identifier,
+        marketId: String? = nil,
         address: Address? = nil,
         fields: [UserCustomField] = []
     ) {
@@ -28,6 +30,7 @@ public struct AnonymousUserAttributes: Codable {
         self.lastName = lastName
         self.languageCode = languageCode
         self.timeZone = timeZone
+        self.marketId = marketId
         self.address = address
         self.fields = fields
     }

@@ -143,6 +143,10 @@ final class InAppMessages {
         sessionService.sessionDurationTimer()
     }
 
+    private func handleNewSessionStarted() {
+        inAppService.reprocessInAppMessages()
+    }
+
     func updateSessionConfiguration(
         previous: RetenoSessionConfiguration?,
         new configuration: RetenoSessionConfiguration
@@ -180,6 +184,9 @@ final class InAppMessages {
     func subscribeOnNotifications() {
         InAppWebViewPool.shared.warmUp()
         self.sessionService.subscribeOnNotifications()
+        self.sessionService.onSessionStarted = { [weak self] in
+            self?.handleNewSessionStarted()
+        }
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleApplicationDidBecomeActiveNotification),
@@ -482,7 +489,7 @@ final class InAppMessages {
             self.storage.addMinIntervalInApps(id: showModel.message.messageId)
         } else if showModel.frequency == .timesPerTimeUnit {
             self.storage.addTimePerTimeUnitInApps(id: showModel.message.messageId)
-        } else if showModel.frequency == .noLimit, showModel.conditions.isEmpty {
+        } else if showModel.frequency == .noLimit, !showModel.hasEventCondition {
             self.storage.addNoLimitDisplayedId(id: showModel.message.messageId)
         }
     }

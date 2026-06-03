@@ -15,6 +15,7 @@ public struct UserAttributes: Codable, Equatable {
     let lastName: String?
     let languageCode: String?
     let timeZone: String?
+    let marketId: String?
     let address: Address?
     let fields: [UserCustomField]
     
@@ -25,6 +26,7 @@ public struct UserAttributes: Codable, Equatable {
         lastName: String? = nil,
         languageCode: String? = nil,
         timeZone: String? = TimeZone.current.identifier,
+        marketId: String? = nil,
         address: Address? = nil,
         fields: [UserCustomField] = []
     ) {
@@ -34,6 +36,7 @@ public struct UserAttributes: Codable, Equatable {
         self.lastName = lastName
         self.languageCode = languageCode
         self.timeZone = timeZone
+        self.marketId = marketId
         self.address = address
         self.fields = fields
     }
@@ -47,6 +50,9 @@ public struct UserAttributes: Codable, Equatable {
         tempJSON["lastName"] = lastName
         tempJSON["languageCode"] = languageCode
         tempJSON["timeZone"] = timeZone
+        if let marketId {
+            tempJSON["marketId"] = marketId
+        }
         tempJSON["address"] = address?.toJSON()
         
         let tempFields = fields.map { $0.toJSON() }
@@ -56,6 +62,14 @@ public struct UserAttributes: Codable, Equatable {
     }
     
     public static func == (lhs: UserAttributes, rhs: UserAttributes) -> Bool {
-        lhs.phone == rhs.phone && lhs.email == rhs.email && lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName && lhs.languageCode == rhs.languageCode && lhs.timeZone == rhs.timeZone && lhs.address == rhs.address && lhs.fields == rhs.fields
+        lhs.phone == rhs.phone &&
+        lhs.email == rhs.email &&
+        lhs.firstName == rhs.firstName &&
+        lhs.lastName == rhs.lastName &&
+        lhs.languageCode == rhs.languageCode &&
+        lhs.timeZone == rhs.timeZone &&
+        lhs.address == rhs.address &&
+        lhs.fields == rhs.fields &&
+        lhs.marketId == rhs.marketId
     }
 }

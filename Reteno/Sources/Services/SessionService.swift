@@ -25,6 +25,8 @@ final class SessionService {
     }
     
     private var sesionTimer: Timer?
+
+    var onSessionStarted: (() -> Void)?
     
     init() {
         self.isSessionStartEventReportingEnabled = storage.getValue(forKey: StorageKeys.automaticSessionReportingEnabled.rawValue)
@@ -58,6 +60,7 @@ final class SessionService {
         setLastActivityDate()
         startSession()
         sessionDurationTimer()
+        storage.clearOncePerSessionEvents()
     }
 
     private func applyInMemoryConfiguration(_ configuration: RetenoSessionConfiguration) {
@@ -109,6 +112,7 @@ final class SessionService {
         timeInApp = 0
         storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
         storage.set(value: now.timeIntervalSince1970, forKey: StorageKeys.lastActivityDate.rawValue)
+        storage.clearOncePerSessionEvents()
         startSession()
     }
     
@@ -166,6 +170,7 @@ final class SessionService {
         storage.set(value: 0, forKey: StorageKeys.sessionDuration.rawValue)
         
         sendStartSessionEventIfNeeded()
+        onSessionStarted?()
     }
     
     func sendStartSessionEventIfNeeded() {

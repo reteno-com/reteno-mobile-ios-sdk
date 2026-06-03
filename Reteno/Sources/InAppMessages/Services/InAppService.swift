@@ -85,6 +85,11 @@ final class InAppService {
         storage.removeValue(forKey: StorageKeys.inAppCacheLastUpdate.rawValue)
     }
     
+    func reprocessInAppMessages() {
+        guard !messages.isEmpty else { return }
+        processingInApps(messages: messages, isNeedDownloadContent: false)
+    }
+    
     private func processingInApps(messages: [Message], isNeedDownloadContent: Bool = true) {
         self.checkAsyncRulesSegment()
         var messageInstanceIds: [Int] = []
@@ -130,7 +135,7 @@ final class InAppService {
         for predicate in message.displayRules.frequency.predicates.filter({ $0.isActive }) {
             switch predicate.name {
             case .noLimit:
-                if message.displayRules.targeting.schema?.include.groups.isNotEmpty ?? false {
+                if hasEventCondition(in: message) {
                     return (true, predicate.name, predicate.params)
                 } else {
                     let displayedInApps = storage.getNoLimitDisplayedInAppIds()
@@ -204,6 +209,18 @@ final class InAppService {
         }
         
         return (false, .unknown, nil)
+    }
+
+    private func hasEventCondition(in message: Message) -> Bool {
+        guard message.displayRules.targeting.enabled,
+              let groups = message.displayRules.targeting.schema?.include.groups
+        else {
+            return false
+        }
+        return groups.contains { group in
+            guard let conditions = group?.conditions else { return false }
+            return conditions.contains { $0.operator == nil && $0.operand.name == .event }
+        }
     }
     
     private func shedulerChecks(_ messages: [Message]) -> [Message] {

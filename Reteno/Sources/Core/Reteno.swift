@@ -35,7 +35,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.7.0"
+    static var version = "2.7.1"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -51,15 +51,17 @@ public struct Reteno {
     
     /// SDK initialization
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
-    /// - Parameter configs: Flag that indicates if automatic screen view tracking enabled
-    /// - Parameter customDevieIdProvider: Custom Device Id provider
+    /// - Parameter deviceTokenHandlingMode: Defines how the SDK obtains the device push token. Use `.manual` if you use FCM or need to handle push token registration yourself by implementing: `application(_:didRegisterForRemoteNotificationsWithDeviceToken:)`. Use `.automatic` if you use APNs directly and do not need your own implementation of this method. In this mode, the SDK retrieves the device token automatically using method swizzling.
+    /// - Parameter configuration: Defines SDK configuration
     @available(iOSApplicationExtension, unavailable)
-    public static func start(apiKey: String, configuration: RetenoConfiguration = RetenoConfiguration()) {
+    public static func start(apiKey: String,
+                             deviceTokenHandlingMode: DeviceTokenHandlingMode,
+                             configuration: RetenoConfiguration = RetenoConfiguration()) {
         guard !sdkStateHelper.isInitialized else {
             Logger.log("RetenoSDK was already initialized, skipping", eventType: .error)
             return
         }
-        userNotificationService.setDeviceTokenHandlingMode(configuration.deviceTokenHandlingMode)
+        userNotificationService.setDeviceTokenHandlingMode(deviceTokenHandlingMode)
         let deviceIdProvider: DeviceIdProvider = configuration.useCustomDeviceId ? customDeviceIdProvider : DefaultDeviceIdProvider()
         deviceIdProvider.setDeviceIdCompletionHandler { deviceId in
             sdkStateHelper.set(isDelayedInitialization: false)
@@ -97,16 +99,18 @@ public struct Reteno {
     
     /// SDK delayed  initialization (can be called only after Reteno.delayedStart(configuration:))
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
-    /// - Parameter customDevieIdProvider: Custom Device Id provider
+    /// - Parameter deviceTokenHandlingMode: Defines how the SDK obtains the device push token. Use `.manual` if you use FCM or need to handle push token registration yourself by implementing: `application(_:didRegisterForRemoteNotificationsWithDeviceToken:)`. Use `.automatic` if you use APNs directly and do not need your own implementation of this method. In this mode, the SDK retrieves the device token automatically using method swizzling.
     @available(iOSApplicationExtension, unavailable)
-    public static func delayedSetup(apiKey: String, configuration: RetenoConfiguration = RetenoConfiguration()) {
+    public static func delayedSetup(apiKey: String,
+                                    deviceTokenHandlingMode: DeviceTokenHandlingMode,
+                                    configuration: RetenoConfiguration = RetenoConfiguration()) {
         guard !sdkStateHelper.isInitialized else {
             Logger.log("RetenoSDK was already initialized, skipping", eventType: .error)
             return
         }
         
         storage = storage ?? StorageBuilder.build()
-        userNotificationService.setDeviceTokenHandlingMode(configuration.deviceTokenHandlingMode)
+        userNotificationService.setDeviceTokenHandlingMode(deviceTokenHandlingMode)
 
         guard sdkStateHelper.IsDelayedInitialization else {
             Logger.log("\(#function) can be called only after Reteno.delayedStart()", eventType: .error)
@@ -151,12 +155,14 @@ public struct Reteno {
     
     /// SDK initialization
     /// - Parameter apiKey: API key is used for authentication. You can create a key for a mobile application in the `Settings → Mobile Push` section in the `Reteno` cabinet.
+    /// - Parameter deviceTokenHandlingMode: Defines how the SDK obtains the device push token. Use `.manual` if you use FCM or need to handle push token registration yourself by implementing: `application(_:didRegisterForRemoteNotificationsWithDeviceToken:)`. Use `.automatic` if you use APNs directly and do not need your own implementation of this method. In this mode, the SDK retrieves the device token automatically using method swizzling.
     /// - Parameter isAutomaticScreenReportingEnabled: Flag that indicates if automatic screen view tracking enabled
     /// - Parameter isDebugMode: Flag that indicates if `DebugMode` is enabled
     /// - Parameter isPausedInAppMessages: Flag that indicates pause in InAppMessage presenting
     @available(iOSApplicationExtension, unavailable)
     public static func start(
         apiKey: String,
+        deviceTokenHandlingMode: DeviceTokenHandlingMode,
         isAutomaticScreenReportingEnabled: Bool = false,
         isDebugMode: Bool = false,
         isPausedInAppMessages: Bool = false,
@@ -168,7 +174,7 @@ public struct Reteno {
             inAppMessagesPauseBehaviour: inAppMessagesPauseBehaviour,
             isDebugMode: isDebugMode
         )
-        start(apiKey: apiKey, configuration: configuration)
+        start(apiKey: apiKey, deviceTokenHandlingMode: deviceTokenHandlingMode, configuration: configuration)
     }
     
     /// Log events
@@ -357,6 +363,7 @@ public struct Reteno {
                 lastName: userAttributes.lastName,
                 languageCode: userAttributes.languageCode,
                 timeZone: userAttributes.timeZone,
+                marketId: userAttributes.marketId,
                 address: userAttributes.address,
                 fields: userAttributes.fields
             ),

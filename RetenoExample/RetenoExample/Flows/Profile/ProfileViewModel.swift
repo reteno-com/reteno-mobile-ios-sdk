@@ -35,6 +35,14 @@ final class ProfileViewModel {
         model.updateEmail(email)
     }
     
+    func updateMarketId(_ marketId: String) {
+        model.updateMarketId(marketId)
+    }
+    
+    func updateShouldClearMarketId(_ shouldClear: Bool) {
+        model.updateShouldClearMarketId(shouldClear)
+    }
+    
     func updateAccountSuffix(_ firstName: String) {
         model.updateAccountSuffix(firstName)
     }

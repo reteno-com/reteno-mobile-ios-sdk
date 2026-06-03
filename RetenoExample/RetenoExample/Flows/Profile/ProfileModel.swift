@@ -18,6 +18,7 @@ final class ProfileModel {
     
     private var user: User
     private var isAnonymous = false
+    private var shouldClearMarketId = false
     
     private var accountSuffix: String?
     
@@ -63,6 +64,14 @@ final class ProfileModel {
         user.email = email
     }
     
+    func updateMarketId(_ marketId: String) {
+        user.marketId = marketId
+    }
+    
+    func updateShouldClearMarketId(_ shouldClear: Bool) {
+        shouldClearMarketId = shouldClear
+    }
+    
     func generateId() -> String {
         UUID().uuidString
     }
@@ -72,12 +81,15 @@ final class ProfileModel {
     }
     
     func saveUser() {
+        let marketIdToSend: String? = shouldClearMarketId ? "" : user.marketId
+        
         if isAnonymous {
-            if user.firstName != nil || user.lastName != nil {
+            if user.firstName != nil || user.lastName != nil || marketIdToSend != nil {
                 let attributes = AnonymousUserAttributes(
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    timeZone: TimeZone.current.identifier
+                    timeZone: TimeZone.current.identifier,
+                    marketId: marketIdToSend
                 )
                 Reteno.updateAnonymousUserAttributes(userAttributes: attributes)
             }
@@ -88,9 +100,16 @@ final class ProfileModel {
                     || user.email != nil
                     || user.firstName != nil
                     || user.lastName != nil
+                    || marketIdToSend != nil
                 else { return nil }
                 
-                return .init(phone: user.phone, email: user.email, firstName: user.firstName, lastName: user.lastName)
+                return .init(
+                    phone: user.phone,
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    marketId: marketIdToSend
+                )
             }()
             Reteno.updateMultiAccountUserAttributes(externalUserId: user.id,
                                         userAttributes: attributes,

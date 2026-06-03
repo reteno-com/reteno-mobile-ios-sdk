@@ -12,6 +12,10 @@ struct InAppShowModel {
     let frequency: PredicateName
     let frequencyParams: FrequencyBaseParams?
     let conditions: [Condition]
+
+    var hasEventCondition: Bool {
+        conditions.contains { $0.operator == nil && $0.operand.name == .event }
+    }
 }
 
 class InAppMessagePresenter {

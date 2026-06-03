@@ -16,7 +16,13 @@ final class ProfileViewController: NiblessViewController {
     private let phoneTextField = CommonTextField()
     private let emailTextField = CommonTextField()
     private let accountSuffixField = CommonTextField()
+    private let marketIdTextField = CommonTextField()
+    private let clearMarketIdSwitch = UISwitch()
     private let isAnonymousSwitch = UISwitch()
+    
+    private static let allowedMarketIdCharacters = CharacterSet(
+        charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+    )
     
     private let unreadMessagesCountLabel = UILabel()
     
@@ -47,6 +53,8 @@ final class ProfileViewController: NiblessViewController {
         accountSuffixField.addTarget(self, action: #selector(accountSuffixHandler), for: .editingChanged)
         phoneTextField.addTarget(self, action: #selector(phoneHandler), for: .editingChanged)
         emailTextField.addTarget(self, action: #selector(emailHandler), for: .editingChanged)
+        marketIdTextField.addTarget(self, action: #selector(marketIdHandler), for: .editingChanged)
+        clearMarketIdSwitch.addTarget(self, action: #selector(clearMarketIdSwitchHandler), for: .valueChanged)
         isAnonymousSwitch.addTarget(self, action: #selector(isAnonymousSwitchHandler), for: .valueChanged)
         generateIdButton.addTarget(self, action: #selector(generateIdAction), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
@@ -80,6 +88,26 @@ final class ProfileViewController: NiblessViewController {
     @objc
     func emailHandler(_ textField: UITextField) {
         viewModel.updateEmail(textField.text ?? "")
+    }
+    
+    @objc
+    func marketIdHandler(_ textField: UITextField) {
+        let rawText = textField.text ?? ""
+        let filtered = String(rawText.unicodeScalars.filter { Self.allowedMarketIdCharacters.contains($0) })
+        if filtered != rawText {
+            textField.text = filtered
+        }
+        viewModel.updateMarketId(filtered)
+    }
+    
+    @objc
+    private func clearMarketIdSwitchHandler(_ sender: UISwitch) {
+        if sender.isOn {
+            marketIdTextField.text = nil
+            viewModel.updateMarketId("")
+        }
+        marketIdTextField.isEnabled = !sender.isOn
+        viewModel.updateShouldClearMarketId(sender.isOn)
     }
     
     @objc
@@ -168,6 +196,20 @@ private extension ProfileViewController {
         stack.addArrangedSubview(accountSuffixField)
         accountSuffixField.placeholder = "Account suffix"
         
+        stack.addArrangedSubview(marketIdTextField)
+        marketIdTextField.keyboardType = .asciiCapable
+        marketIdTextField.autocorrectionType = .no
+        marketIdTextField.autocapitalizationType = .none
+        marketIdTextField.placeholder = NSLocalizedString("createProfile_screen.fields.marketId", comment: "")
+        
+        let clearMarketIdStackView = UIStackView()
+        clearMarketIdStackView.axis = .horizontal
+        clearMarketIdStackView.spacing = 6.0
+        let clearMarketIdLabel = UILabel()
+        clearMarketIdLabel.text = NSLocalizedString("createProfile_screen.clearMarketIdSwitch", comment: "")
+        clearMarketIdStackView.addArrangedSubview(clearMarketIdSwitch)
+        clearMarketIdStackView.addArrangedSubview(clearMarketIdLabel)
+        stack.addArrangedSubview(clearMarketIdStackView)
 
         let isAnonymousStackView = UIStackView()
         isAnonymousStackView.axis = .horizontal

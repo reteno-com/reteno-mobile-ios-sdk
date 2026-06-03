@@ -42,6 +42,8 @@
 "createProfile_screen.fields.lastName" = "Last name (optional)";
 "createProfile_screen.fields.phone" = "Phone (optional)";
 "createProfile_screen.fields.email" = "Email (optional)";
+"createProfile_screen.fields.marketId" = "Market Id (optional)";
+"createProfile_screen.clearMarketIdSwitch" = "Clear market id";
 "createProfile_screen.generateButton" = "Generate";
 "createProfile_screen.anonymousSwitch" = "is anonymous contact";
 "createProfile_screen.saveButton" = "Save";

@@ -198,6 +198,7 @@ final class EventsSenderScheduler {
                 lastName: lastUser.userAttributes?.lastName == userAttributes?.lastName ? nil : userAttributes?.lastName,
                 languageCode: lastUser.userAttributes?.languageCode == userAttributes?.languageCode ? nil : userAttributes?.languageCode,
                 timeZone: lastUser.userAttributes?.timeZone == userAttributes?.timeZone ? nil : userAttributes?.timeZone,
+                marketId: lastUser.userAttributes?.marketId == userAttributes?.marketId ? nil : userAttributes?.marketId,
                 address: lastUser.userAttributes?.address == userAttributes?.address ? nil : userAttributes?.address,
                 fields: lastUser.userAttributes?.fields == userAttributes?.fields ? [] : (userAttributes?.fields ?? [])
             )
@@ -212,7 +213,7 @@ final class EventsSenderScheduler {
             )
             
             let attributes = userToSend.userAttributes
-            guard attributes?.phone != nil || attributes?.email != nil || attributes?.firstName != nil || attributes?.lastName != nil || attributes?.languageCode != nil || attributes?.timeZone != nil || attributes?.address != nil || attributes?.fields.isNotEmpty ?? false || userToSend.subscriptionKeys.isNotEmpty || userToSend.groupNamesInclude.isNotEmpty || userToSend.groupNamesExclude.isNotEmpty  else {
+            guard attributes?.phone != nil || attributes?.email != nil || attributes?.firstName != nil || attributes?.lastName != nil || attributes?.languageCode != nil || attributes?.timeZone != nil || attributes?.address != nil || attributes?.marketId != nil || attributes?.fields.isNotEmpty ?? false || userToSend.subscriptionKeys.isNotEmpty || userToSend.groupNamesInclude.isNotEmpty || userToSend.groupNamesExclude.isNotEmpty  else {
                 /// Not store, and not send request if all fields are same
                 NotificationCenter.default.post(name: Reteno.userUpdateCompleted, object: nil)
                 return

@@ -50,9 +50,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                                                            isApplicationForegroundLifecycleReportingEnabled: applicationForegroundLifecycleReportingEnabled(),
                                                            sessionConfiguration: sessionConfiguration(),
                                                            isDebugMode: true,
-                                                           useCustomDeviceId: isCustomDeviceIdProviderEnabled,
-                                                           deviceTokenHandlingMode: .manual)
+                                                           useCustomDeviceId: isCustomDeviceIdProviderEnabled)
             Reteno.start(apiKey: apiKey,
+                         deviceTokenHandlingMode: .manual,
                          configuration: configuration)
             if isCustomDeviceIdProviderEnabled {
                 provideCustomDeviceId()
@@ -251,7 +251,7 @@ extension AppDelegate {
             sessionConfiguration: sessionConfiguration(),
             isDebugMode: true
         )
-        Reteno.delayedSetup(apiKey: apiKey, configuration: configuration)
+        Reteno.delayedSetup(apiKey: apiKey, deviceTokenHandlingMode: .manual, configuration: configuration)
     }
     
     // MARK: - Session configuration
