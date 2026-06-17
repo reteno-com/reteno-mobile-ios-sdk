@@ -44,6 +44,13 @@ final class MainFlowAssembly: Assembly {
             
             return SessionConfigViewController(viewModel: viewModel)
         }
+        
+        container.register(CustomEventViewController.self) { _ in
+            let model = CustomEventModel()
+            let viewModel = CustomEventViewModel(model: model)
+            
+            return CustomEventViewController(viewModel: viewModel)
+        }
     }
     
 }

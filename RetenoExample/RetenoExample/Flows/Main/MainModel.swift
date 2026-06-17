@@ -18,6 +18,7 @@ protocol MainModelNavigationHandler {
     func openCustomDeviceId()
     func openCustomInAppURL()
     func openSessionConfig()
+    func openCustomEvent()
 }
 
 final class MainModel {
@@ -83,5 +84,9 @@ final class MainModel {
     
     func openSessionConfig() {
         navigationHandler.openSessionConfig()
+    }
+    
+    func openCustomEvent() {
+        navigationHandler.openCustomEvent()
     }
 }

@@ -239,7 +239,7 @@ struct Condition: Codable {
                 let value: [String]
                 
                 enum ParametersOperator: String, Codable {
-                    case contains = "CONTAINS", equals = "EQUALS", startsWith = "STARTS_WITH", containsOneOf = "CONTAINS_ONE_OF", endsWith = "ENDS_WITH", regex = "REG_EX"
+                    case contains = "CONTAINS", equals = "EQUALS", doesNotEqual = "DOES_NOT_EQUAL", startsWith = "STARTS_WITH", containsOneOf = "CONTAINS_ONE_OF", endsWith = "ENDS_WITH", regex = "REG_EX"
                 }
             }
         }

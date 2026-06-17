@@ -130,6 +130,13 @@ final class MainViewController: NiblessViewController {
                 viewModel?.openSessionConfig()
             }
         ))
+        alert.addAction(UIAlertAction(
+            title: NSLocalizedString("custom_event_screen.title", comment: ""),
+            style: .default,
+            handler: { [weak viewModel] _ in
+                viewModel?.openCustomEvent()
+            }
+        ))
         alert.addAction(UIAlertAction(title: NSLocalizedString("common.cancel", comment: ""), style: .cancel))
         alert.popoverPresentationController?.barButtonItem = sender
         present(alert, animated: true)
@@ -150,6 +157,12 @@ final class MainViewController: NiblessViewController {
                         title: NSLocalizedString("session_config_screen.title", comment: ""),
                         handler: { [weak viewModel] _ in
                             viewModel?.openSessionConfig()
+                        }
+                    ),
+                    UIAction(
+                        title: NSLocalizedString("custom_event_screen.title", comment: ""),
+                        handler: { [weak viewModel] _ in
+                            viewModel?.openCustomEvent()
                         }
                     )
                 ]

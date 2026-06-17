@@ -67,6 +67,9 @@
 		5E87CF462E15AACD0073B6C5 /* CustomInAppURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E87CF452E15AACD0073B6C5 /* CustomInAppURLViewController.swift */; };
 		5E87CF482E15AAE00073B6C5 /* CustomInAppURLViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E87CF472E15AAE00073B6C5 /* CustomInAppURLViewModel.swift */; };
 		5E87CF4A2E15AAED0073B6C5 /* CustomInAppURLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E87CF492E15AAED0073B6C5 /* CustomInAppURLModel.swift */; };
+		5ECE00012F1F00000073B6C5 /* CustomEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE00002F1F00000073B6C5 /* CustomEventModel.swift */; };
+		5ECE00032F1F00000073B6C5 /* CustomEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE00022F1F00000073B6C5 /* CustomEventViewModel.swift */; };
+		5ECE00052F1F00000073B6C5 /* CustomEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECE00042F1F00000073B6C5 /* CustomEventViewController.swift */; };
 		5EFF10012F1E01100073B6C5 /* SessionConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFF10002F1E01100073B6C5 /* SessionConfigModel.swift */; };
 		5EFF10032F1E01100073B6C5 /* SessionConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFF10022F1E01100073B6C5 /* SessionConfigViewModel.swift */; };
 		5EFF10052F1E01100073B6C5 /* SessionConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFF10042F1E01100073B6C5 /* SessionConfigViewController.swift */; };
@@ -269,6 +272,9 @@
 		5E87CF472E15AAE00073B6C5 /* CustomInAppURLViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInAppURLViewModel.swift; sourceTree = "<group>"; };
 		5E87CF492E15AAED0073B6C5 /* CustomInAppURLModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInAppURLModel.swift; sourceTree = "<group>"; };
 		5E9DDF2CDA22128B9EE3FB51 /* Pods_RetenoExample_NotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_NotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5ECE00002F1F00000073B6C5 /* CustomEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEventModel.swift; sourceTree = "<group>"; };
+		5ECE00022F1F00000073B6C5 /* CustomEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEventViewModel.swift; sourceTree = "<group>"; };
+		5ECE00042F1F00000073B6C5 /* CustomEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEventViewController.swift; sourceTree = "<group>"; };
 		5EFF10002F1E01100073B6C5 /* SessionConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfigModel.swift; sourceTree = "<group>"; };
 		5EFF10022F1E01100073B6C5 /* SessionConfigViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfigViewModel.swift; sourceTree = "<group>"; };
 		5EFF10042F1E01100073B6C5 /* SessionConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionConfigViewController.swift; sourceTree = "<group>"; };
@@ -732,6 +738,16 @@
 			path = CustomInAppURL;
 			sourceTree = "<group>";
 		};
+		5ECE00102F1F00000073B6C5 /* CustomEvent */ = {
+			isa = PBXGroup;
+			children = (
+				5ECE00002F1F00000073B6C5 /* CustomEventModel.swift */,
+				5ECE00022F1F00000073B6C5 /* CustomEventViewModel.swift */,
+				5ECE00042F1F00000073B6C5 /* CustomEventViewController.swift */,
+			);
+			path = CustomEvent;
+			sourceTree = "<group>";
+		};
 		5EFF100F2F1E01100073B6C5 /* SessionConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,6 +820,7 @@
 				D5F91E2B29080C2700EA5FBA /* AppInbox */,
 				5E1F31332E0BE786000E6AE7 /* CustomDeviceId */,
 				5EFF100F2F1E01100073B6C5 /* SessionConfig */,
+				5ECE00102F1F00000073B6C5 /* CustomEvent */,
 				D545923B291D219300E589A9 /* Recommendations */,
 			);
 			path = Flows;
@@ -1694,6 +1711,9 @@
 				5EFF10012F1E01100073B6C5 /* SessionConfigModel.swift in Sources */,
 				5EFF10032F1E01100073B6C5 /* SessionConfigViewModel.swift in Sources */,
 				5EFF10052F1E01100073B6C5 /* SessionConfigViewController.swift in Sources */,
+				5ECE00012F1F00000073B6C5 /* CustomEventModel.swift in Sources */,
+				5ECE00032F1F00000073B6C5 /* CustomEventViewModel.swift in Sources */,
+				5ECE00052F1F00000073B6C5 /* CustomEventViewController.swift in Sources */,
 				27F60CAD29489B5A009E70EF /* EcommerceModel.swift in Sources */,
 				B52C7C1528DA80D10014ED15 /* MainViewModel.swift in Sources */,
 				B5EEC30D28EEF916005D0314 /* NiblessViewController.swift in Sources */,
@@ -2032,7 +2052,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 542;
+				CURRENT_PROJECT_VERSION = 562;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2112,7 +2132,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 542;
+				CURRENT_PROJECT_VERSION = 562;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2190,7 +2210,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 542;
+				CURRENT_PROJECT_VERSION = 562;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2268,7 +2288,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 542;
+				CURRENT_PROJECT_VERSION = 562;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2603,7 +2623,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 542;
+				CURRENT_PROJECT_VERSION = 562;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2631,7 +2651,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 542;
+				CURRENT_PROJECT_VERSION = 562;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;

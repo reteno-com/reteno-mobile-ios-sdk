@@ -66,4 +66,8 @@ final class MainViewModel {
         model.openSessionConfig()
     }
     
+    func openCustomEvent() {
+        model.openCustomEvent()
+    }
+    
 }

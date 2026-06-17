@@ -102,6 +102,10 @@ class InAppMessagePresenter {
                     case .equals:
                         let filtered = trigerEvent.value.filter { customParams.value.elementsEqual($0) }
                         allConditionsFine = filtered.isNotEmpty
+
+                    case .doesNotEqual:
+                        let filtered = trigerEvent.value.filter { customParams.value.elementsEqual($0) }
+                        allConditionsFine = filtered.isEmpty
                         
                     case .startsWith:
                         let filtered = trigerEvent.value.filter { customParams.value.hasPrefix($0) }
@@ -122,6 +126,8 @@ class InAppMessagePresenter {
                     if !allConditionsFine {
                         break
                     }
+                } else if trigerEvent.operator == .doesNotEqual {
+                    allConditionsFine = true
                 } else {
                     allConditionsFine = false
                     break

@@ -32,6 +32,19 @@
 "session_config_screen.restart_alert.title" = "Restart required";
 "session_config_screen.restart_alert.message" = "The app should be closed and relaunched to apply the new session configuration.";
 
+// MARK: - Custom event
+
+"custom_event_screen.title" = "Log custom event";
+"custom_event_screen.event_name" = "Event name";
+"custom_event_screen.event_name_placeholder" = "Enter event name";
+"custom_event_screen.parameters" = "Parameters";
+"custom_event_screen.parameter_name_placeholder" = "Name";
+"custom_event_screen.parameter_value_placeholder" = "Value";
+"custom_event_screen.add_parameter_button.title" = "Add parameter";
+"custom_event_screen.log_event_button.title" = "Log event";
+"custom_event_screen.validation.missed_event_name" = "Event name is required";
+"custom_event_screen.logged_alert.message" = "Custom event has been logged";
+
 
 
 // MARK: - Create profile
