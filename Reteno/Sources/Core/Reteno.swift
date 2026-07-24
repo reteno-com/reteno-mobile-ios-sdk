@@ -28,14 +28,18 @@ extension Reteno {
 public struct Reteno {
     
     @available(iOSApplicationExtension, unavailable)
-    public static let userNotificationService = UserNotificationService.shared
+    public static let userNotificationService: UserNotificationService = {
+        let service = UserNotificationService.shared
+        service.setScheduler(senderScheduler)
+        return service
+    }()
     public static let customDeviceIdProvider = CustomDeviceIdProvider()
     
     static let senderScheduler = EventsSenderSchedulerBuilder.build()
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.7.2"
+    static var version = "2.7.3"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30

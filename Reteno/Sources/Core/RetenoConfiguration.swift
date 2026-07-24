@@ -31,7 +31,7 @@ public struct RetenoConfiguration {
     
     /// Flag that indicates if automatic push subsription status tracking enabled
     /// `true` by default
-    public let isAutomaticPushSubsriptionReportingEnabled: Bool
+    public let isAutomaticPushSubscriptionReportingEnabled: Bool
     
     /// Configuration that controls automatic session tracking and reporting.
     /// `RetenoSessionConfiguration.default` by default.
@@ -57,7 +57,7 @@ public struct RetenoConfiguration {
         isAutomaticScreenReportingEnabled: Bool = false,
         isAutomaticAppLifecycleReportingEnabled: Bool = true,
         isApplicationForegroundLifecycleReportingEnabled: Bool = false,
-        isAutomaticPushSubsriptionReportingEnabled: Bool = true,
+        isAutomaticPushSubscriptionReportingEnabled: Bool = true,
         sessionConfiguration: RetenoSessionConfiguration = .default,
         isPausedInAppMessages: Bool = false,
         inAppMessagesPauseBehaviour: PauseBehaviour = .postponeInApps,
@@ -67,7 +67,7 @@ public struct RetenoConfiguration {
         self.isAutomaticScreenReportingEnabled = isAutomaticScreenReportingEnabled
         self.isAutomaticAppLifecycleReportingEnabled = isAutomaticAppLifecycleReportingEnabled
         self.isApplicationForegroundLifecycleReportingEnabled = isApplicationForegroundLifecycleReportingEnabled
-        self.isAutomaticPushSubsriptionReportingEnabled = isAutomaticPushSubsriptionReportingEnabled
+        self.isAutomaticPushSubscriptionReportingEnabled = isAutomaticPushSubscriptionReportingEnabled
         self.sessionConfiguration = sessionConfiguration
         self.isPausedInAppMessages = isPausedInAppMessages
         self.inAppMessagesPauseBehaviour = inAppMessagesPauseBehaviour

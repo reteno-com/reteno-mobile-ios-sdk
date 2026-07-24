@@ -51,13 +51,14 @@ enum StorageKeys: String, CaseIterable {
     case previousBuild = "com.reteno.previous-build.key"
     case automaticAppLifecycleReportingEnabled = "com.reteno.automatic-app-lifecycle-reporting.key"
     case applicationForegroundLifecycleReportingEnabled = "com.reteno.application-foreground-lifecycle-reporting.key"
-    case automaticPushSubsriptionReportingEnabled = "com.reteno.automatic-push-subsription-reporting.key"
+    case automaticPushSubscriptionReportingEnabled = "com.reteno.automatic-push-subsription-reporting.key"
     case automaticSessionReportingEnabled = "com.reteno.automatic-session-reporting.key"
     case automaticSessionEndReportingEnabled = "com.reteno.automatic-session-end-reporting.key"
     case sessionInactivityDuration = "com.reteno.session-inactivity-duration.key"
     case retenoConfiguration = "com.reteno.reteno-configuration.key"
     case isDelayedInitialization = "com.reteno.reteno-delayed-initialization.key"
     case lastBaseHTMLFetchDate = "com.reteno.last-base-html-fetch-date.key"
+    case lastBaseHTMLPath = "com.reteno.last-base-html-path.key"
 }
 
 final class KeyValueStorage {
@@ -153,8 +154,8 @@ final class KeyValueStorage {
             forKey: StorageKeys.applicationForegroundLifecycleReportingEnabled.rawValue
         )
         storage.setValue(
-            configuration.isAutomaticPushSubsriptionReportingEnabled,
-            forKey: StorageKeys.automaticPushSubsriptionReportingEnabled.rawValue
+            configuration.isAutomaticPushSubscriptionReportingEnabled,
+            forKey: StorageKeys.automaticPushSubscriptionReportingEnabled.rawValue
         )
         storage.setValue(
             configuration.sessionConfiguration.isSessionStartReportingEnabled,

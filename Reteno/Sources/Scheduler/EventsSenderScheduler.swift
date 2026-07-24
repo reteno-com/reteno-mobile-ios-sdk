@@ -137,7 +137,8 @@ final class EventsSenderScheduler {
                         self?.updateNotificationInteractionStatus(
                             interactionId: notificationStatus.interactionId,
                             status: notificationStatus.status,
-                            date: notificationStatus.date
+                            date: notificationStatus.date,
+                            action: notificationStatus.action
                         )
                         break
                     default:
@@ -148,9 +149,14 @@ final class EventsSenderScheduler {
         }
     }
     
-    func updateNotificationInteractionStatus(interactionId: String, status: InteractionStatus, date: Date) {
-        let status = NotificationStatus(interactionId: interactionId, status: status, date: date)
-        storage.addNotificationStatus(status)
+    func updateNotificationInteractionStatus(
+        interactionId: String,
+        status: InteractionStatus,
+        date: Date,
+        action: NotificationStatus.Action? = nil
+    ) {
+        let notificationStatus = NotificationStatus(interactionId: interactionId, status: status, date: date, action: action)
+        storage.addNotificationStatus(notificationStatus)
         
         // Added random time offset to reduce server load
         let randomTimeOffset = TimeInterval((0...5).randomElement() ?? 1)

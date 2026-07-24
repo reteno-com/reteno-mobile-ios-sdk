@@ -56,14 +56,10 @@ internal final class FileStorage {
         let documentDirectory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         let localURL = documentDirectory.appendingPathComponent(baseFileName)
         do {
-            let path: String = {
-                if #available(iOS 16.0, *) {
-                    return localURL.path()
-                } else {
-                    return localURL.path
-                }
-            }()
-            if fileManager.fileExists(atPath: path) {
+            if !fileManager.fileExists(atPath: documentDirectory.path) {
+                try fileManager.createDirectory(at: documentDirectory, withIntermediateDirectories: true)
+            }
+            if fileManager.fileExists(atPath: localURL.path) {
                 try fileManager.removeItem(at: localURL)
             }
             try fileManager.moveItem(at: fileURL, to: localURL)

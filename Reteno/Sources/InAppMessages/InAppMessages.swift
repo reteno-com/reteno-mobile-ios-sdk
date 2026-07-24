@@ -214,7 +214,12 @@ final class InAppMessages {
     }
     
     private func fetchBaseHTML(completion: @escaping () -> Void = {}) {
-        if let lastFetchTimestamp: Double = storage.getValue(forKey: StorageKeys.lastBaseHTMLFetchDate.rawValue),
+        let currentPath = inAppRequestService.baseHTMLPath
+        let lastFetchedPath: String? = storage.getValue(forKey: StorageKeys.lastBaseHTMLPath.rawValue)
+        let isPathChanged = lastFetchedPath != currentPath
+        
+        if !isPathChanged,
+           let lastFetchTimestamp: Double = storage.getValue(forKey: StorageKeys.lastBaseHTMLFetchDate.rawValue),
            lastFetchTimestamp > 0 {
             let elapsed = Date().timeIntervalSince1970 - lastFetchTimestamp
             if elapsed < Self.baseHTMLFetchThreshold {
@@ -226,13 +231,17 @@ final class InAppMessages {
         inAppRequestService.fetchBaseHTML { [weak self] result in
             switch result {
             case .success(let version):
-                guard
-                    let self, let version,
-                    (self.storage.getValue(forKey: StorageKeys.inAppMessageBaseHTMLVersion.rawValue) != version
-                     ||
-                     !self.inAppRequestService.baseHTMLExists())
-                else {
-                    self?.storage.set(value: Date().timeIntervalSince1970, forKey: StorageKeys.lastBaseHTMLFetchDate.rawValue)
+                guard let self else {
+                    completion()
+                    return
+                }
+                
+                let isVersionChanged = version != nil
+                    && self.storage.getValue(forKey: StorageKeys.inAppMessageBaseHTMLVersion.rawValue) != version
+                
+                guard isPathChanged || isVersionChanged || !self.inAppRequestService.baseHTMLExists() else {
+                    self.storage.set(value: Date().timeIntervalSince1970, forKey: StorageKeys.lastBaseHTMLFetchDate.rawValue)
+                    self.storage.set(value: currentPath, forKey: StorageKeys.lastBaseHTMLPath.rawValue)
                     completion()
                     return
                 }
@@ -240,8 +249,13 @@ final class InAppMessages {
                 self.inAppRequestService.downloadBaseHTML { result in
                     switch result {
                     case .success:
-                        self.storage.set(value: version, forKey: StorageKeys.inAppMessageBaseHTMLVersion.rawValue)
+                        if let version {
+                            self.storage.set(value: version, forKey: StorageKeys.inAppMessageBaseHTMLVersion.rawValue)
+                        } else {
+                            self.storage.removeValue(forKey: StorageKeys.inAppMessageBaseHTMLVersion.rawValue)
+                        }
                         self.storage.set(value: Date().timeIntervalSince1970, forKey: StorageKeys.lastBaseHTMLFetchDate.rawValue)
+                        self.storage.set(value: currentPath, forKey: StorageKeys.lastBaseHTMLPath.rawValue)
                         
                     case .failure(let error):
                         ErrorLogger.shared.capture(error: error)

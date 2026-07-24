@@ -9,9 +9,14 @@ import Foundation
 
 final class InAppRequestService {
     
-    private var baseHTMLPath: String {
+    var baseHTMLPath: String {
         if UserDefaults.standard.bool(forKey: "IsCustomInAppURL"),
-           let customURL = UserDefaults.standard.string(forKey: "CustomInAppURL") {
+           let customURL = UserDefaults.standard.string(forKey: "CustomInAppURL")?
+            .trimmingCharacters(in: .whitespacesAndNewlines),
+           !customURL.isEmpty {
+            if customURL.lowercased().hasPrefix("http://") || customURL.lowercased().hasPrefix("https://") {
+                return customURL
+            }
             return BaseURL.retenoStatics.rawValue + customURL
         }
         return BaseURL.retenoStatics.rawValue + "in-app/base.latest.html"

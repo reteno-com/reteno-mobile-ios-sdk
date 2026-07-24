@@ -31,6 +31,8 @@ public final class UserNotificationService: NSObject {
     
     public static let shared = UserNotificationService()
 
+    private var scheduler: EventsSenderScheduler?
+
     private var sdkStateHelper: SDKStateHelper {
         Reteno.sdkStateHelper
     }
@@ -153,7 +155,18 @@ public final class UserNotificationService: NSObject {
             }
             
             if let actionButton = notification.actionButtons?.first(where: { $0.actionId == response.actionIdentifier }) {
-                Reteno.updateNotificationInteractionStatus(interactionId: notification.id, status: .clicked, date: Date())
+                let actionURL = (actionButton.rawLink ?? actionButton.link)?.absoluteString
+                scheduler?.updateNotificationInteractionStatus(
+                    interactionId: notification.id,
+                    status: .clicked,
+                    date: Date(),
+                    action: NotificationStatus.Action(
+                        type: "OPEN_URL",
+                        targetComponentId: actionButton.actionId,
+                        url: actionURL
+                    )
+                )
+                
                 DeepLinksProcessor.processLinks(
                     wrappedUrl: actionButton.link,
                     rawURL: actionButton.rawLink,
@@ -181,6 +194,10 @@ public final class UserNotificationService: NSObject {
     
     func setDeviceTokenHandlingMode(_ mode: DeviceTokenHandlingMode) {
         deviceTokenHandlingMode = mode
+    }
+    
+    func setScheduler(_ scheduler: EventsSenderScheduler?) {
+        self.scheduler = scheduler
     }
 }
 
