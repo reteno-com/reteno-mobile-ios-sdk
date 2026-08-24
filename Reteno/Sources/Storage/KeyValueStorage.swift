@@ -63,6 +63,8 @@ enum StorageKeys: String, CaseIterable {
 
 final class KeyValueStorage {
     
+    private static let lock = NSRecursiveLock()
+    
     private let storage: UserDefaults?
     
     init(storage: UserDefaults? = UserDefaults(suiteName: "group.\(BundleIdHelper.getMainAppBundleId()).reteno-local-storage")) {
@@ -70,54 +72,81 @@ final class KeyValueStorage {
     }
     
     func set(value: String, forKey key: String) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.setValue(value, forKey: key)
     }
     
     func getValue(forKey key: String) -> String? {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return nil }
         
         return storage.string(forKey: key)
     }
     
     func set(value: Bool, forKey key: String) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.setValue(value, forKey: key)
     }
     
     func getValue(forKey key: String) -> Bool {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return false }
         
         return storage.bool(forKey: key)
     }
     
     func set(value: Double, forKey key: String) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set(value, forKey: key)
     }
     
     func getValue(forKey key: String) -> Double? {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return nil }
 
         return storage.double(forKey: key)
     }
     
     func set(value: Int, forKey key: String) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set(value, forKey: key)
     }
     
     func getValue(forKey key: String) -> Int? {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return nil }
 
         return storage.integer(forKey: key)
     }
     
     func removeValue(forKey key: String) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.removeObject(forKey: key)
@@ -126,6 +155,9 @@ final class KeyValueStorage {
     // MARK: Analytics logic
 
     func getStoredSessionConfiguration() -> RetenoSessionConfiguration? {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return nil }
         guard storage.object(forKey: StorageKeys.sessionInactivityDuration.rawValue) != nil else {
             return nil
@@ -139,6 +171,9 @@ final class KeyValueStorage {
     }
 
     func setAnalyticsValues(configuration: RetenoConfiguration) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
 
         storage.setValue(
@@ -174,6 +209,9 @@ final class KeyValueStorage {
     // MARK: Events logic
     
     func addEvent(_ event: Event) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -187,6 +225,9 @@ final class KeyValueStorage {
     }
     
     func getEvents() -> [Event] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -203,12 +244,18 @@ final class KeyValueStorage {
     }
     
     func clearEventsCache() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set([], forKey: StorageKeys.events.rawValue)
     }
     
     func clearEvents(_ events: [Event]) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         let idForRemove = events.map { $0.id }
@@ -225,6 +272,9 @@ final class KeyValueStorage {
     // MARK: NotificationStatus logic
     
     func addNotificationStatus(_ model: NotificationStatus) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -238,6 +288,9 @@ final class KeyValueStorage {
     }
     
     func getNotificationStatuses() -> [NotificationStatus] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -254,6 +307,9 @@ final class KeyValueStorage {
     }
     
     func clearNotificationStatus(_ model: NotificationStatus) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -267,6 +323,9 @@ final class KeyValueStorage {
     }
     
     func clearOldNotificationStatusesCache() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -282,6 +341,9 @@ final class KeyValueStorage {
     // MARK: Users logic
     
     func addUser(_ user: User) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -295,6 +357,9 @@ final class KeyValueStorage {
     }
     
     func getUsers() -> [User] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -311,6 +376,9 @@ final class KeyValueStorage {
     }
     
     func clearUser(_ user: User) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -334,6 +402,9 @@ final class KeyValueStorage {
     }
     
     func updateCachedUser(_ user: User?) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -345,6 +416,9 @@ final class KeyValueStorage {
     }
     
     func getCachedUser() -> User? {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return nil }
         
         do {
@@ -361,6 +435,9 @@ final class KeyValueStorage {
     }
     
     func clearCachedUser() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set(nil, forKey: StorageKeys.cachedUser.rawValue)
@@ -369,6 +446,9 @@ final class KeyValueStorage {
     // MARK: Cached Device Request
     
     func updateCachedDevice(_ cachedDevice: [String: Any]) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -380,6 +460,9 @@ final class KeyValueStorage {
     }
     
     func getCachedDevice() -> [String: Any]? {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return nil }
         
         do {
@@ -396,6 +479,9 @@ final class KeyValueStorage {
     }
     
     func clearCachedDevice() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set(nil, forKey: StorageKeys.cachedDevice.rawValue)
@@ -404,6 +490,9 @@ final class KeyValueStorage {
     // MARK: Recom events logic
     
     func addRecomEvent(_ event: RecomEvents) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -417,6 +506,9 @@ final class KeyValueStorage {
     }
     
     func getRecomEvents() -> [RecomEvents] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -433,12 +525,18 @@ final class KeyValueStorage {
     }
     
     func clearRecomEventsCache() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set([], forKey: StorageKeys.recomEvents.rawValue)
     }
     
     func clearRecomEvents(_ events: [RecomEvents]) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         let idForRemove = events.map { $0.id }
@@ -455,6 +553,9 @@ final class KeyValueStorage {
     // MARK: App inbox messages ids logic
     
     func addInboxOpenedMessagesIds(_ ids: [AppInboxMessageStorableId]) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -471,6 +572,9 @@ final class KeyValueStorage {
     }
 
     func getInboxOpenedMessagesIds() -> [AppInboxMessageStorableId] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -487,6 +591,9 @@ final class KeyValueStorage {
     }
 
     func clearInboxOpenedMessagesIds(_ ids: [AppInboxMessageStorableId]) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         let idForRemove = ids.map { $0.id }
@@ -501,6 +608,9 @@ final class KeyValueStorage {
     }
 
     func clearInboxOpenedMessagesIdsCache() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set([], forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
@@ -509,6 +619,9 @@ final class KeyValueStorage {
     // MARK: Wrapped links logic
     
     func appendLink(_ link: StorableLink) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -522,6 +635,9 @@ final class KeyValueStorage {
     }
     
     func getLinks() -> [StorableLink] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -536,6 +652,9 @@ final class KeyValueStorage {
     }
     
     func clearLinks(_ links: [StorableLink]) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -549,6 +668,9 @@ final class KeyValueStorage {
     }
     
     func clearAllLinks() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.setValue([], forKey: StorageKeys.wrappedLinks.rawValue)
@@ -557,6 +679,9 @@ final class KeyValueStorage {
     // MARK: Error
     
     func addErrorEvent(_ event: ErrorEvent) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -571,6 +696,9 @@ final class KeyValueStorage {
 
     
     func getErrorEvents() -> [ErrorEvent] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -587,6 +715,9 @@ final class KeyValueStorage {
     }
     
     func clearErrorEvents(_ errorEvents: [ErrorEvent]) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         let idForRemove = errorEvents.map { $0.id }
@@ -601,6 +732,9 @@ final class KeyValueStorage {
     }
     
     func clearAllErrorEvents() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set([], forKey: StorageKeys.errorEvents.rawValue)
@@ -609,6 +743,9 @@ final class KeyValueStorage {
     // MARK: Only once - Displayed inApp ids
     
     func getOnlyOnceDisplayedInAppIds() -> [Int] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -624,6 +761,9 @@ final class KeyValueStorage {
     }
     
     func addOnlyOnceDisplayedId(id: Int) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -639,6 +779,9 @@ final class KeyValueStorage {
     // MARK: No Limit - Displayed inApp ids
     
     func getNoLimitDisplayedInAppIds() -> [Int] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -654,6 +797,9 @@ final class KeyValueStorage {
     }
     
     func addNoLimitDisplayedId(id: Int) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -667,6 +813,9 @@ final class KeyValueStorage {
     }
     
     func clearNoLimitEvents() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set([], forKey: StorageKeys.noLimitInApps.rawValue)
@@ -675,6 +824,9 @@ final class KeyValueStorage {
     // MARK: Once per session - Displayed inApp ids
     
     func getOncePerSessionDisplayedInAppIds() -> [Int] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
         
         do {
@@ -690,6 +842,9 @@ final class KeyValueStorage {
     }
     
     func addOncePerSessionDisplayedId(id: Int) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -703,6 +858,9 @@ final class KeyValueStorage {
     }
     
     func clearOncePerSessionEvents() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         storage.set([], forKey: StorageKeys.oncePerSessionInApps.rawValue)
@@ -711,6 +869,9 @@ final class KeyValueStorage {
     // MARK: Min Interval - Displayed inApp Id and Date
     
     func getMinIntervalInApps() -> [Int: Date] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [:] }
         
         do {
@@ -726,6 +887,9 @@ final class KeyValueStorage {
     }
     
     func addMinIntervalInApps(id: Int) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -741,6 +905,9 @@ final class KeyValueStorage {
     // MARK: Time Per Time Unit
     
     func getTimePerTimeUnitInApps() -> [Int: [Date]] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [:] }
 
         do {
@@ -756,6 +923,9 @@ final class KeyValueStorage {
     }
     
     func addTimePerTimeUnitInApps(id: Int) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
 
         do {
@@ -773,6 +943,9 @@ final class KeyValueStorage {
     // MARK: In App Messages
     
     func getInAppMessages() -> [Message] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
 
         do {
@@ -789,6 +962,9 @@ final class KeyValueStorage {
     }
     
     func saveInAppMessages(messages: [Message]) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -800,6 +976,9 @@ final class KeyValueStorage {
     }
 
     func clearInApps() {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         storage.set([], forKey: StorageKeys.inAppMessages.rawValue)
         storage.set([], forKey: StorageKeys.inAppMessageContents.rawValue)
@@ -808,6 +987,9 @@ final class KeyValueStorage {
     // MARK: In App Message Contents
     
     func getInAppMessageContents() -> [InAppContent] {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return [] }
 
         do {
@@ -824,6 +1006,9 @@ final class KeyValueStorage {
     }
     
     func saveInAppMessageContents(contents: [InAppContent]) {
+        Self.lock.lock()
+        defer { Self.lock.unlock() }
+        
         guard let storage = storageUnwrapper() else { return }
         
         do {

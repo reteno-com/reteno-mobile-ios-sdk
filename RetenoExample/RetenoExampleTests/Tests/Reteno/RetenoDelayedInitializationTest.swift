@@ -25,7 +25,7 @@ final class RetenoDelayedInitializationTest: XCTestCase {
     }
     
     func test_setInitializedBoolValueOnStart() {
-        Reteno.start(apiKey: "SDK_API_KEY")
+        Reteno.start(apiKey: "SDK_API_KEY", deviceTokenHandlingMode: .manual)
         
         XCTAssert(Reteno.sdkStateHelper.isInitialized, "Should be true")
         XCTAssert(!Reteno.sdkStateHelper.IsDelayedInitialization, "IsDelayedInitialization should be false")
@@ -40,7 +40,7 @@ final class RetenoDelayedInitializationTest: XCTestCase {
     
     func test_setInitializedBoolValueOnDelayedStartAndContinue() {
         Reteno.delayedStart()
-        Reteno.delayedSetup(apiKey: "SDK_API_KEY")
+        Reteno.delayedSetup(apiKey: "SDK_API_KEY", deviceTokenHandlingMode: .manual)
         
         XCTAssert(Reteno.sdkStateHelper.isInitialized, "isInitialized should be true")
         XCTAssert(Reteno.sdkStateHelper.IsDelayedInitialization, "IsDelayedInitialization should be true")

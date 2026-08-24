@@ -25,11 +25,13 @@ final class InformationAlert: UIView {
     enum BackgroundType {
         case push
         case inApp
+        case scheduledEvent
         
         var color: UIColor {
             switch self {
             case .inApp: return UIColor.cyan
             case .push: return UIColor.orange
+            case .scheduledEvent: return UIColor.green
             }
         }
         

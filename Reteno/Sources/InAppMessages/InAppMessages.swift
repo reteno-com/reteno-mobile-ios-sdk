@@ -29,6 +29,9 @@ final class InAppMessages {
     private var inAppPresenters: [InAppMessagePresenter] = []
     private var postponeInAppInfo: [(showModel: InAppShowModel, canDelete: Bool, content: InAppContent, segmentId: Int?)] = []
     
+    private var pendingEventTriggers: [PendingEventTrigger] = []
+    private let pendingEventTriggersQueue = DispatchQueue(label: "com.reteno.in-app-messages.pending-event-triggers")
+    
     private var isAlreadySendRequest: Bool = false
     private var isAlreadyFetchBaseFile: Bool = false
     private var slideUpTransitioningDelegate: SlideUpTransitioningDelegate?
@@ -38,6 +41,14 @@ final class InAppMessages {
     }
     
     private static let baseHTMLFetchThreshold: TimeInterval = 4 * 60 * 60
+    private static let pendingEventTriggerLifetime: TimeInterval = 60
+    private static let pendingEventTriggersLimit: Int = 50
+    
+    private struct PendingEventTrigger {
+        let eventTypeKey: String
+        let parameters: [Event.Parameter]
+        let date: Date
+    }
     
     init(
         mobileRequestService: MobileRequestService,
@@ -91,10 +102,50 @@ final class InAppMessages {
     func logEventTrigger(eventTypeKey: String, parameters: [Event.Parameter]) {
         guard !isInAppWebViewController(parameters: parameters) else { return }
         
-        for inAppPresenter in inAppPresenters {
-            if inAppPresenter.isHasEventConditions() {
-                inAppPresenter.checkEvent(eventTypeName: eventTypeKey, parameters: parameters)
+        guard isReadyToEvaluateEventTriggers else {
+            bufferEventTrigger(eventTypeKey: eventTypeKey, parameters: parameters)
+            return
+        }
+        
+        evaluateEventTrigger(eventTypeKey: eventTypeKey, parameters: parameters)
+    }
+    
+    private var isReadyToEvaluateEventTriggers: Bool {
+        isAlreadyFetchBaseFile && inAppPresenters.isNotEmpty
+    }
+    
+    private func evaluateEventTrigger(eventTypeKey: String, parameters: [Event.Parameter]) {
+        for inAppPresenter in inAppPresenters where inAppPresenter.isHasEventConditions() {
+            inAppPresenter.checkEvent(eventTypeName: eventTypeKey, parameters: parameters)
+        }
+    }
+    
+    private func bufferEventTrigger(eventTypeKey: String, parameters: [Event.Parameter]) {
+        pendingEventTriggersQueue.sync {
+            pendingEventTriggers.append(
+                .init(eventTypeKey: eventTypeKey, parameters: parameters, date: Date())
+            )
+            let overflow = pendingEventTriggers.count - Self.pendingEventTriggersLimit
+            if overflow > 0 {
+                pendingEventTriggers.removeFirst(overflow)
             }
+        }
+        Logger.log("inApp event trigger: \(eventTypeKey) postponed until in-apps are ready", eventType: .verbose)
+    }
+    
+    private func drainPendingEventTriggers() {
+        guard isReadyToEvaluateEventTriggers else { return }
+        
+        let earliestValidDate = Date().addingTimeInterval(-Self.pendingEventTriggerLifetime)
+        let triggers: [PendingEventTrigger] = pendingEventTriggersQueue.sync {
+            let actualTriggers = pendingEventTriggers.filter { $0.date > earliestValidDate }
+            pendingEventTriggers.removeAll()
+            return actualTriggers
+        }
+        
+        for trigger in triggers {
+            Logger.log("inApp event trigger: \(trigger.eventTypeKey) replayed", eventType: .verbose)
+            evaluateEventTrigger(eventTypeKey: trigger.eventTypeKey, parameters: trigger.parameters)
         }
     }
     
@@ -136,6 +187,7 @@ final class InAppMessages {
     func clearInApps() {
         inAppService.clearInApps()
         inAppPresenters = []
+        pendingEventTriggersQueue.sync { pendingEventTriggers.removeAll() }
     }
     
     func startSession() {
@@ -333,6 +385,7 @@ final class InAppMessages {
             )
         }
         self.inAppPresentersSelections()
+        self.drainPendingEventTriggers()
     }
     
     private func updateAllPresenters(
@@ -528,6 +581,7 @@ final class InAppMessages {
         DispatchQueue.global().async { [weak self] in
             self?.fetchBaseHTML { [weak self] in
                 self?.isAlreadyFetchBaseFile = true
+                self?.drainPendingEventTriggers()
                 guard let currentInAppMessage = self?.currentInAppMessage else { return }
                 
                 DispatchQueue.main.async { [weak self] in

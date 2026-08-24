@@ -164,7 +164,32 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         self.window = window
         
+        observeScheduledCustomEvents()
+        CustomEventScheduler.shared.start()
+        
         return true
+    }
+    
+    private func observeScheduledCustomEvents() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(scheduledCustomEventDidFire),
+            name: CustomEventScheduler.didFireEventNotification,
+            object: nil
+        )
+    }
+    
+    @objc
+    private func scheduledCustomEventDidFire(_ notification: Notification) {
+        guard
+            let eventName = notification.userInfo?[CustomEventScheduler.firedEventNameUserInfoKey] as? String
+        else { return }
+        
+        let alert = InformationAlert(
+            text: String(format: NSLocalizedString("custom_event_screen.fired_alert.message", comment: ""), eventName),
+            backgroundType: .scheduledEvent
+        )
+        window?.showInformationAlert(alert)
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

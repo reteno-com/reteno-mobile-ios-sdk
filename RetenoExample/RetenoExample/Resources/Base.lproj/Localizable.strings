@@ -45,6 +45,18 @@
 "custom_event_screen.validation.missed_event_name" = "Event name is required";
 "custom_event_screen.logged_alert.message" = "Custom event has been logged";
 
+"custom_event_screen.schedule" = "Schedule";
+"custom_event_screen.schedule.time" = "Time";
+"custom_event_screen.schedule.repeat_once" = "Once";
+"custom_event_screen.schedule.repeat_daily" = "Every day";
+"custom_event_screen.schedule_button.title" = "Schedule event";
+"custom_event_screen.scheduled_events" = "Scheduled events";
+"custom_event_screen.scheduled_events.empty" = "No scheduled events";
+"custom_event_screen.scheduled_event.once" = "Once at %@";
+"custom_event_screen.scheduled_event.daily" = "Every day at %@";
+"custom_event_screen.scheduled_alert.message" = "Custom event has been scheduled — %@";
+"custom_event_screen.fired_alert.message" = "Scheduled event logged: %@";
+
 
 
 // MARK: - Create profile

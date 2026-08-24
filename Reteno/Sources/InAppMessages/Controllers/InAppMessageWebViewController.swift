@@ -50,8 +50,9 @@ class InAppMessageWebViewController: UIViewController {
             return
         }
         
+        let personalisation = InAppPersonalisation()
         let htmlString = htmlContent
-            .replacingOccurrences(of: "${documentModel}", with: message.model)
+            .replacingOccurrences(of: "${documentModel}", with: personalisation.apply(to: message.model))
             .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")
         
         webView.layout(in: view)

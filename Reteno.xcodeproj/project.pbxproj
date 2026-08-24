@@ -99,6 +99,7 @@
 		E0367B8F2CA4A07700F88784 /* AppInbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367A8F2CA4A07700F88784 /* AppInbox.swift */; };
 		E0367B902CA4A07700F88784 /* DeviceCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B052CA4A07700F88784 /* DeviceCategory.swift */; };
 		E0367B912CA4A07700F88784 /* InAppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367ADE2CA4A07700F88784 /* InAppService.swift */; };
+		AA1F0A0000000000000000B1 /* InAppPersonalisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F0A0000000000000000A1 /* InAppPersonalisation.swift */; };
 		E0367B922CA4A07700F88784 /* InAppScriptEventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B152CA4A07700F88784 /* InAppScriptEventRequest.swift */; };
 		E0367B932CA4A07700F88784 /* RecomEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF82CA4A07700F88784 /* RecomEvents.swift */; };
 		E0367B942CA4A07700F88784 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B0D2CA4A07700F88784 /* Event.swift */; };
@@ -253,6 +254,7 @@
 		E0367ADB2CA4A07700F88784 /* NewInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewInteraction.swift; sourceTree = "<group>"; };
 		E0367ADD2CA4A07700F88784 /* InAppRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppRequestService.swift; sourceTree = "<group>"; };
 		E0367ADE2CA4A07700F88784 /* InAppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppService.swift; sourceTree = "<group>"; };
+		AA1F0A0000000000000000A1 /* InAppPersonalisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPersonalisation.swift; sourceTree = "<group>"; };
 		E0367AE02CA4A07700F88784 /* InAppMessagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessagePresenter.swift; sourceTree = "<group>"; };
 		E0367AE12CA4A07700F88784 /* InAppMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessages.swift; sourceTree = "<group>"; };
 		E0367AE22CA4A07700F88784 /* InAppMessageStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppMessageStatus.swift; sourceTree = "<group>"; };
@@ -604,6 +606,7 @@
 		E0367ADF2CA4A07700F88784 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				AA1F0A0000000000000000A1 /* InAppPersonalisation.swift */,
 				E0367ADD2CA4A07700F88784 /* InAppRequestService.swift */,
 				E0367ADE2CA4A07700F88784 /* InAppService.swift */,
 			);
@@ -1070,6 +1073,7 @@
 				E0367B8F2CA4A07700F88784 /* AppInbox.swift in Sources */,
 				E0367B902CA4A07700F88784 /* DeviceCategory.swift in Sources */,
 				E0367B912CA4A07700F88784 /* InAppService.swift in Sources */,
+				AA1F0A0000000000000000B1 /* InAppPersonalisation.swift in Sources */,
 				E0367B922CA4A07700F88784 /* InAppScriptEventRequest.swift in Sources */,
 				E0367B932CA4A07700F88784 /* RecomEvents.swift in Sources */,
 				E0367B942CA4A07700F88784 /* Event.swift in Sources */,

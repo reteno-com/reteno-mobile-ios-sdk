@@ -233,6 +233,7 @@ final class EventsSenderScheduler {
                 lastName: lastUser.userAttributes?.lastName == userAttributes?.lastName ? userAttributes?.lastName : userAttributes?.lastName ?? lastUser.userAttributes?.lastName,
                 languageCode: lastUser.userAttributes?.languageCode == userAttributes?.languageCode ? userAttributes?.languageCode : userAttributes?.languageCode ?? lastUser.userAttributes?.languageCode,
                 timeZone: lastUser.userAttributes?.timeZone == userAttributes?.timeZone ? userAttributes?.timeZone : userAttributes?.timeZone ?? lastUser.userAttributes?.timeZone,
+                marketId: lastUser.userAttributes?.marketId == userAttributes?.marketId ? userAttributes?.marketId : userAttributes?.marketId ?? lastUser.userAttributes?.marketId,
                 address: lastUser.userAttributes?.address == userAttributes?.address ? userAttributes?.address : userAttributes?.address ?? lastUser.userAttributes?.address,
                 fields: lastUser.userAttributes?.fields == userAttributes?.fields ? userAttributes?.fields ?? [] : userAttributes?.fields ?? lastUser.userAttributes?.fields ?? []
             )

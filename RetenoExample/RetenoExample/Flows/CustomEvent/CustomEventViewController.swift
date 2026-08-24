@@ -16,9 +16,20 @@ final class CustomEventViewController: KeyboardHandlingViewController {
     private let eventNameTextField = CommonTextField()
     private let parametersStack = UIStackView()
     private let addParameterButton = CommonButton()
+    private let repeatModeControl = UISegmentedControl(items: ScheduleRepeatMode.allCases.map { $0.title })
+    private let timePicker = UIDatePicker()
+    private let scheduleEventButton = CommonButton()
+    private let scheduledEventsStack = UIStackView()
     private let logEventButton = CommonButton()
     
     private var parameterRows: [ParameterRow] = []
+    
+    private var selectedRepeatMode: ScheduleRepeatMode {
+        let modes = ScheduleRepeatMode.allCases
+        guard modes.indices.contains(repeatModeControl.selectedSegmentIndex) else { return .once }
+        
+        return modes[repeatModeControl.selectedSegmentIndex]
+    }
     
     private let viewModel: CustomEventViewModel
     
@@ -33,6 +44,7 @@ final class CustomEventViewController: KeyboardHandlingViewController {
         
         setupLayout()
         setupHandlers()
+        reloadScheduledEvents()
     }
     
     // MARK: - Actions
@@ -46,21 +58,53 @@ final class CustomEventViewController: KeyboardHandlingViewController {
     private func logEventAction() {
         view.endEditing(true)
         
-        guard let eventName = eventNameTextField.text, !eventName.isEmpty else {
-            presentAlert(message: NSLocalizedString("custom_event_screen.validation.missed_event_name", comment: ""))
-            return
-        }
+        guard let eventName = validatedEventName() else { return }
         
         viewModel.logEvent(eventTypeKey: eventName, parameters: mapParameters())
     }
     
+    @objc
+    private func scheduleEventAction() {
+        view.endEditing(true)
+        
+        guard let eventName = validatedEventName() else { return }
+        
+        let time = Calendar.current.dateComponents([.hour, .minute], from: timePicker.date)
+        guard
+            let scheduledEvent = viewModel.scheduleEvent(
+                eventTypeKey: eventName,
+                parameters: mapParameters(),
+                hour: time.hour ?? 0,
+                minute: time.minute ?? 0,
+                repeatMode: selectedRepeatMode
+            )
+        else { return }
+        
+        reloadScheduledEvents()
+        presentAlert(
+            message: String(
+                format: NSLocalizedString("custom_event_screen.scheduled_alert.message", comment: ""),
+                scheduledEvent.scheduleDescription
+            )
+        )
+    }
+    
     // MARK: - Helpers
     
-    private func mapParameters() -> [Event.Parameter] {
+    private func validatedEventName() -> String? {
+        guard let eventName = eventNameTextField.text, !eventName.isEmpty else {
+            presentAlert(message: NSLocalizedString("custom_event_screen.validation.missed_event_name", comment: ""))
+            return nil
+        }
+        
+        return eventName
+    }
+    
+    private func mapParameters() -> [CustomEventParameter] {
         parameterRows.compactMap { row in
             guard let name = row.name, !name.isEmpty else { return nil }
             
-            return Event.Parameter(name: name, value: row.value)
+            return CustomEventParameter(name: name, value: row.value)
         }
     }
     
@@ -82,6 +126,33 @@ final class CustomEventViewController: KeyboardHandlingViewController {
         row.removeFromSuperview()
     }
     
+    private func reloadScheduledEvents() {
+        scheduledEventsStack.arrangedSubviews.forEach {
+            scheduledEventsStack.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
+        
+        let scheduledEvents = viewModel.scheduledEvents
+        guard !scheduledEvents.isEmpty else {
+            let emptyLabel = UILabel()
+            emptyLabel.text = NSLocalizedString("custom_event_screen.scheduled_events.empty", comment: "")
+            emptyLabel.textColor = .gray
+            emptyLabel.font = .systemFont(ofSize: 14)
+            scheduledEventsStack.addArrangedSubview(emptyLabel)
+            
+            return
+        }
+        
+        scheduledEvents.forEach { event in
+            let row = ScheduledEventRow(event: event)
+            row.onRemove = { [weak self] id in
+                self?.viewModel.cancelScheduledEvent(id: id)
+                self?.reloadScheduledEvents()
+            }
+            scheduledEventsStack.addArrangedSubview(row)
+        }
+    }
+    
     private func presentAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("common.ok", comment: ""), style: .default))
@@ -90,7 +161,12 @@ final class CustomEventViewController: KeyboardHandlingViewController {
     
     private func setupHandlers() {
         addParameterButton.addTarget(self, action: #selector(addParameterAction), for: .touchUpInside)
+        scheduleEventButton.addTarget(self, action: #selector(scheduleEventAction), for: .touchUpInside)
         logEventButton.addTarget(self, action: #selector(logEventAction), for: .touchUpInside)
+        
+        viewModel.onScheduledEventsChange = { [weak self] in
+            self?.reloadScheduledEvents()
+        }
     }
 }
 
@@ -150,6 +226,8 @@ private extension CustomEventViewController {
         }
         stack.addArrangedSubview(addParameterButton)
         
+        setupScheduleLayout()
+        
         view.addSubview(logEventButton)
         logEventButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16.0)
@@ -160,6 +238,59 @@ private extension CustomEventViewController {
             NSLocalizedString("custom_event_screen.log_event_button.title", comment: ""),
             for: .normal
         )
+    }
+    
+    func setupScheduleLayout() {
+        let scheduleLabel = makeSectionLabel(
+            text: NSLocalizedString("custom_event_screen.schedule", comment: "")
+        )
+        stack.addArrangedSubview(scheduleLabel)
+        
+        repeatModeControl.selectedSegmentIndex = 0
+        stack.addArrangedSubview(repeatModeControl)
+        
+        timePicker.datePickerMode = .time
+        
+        let timeLabel = UILabel()
+        timeLabel.text = NSLocalizedString("custom_event_screen.schedule.time", comment: "")
+        timeLabel.textColor = .black
+        timeLabel.font = .systemFont(ofSize: 16)
+        
+        if #available(iOS 13.4, *) {
+            timePicker.preferredDatePickerStyle = .compact
+            timePicker.setContentHuggingPriority(.required, for: .horizontal)
+            timeLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+            
+            let timeRow = UIStackView(arrangedSubviews: [timeLabel, timePicker])
+            timeRow.axis = .horizontal
+            timeRow.alignment = .center
+            timeRow.spacing = 10.0
+            stack.addArrangedSubview(timeRow)
+        } else {
+            stack.addArrangedSubview(timeLabel)
+            stack.addArrangedSubview(timePicker)
+            timePicker.snp.makeConstraints {
+                $0.height.equalTo(160.0)
+            }
+        }
+        
+        scheduleEventButton.setTitle(
+            NSLocalizedString("custom_event_screen.schedule_button.title", comment: ""),
+            for: .normal
+        )
+        scheduleEventButton.snp.makeConstraints {
+            $0.height.equalTo(45.0)
+        }
+        stack.addArrangedSubview(scheduleEventButton)
+        
+        let scheduledEventsLabel = makeSectionLabel(
+            text: NSLocalizedString("custom_event_screen.scheduled_events", comment: "")
+        )
+        stack.addArrangedSubview(scheduledEventsLabel)
+        
+        scheduledEventsStack.axis = .vertical
+        scheduledEventsStack.spacing = 10.0
+        stack.addArrangedSubview(scheduledEventsStack)
     }
     
     func makeSectionLabel(text: String) -> UILabel {
@@ -221,6 +352,60 @@ private final class ParameterRow: UIView {
         nameTextField.snp.makeConstraints {
             $0.width.equalTo(valueTextField)
         }
+        
+        removeButton.setTitle("-", for: .normal)
+        removeButton.addTarget(self, action: #selector(removeAction), for: .touchUpInside)
+        removeButton.setContentHuggingPriority(.required, for: .horizontal)
+        removeButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+        rowStack.addArrangedSubview(removeButton)
+        removeButton.snp.makeConstraints {
+            $0.width.height.equalTo(30.0)
+        }
+    }
+}
+
+// MARK: - ScheduledEventRow
+
+private final class ScheduledEventRow: UIView {
+    
+    var onRemove: ((UUID) -> Void)?
+    
+    private let eventId: UUID
+    private let titleLabel = UILabel()
+    private let removeButton = CommonButton()
+    
+    init(event: ScheduledCustomEvent) {
+        eventId = event.id
+        
+        super.init(frame: .zero)
+        
+        setupLayout(event: event)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc
+    private func removeAction() {
+        onRemove?(eventId)
+    }
+    
+    private func setupLayout(event: ScheduledCustomEvent) {
+        let rowStack = UIStackView()
+        rowStack.axis = .horizontal
+        rowStack.spacing = 10.0
+        rowStack.alignment = .center
+        addSubview(rowStack)
+        rowStack.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        titleLabel.text = "\(event.eventName)\n\(event.scheduleDescription)"
+        titleLabel.numberOfLines = 0
+        titleLabel.textColor = .black
+        titleLabel.font = .systemFont(ofSize: 14)
+        rowStack.addArrangedSubview(titleLabel)
         
         removeButton.setTitle("-", for: .normal)
         removeButton.addTarget(self, action: #selector(removeAction), for: .touchUpInside)
