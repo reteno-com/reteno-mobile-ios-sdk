@@ -24,7 +24,7 @@ final class SendNotificationsStatusOperation: DateOperation, @unchecked Sendable
     override func main() {
         super.main()
         
-        guard !isCancelled else {
+        guard !isCancelled, storage.getNotificationStatuses().contains(where: { $0.id == notificationStatus.id }) else {
             finish()
             
             return
@@ -43,9 +43,7 @@ final class SendNotificationsStatusOperation: DateOperation, @unchecked Sendable
         sendingService.updateInteractionStatus(
             status: notificationStatus,
             token: token
-        ) { [weak self, notificationStatus] result in
-            guard let self = self else { return }
-            
+        ) { [notificationStatus] result in
             switch result {
             case .success:
                 self.storage.clearNotificationStatus(notificationStatus)

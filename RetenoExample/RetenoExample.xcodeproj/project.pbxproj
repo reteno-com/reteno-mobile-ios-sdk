@@ -14,6 +14,8 @@
 		181BFDB829007505007C5422 /* ArrayExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BFDB729007505007C5422 /* ArrayExtensionsTests.swift */; };
 		184D993E28FEB73D00ABCA8C /* DateExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184D993D28FEB73D00ABCA8C /* DateExtensionsTests.swift */; };
 		184D994528FEF4CA00ABCA8C /* EventsSenderSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184D994428FEF4CA00ABCA8C /* EventsSenderSchedulerTests.swift */; };
+		4FB411202B7C09FBF7B77732 /* SchedulerHardeningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EE33E9C409ED20A993DF88 /* SchedulerHardeningTests.swift */; };
+		019F3032A6D8F92631D60727 /* AnalyticsSwizzlingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E108C06710D63A11491403F5 /* AnalyticsSwizzlingTests.swift */; };
 		1856108A28EC757800744967 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1856108928EC757700744967 /* EventTests.swift */; };
 		1875126028EAD44A0068B5F4 /* AnalyticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1875125F28EAD44A0068B5F4 /* AnalyticsServiceTests.swift */; };
 		1875126628EAD74E0068B5F4 /* EventsSenderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1875126528EAD74E0068B5F4 /* EventsSenderMock.swift */; };
@@ -64,6 +66,7 @@
 		5E1F313D2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F313C2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift */; };
 		5E1F313F2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F313E2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift */; };
 		5E1F31412E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F31402E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift */; };
+		5E27A0022F6E4A110073B6C5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E27A0012F6E4A110073B6C5 /* SceneDelegate.swift */; };
 		5E87CF462E15AACD0073B6C5 /* CustomInAppURLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E87CF452E15AACD0073B6C5 /* CustomInAppURLViewController.swift */; };
 		5E87CF482E15AAE00073B6C5 /* CustomInAppURLViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E87CF472E15AAE00073B6C5 /* CustomInAppURLViewModel.swift */; };
 		5E87CF4A2E15AAED0073B6C5 /* CustomInAppURLModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E87CF492E15AAED0073B6C5 /* CustomInAppURLModel.swift */; };
@@ -219,6 +222,8 @@
 		181BFDB729007505007C5422 /* ArrayExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensionsTests.swift; sourceTree = "<group>"; };
 		184D993D28FEB73D00ABCA8C /* DateExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionsTests.swift; sourceTree = "<group>"; };
 		184D994428FEF4CA00ABCA8C /* EventsSenderSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSenderSchedulerTests.swift; sourceTree = "<group>"; };
+		A3EE33E9C409ED20A993DF88 /* SchedulerHardeningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerHardeningTests.swift; sourceTree = "<group>"; };
+		E108C06710D63A11491403F5 /* AnalyticsSwizzlingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsSwizzlingTests.swift; sourceTree = "<group>"; };
 		1856108928EC757700744967 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
 		1875125F28EAD44A0068B5F4 /* AnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceTests.swift; sourceTree = "<group>"; };
 		1875126528EAD74E0068B5F4 /* EventsSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSenderMock.swift; sourceTree = "<group>"; };
@@ -271,6 +276,7 @@
 		5E1F313C2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceIdModel.swift; sourceTree = "<group>"; };
 		5E1F313E2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceIdViewController.swift; sourceTree = "<group>"; };
 		5E1F31402E0D4A58000E6AE7 /* CustomDeviceIdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDeviceIdViewModel.swift; sourceTree = "<group>"; };
+		5E27A0012F6E4A110073B6C5 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		5E4B1CE60F7AC9A5F0ACBC28 /* Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-release.xcconfig"; sourceTree = "<group>"; };
 		5E87CF452E15AACD0073B6C5 /* CustomInAppURLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInAppURLViewController.swift; sourceTree = "<group>"; };
 		5E87CF472E15AAE00073B6C5 /* CustomInAppURLViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInAppURLViewModel.swift; sourceTree = "<group>"; };
@@ -451,6 +457,7 @@
 		184D994328FEF4B200ABCA8C /* EventsSenderScheduler */ = {
 			isa = PBXGroup;
 			children = (
+				A3EE33E9C409ED20A993DF88 /* SchedulerHardeningTests.swift */,
 				184D994428FEF4CA00ABCA8C /* EventsSenderSchedulerTests.swift */,
 			);
 			path = EventsSenderScheduler;
@@ -459,6 +466,7 @@
 		1875125E28EAD3EA0068B5F4 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
+				E108C06710D63A11491403F5 /* AnalyticsSwizzlingTests.swift */,
 				1875125F28EAD44A0068B5F4 /* AnalyticsServiceTests.swift */,
 			);
 			path = Analytics;
@@ -813,6 +821,7 @@
 				B52C7C2E28DAE5160014ED15 /* RetenoExample.entitlements */,
 				B52C7C2C28DA92340014ED15 /* GoogleService-Info.plist */,
 				70BF67552045A6AD00803C08 /* AppDelegate.swift */,
+				5E27A0012F6E4A110073B6C5 /* SceneDelegate.swift */,
 				70BF677D2045A6AD00803C08 /* Flows */,
 				70BF67AE2045A6AD00803C08 /* Resources */,
 				505FCBEA2052E68E006CF982 /* SupportingFiles */,
@@ -1605,6 +1614,8 @@
 				188DA3B628E1FEB600AAA6EA /* SendingServicesTests.swift in Sources */,
 				188DA3B928E1FEB600AAA6EA /* ApiRequestMock.swift in Sources */,
 				184D994528FEF4CA00ABCA8C /* EventsSenderSchedulerTests.swift in Sources */,
+				4FB411202B7C09FBF7B77732 /* SchedulerHardeningTests.swift in Sources */,
+				019F3032A6D8F92631D60727 /* AnalyticsSwizzlingTests.swift in Sources */,
 				1875126028EAD44A0068B5F4 /* AnalyticsServiceTests.swift in Sources */,
 				B5B2191628F95E02000DB212 /* AddressTests.swift in Sources */,
 				184D993E28FEB73D00ABCA8C /* DateExtensionsTests.swift in Sources */,
@@ -1697,6 +1708,7 @@
 				D5F91E342908138F00EA5FBA /* AppInboxMessageCell.swift in Sources */,
 				B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */,
 				70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */,
+				5E27A0022F6E4A110073B6C5 /* SceneDelegate.swift in Sources */,
 				2752B403294E44E900CB2DFC /* SearchRequestViewController.swift in Sources */,
 				D5F91E3929096BF800EA5FBA /* BaseDateFormatter.swift in Sources */,
 				5E87CF482E15AAE00073B6C5 /* CustomInAppURLViewModel.swift in Sources */,
@@ -1809,7 +1821,7 @@
 					"$(inherited)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1847,7 +1859,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1884,7 +1896,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1921,7 +1933,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1958,7 +1970,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1995,7 +2007,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2076,11 +2088,11 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 588;
+				CURRENT_PROJECT_VERSION = 605;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2156,11 +2168,11 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 588;
+				CURRENT_PROJECT_VERSION = 605;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2234,11 +2246,11 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 588;
+				CURRENT_PROJECT_VERSION = 605;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2312,11 +2324,11 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 588;
+				CURRENT_PROJECT_VERSION = 605;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2647,11 +2659,11 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 588;
+				CURRENT_PROJECT_VERSION = 605;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2675,11 +2687,11 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 588;
+				CURRENT_PROJECT_VERSION = 605;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2715,7 +2727,7 @@
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2754,7 +2766,7 @@
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2793,7 +2805,7 @@
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2832,7 +2844,7 @@
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2870,7 +2882,7 @@
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2908,7 +2920,7 @@
 				INFOPLIST_FILE = NotificationContentExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = NotificationContentExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2023 Yalantis. All rights reserved.";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

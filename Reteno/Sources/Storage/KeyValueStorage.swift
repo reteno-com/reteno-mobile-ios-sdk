@@ -258,7 +258,7 @@ final class KeyValueStorage {
         
         guard let storage = storageUnwrapper() else { return }
         
-        let idForRemove = events.map { $0.id }
+        let idForRemove = Set(events.map { $0.id })
         let resultEvents = getEvents().filter { !idForRemove.contains($0.id) }
         
         do {
@@ -539,7 +539,7 @@ final class KeyValueStorage {
         
         guard let storage = storageUnwrapper() else { return }
         
-        let idForRemove = events.map { $0.id }
+        let idForRemove = Set(events.map { $0.id })
         let resultEvents = getRecomEvents().filter { !idForRemove.contains($0.id) }
         
         do {
@@ -596,7 +596,7 @@ final class KeyValueStorage {
         
         guard let storage = storageUnwrapper() else { return }
         
-        let idForRemove = ids.map { $0.id }
+        let idForRemove = Set(ids.map { $0.id })
         let resultIds = getInboxOpenedMessagesIds().filter { !idForRemove.contains($0.id) }
         
         do {
@@ -720,7 +720,7 @@ final class KeyValueStorage {
         
         guard let storage = storageUnwrapper() else { return }
         
-        let idForRemove = errorEvents.map { $0.id }
+        let idForRemove = Set(errorEvents.map { $0.id })
         let resultEvents = getErrorEvents().filter { !idForRemove.contains($0.id) }
         
         do {

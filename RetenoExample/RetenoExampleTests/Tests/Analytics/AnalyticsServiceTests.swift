@@ -29,18 +29,19 @@ final class AnalyticsServiceTests: XCTestCase {
         sut = nil
     }
     
-    func test_AppControllerViewDidAppearMethod_sendEvent() {
+    func test_AppControllerViewDidAppearMethod_sendEvent() throws {
         setupService(isAutomaticScreenReportingEnabled: true)
         let viewController = AppInboxViewController(viewModel: AppInboxViewModel(model: AppInboxModel()))
-        viewController.viewDidAppear(true)
+        viewController.beginAppearanceTransition(true, animated: false)
+        viewController.endAppearanceTransition()
                 
         let events = storage.getEvents()
-        let screenViewEvent = events.first(where: { $0.eventTypeKey == ScreenViewEvent })
-        XCTAssertNotNil(screenViewEvent, "screenView event should NOT be nil")
-        XCTAssertEqual(screenViewEvent!.eventTypeKey, ScreenViewEvent, "should have valid `eventTypeKey`")
-        XCTAssertEqual(screenViewEvent!.parameters[0].name, ScreenClass, "should have screen class parameter name")
+        let screenViewEvent = try XCTUnwrap(events.first(where: { $0.eventTypeKey == ScreenViewEvent }))
+        let screenClass = try XCTUnwrap(screenViewEvent.parameters.first)
+        XCTAssertEqual(screenViewEvent.eventTypeKey, ScreenViewEvent, "should have valid `eventTypeKey`")
+        XCTAssertEqual(screenClass.name, ScreenClass, "should have screen class parameter name")
         XCTAssertEqual(
-            screenViewEvent!.parameters[0].value,
+            screenClass.value,
             String(describing: type(of: viewController)),
             "should have screen class parameter value"
         )

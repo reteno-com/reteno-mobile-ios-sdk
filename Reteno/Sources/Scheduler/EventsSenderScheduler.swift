@@ -19,7 +19,7 @@ final class EventsSenderScheduler {
         }
     }
     
-    private lazy var operationQueue: OperationQueue = {
+    private let operationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.qualityOfService = .utility
         queue.maxConcurrentOperationCount = 1
@@ -30,10 +30,12 @@ final class EventsSenderScheduler {
     private let pendingDeviceOperationsAccessQueue: DispatchQueue = DispatchQueue(label: "com.reteno.pendingDeviceOperationsAccessQueue")
     
     private var pendingSendDeviceOperations: [SendDeviceOperation] = []
-    private var backgroundTaskIdentifier: UIBackgroundTaskIdentifier = .invalid
     private var sendingTimer: Timer?
     private var application: UIApplication?
-    private var lastForcePushTimestamp: Date?
+    
+    private let syncStateQueue = DispatchQueue(label: "com.reteno.syncStateQueue")
+    private var isSyncInProgress = false
+    private var isSyncRequested = false
     /// time interval resolvers
     private var timeIntervalResolver: () -> TimeInterval
     private var randomOffsetResolver: () -> TimeInterval
@@ -75,29 +77,14 @@ final class EventsSenderScheduler {
     }
     
     func upsertDevice(_ device: Device, date: Date = Date()) {
-        if #available(iOS 18.0, *) {
-            pendingDeviceOperationsAccessQueue.async { [weak self] in
-                guard let self else { return }
-                if !pendingSendDeviceOperations.contains(where: { $0.device == device }) {
-                    if device.isSubscribedOnPush != StorageBuilder.build().getValue(forKey: StorageKeys.isPushSubscribed.rawValue) {
-                        sendPushSubscriptionEvent(isSubscribed: device.isSubscribedOnPush)
-                    }
-                    let operation = SendDeviceOperation(
-                        requestService: mobileRequestService,
-                        storage: storage,
-                        device: device,
-                        date: date
-                    )
-                    operation.completionBlock = {
-                        self.pendingDeviceOperationsAccessQueue.async {
-                            self.pendingSendDeviceOperations.removeAll(where: { $0.uuid == operation.uuid })
-                        }
-                    }
-                    self.pendingSendDeviceOperations.append(operation)
-                    operationQueue.addOperation(operation)
-                }
-            }
-        } else {
+        pendingDeviceOperationsAccessQueue.async { [weak self] in
+            guard let self else { return }
+            
+            /// `prepareOperationSequence` re-requests the device on every sync until the backend
+            /// confirms it, so an identical upsert that is still pending has to be dropped here -
+            /// otherwise a failing device request piles up one more operation per sync.
+            guard !pendingSendDeviceOperations.contains(where: { $0.device == device }) else { return }
+            
             if device.isSubscribedOnPush != StorageBuilder.build().getValue(forKey: StorageKeys.isPushSubscribed.rawValue) {
                 sendPushSubscriptionEvent(isSubscribed: device.isSubscribedOnPush)
             }
@@ -107,6 +94,12 @@ final class EventsSenderScheduler {
                 device: device,
                 date: date
             )
+            operation.completionBlock = { [weak self] in
+                self?.pendingDeviceOperationsAccessQueue.async {
+                    self?.pendingSendDeviceOperations.removeAll(where: { $0.uuid == operation.uuid })
+                }
+            }
+            pendingSendDeviceOperations.append(operation)
             operationQueue.addOperation(operation)
         }
     }
@@ -270,12 +263,7 @@ final class EventsSenderScheduler {
             return
         }
         
-        if let lastForcePushTimestamp = lastForcePushTimestamp, Date().timeIntervalSince(lastForcePushTimestamp) < 1 {
-            return
-        }
-        
-        sendCollectedData()
-        lastForcePushTimestamp = Date()
+        requestSync()
     }
     
     func forceFetchMessagesCount() {
@@ -324,23 +312,74 @@ final class EventsSenderScheduler {
             withTimeInterval: timeIntervalResolver() + randomOffsetResolver(),
             repeats: true,
             block: { [weak self] _ in
-                self?.sendCollectedData()
+                self?.requestSync()
             }
         )
     }
     
-    private func sendCollectedData() {
-        guard Reteno.sdkStateHelper.isInitialized else { return }
-
-        if backgroundTaskIdentifier != .invalid {
-            self.endTask()
-        }
-        backgroundTaskIdentifier = application?.beginBackgroundTask(expirationHandler: { [weak self] in
-            guard let self = self else { return }
+    
+    private func requestSync() {
+        syncStateQueue.async { [weak self] in
+            guard let self else { return }
             
-            self.operationQueue.cancelAllOperations()
-            self.endTask()
-        }) ?? .invalid
+            guard !isSyncInProgress else {
+                isSyncRequested = true
+                return
+            }
+            
+            startSync(previousBackgroundTask: nil)
+        }
+    }
+    
+    private func startSync(previousBackgroundTask: SyncBackgroundTask?) {
+        isSyncInProgress = true
+        sendCollectedData { [weak self] backgroundTask, canStartNextSync in
+            guard let self else {
+                backgroundTask?.end()
+                return
+            }
+            
+            completeSync(backgroundTask: backgroundTask, canStartNextSync: canStartNextSync)
+        }
+        previousBackgroundTask?.end()
+    }
+    
+    private func completeSync(backgroundTask: SyncBackgroundTask?, canStartNextSync: Bool) {
+        syncStateQueue.async { [weak self] in
+            guard let self else {
+                backgroundTask?.end()
+                return
+            }
+            
+            isSyncInProgress = false
+            if isSyncRequested, canStartNextSync {
+                isSyncRequested = false
+                startSync(previousBackgroundTask: backgroundTask)
+            } else {
+                backgroundTask?.end()
+            }
+        }
+    }
+    
+    private func sendCollectedData(completion: @escaping (SyncBackgroundTask?, Bool) -> Void) {
+        guard Reteno.sdkStateHelper.isInitialized else {
+            completion(nil, true)
+            return
+        }
+        
+        let syncCompletion = SyncCompletion(handler: completion)
+        let backgroundTask = SyncBackgroundTask(application: application) { [weak self] in
+            /// Out of background time. Drop everything that has not started yet; an operation that
+            /// is already executing keeps its request in flight and finishes on its own callback -
+            /// cutting it short is exactly what used to make the next sync resend the same payload.
+            ///
+            /// The sync slot is released right here so that a response that never arrives cannot
+            /// latch the scheduler for the rest of the process lifetime. The serial queue still
+            /// keeps the in-flight operation ahead of anything a later sync enqueues, and every
+            /// operation re-checks the storage before sending, so nothing goes out twice.
+            self?.operationQueue.cancelAllOperations()
+            syncCompletion.complete(backgroundTask: nil, canStartNextSync: false)
+        }
         
         let operations = prepareOperationSequence()
         let completionOperation = Operation()
@@ -348,7 +387,10 @@ final class EventsSenderScheduler {
             completionOperation.addDependency(operation)
         }
         completionOperation.completionBlock = { [weak self] in
-            guard let self = self else { return }
+            guard let self = self else {
+                syncCompletion.complete(backgroundTask: backgroundTask, canStartNextSync: true)
+                return
+            }
             
             let oldNotificationStatuses = self.storage.getNotificationStatuses().filter { !$0.isValid }
             if oldNotificationStatuses.isNotEmpty {
@@ -368,7 +410,7 @@ final class EventsSenderScheduler {
                 )
                 self.storage.clearLinks(oldLinks)
             }
-            self.endTask()
+            syncCompletion.complete(backgroundTask: backgroundTask, canStartNextSync: true)
         }
         
         operationQueue.addOperation(completionOperation)
@@ -398,7 +440,6 @@ final class EventsSenderScheduler {
             }
         }
         
-        operations.append(contentsOf: registerWrappedLinkClickOperations())
         if let sendEventOperation = sendEventsOperation() {
             operations.append(sendEventOperation)
         }
@@ -429,11 +470,6 @@ final class EventsSenderScheduler {
         return operations
     }
     
-    private func endTask() {
-        application?.endBackgroundTask(self.backgroundTaskIdentifier)
-        backgroundTaskIdentifier = .invalid
-    }
-    
     // MARK: Sending logic
     
     private func sendNotificationsStatusOperations() -> [DateOperation] {
@@ -442,7 +478,7 @@ final class EventsSenderScheduler {
         
         guard !validStatuses.isEmpty else { return [] }
         
-        return statuses.map {
+        return validStatuses.map {
             SendNotificationsStatusOperation(sendingService: sendingService, storage: storage, notificationStatus: $0)
         }
     }
@@ -586,4 +622,79 @@ final class EventsSenderScheduler {
             }
         }
     }
+}
+
+
+/// Runs a sync's completion exactly once.
+///
+/// A sync finishes either when its operation sequence drains or when the background task expires
+/// with a request still in flight, and both can happen for the same sync. Letting the completion
+/// run twice would release the sync slot twice and allow two sequences to be built from the same
+/// storage snapshot - the overlap that sends events more than once.
+private final class SyncCompletion {
+    
+    private let lock = NSLock()
+    private var handler: ((SyncBackgroundTask?, Bool) -> Void)?
+    
+    init(handler: @escaping (SyncBackgroundTask?, Bool) -> Void) {
+        self.handler = handler
+    }
+    
+    func complete(backgroundTask: SyncBackgroundTask?, canStartNextSync: Bool) {
+        lock.lock()
+        let handler = self.handler
+        self.handler = nil
+        lock.unlock()
+        
+        guard let handler else {
+            backgroundTask?.end()
+            
+            return
+        }
+        
+        handler(backgroundTask, canStartNextSync)
+    }
+    
+}
+
+
+private final class SyncBackgroundTask {
+    
+    private let lock = NSLock()
+    private let application: UIApplication?
+    private var identifier: UIBackgroundTaskIdentifier = .invalid
+    private var isEnded = false
+    
+    init(application: UIApplication?, expirationHandler: @escaping () -> Void) {
+        self.application = application
+        
+        let identifier = application?.beginBackgroundTask(expirationHandler: {
+            expirationHandler()
+            self.end()
+        }) ?? .invalid
+        
+        lock.lock()
+        let isEnded = self.isEnded
+        if !isEnded {
+            self.identifier = identifier
+        }
+        lock.unlock()
+        
+        if isEnded, identifier != .invalid {
+            application?.endBackgroundTask(identifier)
+        }
+    }
+    
+    func end() {
+        lock.lock()
+        let identifier = self.identifier
+        self.identifier = .invalid
+        isEnded = true
+        lock.unlock()
+        
+        guard identifier != .invalid else { return }
+        
+        application?.endBackgroundTask(identifier)
+    }
+    
 }

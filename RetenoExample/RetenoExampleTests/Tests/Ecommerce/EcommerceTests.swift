@@ -17,6 +17,7 @@ final class EcommerceTests: XCTestCase {
     private var scheduler: EventsSenderScheduler!
     private var storage: KeyValueStorage!
     private var sut: Ecommerce!
+    private var previousAnalyticsService: AnalyticsService?
     
     override func setUp() {
         super.setUp()
@@ -25,6 +26,13 @@ final class EcommerceTests: XCTestCase {
         requestService = MobileRequestService(requestManager: .stub)
         storage = KeyValueStorage(storage: userDefaults)
         storage.clearEventsCache()
+        previousAnalyticsService = Reteno.analyticsService
+        Reteno.analyticsService = AnalyticsService(
+            isAutomaticScreenReportingEnabled: false,
+            isAutomaticAppLifecycleReportingEnabled: false,
+            isApplicationForegroundLifecycleReportingEnabled: false,
+            storage: storage
+        )
         scheduler = buildScheduler()
         sut = Ecommerce(requestService: requestService, scheduler: scheduler, storage: storage)
     }
@@ -33,6 +41,8 @@ final class EcommerceTests: XCTestCase {
         super.tearDown()
         
         storage.clearEventsCache()
+        Reteno.analyticsService = previousAnalyticsService
+        previousAnalyticsService = nil
         requestService = nil
         sut = nil
         userDefaults.removeSuite(named: "unit_tests_operations")

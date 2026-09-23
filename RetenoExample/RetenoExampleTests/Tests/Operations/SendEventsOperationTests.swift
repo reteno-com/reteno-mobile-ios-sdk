@@ -21,7 +21,7 @@ final class SendEventsOperationTests: XCTestCase {
         
         operationQueue = OperationQueue()
         requestService = MobileRequestService(requestManager: RequestManager.stub)
-        userDefaults = UserDefaults(suiteName: "unit_tests_operations")
+        userDefaults = UserDefaults(suiteName: "unit_tests_send_events_operation")
         storage = KeyValueStorage(storage: userDefaults)
         storage.clearEventsCache()
     }
@@ -33,7 +33,7 @@ final class SendEventsOperationTests: XCTestCase {
         operationQueue = nil
         requestService = nil
         storage.clearEventsCache()
-        userDefaults.removeSuite(named: "unit_tests_operations")
+        userDefaults.removeSuite(named: "unit_tests_send_events_operation")
         HTTPStubs.removeAllStubs()
     }
     
@@ -256,6 +256,153 @@ final class SendEventsOperationTests: XCTestCase {
         operationQueue.addOperation(operation)
         
         waitForExpectations(timeout: 1.0)
+    }
+    
+    
+    func test_sendEventsOperation_withEventsRemovedFromStorageBeforeStart_sendsOnlyStoredEvents() {
+        let events = (1...3).map { Event(eventTypeKey: "key\($0)", date: Date(), parameters: []) }
+        let recorder = EventsRequestsRecorder(trackedEventTypeKeys: events.map { $0.eventTypeKey })
+        recorder.stubEventsRequest()
+        events.forEach { storage.addEvent($0) }
+        
+        let operation = SendEventsOperation(requestService: requestService, storage: storage, events: events)
+        storage.clearEvents(Array(events.prefix(2)))
+        
+        let expectation = expectation(description: "Operation")
+        operation.completionBlock = {
+            expectation.fulfill()
+        }
+        operationQueue.addOperation(operation)
+        waitForExpectations(timeout: 1.0)
+        
+        XCTAssertEqual(recorder.batches, [["key3"]], "only events remaining in storage should be sent")
+        XCTAssertTrue(storage.getEvents().isEmpty, "array of events from storage should be empty")
+    }
+    
+    func test_sendEventsOperation_withAllEventsRemovedFromStorageBeforeStart_doesNotSendRequest() {
+        let events = (1...3).map { Event(eventTypeKey: "key\($0)", date: Date(), parameters: []) }
+        let recorder = EventsRequestsRecorder(trackedEventTypeKeys: events.map { $0.eventTypeKey })
+        recorder.stubEventsRequest()
+        events.forEach { storage.addEvent($0) }
+        
+        let operation = SendEventsOperation(requestService: requestService, storage: storage, events: events)
+        storage.clearEvents(events)
+        
+        let expectation = expectation(description: "Operation")
+        operation.completionBlock = {
+            expectation.fulfill()
+        }
+        operationQueue.addOperation(operation)
+        waitForExpectations(timeout: 1.0)
+        
+        XCTAssertTrue(operation.isFinished, "operation should be finished")
+        XCTAssertTrue(recorder.batches.isEmpty, "already delivered events shouldn't be sent again")
+    }
+    
+    func test_sendEventsOperation_withEventsAboveBatchLimit_sendsSeveralRequests() {
+        let events = (1...250).map { Event(eventTypeKey: "key\($0)", date: Date(), parameters: []) }
+        let recorder = EventsRequestsRecorder(trackedEventTypeKeys: events.map { $0.eventTypeKey })
+        recorder.stubEventsRequest()
+        events.forEach { storage.addEvent($0) }
+        
+        let expectation = expectation(description: "Operation")
+        let operation = SendEventsOperation(requestService: requestService, storage: storage, events: events)
+        operation.completionBlock = {
+            expectation.fulfill()
+        }
+        operationQueue.addOperation(operation)
+        waitForExpectations(timeout: 3.0)
+        
+        XCTAssertEqual(recorder.batches.map { $0.count }, [100, 100, 50], "events should be split into batches")
+        XCTAssertEqual(recorder.sentEventTypeKeys, events.map { $0.eventTypeKey }, "events should be sent in order")
+        XCTAssertTrue(storage.getEvents().isEmpty, "array of events from storage should be empty")
+    }
+    
+    func test_sendEventsOperation_withEventsAboveBatchLimitAndNegativeResult_with5xxStatusCode() {
+        let events = (1...250).map { Event(eventTypeKey: "key\($0)", date: Date(), parameters: []) }
+        let recorder = EventsRequestsRecorder(trackedEventTypeKeys: events.map { $0.eventTypeKey })
+        recorder.stubEventsRequest(statusCode: 500)
+        events.forEach { storage.addEvent($0) }
+        
+        let expectation = expectation(description: "Operation")
+        let operation = SendEventsOperation(requestService: requestService, storage: storage, events: events)
+        operation.completionBlock = {
+            expectation.fulfill()
+        }
+        operationQueue.addOperation(operation)
+        waitForExpectations(timeout: 3.0)
+        
+        XCTAssertEqual(recorder.batches.map { $0.count }, [100], "sending should stop after a failed batch")
+        XCTAssertEqual(storage.getEvents().count, 250, "all events should be kept for retry")
+    }
+    
+    func test_sendEventsOperation_withEventsAboveBatchLimitAndNegativeResult_with4xxStatusCode() {
+        let events = (1...250).map { Event(eventTypeKey: "key\($0)", date: Date(), parameters: []) }
+        let recorder = EventsRequestsRecorder(trackedEventTypeKeys: events.map { $0.eventTypeKey })
+        recorder.stubEventsRequest(statusCode: 400)
+        events.forEach { storage.addEvent($0) }
+        
+        let expectation = expectation(description: "Operation")
+        let operation = SendEventsOperation(requestService: requestService, storage: storage, events: events)
+        operation.completionBlock = {
+            expectation.fulfill()
+        }
+        operationQueue.addOperation(operation)
+        waitForExpectations(timeout: 3.0)
+        
+        XCTAssertEqual(recorder.batches.map { $0.count }, [100, 100, 50], "rejected batch shouldn't stop next batches")
+        XCTAssertTrue(storage.getEvents().isEmpty, "array of events from storage should be empty")
+    }
+    
+    
+    func test_sendEventsOperation_cancelledWhileRequestInFlight_clearsDeliveredEvents() {
+        let recorder = EventsRequestsRecorder(trackedEventTypeKeys: ["key1"])
+        recorder.stubEventsRequest(responseTime: 1.0)
+        let event = Event(eventTypeKey: "key1", date: Date(), parameters: [])
+        storage.addEvent(event)
+        
+        operationQueue.addOperation(SendEventsOperation(requestService: requestService, storage: storage, events: [event]))
+        let operationQueue = self.operationQueue!
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            operationQueue.cancelAllOperations()
+        }
+        wait(seconds: 2.0)
+        
+        XCTAssertEqual(recorder.sentEventTypeKeys, ["key1"], "event should be sent once")
+        XCTAssertTrue(storage.getEvents().isEmpty, "events accepted by the backend should be removed from storage")
+        XCTAssertEqual(operationQueue.operationCount, 0, "operation should be finished after the response")
+    }
+    
+    func test_sendEventsOperation_cancelledBeforeStart_finishesWithoutSending() {
+        let recorder = EventsRequestsRecorder(trackedEventTypeKeys: ["key1"])
+        recorder.stubEventsRequest(responseTime: 1.0)
+        let event = Event(eventTypeKey: "key1", date: Date(), parameters: [])
+        storage.addEvent(event)
+        
+        let operationQueue = self.operationQueue!
+        operationQueue.maxConcurrentOperationCount = 1
+        let firstOperation = SendEventsOperation(requestService: requestService, storage: storage, events: [event])
+        let secondOperation = SendEventsOperation(requestService: requestService, storage: storage, events: [event])
+        secondOperation.addDependency(firstOperation)
+        operationQueue.addOperations([firstOperation, secondOperation], waitUntilFinished: false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            operationQueue.cancelAllOperations()
+        }
+        wait(seconds: 2.0)
+        
+        XCTAssertTrue(secondOperation.isFinished, "cancelled operation should be finished")
+        XCTAssertEqual(operationQueue.operationCount, 0, "cancelled operations shouldn't block the queue")
+        XCTAssertEqual(recorder.sentEventTypeKeys, ["key1"], "cancelled operation shouldn't send events")
+        XCTAssertTrue(storage.getEvents().isEmpty, "events accepted by the backend should be removed from storage")
+    }
+    
+    
+    private func wait(seconds: TimeInterval) {
+        let expectation = expectation(description: "Wait for \(seconds) seconds")
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: seconds + 1.0)
     }
     
 }

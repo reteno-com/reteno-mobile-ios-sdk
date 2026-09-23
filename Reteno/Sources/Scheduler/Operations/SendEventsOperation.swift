@@ -1,6 +1,5 @@
 //
 //  SendEventsOperation.swift
-//  
 //
 //  Created by Serhii Prykhodko on 20.10.2022.
 //
@@ -8,48 +7,68 @@
 import Foundation
 
 final class SendEventsOperation: DateOperation, @unchecked Sendable {
-    
+
+    static let maxBatchSize = 100
+
     private let requestService: MobileRequestService
     private let storage: KeyValueStorage
     private let events: [Event]
-    
+
     init(requestService: MobileRequestService, storage: KeyValueStorage, events: [Event]) {
         self.requestService = requestService
         self.storage = storage
         self.events = events
-        
+
         super.init(date: events.first?.date ?? Date())
     }
-    
+
     override func main() {
         super.main()
-        
+
         guard !isCancelled else {
             finish()
-            
+
             return
         }
-        
-        requestService.sendEvents(events) { [weak self, events] result in
-            guard let self = self else { return }
-            
+
+        /// The operation is built from a snapshot taken when the sequence was prepared, which can be
+        /// older than the storage by the time it runs. Events already acknowledged by another sync
+        /// are gone from the storage - dropping them here is what keeps them from being sent twice.
+        let storedIds = Set(storage.getEvents().map { $0.id })
+        let pendingEvents = events.filter { storedIds.contains($0.id) }
+
+        sendNextBatch(from: pendingEvents[...])
+    }
+
+    private func sendNextBatch(from remainingEvents: ArraySlice<Event>) {
+        let batch = Array(remainingEvents.prefix(Self.maxBatchSize))
+
+        guard !isCancelled, batch.isNotEmpty else {
+            finish()
+
+            return
+        }
+
+        requestService.sendEvents(batch) { [storage] result in
+            let isBatchHandled: Bool
             switch result {
             case .success:
-                self.storage.clearEvents(events)
-                
+                isBatchHandled = true
+
             case .failure(let error):
-                if let responseCode = (error as? APIStatusError)?.statusCode {
-                    switch responseCode {
-                    case 400...499:
-                        self.storage.clearEvents(events)
-                        
-                    default:
-                        break
-                    }
-                }
+                let responseCode = (error as? APIStatusError)?.statusCode ?? 0
+                isBatchHandled = (400...499).contains(responseCode)
             }
-            self.finish()
+
+            guard isBatchHandled else {
+                self.finish()
+
+                return
+            }
+
+            storage.clearEvents(batch)
+            self.sendNextBatch(from: remainingEvents.dropFirst(batch.count))
         }
     }
-    
+
 }

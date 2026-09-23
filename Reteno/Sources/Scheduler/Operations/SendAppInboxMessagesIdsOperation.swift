@@ -30,9 +30,15 @@ final class SendAppInboxMessagesIdsOperation: DateOperation, @unchecked Sendable
             return
         }
         
-        requestService.markInboxMessagesAsOpened(ids: ids.map { $0.id }) { [weak self, ids] result in
-            guard let self = self else { return }
-
+        let storedIds = Set(storage.getInboxOpenedMessagesIds().map { $0.id })
+        let ids = self.ids.filter { storedIds.contains($0.id) }
+        guard ids.isNotEmpty else {
+            finish()
+            
+            return
+        }
+        
+        requestService.markInboxMessagesAsOpened(ids: ids.map { $0.id }) { [ids] result in
             switch result {
             case .success:
                 self.storage.clearInboxOpenedMessagesIds(ids)

@@ -21,17 +21,15 @@ final class MessagesCountOperation: NetworkOperation, @unchecked Sendable {
     override func main() {
         super.main()
         
-        requestService.getInboxMessagesCount { [weak self] result in
-            guard let self = self else { return }
-            
+        requestService.getInboxMessagesCount { result in
             switch result {
             case .success(let response):
                 self.inbox.messagesCount = response.unreadCount
-                self.finish()
                 
             case .failure:
                 self.cancel()
             }
+            self.finish()
         }
     }
     

@@ -30,9 +30,15 @@ final class SendRecomEventsOperation: DateOperation, @unchecked Sendable {
             return
         }
         
-        requestService.sendRecomEvents(events) { [weak self, events] result in
-            guard let self = self else { return }
-
+        let storedIds = Set(storage.getRecomEvents().map { $0.id })
+        let events = self.events.filter { storedIds.contains($0.id) }
+        guard events.isNotEmpty else {
+            finish()
+            
+            return
+        }
+        
+        requestService.sendRecomEvents(events) { [events] result in
             switch result {
             case .success:
                 self.storage.clearRecomEvents(events)

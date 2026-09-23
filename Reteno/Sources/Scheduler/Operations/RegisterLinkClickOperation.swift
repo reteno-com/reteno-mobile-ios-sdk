@@ -24,15 +24,13 @@ final class RegisterLinkClickOperation: DateOperation, @unchecked Sendable {
     override func main() {
         super.main()
         
-        guard !isCancelled else {
+        guard !isCancelled, storage.getLinks().contains(link) else {
             finish()
             
             return
         }
         
-        requestService.registerLinkClick(link.value) { [weak self] result in
-            guard let self = self else { return }
-            
+        requestService.registerLinkClick(link.value) { result in
             switch result {
             case .success:
                 self.storage.clearLinks([self.link])

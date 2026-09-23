@@ -17,7 +17,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let userDefaults: UserDefaults = .standard
     
     var window: UIWindow?
-    private var applicationFlowCoordinator: ApplicationFlowCoordinator!
+    private var applicationFlowCoordinator: ApplicationFlowCoordinator?
     
     private var isRunningTests: Bool {
       NSClassFromString("XCTestCase") != nil
@@ -30,10 +30,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
         if isRunningTests {
-          window = UIWindow(frame: UIScreen.main.bounds)
-          window?.rootViewController = UIViewController()
-          window?.makeKeyAndVisible()
-          
           return true
         }
         
@@ -135,7 +131,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 return
             }
  
-            self?.applicationFlowCoordinator.handleUniversalLink(linkItem)
+            self?.applicationFlowCoordinator?.handleUniversalLink(linkItem)
         }
         
         Reteno.addInAppStatusHandler { inAppMessageStatus in
@@ -156,13 +152,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 print("inAppReceivedError \(error)")
             }
         }
-        
-        let window = UIWindow()
-        
-        applicationFlowCoordinator = ApplicationFlowCoordinator(window: window)
-        applicationFlowCoordinator.execute()
-        
-        self.window = window
         
         observeScheduledCustomEvents()
         CustomEventScheduler.shared.start()
@@ -199,20 +188,38 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     func application(
-        _ app: UIApplication,
-        open url: URL,
-        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
-    ) -> Bool {
-        applicationFlowCoordinator.handleDeeplink(url)
-        
-        return true
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        let configuration = UISceneConfiguration(
+            name: "Default Configuration",
+            sessionRole: connectingSceneSession.role
+        )
+        configuration.delegateClass = SceneDelegate.self
+        return configuration
     }
     
-    func application(
-        _ application: UIApplication,
-        continue userActivity: NSUserActivity,
-        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
-    ) -> Bool {
+    func configureMainWindow(_ window: UIWindow) {
+        self.window = window
+        
+        if isRunningTests {
+            window.rootViewController = UIViewController()
+            window.makeKeyAndVisible()
+            return
+        }
+        
+        let coordinator = ApplicationFlowCoordinator(window: window)
+        applicationFlowCoordinator = coordinator
+        coordinator.execute()
+    }
+    
+    func handleOpenURL(_ url: URL) {
+        applicationFlowCoordinator?.handleDeeplink(url)
+    }
+    
+    @discardableResult
+    func handleUserActivity(_ userActivity: NSUserActivity) -> Bool {
         guard
             userActivity.activityType == NSUserActivityTypeBrowsingWeb,
             let url = userActivity.webpageURL,
@@ -220,13 +227,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             let linkItem = UniversalLinkItem(rawValue: components.path)
         else { return false }
         
-        applicationFlowCoordinator.handleUniversalLink(linkItem)
+        applicationFlowCoordinator?.handleUniversalLink(linkItem)
         
         return false
-    }
-    
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        application.applicationIconBadgeNumber = 0
     }
     
     private func provideCustomDeviceId() {

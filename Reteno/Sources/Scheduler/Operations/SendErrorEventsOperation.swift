@@ -29,9 +29,15 @@ final class SendErrorEventsOperation: DateOperation, @unchecked Sendable {
             return
         }
         
-        requestService.sendErrorEvents(errorEvents) { [weak self, errorEvents] result in
-            guard let self = self else { return }
-
+        let storedIds = Set(storage.getErrorEvents().map { $0.id })
+        let errorEvents = self.errorEvents.filter { storedIds.contains($0.id) }
+        guard errorEvents.isNotEmpty else {
+            finish()
+            
+            return
+        }
+        
+        requestService.sendErrorEvents(errorEvents) { [errorEvents] result in
             switch result {
             case .success:
                 self.storage.clearErrorEvents(errorEvents)

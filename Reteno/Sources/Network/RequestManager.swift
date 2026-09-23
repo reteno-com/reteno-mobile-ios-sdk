@@ -83,9 +83,10 @@ final class RequestManager {
             return
         }
         
-        session.dataTask(with: urlRequest) { [weak self] data, urlResponse, error in
-            guard let self = self else { return }
-            
+        /// `self` is captured strongly on purpose. Dropping the completion handler when the manager
+        /// goes away would leave the calling `NetworkOperation` executing forever and block the
+        /// scheduler's serial queue - the closure is released as soon as the task completes.
+        session.dataTask(with: urlRequest) { data, urlResponse, error in
             let statusCode = ResponseData.statusCode(from: urlResponse) ?? -1
             let responseData = ResponseData(
                 data: data,

@@ -44,9 +44,7 @@ final class SendDeviceOperation: DateOperation, @unchecked Sendable {
             email: device.email,
             phone: device.phone,
             isSubscribedOnPush: device.isSubscribedOnPush
-        ) { [weak self] result in
-            guard let self = self else { return }
-            
+        ) { result in
             switch result {
             case .success:
                 self.storage.set(value: true, forKey: StorageKeys.isUpdatedDevice.rawValue)

@@ -28,15 +28,14 @@ final class SendUserOperation: DateOperation, @unchecked Sendable {
     override func main() {
         super.main()
         
-        guard !isCancelled else {
+        guard !isCancelled, storage.getUsers().contains(where: { $0.id == user.id }) else {
             finish()
             
             return
         }
         
-        let updateAttributesResult: (Result<Bool, Error>) -> Void = { [user, weak self] result in
+        let updateAttributesResult: (Result<Bool, Error>) -> Void = { [user] result in
             NotificationCenter.default.post(name: Reteno.userUpdateCompleted, object: nil)
-            guard let self = self else { return }
             switch result {
             case .success:
                 self.storage.clearUser(user)
@@ -53,6 +52,7 @@ final class SendUserOperation: DateOperation, @unchecked Sendable {
                     }
                 }
                 self.cancel()
+                self.finish()
             }
         }
         
@@ -73,22 +73,19 @@ final class SendUserOperation: DateOperation, @unchecked Sendable {
                     email: user.userAttributes?.email,
                     phone: user.userAttributes?.phone,
                     isSubscribedOnPush: RetenoNotificationsHelper.isPushSubscribed()
-                ) { [weak self] result in
-                    guard let self = self else { return }
-                    
+                ) { result in
                     switch result {
                     case .success:
+                        self.storage.updateCachedDevice(infoDeviceRequest.paramsToSave ?? [:])
                         if self.user.userAttributes.isSome
                             || self.user.subscriptionKeys.isNotEmpty
                             || self.user.groupNamesInclude.isNotEmpty
                             || self.user.groupNamesExclude.isNotEmpty {
-                            self.storage.updateCachedDevice(infoDeviceRequest.paramsToSave ?? [:])
                             self.requestService.updateUserAttributes(user: self.user, completionHandler: updateAttributesResult)
                         } else {
                             self.storage.clearUser(self.user)
                             self.finish()
                         }
-                        self.storage.updateCachedDevice(infoDeviceRequest.paramsToSave ?? [:])
                         
                     case .failure(let failure):
                         if let responseCode = (failure as? APIStatusError)?.statusCode {
@@ -101,6 +98,7 @@ final class SendUserOperation: DateOperation, @unchecked Sendable {
                             }
                         }
                         self.cancel()
+                        self.finish()
                     }
                 }
             }
