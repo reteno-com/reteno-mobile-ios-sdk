@@ -80,4 +80,52 @@ final class KeyValueStorageConcurrencyTests: XCTestCase {
         XCTAssertEqual(storedIds.count, batchSize, "events logged alongside the clear should be kept")
     }
     
+    func test_writeWaitingForMainThread_doesNotBlockMainThread() {
+        let storage = self.storage!
+        let deliveredEvents = (0..<10).map {
+            Event(eventTypeKey: "delivered_\($0)", date: Date(), parameters: [])
+        }
+        deliveredEvents.forEach { storage.addEvent($0) }
+        
+        let writeStarted = DispatchSemaphore(value: 0)
+        let postingObserver = NotificationCenter.default.addObserver(
+            forName: UserDefaults.didChangeNotification,
+            object: userDefaults,
+            queue: nil
+        ) { _ in
+            writeStarted.signal()
+        }
+        let mainQueueObserver = NotificationCenter.default.addObserver(
+            forName: UserDefaults.didChangeNotification,
+            object: userDefaults,
+            queue: .main
+        ) { _ in }
+        defer {
+            NotificationCenter.default.removeObserver(postingObserver)
+            NotificationCenter.default.removeObserver(mainQueueObserver)
+        }
+        
+        let clearFinished = expectation(description: "clear finished")
+        DispatchQueue.global(qos: .userInitiated).async {
+            storage.clearEvents(deliveredEvents)
+            clearFinished.fulfill()
+        }
+        XCTAssertEqual(writeStarted.wait(timeout: .now() + 2), .success, "the clear should reach UserDefaults")
+        
+        let loggedEvent = Event(eventTypeKey: "logged", date: Date(), parameters: [])
+        storage.addEvent(loggedEvent)
+        storage.set(value: "device", forKey: StorageKeys.deviceId.rawValue)
+        XCTAssertEqual(storage.getValue(forKey: StorageKeys.deviceId.rawValue), "device")
+        XCTAssertEqual(
+            storage.getEvents().map { $0.id },
+            [loggedEvent.id],
+            "a clear still waiting for its write must already hide the delivered events"
+        )
+        
+        wait(for: [clearFinished], timeout: 2)
+        
+        let persistedEvents = KeyValueStorage(storage: UserDefaults(suiteName: suiteName)).getEvents()
+        XCTAssertEqual(persistedEvents.map { $0.id }, [loggedEvent.id], "the latest state should be persisted")
+    }
+    
 }

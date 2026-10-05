@@ -14,8 +14,6 @@
 		181BFDB829007505007C5422 /* ArrayExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BFDB729007505007C5422 /* ArrayExtensionsTests.swift */; };
 		184D993E28FEB73D00ABCA8C /* DateExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184D993D28FEB73D00ABCA8C /* DateExtensionsTests.swift */; };
 		184D994528FEF4CA00ABCA8C /* EventsSenderSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184D994428FEF4CA00ABCA8C /* EventsSenderSchedulerTests.swift */; };
-		4FB411202B7C09FBF7B77732 /* SchedulerHardeningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EE33E9C409ED20A993DF88 /* SchedulerHardeningTests.swift */; };
-		019F3032A6D8F92631D60727 /* AnalyticsSwizzlingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E108C06710D63A11491403F5 /* AnalyticsSwizzlingTests.swift */; };
 		1856108A28EC757800744967 /* EventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1856108928EC757700744967 /* EventTests.swift */; };
 		1875126028EAD44A0068B5F4 /* AnalyticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1875125F28EAD44A0068B5F4 /* AnalyticsServiceTests.swift */; };
 		1875126628EAD74E0068B5F4 /* EventsSenderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1875126528EAD74E0068B5F4 /* EventsSenderMock.swift */; };
@@ -62,6 +60,7 @@
 		27F60CB129489C32009E70EF /* EcommerceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F60CB029489C32009E70EF /* EcommerceViewController.swift */; };
 		27FACDAB295C495F001B34D1 /* RecommendationsFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FACDAA295C495F001B34D1 /* RecommendationsFlowAssembly.swift */; };
 		27FACDAD295C5080001B34D1 /* RecommendationsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FACDAC295C5080001B34D1 /* RecommendationsCoordinator.swift */; };
+		4FB411202B7C09FBF7B77732 /* SchedulerHardeningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EE33E9C409ED20A993DF88 /* SchedulerHardeningTests.swift */; };
 		515AF47B14A52DD9C1F62832 /* Pods_RetenoExample_RetenoExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DFA28B3CB6E5EB4AB39F93E /* Pods_RetenoExample_RetenoExampleTests.framework */; };
 		5E1F313D2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F313C2E0D4A43000E6AE7 /* CustomDeviceIdModel.swift */; };
 		5E1F313F2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1F313E2E0D4A4E000E6AE7 /* CustomDeviceIdViewController.swift */; };
@@ -222,8 +221,6 @@
 		181BFDB729007505007C5422 /* ArrayExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensionsTests.swift; sourceTree = "<group>"; };
 		184D993D28FEB73D00ABCA8C /* DateExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionsTests.swift; sourceTree = "<group>"; };
 		184D994428FEF4CA00ABCA8C /* EventsSenderSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSenderSchedulerTests.swift; sourceTree = "<group>"; };
-		A3EE33E9C409ED20A993DF88 /* SchedulerHardeningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerHardeningTests.swift; sourceTree = "<group>"; };
-		E108C06710D63A11491403F5 /* AnalyticsSwizzlingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsSwizzlingTests.swift; sourceTree = "<group>"; };
 		1856108928EC757700744967 /* EventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTests.swift; sourceTree = "<group>"; };
 		1875125F28EAD44A0068B5F4 /* AnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceTests.swift; sourceTree = "<group>"; };
 		1875126528EAD74E0068B5F4 /* EventsSenderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsSenderMock.swift; sourceTree = "<group>"; };
@@ -326,6 +323,7 @@
 		8DAF388F2BA077D400C2D1F4 /* in_app_contents_valid.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = in_app_contents_valid.json; sourceTree = "<group>"; };
 		8DAF38942BA1D9D100C2D1F4 /* in_apps_async.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = in_apps_async.json; sourceTree = "<group>"; };
 		976B37F7BD59A3CD9946C0BA /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		A3EE33E9C409ED20A993DF88 /* SchedulerHardeningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerHardeningTests.swift; sourceTree = "<group>"; };
 		AA1F0A0000000000000000D1 /* InAppPersonalisationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPersonalisationTests.swift; sourceTree = "<group>"; };
 		B494975CB6A691F9E37715F7 /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
 		B51AF01C290E924100D723CD /* MessageCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountTests.swift; sourceTree = "<group>"; };
@@ -466,7 +464,6 @@
 		1875125E28EAD3EA0068B5F4 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				E108C06710D63A11491403F5 /* AnalyticsSwizzlingTests.swift */,
 				1875125F28EAD44A0068B5F4 /* AnalyticsServiceTests.swift */,
 			);
 			path = Analytics;
@@ -1615,7 +1612,6 @@
 				188DA3B928E1FEB600AAA6EA /* ApiRequestMock.swift in Sources */,
 				184D994528FEF4CA00ABCA8C /* EventsSenderSchedulerTests.swift in Sources */,
 				4FB411202B7C09FBF7B77732 /* SchedulerHardeningTests.swift in Sources */,
-				019F3032A6D8F92631D60727 /* AnalyticsSwizzlingTests.swift in Sources */,
 				1875126028EAD44A0068B5F4 /* AnalyticsServiceTests.swift in Sources */,
 				B5B2191628F95E02000DB212 /* AddressTests.swift in Sources */,
 				184D993E28FEB73D00ABCA8C /* DateExtensionsTests.swift in Sources */,
@@ -2088,7 +2084,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 605;
+				CURRENT_PROJECT_VERSION = 608;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2168,7 +2164,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 605;
+				CURRENT_PROJECT_VERSION = 608;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2246,7 +2242,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 605;
+				CURRENT_PROJECT_VERSION = 608;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2324,7 +2320,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 605;
+				CURRENT_PROJECT_VERSION = 608;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2659,7 +2655,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 605;
+				CURRENT_PROJECT_VERSION = 608;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2687,7 +2683,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 605;
+				CURRENT_PROJECT_VERSION = 608;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;

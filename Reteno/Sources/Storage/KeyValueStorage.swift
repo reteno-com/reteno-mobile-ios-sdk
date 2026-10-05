@@ -63,101 +63,53 @@ enum StorageKeys: String, CaseIterable {
 
 final class KeyValueStorage {
     
-    private static let lock = NSRecursiveLock()
+    static let defaultStorage = UserDefaults(suiteName: "group.\(BundleIdHelper.getMainAppBundleId()).reteno-local-storage")
     
     private let storage: UserDefaults?
     
-    init(storage: UserDefaults? = UserDefaults(suiteName: "group.\(BundleIdHelper.getMainAppBundleId()).reteno-local-storage")) {
+    init(storage: UserDefaults? = KeyValueStorage.defaultStorage) {
         self.storage = storage
     }
     
     func set(value: String, forKey key: String) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.setValue(value, forKey: key)
+        storageUnwrapper()?.setValue(value, forKey: key)
     }
     
     func getValue(forKey key: String) -> String? {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return nil }
-        
-        return storage.string(forKey: key)
+        storageUnwrapper()?.string(forKey: key)
     }
     
     func set(value: Bool, forKey key: String) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.setValue(value, forKey: key)
+        storageUnwrapper()?.setValue(value, forKey: key)
     }
     
     func getValue(forKey key: String) -> Bool {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return false }
-        
-        return storage.bool(forKey: key)
+        storageUnwrapper()?.bool(forKey: key) ?? false
     }
     
     func set(value: Double, forKey key: String) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set(value, forKey: key)
+        storageUnwrapper()?.set(value, forKey: key)
     }
     
     func getValue(forKey key: String) -> Double? {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return nil }
-
-        return storage.double(forKey: key)
+        storageUnwrapper()?.double(forKey: key)
     }
     
     func set(value: Int, forKey key: String) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set(value, forKey: key)
+        storageUnwrapper()?.set(value, forKey: key)
     }
     
     func getValue(forKey key: String) -> Int? {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return nil }
-
-        return storage.integer(forKey: key)
+        storageUnwrapper()?.integer(forKey: key)
     }
     
     func removeValue(forKey key: String) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.removeObject(forKey: key)
+        storageUnwrapper()?.removeObject(forKey: key)
     }
     
     // MARK: Analytics logic
 
     func getStoredSessionConfiguration() -> RetenoSessionConfiguration? {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return nil }
         guard storage.object(forKey: StorageKeys.sessionInactivityDuration.rawValue) != nil else {
             return nil
@@ -171,9 +123,6 @@ final class KeyValueStorage {
     }
 
     func setAnalyticsValues(configuration: RetenoConfiguration) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return }
 
         storage.setValue(
@@ -209,202 +158,59 @@ final class KeyValueStorage {
     // MARK: Events logic
     
     func addEvent(_ event: Event) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingEvents = getEvents()
-            existingEvents.append(event)
-            let encodedEvents = try JSONEncoder().encode(existingEvents)
-            storage.set(encodedEvents, forKey: StorageKeys.events.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.events, empty: [Event]()) { $0.append(event) }
     }
     
     func getEvents() -> [Event] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.events.rawValue) else { return [] }
-            
-            let decodedEvents = try JSONDecoder().decode([Event].self, from: data)
-            
-            return decodedEvents
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return []
-        }
+        readCollection(StorageKeys.events, empty: [Event]())
     }
     
     func clearEventsCache() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set([], forKey: StorageKeys.events.rawValue)
+        removeCollection(StorageKeys.events)
     }
     
     func clearEvents(_ events: [Event]) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
         let idForRemove = Set(events.map { $0.id })
-        let resultEvents = getEvents().filter { !idForRemove.contains($0.id) }
-        
-        do {
-            let encodedEvents = try JSONEncoder().encode(resultEvents)
-            storage.set(encodedEvents, forKey: StorageKeys.events.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.events, empty: [Event]()) { $0.removeAll(where: { idForRemove.contains($0.id) }) }
     }
     
     // MARK: NotificationStatus logic
     
     func addNotificationStatus(_ model: NotificationStatus) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingStatuses = getNotificationStatuses()
-            existingStatuses.append(model)
-            let encodedStatuses = try JSONEncoder().encode(existingStatuses)
-            storage.set(encodedStatuses, forKey: StorageKeys.notificationStatuses.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.notificationStatuses, empty: [NotificationStatus]()) { $0.append(model) }
     }
     
     func getNotificationStatuses() -> [NotificationStatus] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.notificationStatuses.rawValue) else { return [] }
-            
-            let decodedEvents = try JSONDecoder().decode([NotificationStatus].self, from: data)
-            
-            return decodedEvents
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return []
-        }
+        readCollection(StorageKeys.notificationStatuses, empty: [NotificationStatus]())
     }
     
     func clearNotificationStatus(_ model: NotificationStatus) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingStatuses = getNotificationStatuses()
-            existingStatuses.removeAll(where: { $0.id == model.id })
-            let encodedStatuses = try JSONEncoder().encode(existingStatuses)
-            storage.set(encodedStatuses, forKey: StorageKeys.notificationStatuses.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
+        updateCollection(StorageKeys.notificationStatuses, empty: [NotificationStatus]()) {
+            $0.removeAll(where: { $0.id == model.id })
         }
     }
     
     func clearOldNotificationStatusesCache() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingStatuses = getNotificationStatuses()
-            existingStatuses.removeAll(where: { !$0.isValid })
-            let encodedStatuses = try JSONEncoder().encode(existingStatuses)
-            storage.set(encodedStatuses, forKey: StorageKeys.notificationStatuses.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
+        updateCollection(StorageKeys.notificationStatuses, empty: [NotificationStatus]()) {
+            $0.removeAll(where: { !$0.isValid })
         }
     }
     
     // MARK: Users logic
     
     func addUser(_ user: User) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingUsers = getUsers()
-            existingUsers.append(user)
-            let encodedUsers = try JSONEncoder().encode(existingUsers)
-            storage.set(encodedUsers, forKey: StorageKeys.users.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.users, empty: [User]()) { $0.append(user) }
     }
     
     func getUsers() -> [User] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.users.rawValue) else { return [] }
-            
-            let decodedUsers = try JSONDecoder().decode([User].self, from: data)
-            
-            return decodedUsers
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return []
-        }
+        readCollection(StorageKeys.users, empty: [User]())
     }
     
     func clearUser(_ user: User) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingUsers = getUsers()
-            existingUsers.removeAll(where: { $0.id == user.id })
-            let encodedUsers = try JSONEncoder().encode(existingUsers)
-            storage.set(encodedUsers, forKey: StorageKeys.users.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
-    }
-    
-    private func storageUnwrapper() -> UserDefaults? {
-        guard let storage = storage else {
-            ErrorLogger.shared.capture(error: StorageDoesNotExistError())
-            
-            return nil
-        }
-        
-        return storage
+        updateCollection(StorageKeys.users, empty: [User]()) { $0.removeAll(where: { $0.id == user.id }) }
     }
     
     func updateCachedUser(_ user: User?) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -416,9 +222,6 @@ final class KeyValueStorage {
     }
     
     func getCachedUser() -> User? {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return nil }
         
         do {
@@ -435,20 +238,12 @@ final class KeyValueStorage {
     }
     
     func clearCachedUser() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set(nil, forKey: StorageKeys.cachedUser.rawValue)
+        storageUnwrapper()?.set(nil, forKey: StorageKeys.cachedUser.rawValue)
     }
     
     // MARK: Cached Device Request
     
     func updateCachedDevice(_ cachedDevice: [String: Any]) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -460,9 +255,6 @@ final class KeyValueStorage {
     }
     
     func getCachedDevice() -> [String: Any]? {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return nil }
         
         do {
@@ -479,473 +271,158 @@ final class KeyValueStorage {
     }
     
     func clearCachedDevice() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set(nil, forKey: StorageKeys.cachedDevice.rawValue)
+        storageUnwrapper()?.set(nil, forKey: StorageKeys.cachedDevice.rawValue)
     }
     
     // MARK: Recom events logic
     
     func addRecomEvent(_ event: RecomEvents) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingEvents = getRecomEvents()
-            existingEvents.append(event)
-            let encodedEvents = try JSONEncoder().encode(existingEvents)
-            storage.set(encodedEvents, forKey: StorageKeys.recomEvents.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.recomEvents, empty: [RecomEvents]()) { $0.append(event) }
     }
     
     func getRecomEvents() -> [RecomEvents] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.recomEvents.rawValue) else { return [] }
-            
-            let decodedEvents = try JSONDecoder().decode([RecomEvents].self, from: data)
-            
-            return decodedEvents
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return []
-        }
+        readCollection(StorageKeys.recomEvents, empty: [RecomEvents]())
     }
     
     func clearRecomEventsCache() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set([], forKey: StorageKeys.recomEvents.rawValue)
+        removeCollection(StorageKeys.recomEvents)
     }
     
     func clearRecomEvents(_ events: [RecomEvents]) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
         let idForRemove = Set(events.map { $0.id })
-        let resultEvents = getRecomEvents().filter { !idForRemove.contains($0.id) }
-        
-        do {
-            let encodedEvents = try JSONEncoder().encode(resultEvents)
-            storage.set(encodedEvents, forKey: StorageKeys.recomEvents.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
+        updateCollection(StorageKeys.recomEvents, empty: [RecomEvents]()) {
+            $0.removeAll(where: { idForRemove.contains($0.id) })
         }
     }
     
     // MARK: App inbox messages ids logic
     
     func addInboxOpenedMessagesIds(_ ids: [AppInboxMessageStorableId]) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingIds = getInboxOpenedMessagesIds()
+        updateCollection(StorageKeys.inboxOpenedMessagesIds, empty: [AppInboxMessageStorableId]()) { existingIds in
             let idsToAdd = ids.filter { item in
-                !existingIds.contains {  $0.id == item.id }
+                !existingIds.contains { $0.id == item.id }
             }
             existingIds.append(contentsOf: idsToAdd)
-            let encodedIds = try JSONEncoder().encode(existingIds)
-            storage.set(encodedIds, forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
         }
     }
 
     func getInboxOpenedMessagesIds() -> [AppInboxMessageStorableId] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.inboxOpenedMessagesIds.rawValue) else { return [] }
-            
-            let decodedIds = try JSONDecoder().decode([AppInboxMessageStorableId].self, from: data)
-            
-            return decodedIds
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return []
-        }
+        readCollection(StorageKeys.inboxOpenedMessagesIds, empty: [AppInboxMessageStorableId]())
     }
 
     func clearInboxOpenedMessagesIds(_ ids: [AppInboxMessageStorableId]) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
         let idForRemove = Set(ids.map { $0.id })
-        let resultIds = getInboxOpenedMessagesIds().filter { !idForRemove.contains($0.id) }
-        
-        do {
-            let encodedIds = try JSONEncoder().encode(resultIds)
-            storage.set(encodedIds, forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
+        updateCollection(StorageKeys.inboxOpenedMessagesIds, empty: [AppInboxMessageStorableId]()) {
+            $0.removeAll(where: { idForRemove.contains($0.id) })
         }
     }
 
     func clearInboxOpenedMessagesIdsCache() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set([], forKey: StorageKeys.inboxOpenedMessagesIds.rawValue)
+        removeCollection(StorageKeys.inboxOpenedMessagesIds)
     }
     
     // MARK: Wrapped links logic
     
     func appendLink(_ link: StorableLink) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingLinks = getLinks()
-            existingLinks.append(link)
-            let encodedLinks = try JSONEncoder().encode(existingLinks)
-            storage.set(encodedLinks, forKey: StorageKeys.wrappedLinks.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.wrappedLinks, empty: [StorableLink]()) { $0.append(link) }
     }
     
     func getLinks() -> [StorableLink] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.wrappedLinks.rawValue) else { return [] }
-            
-            let decodedLinks = try JSONDecoder().decode([StorableLink].self, from: data)
-            return decodedLinks
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            return []
-        }
+        readCollection(StorageKeys.wrappedLinks, empty: [StorableLink]())
     }
     
     func clearLinks(_ links: [StorableLink]) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingLinks = getLinks()
-            existingLinks.removeAll(where: { links.contains($0) })
-            let encodedLinks = try JSONEncoder().encode(existingLinks)
-            storage.set(encodedLinks, forKey: StorageKeys.wrappedLinks.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.wrappedLinks, empty: [StorableLink]()) { $0.removeAll(where: { links.contains($0) }) }
     }
     
     func clearAllLinks() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.setValue([], forKey: StorageKeys.wrappedLinks.rawValue)
+        removeCollection(StorageKeys.wrappedLinks)
     }
     
     // MARK: Error
     
     func addErrorEvent(_ event: ErrorEvent) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingEvents = getErrorEvents()
-            existingEvents.append(event)
-            let encodedEvents = try JSONEncoder().encode(existingEvents)
-            storage.set(encodedEvents, forKey: StorageKeys.errorEvents.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.errorEvents, empty: [ErrorEvent](), reportsErrors: false) { $0.append(event) }
     }
-
     
     func getErrorEvents() -> [ErrorEvent] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.errorEvents.rawValue) else { return [] }
-            
-            let decodedEvents = try JSONDecoder().decode([ErrorEvent].self, from: data)
-            
-            return decodedEvents
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return []
-        }
+        readCollection(StorageKeys.errorEvents, empty: [ErrorEvent](), reportsErrors: false)
     }
     
     func clearErrorEvents(_ errorEvents: [ErrorEvent]) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
         let idForRemove = Set(errorEvents.map { $0.id })
-        let resultEvents = getErrorEvents().filter { !idForRemove.contains($0.id) }
-        
-        do {
-            let encodedEvents = try JSONEncoder().encode(resultEvents)
-            storage.set(encodedEvents, forKey: StorageKeys.errorEvents.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
+        updateCollection(StorageKeys.errorEvents, empty: [ErrorEvent](), reportsErrors: false) {
+            $0.removeAll(where: { idForRemove.contains($0.id) })
         }
     }
     
     func clearAllErrorEvents() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set([], forKey: StorageKeys.errorEvents.rawValue)
+        removeCollection(StorageKeys.errorEvents, reportsErrors: false)
     }
     
     // MARK: Only once - Displayed inApp ids
     
     func getOnlyOnceDisplayedInAppIds() -> [Int] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.onlyOnceInApps.rawValue) else { return [] }
-            
-            let decodedInAppsIds = try JSONDecoder().decode([Int].self, from: data)
-            return decodedInAppsIds
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return []
-        }
+        readCollection(StorageKeys.onlyOnceInApps, empty: [Int]())
     }
     
     func addOnlyOnceDisplayedId(id: Int) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingIds = getOnlyOnceDisplayedInAppIds()
-            existingIds.append(id)
-            let encodedIds = try JSONEncoder().encode(existingIds)
-            storage.set(encodedIds, forKey: StorageKeys.onlyOnceInApps.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.onlyOnceInApps, empty: [Int]()) { $0.append(id) }
     }
     
     // MARK: No Limit - Displayed inApp ids
     
     func getNoLimitDisplayedInAppIds() -> [Int] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.noLimitInApps.rawValue) else { return [] }
-            
-            let decodedInAppsIds = try JSONDecoder().decode([Int].self, from: data)
-            return decodedInAppsIds
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return []
-        }
+        readCollection(StorageKeys.noLimitInApps, empty: [Int]())
     }
     
     func addNoLimitDisplayedId(id: Int) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingIds = getNoLimitDisplayedInAppIds()
-            existingIds.append(id)
-            let encodedIds = try JSONEncoder().encode(existingIds)
-            storage.set(encodedIds, forKey: StorageKeys.noLimitInApps.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.noLimitInApps, empty: [Int]()) { $0.append(id) }
     }
     
     func clearNoLimitEvents() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set([], forKey: StorageKeys.noLimitInApps.rawValue)
+        removeCollection(StorageKeys.noLimitInApps)
     }
     
     // MARK: Once per session - Displayed inApp ids
     
     func getOncePerSessionDisplayedInAppIds() -> [Int] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.oncePerSessionInApps.rawValue) else { return [] }
-            
-            let decodedInAppsIds = try JSONDecoder().decode([Int].self, from: data)
-            return decodedInAppsIds
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return []
-        }
+        readCollection(StorageKeys.oncePerSessionInApps, empty: [Int]())
     }
     
     func addOncePerSessionDisplayedId(id: Int) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingIds = getOncePerSessionDisplayedInAppIds()
-            existingIds.append(id)
-            let encodedIds = try JSONEncoder().encode(existingIds)
-            storage.set(encodedIds, forKey: StorageKeys.oncePerSessionInApps.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        updateCollection(StorageKeys.oncePerSessionInApps, empty: [Int]()) { $0.append(id) }
     }
     
     func clearOncePerSessionEvents() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        storage.set([], forKey: StorageKeys.oncePerSessionInApps.rawValue)
+        removeCollection(StorageKeys.oncePerSessionInApps)
     }
     
     // MARK: Min Interval - Displayed inApp Id and Date
     
     func getMinIntervalInApps() -> [Int: Date] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [:] }
-        
-        do {
-            guard let data = storage.data(forKey: StorageKeys.minIntervalValue.rawValue) else { return [:] }
-            
-            let decodedInAppsIds = try JSONDecoder().decode([Int: Date].self, from: data)
-            return decodedInAppsIds
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return [:]
-        }
+        readCollection(StorageKeys.minIntervalValue, empty: [Int: Date]())
     }
     
     func addMinIntervalInApps(id: Int) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-        
-        do {
-            var existingIds = getMinIntervalInApps()
-            existingIds[id] = Date()
-            let encodedIds = try JSONEncoder().encode(existingIds)
-            storage.set(encodedIds, forKey: StorageKeys.minIntervalValue.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        let date = Date()
+        updateCollection(StorageKeys.minIntervalValue, empty: [Int: Date]()) { $0[id] = date }
     }
     
     // MARK: Time Per Time Unit
     
     func getTimePerTimeUnitInApps() -> [Int: [Date]] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return [:] }
-
-        do {
-            guard let data = storage.data(forKey: StorageKeys.timePerUnitInApps.rawValue) else { return [:] }
-            
-            let decodedInAppsIds = try JSONDecoder().decode([Int: [Date]].self, from: data)
-            return decodedInAppsIds
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-            
-            return [:]
-        }
+        readCollection(StorageKeys.timePerUnitInApps, empty: [Int: [Date]]())
     }
     
     func addTimePerTimeUnitInApps(id: Int) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
-        guard let storage = storageUnwrapper() else { return }
-
-        do {
-            var existingInApps = getTimePerTimeUnitInApps()
-            var existingInAppsTime: [Date] = existingInApps[id] ?? []
-            existingInAppsTime.append(Date())
-            existingInApps[id] = existingInAppsTime
-            let encodedIds = try JSONEncoder().encode(existingInApps)
-            storage.set(encodedIds, forKey: StorageKeys.timePerUnitInApps.rawValue)
-        } catch {
-            ErrorLogger.shared.capture(error: error)
-        }
+        let date = Date()
+        updateCollection(StorageKeys.timePerUnitInApps, empty: [Int: [Date]]()) { $0[id, default: []].append(date) }
     }
     
     // MARK: In App Messages
     
     func getInAppMessages() -> [Message] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return [] }
 
         do {
@@ -962,9 +439,6 @@ final class KeyValueStorage {
     }
     
     func saveInAppMessages(messages: [Message]) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -976,9 +450,6 @@ final class KeyValueStorage {
     }
 
     func clearInApps() {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return }
         storage.set([], forKey: StorageKeys.inAppMessages.rawValue)
         storage.set([], forKey: StorageKeys.inAppMessageContents.rawValue)
@@ -987,9 +458,6 @@ final class KeyValueStorage {
     // MARK: In App Message Contents
     
     func getInAppMessageContents() -> [InAppContent] {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return [] }
 
         do {
@@ -1006,9 +474,6 @@ final class KeyValueStorage {
     }
     
     func saveInAppMessageContents(contents: [InAppContent]) {
-        Self.lock.lock()
-        defer { Self.lock.unlock() }
-        
         guard let storage = storageUnwrapper() else { return }
         
         do {
@@ -1018,6 +483,161 @@ final class KeyValueStorage {
             ErrorLogger.shared.capture(error: error)
         }
     }
+    
+    // MARK: Collections
+    
+    private func readCollection<T: Decodable>(_ key: StorageKeys, empty: T, reportsErrors: Bool = true) -> T {
+        guard let storage = storageUnwrapper(reportsErrors: reportsErrors),
+              let data = PendingWritesStore.shared.data(forKey: key.rawValue, in: storage) else {
+            return empty
+        }
+        
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch {
+            if reportsErrors {
+                ErrorLogger.shared.capture(error: error)
+            }
+            
+            return empty
+        }
+    }
+    
+    private func updateCollection<T: Codable>(
+        _ key: StorageKeys,
+        empty: T,
+        reportsErrors: Bool = true,
+        _ modify: (inout T) -> Void
+    ) {
+        guard let storage = storageUnwrapper(reportsErrors: reportsErrors) else { return }
+        
+        var errors: [Error] = []
+        PendingWritesStore.shared.update(forKey: key.rawValue, in: storage) { data in
+            var value = empty
+            if let data = data {
+                do {
+                    value = try JSONDecoder().decode(T.self, from: data)
+                } catch {
+                    errors.append(error)
+                }
+            }
+            modify(&value)
+            
+            do {
+                return try JSONEncoder().encode(value)
+            } catch {
+                errors.append(error)
+                
+                return data
+            }
+        }
+        
+        if reportsErrors {
+            errors.forEach { ErrorLogger.shared.capture(error: $0) }
+        }
+    }
+    
+    private func removeCollection(_ key: StorageKeys, reportsErrors: Bool = true) {
+        guard let storage = storageUnwrapper(reportsErrors: reportsErrors) else { return }
+        
+        PendingWritesStore.shared.update(forKey: key.rawValue, in: storage) { _ in nil }
+    }
+    
+    private func storageUnwrapper(reportsErrors: Bool = true) -> UserDefaults? {
+        guard let storage = storage else {
+            if reportsErrors {
+                ErrorLogger.shared.capture(error: StorageDoesNotExistError())
+            }
+            
+            return nil
+        }
+        
+        return storage
+    }
+}
+
+// MARK: PendingWritesStore
+
+private final class PendingWritesStore {
+    
+    static let shared = PendingWritesStore()
+    
+    private struct Key: Hashable {
+        let storage: ObjectIdentifier
+        let key: String
+    }
+    
+    private struct PendingWrite {
+        let storage: UserDefaults
+        let key: String
+        let value: Data?
+        let version: UInt64
+    }
+    
+    private let lock = NSLock()
+    private var pendingWrites: [Key: PendingWrite] = [:]
+    private var version: UInt64 = 0
+    private var isFlushing = false
+    
+    func data(forKey key: String, in storage: UserDefaults) -> Data? {
+        lock.lock()
+        defer { lock.unlock() }
+        
+        return committedData(forKey: key, in: storage)
+    }
+    
+    func update(forKey key: String, in storage: UserDefaults, _ transform: (Data?) -> Data?) {
+        lock.lock()
+        let value = transform(committedData(forKey: key, in: storage))
+        version &+= 1
+        pendingWrites[Key(storage: ObjectIdentifier(storage), key: key)] = PendingWrite(
+            storage: storage,
+            key: key,
+            value: value,
+            version: version
+        )
+        let shouldFlush = !isFlushing
+        isFlushing = true
+        lock.unlock()
+        
+        if shouldFlush {
+            flush()
+        }
+    }
+    
+    private func committedData(forKey key: String, in storage: UserDefaults) -> Data? {
+        if let pendingWrite = pendingWrites[Key(storage: ObjectIdentifier(storage), key: key)] {
+            return pendingWrite.value
+        }
+        
+        return storage.data(forKey: key)
+    }
+    
+    private func flush() {
+        while true {
+            lock.lock()
+            let writes = Array(pendingWrites.values)
+            guard writes.isNotEmpty else {
+                isFlushing = false
+                lock.unlock()
+                
+                return
+            }
+            lock.unlock()
+            
+            writes.forEach { $0.storage.set($0.value, forKey: $0.key) }
+            
+            lock.lock()
+            for write in writes {
+                let key = Key(storage: ObjectIdentifier(write.storage), key: write.key)
+                if pendingWrites[key]?.version == write.version {
+                    pendingWrites[key] = nil
+                }
+            }
+            lock.unlock()
+        }
+    }
+    
 }
 
 // MARK: StorageDoesNotExistError
