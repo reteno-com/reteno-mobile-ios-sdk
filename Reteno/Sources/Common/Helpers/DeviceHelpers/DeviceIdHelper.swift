@@ -19,8 +19,15 @@ struct DeviceIdHelper {
             return
         }
         
+        saveDeviceId(providedDeviceId)
+        upsertCurrentDevice()
+    }
+    
+    /// Registers the device under the currently stored device id with the currently stored identity
+    /// (external user id, email, phone). Callers must have the identity written to storage before calling.
+    @available(iOSApplicationExtension, unavailable)
+    static func upsertCurrentDevice() {
         let storage = StorageBuilder.build()
-        storage.set(value: providedDeviceId, forKey: StorageKeys.deviceId.rawValue)
         RetenoNotificationsHelper.isSubscribedOnNotifications { isSubscribed in
             storage.set(value: isSubscribed, forKey: StorageKeys.isPushSubscribed.rawValue)
             let device = Device(
@@ -35,6 +42,10 @@ struct DeviceIdHelper {
     
     static func deviceId() -> String? {
         StorageBuilder.build().getValue(forKey: StorageKeys.deviceId.rawValue)
+    }
+    
+    static func saveDeviceId(_ id: String) {
+        StorageBuilder.build().set(value: id, forKey: StorageKeys.deviceId.rawValue)
     }
     
     static func baseDeviceID() -> String? {

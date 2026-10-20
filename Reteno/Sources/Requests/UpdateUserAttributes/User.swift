@@ -17,6 +17,8 @@ struct User: Codable, Equatable {
     let groupNamesExclude: [String]
     let date: Date
     let isAnonymous: Bool
+    /// Identity the update was made under, `nil` for updates stored by an older SDK version.
+    let identity: RequestIdentity?
     
     init(
         externalUserId: String? = nil,
@@ -25,7 +27,8 @@ struct User: Codable, Equatable {
         groupNamesInclude: [String],
         groupNamesExclude: [String],
         date: Date = Date(),
-        isAnonymous: Bool
+        isAnonymous: Bool,
+        identity: RequestIdentity? = .current
     ) {
         self.id = UUID().uuidString
         self.externalUserId = externalUserId
@@ -35,6 +38,7 @@ struct User: Codable, Equatable {
         self.groupNamesExclude = groupNamesExclude
         self.date = date
         self.isAnonymous = isAnonymous
+        self.identity = identity
     }
     
     init(from decoder: Decoder) throws {
@@ -47,6 +51,7 @@ struct User: Codable, Equatable {
         self.groupNamesExclude = try container.decode([String].self, forKey: .groupNamesExclude)
         self.date = try container.decode(Date.self, forKey: .date)
         self.isAnonymous = (try? container.decode(Bool.self, forKey: .isAnonymous)) ?? false
+        self.identity = try? container.decodeIfPresent(RequestIdentity.self, forKey: .identity)
     }
     
     static func == (lhs: User, rhs: User) -> Bool {

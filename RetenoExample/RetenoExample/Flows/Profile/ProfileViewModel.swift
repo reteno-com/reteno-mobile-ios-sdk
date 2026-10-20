@@ -15,48 +15,52 @@ final class ProfileViewModel {
         self.model = model
     }
     
-    func updateExternalId(_ externalId: String?) {
-        model.updateExternalId(externalId)
+    // MARK: Multi-account
+    
+    var isMultiAccountEnabled: Bool {
+        model.isMultiAccountEnabled
     }
     
-    func updateFirstName(_ firstName: String) {
-        model.updateFirstName(firstName)
+    func setMultiAccountEnabled(_ isEnabled: Bool) {
+        model.setMultiAccountEnabled(isEnabled)
     }
     
-    func updateLastName(_ lastName: String) {
-        model.updateLastName(lastName)
+    func openAccounts() {
+        model.openAccounts()
     }
     
-    func updatePhone(_ phone: String) {
-        model.updatePhone(phone)
+    /// Human-readable description of the device id the SDK currently reports with.
+    func currentAccountDescription() -> String {
+        guard model.isMultiAccountEnabled else {
+            return NSLocalizedString("createProfile_screen.multiAccount.hint.disabled", comment: "")
+        }
+        guard let suffix = model.currentAccountSuffix() else {
+            return NSLocalizedString("createProfile_screen.multiAccount.hint.noAccount", comment: "")
+        }
+        
+        return String(format: NSLocalizedString("createProfile_screen.multiAccount.hint.active", comment: ""), suffix)
     }
     
-    func updateEmail(_ email: String) {
-        model.updateEmail(email)
-    }
+    // MARK: Profile
     
-    func updateMarketId(_ marketId: String) {
-        model.updateMarketId(marketId)
+    var storedProfile: StoredProfile? {
+        model.storedProfile
     }
     
     func updateShouldClearMarketId(_ shouldClear: Bool) {
         model.updateShouldClearMarketId(shouldClear)
     }
     
-    func updateAccountSuffix(_ firstName: String) {
-        model.updateAccountSuffix(firstName)
-    }
-    
     func updateIsAnonymous(_ isAnonymous: Bool) {
         model.updateIsAnonymous(isAnonymous)
     }
     
-    func generateId() -> String {
-        model.generateId()
+    func updateIsMarketingPushEnabled(_ isEnabled: Bool) {
+        model.updateIsMarketingPushEnabled(isEnabled)
     }
     
-    func saveUser() {
-        model.saveUser()
+    func saveUser(_ user: User) {
+        model.saveUser(user)
     }
     
     func getUnreadMessagesCount(completion: @escaping (Int) -> Void) {

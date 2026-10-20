@@ -11,22 +11,25 @@ import Reteno
 protocol ProfileModelNavigationHandler {
     
     func backToMain()
+    func openAccounts()
     
 }
 
 final class ProfileModel {
     
-    private var user: User
     private var isAnonymous = false
     private var shouldClearMarketId = false
-    
-    private var accountSuffix: String?
+    private var isMarketingPushEnabled = false
     
     private let navigationHandler: ProfileModelNavigationHandler
     
-    init(user: User = User(), navigationHandler: ProfileModelNavigationHandler) {
-        self.user = user
+    init(navigationHandler: ProfileModelNavigationHandler) {
         self.navigationHandler = navigationHandler
+        
+        if let profile = ProfileStorage.profile {
+            isAnonymous = profile.isAnonymous
+            isMarketingPushEnabled = profile.isMarketingPushEnabled
+        }
         
         Reteno.logEvent(
             eventTypeKey: "test_event_type",
@@ -38,83 +41,86 @@ final class ProfileModel {
         )
     }
     
-    func updateExternalId(_ externalId: String?) {
-        guard let externalId = externalId else { return }
+    // MARK: Multi-account
+    
+    var isMultiAccountEnabled: Bool {
+        MultiAccountStorage.isEnabled
+    }
+    
+    /// When disabled the SDK goes back to the default device id.
+    func setMultiAccountEnabled(_ isEnabled: Bool) {
+        MultiAccountStorage.isEnabled = isEnabled
+        if !isEnabled {
+            useDefaultDeviceIdIfNeeded()
+        }
+    }
+    
+    /// Suffix of the account the SDK is currently reporting for, `nil` when the default device id is in use.
+    func currentAccountSuffix() -> String? {
+        Reteno.accountSuffix()
+    }
+    
+    func openAccounts() {
+        navigationHandler.openAccounts()
+    }
+    
+    /// Called without arguments `updateMultiAccountUserAttributes` drops the current account
+    /// and resets the device id to the default one.
+    private func useDefaultDeviceIdIfNeeded() {
+        guard Reteno.accountSuffix() != nil else { return }
         
-        user.id = externalId
+        Reteno.updateMultiAccountUserAttributes()
     }
     
-    func updateFirstName(_ firstName: String) {
-        user.firstName = firstName
-    }
+    // MARK: Profile
     
-    func updateLastName(_ lastName: String) {
-        user.lastName = lastName
-    }
-    
-    func updateAccountSuffix(_ suffix: String?) {
-        self.accountSuffix = suffix
-    }
-    
-    func updatePhone(_ phone: String) {
-        user.phone = phone
-    }
-    
-    func updateEmail(_ email: String) {
-        user.email = email
-    }
-    
-    func updateMarketId(_ marketId: String) {
-        user.marketId = marketId
+    var storedProfile: StoredProfile? {
+        ProfileStorage.profile
     }
     
     func updateShouldClearMarketId(_ shouldClear: Bool) {
         shouldClearMarketId = shouldClear
     }
     
-    func generateId() -> String {
-        UUID().uuidString
-    }
-    
     func updateIsAnonymous(_ isAnonymous: Bool) {
         self.isAnonymous = isAnonymous
     }
     
-    func saveUser() {
+    func updateIsMarketingPushEnabled(_ isEnabled: Bool) {
+        isMarketingPushEnabled = isEnabled
+    }
+    
+    func saveUser(_ user: User) {
+        useDefaultDeviceIdIfNeeded()
+        
         let marketIdToSend: String? = shouldClearMarketId ? "" : user.marketId
+        let fields = [UserCustomField(key: "personal.marketing_push_enabled", value: String(isMarketingPushEnabled))]
         
         if isAnonymous {
-            if user.firstName != nil || user.lastName != nil || marketIdToSend != nil {
-                let attributes = AnonymousUserAttributes(
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    timeZone: TimeZone.current.identifier,
-                    marketId: marketIdToSend
-                )
-                Reteno.updateAnonymousUserAttributes(userAttributes: attributes)
-            }
+            let attributes = AnonymousUserAttributes(
+                firstName: user.firstName,
+                lastName: user.lastName,
+                timeZone: TimeZone.current.identifier,
+                marketId: marketIdToSend,
+                fields: fields
+            )
+            Reteno.updateAnonymousUserAttributes(userAttributes: attributes)
         } else {
-            let attributes: UserAttributes? = {
-                guard
-                    user.phone != nil
-                    || user.email != nil
-                    || user.firstName != nil
-                    || user.lastName != nil
-                    || marketIdToSend != nil
-                else { return nil }
-                
-                return .init(
-                    phone: user.phone,
-                    email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    marketId: marketIdToSend
-                )
-            }()
-            Reteno.updateMultiAccountUserAttributes(externalUserId: user.id,
-                                        userAttributes: attributes,
-                                        accountSuffix: accountSuffix)
+            Reteno.updateUserAttributes(
+                externalUserId: user.id,
+                userAttributes: user.userAttributes(marketId: marketIdToSend, fields: fields)
+            )
         }
+        
+        var storedUser = user
+        if shouldClearMarketId {
+            storedUser.marketId = nil
+        }
+        ProfileStorage.profile = StoredProfile(
+            user: storedUser,
+            isAnonymous: isAnonymous,
+            isMarketingPushEnabled: isMarketingPushEnabled
+        )
         
         navigationHandler.backToMain()
     }

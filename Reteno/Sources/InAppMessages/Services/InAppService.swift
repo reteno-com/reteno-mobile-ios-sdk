@@ -8,6 +8,8 @@
 import Foundation
 
 final class InAppService {
+    private static let cacheVersion = 1
+    
     private let requestService: MobileRequestService
     private let storage: KeyValueStorage
     
@@ -27,6 +29,7 @@ final class InAppService {
     ) {
         self.requestService = requestService
         self.storage = storage
+        self.migrateCacheIfNeeded()
         self.checkForActiveCache()
     }
     
@@ -325,6 +328,17 @@ final class InAppService {
                 print(failure)
             }
         }
+    }
+    
+    private func migrateCacheIfNeeded() {
+        let storedVersion: Int = storage.getValue(forKey: StorageKeys.inAppCacheVersion.rawValue) ?? 0
+        guard storedVersion < Self.cacheVersion else { return }
+        
+        /// Messages, contents and the eTag are dropped together: keeping the eTag would get `304 Not Modified`
+        /// back and the SDK would restore messages without any contents, so no in-app could be shown until the
+        /// eTag expires.
+        clearInApps()
+        storage.set(value: Self.cacheVersion, forKey: StorageKeys.inAppCacheVersion.rawValue)
     }
     
     private func checkForActiveCache() {

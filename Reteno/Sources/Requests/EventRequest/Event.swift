@@ -25,12 +25,15 @@ public struct Event: Codable {
     let date: Date
     let parameters: [Parameter]
     let id: String
+    /// Identity the event was logged under, `nil` for events stored by an older SDK version.
+    let identity: RequestIdentity?
     
-    init(eventTypeKey: String, date: Date, parameters: [Event.Parameter]) {
+    init(eventTypeKey: String, date: Date, parameters: [Event.Parameter], identity: RequestIdentity? = .current) {
         self.eventTypeKey = eventTypeKey
         self.date = date
         self.parameters = parameters
         self.id = UUID().uuidString
+        self.identity = identity
     }
     
     func toJSON() -> [String: Any] {

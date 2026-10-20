@@ -71,9 +71,28 @@
 "createProfile_screen.clearMarketIdSwitch" = "Clear market id";
 "createProfile_screen.generateButton" = "Generate";
 "createProfile_screen.anonymousSwitch" = "is anonymous contact";
+"createProfile_screen.marketingPushEnabledSwitch" = "marketing_push_enabled";
+"createProfile_screen.multiAccountSwitch" = "Multi-account";
+"createProfile_screen.fields.accountSuffix" = "Account suffix (optional, defaults to external id)";
+"createProfile_screen.multiAccount.hint.disabled" = "Default device id is used. Enable to keep a separate device id per account.";
+"createProfile_screen.multiAccount.hint.noAccount" = "No account selected — default device id is used.";
+"createProfile_screen.multiAccount.hint.active" = "Active account suffix: %@";
+"createProfile_screen.multiAccount.manageButton" = "Manage accounts";
 "createProfile_screen.saveButton" = "Save";
+"createProfile_screen.updateButton" = "Update";
 
 "createProfile_screen.doneButton" = "Done";
+
+// MARK: - Multi-account
+
+"accounts_screen.title" = "Accounts";
+"accounts_screen.empty" = "No accounts yet.\nTap + to add one.";
+"accounts_screen.footer" = "Tap an account to switch to it. Each account uses its own device id: <device id>:<suffix>. Swipe to delete.";
+"accounts_screen.cell.suffix" = "suffix: %@";
+
+"addAccount_screen.title" = "Add Account";
+"addAccount_screen.hint" = "Saving switches the SDK to this account.";
+"addAccount_screen.error.emptyExternalId" = "External user id is required for an account.";
 
 // MARK: - App inbox
 

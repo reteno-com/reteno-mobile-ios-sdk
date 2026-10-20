@@ -77,13 +77,16 @@ final class EventsSenderScheduler {
     }
     
     func upsertDevice(_ device: Device, date: Date = Date()) {
+        /// Captured before hopping queues: the upsert belongs to the device id current at the call,
+        /// even if a multi-account switch rewrites it before the operation runs.
+        let identity = RequestIdentity(deviceId: DeviceIdHelper.deviceId() ?? "", externalUserId: device.externalUserId)
         pendingDeviceOperationsAccessQueue.async { [weak self] in
             guard let self else { return }
             
             /// `prepareOperationSequence` re-requests the device on every sync until the backend
             /// confirms it, so an identical upsert that is still pending has to be dropped here -
             /// otherwise a failing device request piles up one more operation per sync.
-            guard !pendingSendDeviceOperations.contains(where: { $0.device == device }) else { return }
+            guard !pendingSendDeviceOperations.contains(where: { $0.device == device && $0.identity == identity }) else { return }
             
             if device.isSubscribedOnPush != StorageBuilder.build().getValue(forKey: StorageKeys.isPushSubscribed.rawValue) {
                 sendPushSubscriptionEvent(isSubscribed: device.isSubscribedOnPush)
@@ -92,6 +95,7 @@ final class EventsSenderScheduler {
                 requestService: mobileRequestService,
                 storage: storage,
                 device: device,
+                identity: identity,
                 date: date
             )
             operation.completionBlock = { [weak self] in
@@ -440,15 +444,9 @@ final class EventsSenderScheduler {
             }
         }
         
-        if let sendEventOperation = sendEventsOperation() {
-            operations.append(sendEventOperation)
-        }
-        if let sendRecomEventsOperation = sendRecomEventsOperation() {
-            operations.append(sendRecomEventsOperation)
-        }
-        if let sendAppInboxMessagesIdsOperation = sendAppInboxMessagesIdsOperation() {
-            operations.append(sendAppInboxMessagesIdsOperation)
-        }
+        operations.append(contentsOf: sendEventsOperations())
+        operations.append(contentsOf: sendRecomEventsOperations())
+        operations.append(contentsOf: sendAppInboxMessagesIdsOperations())
         if let sendErrorEventOperation = sendErrorEventsOperation() {
             operations.append(sendErrorEventOperation)
         }
@@ -491,7 +489,22 @@ final class EventsSenderScheduler {
         return users.map { SendUserOperation(storage: storage, user: $0) }
     }
     
-    private func sendEventsOperation() -> DateOperation? {
+    /// Splits queued data into groups that are sent with the same identity, keeping the original order.
+    private func groupedByIdentity<T>(_ items: [T], identity: (T) -> RequestIdentity?) -> [(identity: RequestIdentity, items: [T])] {
+        var groups: [(identity: RequestIdentity, items: [T])] = []
+        for item in items {
+            let resolvedIdentity = RequestIdentity.resolved(identity(item))
+            if let index = groups.firstIndex(where: { $0.identity == resolvedIdentity }) {
+                groups[index].items.append(item)
+            } else {
+                groups.append((resolvedIdentity, [item]))
+            }
+        }
+        
+        return groups
+    }
+    
+    private func sendEventsOperations() -> [DateOperation] {
         let oldEvents = storage.getEvents().filter { !$0.isValid }
         if oldEvents.isNotEmpty {
             ErrorLogger.shared.captureItems(oldEvents, title: Event.logTitle, tagTitle: Event.keyTitle)
@@ -501,9 +514,14 @@ final class EventsSenderScheduler {
         let events = storage.getEvents()
         let validEvents = events.filter { $0.isValid }
         
-        guard !validEvents.isEmpty else { return nil }
-        
-        return SendEventsOperation(requestService: mobileRequestService, storage: storage, events: validEvents)
+        return groupedByIdentity(validEvents, identity: \.identity).map { group in
+            SendEventsOperation(
+                requestService: mobileRequestService,
+                storage: storage,
+                events: group.items,
+                identity: group.identity
+            )
+        }
     }
     
     func messagesCountOperation() -> Operation? {
@@ -512,7 +530,7 @@ final class EventsSenderScheduler {
         return MessagesCountOperation(requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(), inbox: inbox)
     }
     
-    private func sendRecomEventsOperation() -> DateOperation? {
+    private func sendRecomEventsOperations() -> [DateOperation] {
         let oldEvents = storage.getRecomEvents().filter { !$0.isValid }
         if oldEvents.isNotEmpty {
             ErrorLogger.shared.captureLog(title: RecomEvents.logTitle, count: oldEvents.count)
@@ -521,16 +539,16 @@ final class EventsSenderScheduler {
         
         let validEvents = storage.getRecomEvents().filter { $0.isValid }
         
-        guard validEvents.isNotEmpty else { return nil }
-        
-        return SendRecomEventsOperation(
-            requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(),
-            storage: storage,
-            events: validEvents
-        )
+        return groupedByIdentity(validEvents, identity: \.identity).map { group in
+            SendRecomEventsOperation(
+                requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(identity: group.identity),
+                storage: storage,
+                events: group.items
+            )
+        }
     }
     
-    private func sendAppInboxMessagesIdsOperation() -> DateOperation? {
+    private func sendAppInboxMessagesIdsOperations() -> [DateOperation] {
         let oldIds = storage.getInboxOpenedMessagesIds().filter { !$0.isValid }
         if oldIds.isNotEmpty {
             ErrorLogger.shared.captureLog(title: AppInboxMessageStorableId.logTitle, count: oldIds.count)
@@ -539,13 +557,13 @@ final class EventsSenderScheduler {
         
         let validIds = storage.getInboxOpenedMessagesIds().filter { $0.isValid }
         
-        guard validIds.isNotEmpty else { return nil }
-        
-        return SendAppInboxMessagesIdsOperation(
-            requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(),
-            storage: storage,
-            ids: validIds
-        )
+        return groupedByIdentity(validIds, identity: \.identity).map { group in
+            SendAppInboxMessagesIdsOperation(
+                requestService: MobileRequestServiceBuilder.buildWithDeviceIdInHeaders(identity: group.identity),
+                storage: storage,
+                ids: group.items
+            )
+        }
     }
     
     private func registerWrappedLinkClickOperations() -> [DateOperation] {

@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0201B82B4328956BD420751F /* AccountsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA8201C12762AEF992ED018 /* AccountsListViewModel.swift */; };
+		07B0A940130D9CAA5CBC5B87 /* MultiAccountStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03295ED3B29D4A1672F967B0 /* MultiAccountStorage.swift */; };
 		0FC08B43D5D39F70DEECB099 /* Pods_RetenoExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F50B28825570AAEC8CB350 /* Pods_RetenoExample.framework */; };
+		10F59EDE20067D1484489DB6 /* AddAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78E221AE5C263F59C25A1B2 /* AddAccountViewModel.swift */; };
 		13693E116F15DF1BD798D197 /* Pods_RetenoExample_NotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9DDF2CDA22128B9EE3FB51 /* Pods_RetenoExample_NotificationServiceExtension.framework */; };
 		16B2B2653254B4CBD33F6BC4 /* Pods_RetenoExample_NotificationContentExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5E9BB39873FA2BF8C7D1E55 /* Pods_RetenoExample_NotificationContentExtension.framework */; };
 		181BFDB6290073E0007C5422 /* OptionalExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181BFDB5290073E0007C5422 /* OptionalExtensionsTests.swift */; };
@@ -77,18 +80,21 @@
 		5EFF10012F1E01100073B6C5 /* SessionConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFF10002F1E01100073B6C5 /* SessionConfigModel.swift */; };
 		5EFF10032F1E01100073B6C5 /* SessionConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFF10022F1E01100073B6C5 /* SessionConfigViewModel.swift */; };
 		5EFF10052F1E01100073B6C5 /* SessionConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFF10042F1E01100073B6C5 /* SessionConfigViewController.swift */; };
+		6722342618CCD9011F1C76C0 /* ProfileFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C9508F50DEAFCF6328730E /* ProfileFormView.swift */; };
 		7004E8AB236C85060003EBCB /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7004E8A9236C85060003EBCB /* Localizable.strings */; };
 		700D24DB236C6D3300918E21 /* MainFlowAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700D24DA236C6D3300918E21 /* MainFlowAssembly.swift */; };
 		7071CE18238305C700D34895 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7071CE17238305C700D34895 /* LaunchScreen.storyboard */; };
 		70BF67B42045A6AD00803C08 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF67552045A6AD00803C08 /* AppDelegate.swift */; };
 		70BF67CF2045A6AD00803C08 /* ApplicationFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF677E2045A6AD00803C08 /* ApplicationFlowCoordinator.swift */; };
 		70BF67EF2045A6AE00803C08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70BF67AF2045A6AD00803C08 /* Assets.xcassets */; };
+		7152439FB10895EEF8BECD8F /* AccountsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE5F37195ED67BB20BC1A83 /* AccountsListViewController.swift */; };
 		8D0F43A02B6A5C590040B1D4 /* InAppServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D0F439F2B6A5C590040B1D4 /* InAppServiceTests.swift */; };
 		8D0F43A22B6A68260040B1D4 /* in_app_messages.json in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F43A12B6A68260040B1D4 /* in_app_messages.json */; };
 		8D0F43A42B6A82CA0040B1D4 /* in_app_message_content.json in Resources */ = {isa = PBXBuildFile; fileRef = 8D0F43A32B6A82CA0040B1D4 /* in_app_message_content.json */; };
 		8DAF38902BA077D400C2D1F4 /* in_app_messages_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DAF388E2BA077D400C2D1F4 /* in_app_messages_valid.json */; };
 		8DAF38912BA077D400C2D1F4 /* in_app_contents_valid.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DAF388F2BA077D400C2D1F4 /* in_app_contents_valid.json */; };
 		8DAF38952BA1D9D100C2D1F4 /* in_apps_async.json in Resources */ = {isa = PBXBuildFile; fileRef = 8DAF38942BA1D9D100C2D1F4 /* in_apps_async.json */; };
+		A7D2F7FAA55F4C512CA29507 /* ProfileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE05D3C9118F3823EE478022 /* ProfileStorage.swift */; };
 		AA1F0A0000000000000000C1 /* InAppPersonalisationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F0A0000000000000000D1 /* InAppPersonalisationTests.swift */; };
 		B51AF01D290E924100D723CD /* MessageCountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51AF01C290E924100D723CD /* MessageCountTests.swift */; };
 		B52C7C1328DA808C0014ED15 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52C7C1228DA808C0014ED15 /* MainModel.swift */; };
@@ -158,8 +164,11 @@
 		D5F91E342908138F00EA5FBA /* AppInboxMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E332908138E00EA5FBA /* AppInboxMessageCell.swift */; };
 		D5F91E3929096BF800EA5FBA /* BaseDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F91E3829096BF800EA5FBA /* BaseDateFormatter.swift */; };
 		D5F91E3C290972AE00EA5FBA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D5F91E3B290972AE00EA5FBA /* Kingfisher */; };
+		D6DFF5CB204F745DAAA98300 /* AddAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F816D8BADF306792E181C896 /* AddAccountModel.swift */; };
 		E0AA10032D0000000000AA03 /* KeyValueStorageConcurrencyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0AA10022D0000000000AA02 /* KeyValueStorageConcurrencyTests.swift */; };
 		E0CDD69F2C620E6500ABD8A7 /* RetenoDelayedInitializationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CDD69E2C620E6500ABD8A7 /* RetenoDelayedInitializationTest.swift */; };
+		F10E0AD4C2B2584B5976B3E6 /* AccountsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA59752052D636AC31C1402 /* AccountsListModel.swift */; };
+		FAA69C71F20A938B4738CA4A /* AddAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5BF6B394EE51A329D264F2 /* AddAccountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -213,8 +222,10 @@
 
 /* Begin PBXFileReference section */
 		030805C59AE26D53ADFDEDEB /* Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.production-debug.xcconfig"; sourceTree = "<group>"; };
+		03295ED3B29D4A1672F967B0 /* MultiAccountStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MultiAccountStorage.swift; sourceTree = "<group>"; };
 		044E87C978C2C57FD07B5BFB /* Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		0DFA28B3CB6E5EB4AB39F93E /* Pods_RetenoExample_RetenoExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RetenoExample_RetenoExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F5BF6B394EE51A329D264F2 /* AddAccountViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddAccountViewController.swift; sourceTree = "<group>"; };
 		101FEB74A0CB44059CE36D95 /* Pods-RetenoExample-NotificationContentExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		116A8C5AD72880B84EB8B793 /* Pods-RetenoExample.production-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-debug.xcconfig"; sourceTree = "<group>"; };
 		181BFDB5290073E0007C5422 /* OptionalExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalExtensionsTests.swift; sourceTree = "<group>"; };
@@ -325,6 +336,7 @@
 		976B37F7BD59A3CD9946C0BA /* Pods-RetenoExample-RetenoExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		A3EE33E9C409ED20A993DF88 /* SchedulerHardeningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerHardeningTests.swift; sourceTree = "<group>"; };
 		AA1F0A0000000000000000D1 /* InAppPersonalisationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPersonalisationTests.swift; sourceTree = "<group>"; };
+		AFA8201C12762AEF992ED018 /* AccountsListViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccountsListViewModel.swift; sourceTree = "<group>"; };
 		B494975CB6A691F9E37715F7 /* Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
 		B51AF01C290E924100D723CD /* MessageCountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCountTests.swift; sourceTree = "<group>"; };
 		B52C7C1228DA808C0014ED15 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
@@ -360,6 +372,7 @@
 		B5EEC31028EF2321005D0314 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		B726259F769AA265F931D99B /* Pods-RetenoExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.debug.xcconfig"; sourceTree = "<group>"; };
 		BBBB19C86B2CD562C425C82B /* Pods-RetenoExample-NotificationContentExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationContentExtension.release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationContentExtension/Pods-RetenoExample-NotificationContentExtension.release.xcconfig"; sourceTree = "<group>"; };
+		BE05D3C9118F3823EE478022 /* ProfileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStorage.swift; sourceTree = "<group>"; };
 		C521102A1DAB85BC006CEBCE /* RetenoExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetenoExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C96C9F3DC927563924B9F810 /* Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.production-release.xcconfig"; sourceTree = "<group>"; };
 		CBFBCFBE34B71FDEE1B7260D /* Pods-RetenoExample.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-debug.xcconfig"; sourceTree = "<group>"; };
@@ -404,13 +417,18 @@
 		D5F91E3029080C6D00EA5FBA /* AppInboxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxViewController.swift; sourceTree = "<group>"; };
 		D5F91E332908138E00EA5FBA /* AppInboxMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInboxMessageCell.swift; sourceTree = "<group>"; };
 		D5F91E3829096BF800EA5FBA /* BaseDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDateFormatter.swift; sourceTree = "<group>"; };
+		D8C9508F50DEAFCF6328730E /* ProfileFormView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileFormView.swift; sourceTree = "<group>"; };
 		DBDBC108460239B199E3288F /* Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-release.xcconfig"; sourceTree = "<group>"; };
 		E0AA10022D0000000000AA02 /* KeyValueStorageConcurrencyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStorageConcurrencyTests.swift; sourceTree = "<group>"; };
 		E0CDD69E2C620E6500ABD8A7 /* RetenoDelayedInitializationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoDelayedInitializationTest.swift; sourceTree = "<group>"; };
 		E96720BF026F18D0756D553C /* Pods-RetenoExample.staging-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.staging-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.staging-release.xcconfig"; sourceTree = "<group>"; };
+		EDA59752052D636AC31C1402 /* AccountsListModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccountsListModel.swift; sourceTree = "<group>"; };
 		EDEE985BB2BB7D8F93B2B035 /* Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-NotificationServiceExtension/Pods-RetenoExample-NotificationServiceExtension.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		EFACE9DF4C4585122CF2CBD0 /* Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; path = "Target Support Files/Pods-RetenoExample-RetenoExampleTests/Pods-RetenoExample-RetenoExampleTests.staging-debug.xcconfig"; sourceTree = "<group>"; };
 		F110B853869381497F4A8DE7 /* Pods-RetenoExample.production-release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RetenoExample.production-release.xcconfig"; path = "Target Support Files/Pods-RetenoExample/Pods-RetenoExample.production-release.xcconfig"; sourceTree = "<group>"; };
+		F78E221AE5C263F59C25A1B2 /* AddAccountViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddAccountViewModel.swift; sourceTree = "<group>"; };
+		F816D8BADF306792E181C896 /* AddAccountModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddAccountModel.swift; sourceTree = "<group>"; };
+		FEE5F37195ED67BB20BC1A83 /* AccountsListViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AccountsListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -764,6 +782,16 @@
 			path = CustomEvent;
 			sourceTree = "<group>";
 		};
+		5EEB14313B19A8FD02473DB3 /* MultiAccount */ = {
+			isa = PBXGroup;
+			children = (
+				B77C816B36626A7B2633BB1B /* AccountsList */,
+				A2F04AA5B377A4FE618E5DD5 /* AddAccount */,
+				03295ED3B29D4A1672F967B0 /* MultiAccountStorage.swift */,
+			);
+			path = MultiAccount;
+			sourceTree = "<group>";
+		};
 		5EFF100F2F1E01100073B6C5 /* SessionConfig */ = {
 			isa = PBXGroup;
 			children = (
@@ -839,6 +867,7 @@
 				5EFF100F2F1E01100073B6C5 /* SessionConfig */,
 				5ECE00102F1F00000073B6C5 /* CustomEvent */,
 				D545923B291D219300E589A9 /* Recommendations */,
+				5EEB14313B19A8FD02473DB3 /* MultiAccount */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -870,6 +899,16 @@
 				7071CE17238305C700D34895 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		A2F04AA5B377A4FE618E5DD5 /* AddAccount */ = {
+			isa = PBXGroup;
+			children = (
+				F816D8BADF306792E181C896 /* AddAccountModel.swift */,
+				F78E221AE5C263F59C25A1B2 /* AddAccountViewModel.swift */,
+				0F5BF6B394EE51A329D264F2 /* AddAccountViewController.swift */,
+			);
+			path = AddAccount;
 			sourceTree = "<group>";
 		};
 		B011396D30454A9E62A56B60 /* Frameworks */ = {
@@ -915,6 +954,7 @@
 			isa = PBXGroup;
 			children = (
 				B54F2FFC28FECB9400D6AE73 /* DoneBar.swift */,
+				D8C9508F50DEAFCF6328730E /* ProfileFormView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -942,6 +982,7 @@
 				B54F2FFB28FECB6C00D6AE73 /* Views */,
 				B57EAB6528EE0CEB00EA1260 /* Models */,
 				B57EAB6828EE0E0E00EA1260 /* ProfileModel.swift */,
+				BE05D3C9118F3823EE478022 /* ProfileStorage.swift */,
 				B5EEC30E28EF2136005D0314 /* ProfileViewModel.swift */,
 				B5EEC31028EF2321005D0314 /* ProfileViewController.swift */,
 			);
@@ -1013,6 +1054,16 @@
 				B5E67AEC28DDF07E0093C7FB /* UIWindow+InformationAlert.swift */,
 			);
 			path = InformationAlert;
+			sourceTree = "<group>";
+		};
+		B77C816B36626A7B2633BB1B /* AccountsList */ = {
+			isa = PBXGroup;
+			children = (
+				EDA59752052D636AC31C1402 /* AccountsListModel.swift */,
+				AFA8201C12762AEF992ED018 /* AccountsListViewModel.swift */,
+				FEE5F37195ED67BB20BC1A83 /* AccountsListViewController.swift */,
+			);
+			path = AccountsList;
 			sourceTree = "<group>";
 		};
 		C52110211DAB85BC006CEBCE = {
@@ -1676,6 +1727,7 @@
 				2752B3DB294E434300CB2DFC /* CartUpdatedModel.swift in Sources */,
 				D5F91E2D29080C5500EA5FBA /* AppInboxModel.swift in Sources */,
 				B57EAB6928EE0E0E00EA1260 /* ProfileModel.swift in Sources */,
+				A7D2F7FAA55F4C512CA29507 /* ProfileStorage.swift in Sources */,
 				D5CBB0EA2952F663009CB2B3 /* CreateOrderItemModel.swift in Sources */,
 				D5C96C2029223D6E0049109A /* AlertPresentable.swift in Sources */,
 				2752B3DD294E435900CB2DFC /* CartUpdatedViewModel.swift in Sources */,
@@ -1753,6 +1805,14 @@
 				D5C96C2829224EFA0049109A /* RecomsSettingsViewModel.swift in Sources */,
 				27F4110E2949EB7900BFCC9D /* ProductViewedModel.swift in Sources */,
 				D5F91E3129080C6D00EA5FBA /* AppInboxViewController.swift in Sources */,
+				6722342618CCD9011F1C76C0 /* ProfileFormView.swift in Sources */,
+				07B0A940130D9CAA5CBC5B87 /* MultiAccountStorage.swift in Sources */,
+				F10E0AD4C2B2584B5976B3E6 /* AccountsListModel.swift in Sources */,
+				0201B82B4328956BD420751F /* AccountsListViewModel.swift in Sources */,
+				7152439FB10895EEF8BECD8F /* AccountsListViewController.swift in Sources */,
+				D6DFF5CB204F745DAAA98300 /* AddAccountModel.swift in Sources */,
+				10F59EDE20067D1484489DB6 /* AddAccountViewModel.swift in Sources */,
+				FAA69C71F20A938B4738CA4A /* AddAccountViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2084,7 +2144,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 608;
+				CURRENT_PROJECT_VERSION = 617;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2164,7 +2224,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 608;
+				CURRENT_PROJECT_VERSION = 617;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2242,7 +2302,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 608;
+				CURRENT_PROJECT_VERSION = 617;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2320,7 +2380,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 608;
+				CURRENT_PROJECT_VERSION = 617;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2655,7 +2715,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 608;
+				CURRENT_PROJECT_VERSION = 617;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;
@@ -2683,7 +2743,7 @@
 				CODE_SIGN_ENTITLEMENTS = RetenoExample/RetenoExample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 608;
+				CURRENT_PROJECT_VERSION = 617;
 				DEVELOPMENT_TEAM = X9JJR3XKX7;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RetenoExample/SupportingFiles/Info.plist;

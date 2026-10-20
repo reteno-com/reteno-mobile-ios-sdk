@@ -11,6 +11,8 @@ struct AppInboxMessageStorableId: Codable {
     
     let id: String
     let date: Date
+    /// Identity the message was opened under, `nil` for ids stored by an older SDK version.
+    var identity: RequestIdentity? = .current
 
 }
 

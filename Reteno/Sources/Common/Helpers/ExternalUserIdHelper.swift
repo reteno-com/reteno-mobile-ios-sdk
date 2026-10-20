@@ -19,4 +19,8 @@ struct ExternalUserIdHelper {
         StorageBuilder.build().set(value: newId, forKey: StorageKeys.externalUserId.rawValue)
     }
     
+    static func clear() {
+        StorageBuilder.build().removeValue(forKey: StorageKeys.externalUserId.rawValue)
+    }
+    
 }

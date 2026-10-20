@@ -14,11 +14,11 @@ final class SendUserOperation: DateOperation, @unchecked Sendable {
     private let user: User
     
     init(
-        requestService: MobileRequestService = MobileRequestServiceBuilder.buildForDeviceRequest(),
+        requestService: MobileRequestService? = nil,
         storage: KeyValueStorage,
         user: User
     ) {
-        self.requestService = requestService
+        self.requestService = requestService ?? MobileRequestServiceBuilder.buildForDeviceRequest(identity: user.identity)
         self.storage = storage
         self.user = user
         
@@ -56,6 +56,10 @@ final class SendUserOperation: DateOperation, @unchecked Sendable {
             }
         }
         
+        /// The cached device describes the current device id; an update left over from a previous
+        /// multi-account device id is never compared with it and never overwrites it.
+        let isCurrentIdentity = RequestIdentity.resolved(user.identity).isCurrent
+        
         if let externalUserId = user.externalUserId, !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
 
             let infoDeviceRequest = requestService.isEqualDeviceRequest(
@@ -63,7 +67,7 @@ final class SendUserOperation: DateOperation, @unchecked Sendable {
                 email: user.userAttributes?.email,
                 phone: user.userAttributes?.phone,
                 isSubscribedOnPush: RetenoNotificationsHelper.isPushSubscribed(),
-                cachedRequestParams: storage.getCachedDevice()
+                cachedRequestParams: isCurrentIdentity ? storage.getCachedDevice() : nil
             )
             if infoDeviceRequest.isEqual {
                 requestService.updateUserAttributes(user: self.user, completionHandler: updateAttributesResult)
@@ -76,7 +80,9 @@ final class SendUserOperation: DateOperation, @unchecked Sendable {
                 ) { result in
                     switch result {
                     case .success:
-                        self.storage.updateCachedDevice(infoDeviceRequest.paramsToSave ?? [:])
+                        if isCurrentIdentity {
+                            self.storage.updateCachedDevice(infoDeviceRequest.paramsToSave ?? [:])
+                        }
                         if self.user.userAttributes.isSome
                             || self.user.subscriptionKeys.isNotEmpty
                             || self.user.groupNamesInclude.isNotEmpty

@@ -39,7 +39,7 @@ public struct Reteno {
     static let sdkStateHelper = SDKStateHelper.shared
 
     /// SDK version
-    static var version = "2.7.6"
+    static var version = "2.7.7"
     /// Time interval in seconds between sending batches with events
     static var eventsSendingTimeInterval: TimeInterval = {
         DebugModeHelper.isDebugModeOn() ? 10 : 30
@@ -49,7 +49,8 @@ public struct Reteno {
     static var analyticsService: AnalyticsService!
     static var storage: KeyValueStorage!
     
-    static var isUpdatingMultiAccount: Bool = false
+    /// Separator between the base device id and the account suffix in a multi-account device id.
+    static let accountSuffixSeparator = ":"
         
     private init() {}
     
@@ -235,12 +236,19 @@ public struct Reteno {
     
     @available(iOSApplicationExtension, unavailable)
     /// Update MultiAccount User attributes
+    ///
+    /// Every account gets its own device id: `<baseDeviceId>:<accountSuffix>`. The suffix defaults to
+    /// `externalUserId`. When neither `accountSuffix` nor `externalUserId` is provided the device id is
+    /// reset to the base one. Switching accounts drops the previous account's identity (external user id,
+    /// email, phone and the cached device/user snapshots) before the new device id is registered, so nothing
+    /// of the previous account is ever attached to the new device id. Data the previous account queued but has
+    /// not sent yet (events, user updates, etc.) is still sent with the previous device id and external user id.
     /// - Parameter externalUserId: Id for identify user in a system (optional)
     /// - Parameter userAttributes: user specific attributes in format `UserAttributes` (firstName, phone, email, etc.) (optional)
     /// - Parameter subscriptionKeys: list of subscription categories keys, can be empty
     /// - Parameter groupNamesInclude: list of group ID to add a contact to, can be empty
     /// - Parameter groupNamesExclude: list of group ID to remove a contact from, can be empty
-    /// - Parameter accountSuffix: account suffix which will be used in deviceId. Usually accepts external user ID
+    /// - Parameter accountSuffix: account suffix which will be appended to the base device id via `:`. Defaults to `externalUserId`
     public static func updateMultiAccountUserAttributes(
         externalUserId: String? = nil,
         userAttributes: UserAttributes? = nil,
@@ -249,21 +257,29 @@ public struct Reteno {
         groupNamesExclude: [String] = [],
         accountSuffix: String? = nil
     ) {
-        if let accountSuffix,
-           let currentDeviceId = DeviceIdHelper.deviceId() {
-            var newDeviceId: String = ""
-            if let baseDeviceId = DeviceIdHelper.baseDeviceID() {
-                newDeviceId = baseDeviceId + accountSuffix
-            } else {
-                newDeviceId = currentDeviceId + accountSuffix
-                DeviceIdHelper.saveBaseDeviceId(currentDeviceId)
+        guard sdkStateHelper.isInitialized else {
+            Logger.log(
+                "\(#function) could be called only after complete initialization Reteno, finish it.",
+                eventType: .error
+            )
+            return
+        }
+        
+        if let currentDeviceId = DeviceIdHelper.deviceId() {
+            let baseDeviceId = DeviceIdHelper.baseDeviceID() ?? currentDeviceId
+            let suffix = normalizedAccountSuffix(accountSuffix) ?? normalizedAccountSuffix(externalUserId)
+            let newDeviceId = suffix.map { baseDeviceId + accountSuffixSeparator + $0 } ?? baseDeviceId
+            
+            if DeviceIdHelper.baseDeviceID() == nil {
+                DeviceIdHelper.saveBaseDeviceId(baseDeviceId)
             }
-            resetDeviceId(newDeviceId)
-        } else {
-            if let baseDeviceId = DeviceIdHelper.baseDeviceID(), let deviceId = DeviceIdHelper.deviceId() {
-                if baseDeviceId != deviceId {
-                    resetDeviceId(deviceId)
-                }
+            if newDeviceId != currentDeviceId {
+                switchAccount(
+                    toDeviceId: newDeviceId,
+                    baseDeviceId: baseDeviceId,
+                    externalUserId: externalUserId,
+                    userAttributes: userAttributes
+                )
             }
         }
         updateUserAttributes(
@@ -421,12 +437,13 @@ public struct Reteno {
         )
     }()
     
+    /// Account suffix of the current multi-account device id (the part after `<baseDeviceId>:`), `nil` when the base device id is in use.
     public static func accountSuffix() -> String? {
         guard let currentDeviceId = DeviceIdHelper.deviceId(),
               let baseDeviceId = DeviceIdHelper.baseDeviceID(),
-              currentDeviceId.hasPrefix(baseDeviceId) else { return nil }
+              currentDeviceId.hasPrefix(baseDeviceId + accountSuffixSeparator) else { return nil }
         
-        return String(currentDeviceId.dropFirst(baseDeviceId.count))
+        return normalizedAccountSuffix(String(currentDeviceId.dropFirst(baseDeviceId.count + accountSuffixSeparator.count)))
     }
     
     static func inAppMessages() -> InAppMessages { inApps }
@@ -468,13 +485,63 @@ public struct Reteno {
         senderScheduler.forceUpdateNotificationInteractionStatus(interactionId: interactionId, status: .delivered, date: date)
     }
     
+    // MARK: - Multi-account
+    
+    /// Trims the suffix and strips leading separators, so a caller that passes `":123"` (the format required
+    /// before the separator was inserted by the SDK) ends up with the same device id as one passing `"123"`.
+    /// Returns `nil` for an empty suffix.
+    private static func normalizedAccountSuffix(_ suffix: String?) -> String? {
+        guard var suffix = suffix?.trimmingCharacters(in: .whitespacesAndNewlines) else { return nil }
+        
+        while suffix.hasPrefix(accountSuffixSeparator) {
+            suffix.removeFirst(accountSuffixSeparator.count)
+        }
+        
+        return suffix.isEmpty ? nil : suffix
+    }
+    
+    /// Switches the SDK to another account's device id.
+    ///
+    /// Order matters here. The previous account's identity is cleared and the new one is written to storage
+    /// *before* the device is registered under the new id, otherwise `v1/device` for the new id is sent with
+    /// the previous account's external user id / email / phone and the server links both accounts together.
+    /// Data the previous account queued before the switch captured its `RequestIdentity` and is still sent
+    /// with the previous device id, so it does not have to be flushed first.
     @available(iOSApplicationExtension, unavailable)
-    private static func resetDeviceId(_ newId: String) {
+    private static func switchAccount(
+        toDeviceId newDeviceId: String,
+        baseDeviceId: String,
+        externalUserId: String?,
+        userAttributes: UserAttributes?
+    ) {
+        // Close the previous account's session and in-app state while its identity is still in place.
         inApps.endSession()
         inApps.clearInApps()
-        Thread.sleep(forTimeInterval: 1.0)
-        DeviceIdHelper.actualizeDeviceId(providedDeviceId: newId)
+        
+        // Drop everything that identifies the previous account.
+        let keyValueStorage = StorageBuilder.build()
+        ExternalUserIdHelper.clear()
+        ExternalUserDataHelper.clear()
+        keyValueStorage.clearCachedUser()
+        keyValueStorage.clearCachedDevice()
+        
+        DeviceIdHelper.saveBaseDeviceId(baseDeviceId)
+        DeviceIdHelper.saveDeviceId(newDeviceId)
+        
+        // Write the new identity so the device upsert below carries it.
+        if let externalUserId = externalUserId?.trimmingCharacters(in: .whitespacesAndNewlines), !externalUserId.isEmpty {
+            ExternalUserIdHelper.setId(externalUserId)
+        }
+        if let email = userAttributes?.email?.trimmingCharacters(in: .whitespacesAndNewlines), !email.isEmpty {
+            ExternalUserDataHelper.setEmail(email)
+        }
+        if let phone = userAttributes?.phone?.trimmingCharacters(in: .whitespacesAndNewlines), !phone.isEmpty {
+            ExternalUserDataHelper.setPhone(phone)
+        }
+        
+        // The new device id is not confirmed by the backend yet; the scheduler keeps re-registering it until it is.
+        keyValueStorage.set(value: false, forKey: StorageKeys.isUpdatedDevice.rawValue)
+        DeviceIdHelper.upsertCurrentDevice()
         inApps.startSession()
-        Thread.sleep(forTimeInterval: 2.0)
     }
 }

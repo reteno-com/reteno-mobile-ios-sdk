@@ -10,26 +10,18 @@ import SnapKit
 
 final class ProfileViewController: NiblessViewController {
     
-    private let externalIdTextField = CommonTextField()
-    private let firstNameTextField = CommonTextField()
-    private let lastNameTextField = CommonTextField()
-    private let phoneTextField = CommonTextField()
-    private let emailTextField = CommonTextField()
-    private let accountSuffixField = CommonTextField()
-    private let marketIdTextField = CommonTextField()
+    private let isMultiAccountSwitch = UISwitch()
+    private let multiAccountHintLabel = UILabel()
+    private let manageAccountsButton = UIButton()
+    
+    /// Single-account profile; hidden while multi-account mode is on.
+    private let profileSection = UIStackView()
+    private let formView = ProfileFormView()
     private let clearMarketIdSwitch = UISwitch()
     private let isAnonymousSwitch = UISwitch()
-    
-    private static let allowedMarketIdCharacters = CharacterSet(
-        charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
-    )
-    
+    private let marketingPushEnabledSwitch = UISwitch()
     private let unreadMessagesCountLabel = UILabel()
-    
-    private let generateIdButton = UIButton()
     private let saveButton = UIButton()
-    
-    private let unreadMessagesCount: Int = 0
     
     private let viewModel: ProfileViewModel
     
@@ -44,91 +36,78 @@ final class ProfileViewController: NiblessViewController {
         
         setupLayout()
         setupHandlers()
+        fillStoredProfile()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        refreshMultiAccountState()
     }
     
     private func setupHandlers() {
-        externalIdTextField.addTarget(self, action: #selector(externalIdHandler), for: .editingChanged)
-        firstNameTextField.addTarget(self, action: #selector(firstNameHandler), for: .editingChanged)
-        lastNameTextField.addTarget(self, action: #selector(lastNameHandler), for: .editingChanged)
-        accountSuffixField.addTarget(self, action: #selector(accountSuffixHandler), for: .editingChanged)
-        phoneTextField.addTarget(self, action: #selector(phoneHandler), for: .editingChanged)
-        emailTextField.addTarget(self, action: #selector(emailHandler), for: .editingChanged)
-        marketIdTextField.addTarget(self, action: #selector(marketIdHandler), for: .editingChanged)
+        isMultiAccountSwitch.addTarget(self, action: #selector(isMultiAccountSwitchHandler), for: .valueChanged)
+        manageAccountsButton.addTarget(self, action: #selector(manageAccountsAction), for: .touchUpInside)
         clearMarketIdSwitch.addTarget(self, action: #selector(clearMarketIdSwitchHandler), for: .valueChanged)
         isAnonymousSwitch.addTarget(self, action: #selector(isAnonymousSwitchHandler), for: .valueChanged)
-        generateIdButton.addTarget(self, action: #selector(generateIdAction), for: .touchUpInside)
+        marketingPushEnabledSwitch.addTarget(self, action: #selector(marketingPushEnabledSwitchHandler), for: .valueChanged)
         saveButton.addTarget(self, action: #selector(saveAction), for: .touchUpInside)
     }
     
-    @objc
-    func externalIdHandler(_ textField: UITextField) {
-        viewModel.updateExternalId(textField.text)
+    private func fillStoredProfile() {
+        guard let profile = viewModel.storedProfile else { return }
+        
+        isAnonymousSwitch.isOn = profile.isAnonymous
+        formView.setContactsEnabled(!profile.isAnonymous)
+        marketingPushEnabledSwitch.isOn = profile.isMarketingPushEnabled
+        formView.fill(with: profile.user)
+        saveButton.setTitle(NSLocalizedString("createProfile_screen.updateButton", comment: ""), for: .normal)
+    }
+    
+    private func refreshMultiAccountState() {
+        let isEnabled = viewModel.isMultiAccountEnabled
+        isMultiAccountSwitch.isOn = isEnabled
+        multiAccountHintLabel.text = viewModel.currentAccountDescription()
+        manageAccountsButton.isHidden = !isEnabled
+        profileSection.isHidden = isEnabled
+        saveButton.isHidden = isEnabled
     }
     
     @objc
-    func firstNameHandler(_ textField: UITextField) {
-        viewModel.updateFirstName(textField.text ?? "")
-    }
-    
-    @objc
-    func accountSuffixHandler(_ textField: UITextField) {
-        viewModel.updateAccountSuffix(textField.text?.replacingOccurrences(of: " ", with: "-") ?? "")
-    }
-    
-    @objc
-    func lastNameHandler(_ textField: UITextField) {
-        viewModel.updateLastName(textField.text ?? "")
-    }
-    
-    @objc
-    func phoneHandler(_ textField: UITextField) {
-        viewModel.updatePhone(textField.text ?? "")
-    }
-    
-    @objc
-    func emailHandler(_ textField: UITextField) {
-        viewModel.updateEmail(textField.text ?? "")
-    }
-    
-    @objc
-    func marketIdHandler(_ textField: UITextField) {
-        let rawText = textField.text ?? ""
-        let filtered = String(rawText.unicodeScalars.filter { Self.allowedMarketIdCharacters.contains($0) })
-        if filtered != rawText {
-            textField.text = filtered
+    private func isMultiAccountSwitchHandler(_ sender: UISwitch) {
+        view.endEditing(true)
+        viewModel.setMultiAccountEnabled(sender.isOn)
+        refreshMultiAccountState()
+        if sender.isOn {
+            viewModel.openAccounts()
         }
-        viewModel.updateMarketId(filtered)
+    }
+    
+    @objc
+    private func manageAccountsAction(_ button: UIButton) {
+        viewModel.openAccounts()
     }
     
     @objc
     private func clearMarketIdSwitchHandler(_ sender: UISwitch) {
-        if sender.isOn {
-            marketIdTextField.text = nil
-            viewModel.updateMarketId("")
-        }
-        marketIdTextField.isEnabled = !sender.isOn
+        formView.setMarketIdEnabled(!sender.isOn)
         viewModel.updateShouldClearMarketId(sender.isOn)
     }
     
     @objc
     private func isAnonymousSwitchHandler(_ sender: UISwitch) {
-        phoneTextField.text = nil
-        viewModel.updatePhone(phoneTextField.text ?? "")
-        emailTextField.text = nil
-        viewModel.updateEmail(emailTextField.text ?? "")
+        formView.setContactsEnabled(!sender.isOn)
         viewModel.updateIsAnonymous(sender.isOn)
     }
     
     @objc
-    func generateIdAction(_ button: UIButton) {
-        let id = viewModel.generateId()
-        externalIdTextField.text = id
-        viewModel.updateExternalId(id)
+    private func marketingPushEnabledSwitchHandler(_ sender: UISwitch) {
+        viewModel.updateIsMarketingPushEnabled(sender.isOn)
     }
     
     @objc
-    func saveAction(_ button: UIButton) {
-        viewModel.saveUser()
+    private func saveAction(_ button: UIButton) {
+        viewModel.saveUser(formView.user)
         viewModel.getUnreadMessagesCount { [weak self] number in
             self?.unreadMessagesCountLabel.text = "\(number)"
         }
@@ -154,72 +133,50 @@ private extension ProfileViewController {
         stack.axis = .vertical
         stack.spacing = 10.0
         
-        let idStackView = UIStackView()
-        idStackView.axis = .horizontal
-        idStackView.distribution = .fill
-        idStackView.spacing = 8.0
-        stack.addArrangedSubview(idStackView)
+        // Multi-account
         
-        externalIdTextField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        idStackView.addArrangedSubview(externalIdTextField)
+        stack.addArrangedSubview(makeSwitchRow(
+            isMultiAccountSwitch,
+            title: NSLocalizedString("createProfile_screen.multiAccountSwitch", comment: "")
+        ))
         
-        externalIdTextField.placeholder = NSLocalizedString("createProfile_screen.fields.externalId", comment: "")
-        externalIdTextField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        multiAccountHintLabel.font = .systemFont(ofSize: 13.0)
+        multiAccountHintLabel.textColor = .darkGray
+        multiAccountHintLabel.numberOfLines = 0
+        stack.addArrangedSubview(multiAccountHintLabel)
         
-        generateIdButton.contentEdgeInsets = UIEdgeInsets(top: 0.0, left: 4.0, bottom: 0.0, right: 4.0)
-        generateIdButton.layer.cornerRadius = 8.0
-        generateIdButton.backgroundColor = .systemBlue
-        generateIdButton.setTitleColor(.white, for: .normal)
-        generateIdButton.setTitle(NSLocalizedString("createProfile_screen.generateButton", comment: ""), for: .normal)
-        generateIdButton.snp.makeConstraints {
-            $0.height.equalTo(30.0)
+        manageAccountsButton.layer.cornerRadius = 8.0
+        manageAccountsButton.backgroundColor = .systemBlue
+        manageAccountsButton.setTitleColor(.white, for: .normal)
+        manageAccountsButton.setTitle(
+            NSLocalizedString("createProfile_screen.multiAccount.manageButton", comment: ""),
+            for: .normal
+        )
+        manageAccountsButton.snp.makeConstraints {
+            $0.height.equalTo(44.0)
         }
-        generateIdButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        idStackView.addArrangedSubview(generateIdButton)
+        stack.addArrangedSubview(manageAccountsButton)
         
-        stack.addArrangedSubview(firstNameTextField)
-        firstNameTextField.keyboardType = .namePhonePad
-        firstNameTextField.placeholder = NSLocalizedString("createProfile_screen.fields.firstName", comment: "")
+        // Single-account profile
         
-        stack.addArrangedSubview(lastNameTextField)
-        lastNameTextField.keyboardType = .namePhonePad
-        lastNameTextField.placeholder = NSLocalizedString("createProfile_screen.fields.lastName", comment: "")
+        profileSection.axis = .vertical
+        profileSection.spacing = 10.0
+        stack.addArrangedSubview(profileSection)
+        stack.setCustomSpacing(20.0, after: multiAccountHintLabel)
         
-        stack.addArrangedSubview(phoneTextField)
-        phoneTextField.keyboardType = .phonePad
-        phoneTextField.placeholder = NSLocalizedString("createProfile_screen.fields.phone", comment: "")
-        
-        stack.addArrangedSubview(emailTextField)
-        emailTextField.keyboardType = .emailAddress
-        emailTextField.placeholder = NSLocalizedString("createProfile_screen.fields.email", comment: "")
-        
-        stack.addArrangedSubview(accountSuffixField)
-        accountSuffixField.placeholder = "Account suffix"
-        
-        stack.addArrangedSubview(marketIdTextField)
-        marketIdTextField.keyboardType = .asciiCapable
-        marketIdTextField.autocorrectionType = .no
-        marketIdTextField.autocapitalizationType = .none
-        marketIdTextField.placeholder = NSLocalizedString("createProfile_screen.fields.marketId", comment: "")
-        
-        let clearMarketIdStackView = UIStackView()
-        clearMarketIdStackView.axis = .horizontal
-        clearMarketIdStackView.spacing = 6.0
-        let clearMarketIdLabel = UILabel()
-        clearMarketIdLabel.text = NSLocalizedString("createProfile_screen.clearMarketIdSwitch", comment: "")
-        clearMarketIdStackView.addArrangedSubview(clearMarketIdSwitch)
-        clearMarketIdStackView.addArrangedSubview(clearMarketIdLabel)
-        stack.addArrangedSubview(clearMarketIdStackView)
-
-        let isAnonymousStackView = UIStackView()
-        isAnonymousStackView.axis = .horizontal
-        isAnonymousStackView.spacing = 6.0
-        let isAnonymousLabel = UILabel()
-        isAnonymousLabel.text = NSLocalizedString("createProfile_screen.anonymousSwitch", comment: "")
-        isAnonymousStackView.addArrangedSubview(isAnonymousSwitch)
-        isAnonymousStackView.addArrangedSubview(isAnonymousLabel)
-        
-        stack.addArrangedSubview(isAnonymousStackView)
+        profileSection.addArrangedSubview(formView)
+        profileSection.addArrangedSubview(makeSwitchRow(
+            clearMarketIdSwitch,
+            title: NSLocalizedString("createProfile_screen.clearMarketIdSwitch", comment: "")
+        ))
+        profileSection.addArrangedSubview(makeSwitchRow(
+            isAnonymousSwitch,
+            title: NSLocalizedString("createProfile_screen.anonymousSwitch", comment: "")
+        ))
+        profileSection.addArrangedSubview(makeSwitchRow(
+            marketingPushEnabledSwitch,
+            title: NSLocalizedString("createProfile_screen.marketingPushEnabledSwitch", comment: "")
+        ))
         
         let messagesCountStackView = UIStackView()
         messagesCountStackView.axis = .horizontal
@@ -228,9 +185,7 @@ private extension ProfileViewController {
         unreadMessagesTextLabel.text = "Unread messages count:"
         messagesCountStackView.addArrangedSubview(unreadMessagesTextLabel)
         messagesCountStackView.addArrangedSubview(unreadMessagesCountLabel)
-        
-        stack.addArrangedSubview(messagesCountStackView)
-        
+        profileSection.addArrangedSubview(messagesCountStackView)
         
         view.addSubview(saveButton)
         saveButton.snp.makeConstraints {
@@ -243,5 +198,18 @@ private extension ProfileViewController {
         saveButton.setTitleColor(.black, for: .normal)
         saveButton.layer.cornerRadius = 6.0
     }
-
+    
+    func makeSwitchRow(_ switcher: UISwitch, title: String) -> UIStackView {
+        let row = UIStackView()
+        row.axis = .horizontal
+        row.spacing = 6.0
+        let label = UILabel()
+        label.text = title
+        label.numberOfLines = 0
+        row.addArrangedSubview(switcher)
+        row.addArrangedSubview(label)
+        
+        return row
+    }
+    
 }

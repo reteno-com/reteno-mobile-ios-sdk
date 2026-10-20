@@ -17,6 +17,20 @@ final class MainFlowAssembly: Assembly {
             return ProfileViewController(viewModel: viewModel)
         }.inObjectScope(.transient)
         
+        container.register(AccountsListViewController.self) { (_, navigationHandler: AccountsListModelNavigationHandler) in
+            let model = AccountsListModel(navigationHandler: navigationHandler)
+            let viewModel = AccountsListViewModel(model: model)
+            
+            return AccountsListViewController(viewModel: viewModel)
+        }.inObjectScope(.transient)
+        
+        container.register(AddAccountViewController.self) { (_, navigationHandler: AddAccountModelNavigationHandler) in
+            let model = AddAccountModel(navigationHandler: navigationHandler)
+            let viewModel = AddAccountViewModel(model: model)
+            
+            return AddAccountViewController(viewModel: viewModel)
+        }.inObjectScope(.transient)
+        
         container.register(AppInboxViewController.self) { _ in
             let model = AppInboxModel()
             let viewModel = AppInboxViewModel(model: model)

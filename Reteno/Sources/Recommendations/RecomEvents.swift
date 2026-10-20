@@ -14,13 +14,22 @@ struct RecomEvents: Codable {
     let recomVariantId: String
     let impressions: [RecomEvent]
     let clicks: [RecomEvent]
+    /// Identity the events were logged under, `nil` for events stored by an older SDK version.
+    let identity: RequestIdentity?
     
-    init(date: Date = Date(), recomVariantId: String, impressions: [RecomEvent], clicks: [RecomEvent]) {
+    init(
+        date: Date = Date(),
+        recomVariantId: String,
+        impressions: [RecomEvent],
+        clicks: [RecomEvent],
+        identity: RequestIdentity? = .current
+    ) {
         self.id = UUID().uuidString
         self.date = date
         self.recomVariantId = recomVariantId
         self.impressions = impressions
         self.clicks = clicks
+        self.identity = identity
     }
 
     func toJSON() -> [String: Any] {

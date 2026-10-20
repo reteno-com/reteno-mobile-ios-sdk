@@ -106,6 +106,7 @@
 		E0367B952CA4A07700F88784 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AB42CA4A07700F88784 /* Logger.swift */; };
 		E0367B962CA4A07700F88784 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AF02CA4A07700F88784 /* ParameterEncoding.swift */; };
 		E0367B972CA4A07700F88784 /* ExternalUserIdHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AAE2CA4A07700F88784 /* ExternalUserIdHelper.swift */; };
+		A1B2C3D4E5F60718293A4B5D /* RequestIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* RequestIdentity.swift */; };
 		E0367B982CA4A07700F88784 /* InAppCheckAsyncRulesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B112CA4A07700F88784 /* InAppCheckAsyncRulesRequest.swift */; };
 		E0367B992CA4A07700F88784 /* Ecommerce.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367AD12CA4A07700F88784 /* Ecommerce.swift */; };
 		E0367B9A2CA4A07700F88784 /* MessagesCountOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0367B2A2CA4A07700F88784 /* MessagesCountOperation.swift */; };
@@ -218,6 +219,7 @@
 		E0367AAC2CA4A07700F88784 /* DebugModeHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugModeHelper.swift; sourceTree = "<group>"; };
 		E0367AAD2CA4A07700F88784 /* ExternalUserDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalUserDataHelper.swift; sourceTree = "<group>"; };
 		E0367AAE2CA4A07700F88784 /* ExternalUserIdHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalUserIdHelper.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5C /* RequestIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestIdentity.swift; sourceTree = "<group>"; };
 		E0367AAF2CA4A07700F88784 /* JSONConverterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONConverterHelper.swift; sourceTree = "<group>"; };
 		E0367AB02CA4A07700F88784 /* RetenoNotificationsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetenoNotificationsHelper.swift; sourceTree = "<group>"; };
 		E0367AB12CA4A07700F88784 /* SDKStateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKStateHelper.swift; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 				E0367AAC2CA4A07700F88784 /* DebugModeHelper.swift */,
 				E0367AAD2CA4A07700F88784 /* ExternalUserDataHelper.swift */,
 				E0367AAE2CA4A07700F88784 /* ExternalUserIdHelper.swift */,
+				A1B2C3D4E5F60718293A4B5C /* RequestIdentity.swift */,
 				E0367AAF2CA4A07700F88784 /* JSONConverterHelper.swift */,
 				E0367AB02CA4A07700F88784 /* RetenoNotificationsHelper.swift */,
 				E0367AB12CA4A07700F88784 /* SDKStateHelper.swift */,
@@ -1080,6 +1083,7 @@
 				E0367B952CA4A07700F88784 /* Logger.swift in Sources */,
 				E0367B962CA4A07700F88784 /* ParameterEncoding.swift in Sources */,
 				E0367B972CA4A07700F88784 /* ExternalUserIdHelper.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5D /* RequestIdentity.swift in Sources */,
 				E0367B982CA4A07700F88784 /* InAppCheckAsyncRulesRequest.swift in Sources */,
 				E0367B992CA4A07700F88784 /* Ecommerce.swift in Sources */,
 				E0367B9A2CA4A07700F88784 /* MessagesCountOperation.swift in Sources */,

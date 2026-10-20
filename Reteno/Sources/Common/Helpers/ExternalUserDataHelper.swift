@@ -27,4 +27,10 @@ struct ExternalUserDataHelper {
         StorageBuilder.build().set(value: newEmail, forKey: StorageKeys.emailId.rawValue)
     }
     
+    static func clear() {
+        let storage = StorageBuilder.build()
+        storage.removeValue(forKey: StorageKeys.phoneId.rawValue)
+        storage.removeValue(forKey: StorageKeys.emailId.rawValue)
+    }
+    
 }

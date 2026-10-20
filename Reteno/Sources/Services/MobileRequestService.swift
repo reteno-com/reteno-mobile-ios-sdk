@@ -10,9 +10,22 @@ import Foundation
 final class MobileRequestService {
     
     private let requestManager: RequestManager
+    private let identity: () -> RequestIdentity
     
-    init(requestManager: RequestManager = NetworkBuilder.buildMobileApiManager()) {
+    init(
+        requestManager: RequestManager = NetworkBuilder.buildMobileApiManager(),
+        identity: @escaping () -> RequestIdentity = { .current }
+    ) {
         self.requestManager = requestManager
+        self.identity = identity
+    }
+    
+    /// `self` while `identity` is still the current one, otherwise a mobile API service pinned to `identity`,
+    /// so data captured before a multi-account switch is not sent with the next account's device id.
+    func pinned(to identity: RequestIdentity?) -> MobileRequestService {
+        guard let identity, !identity.isCurrent else { return self }
+        
+        return MobileRequestServiceBuilder.build(identity: identity)
     }
     
     func upsertDevice(
@@ -75,7 +88,7 @@ final class MobileRequestService {
             guard
                 let externalUserId = user.externalUserId,
                 !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            else { return ExternalUserIdHelper.getId() ?? "" }
+            else { return identity().externalUserId ?? "" }
             
             return externalUserId
         }()
@@ -90,6 +103,7 @@ final class MobileRequestService {
         
         let request = UpdateUserAttributesRequest(
             externalUserId: user.isAnonymous ? nil : externalUserId,
+            deviceId: identity().deviceId,
             userAttributes: user.userAttributes,
             subscriptionKeys: user.subscriptionKeys,
             groupNamesInclude: user.groupNamesInclude,

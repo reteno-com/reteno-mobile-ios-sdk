@@ -24,7 +24,8 @@ struct NetworkBuilder {
     
     static func buildMobileApiManager(
         apiKey: @escaping @autoclosure () -> String = ApiKeyHelper.getApiKey(),
-        isExternalIdRequired: Bool = true
+        isExternalIdRequired: Bool = true,
+        identity: @escaping () -> RequestIdentity = { .current }
     ) -> RequestManager {
         let headersDecorator = RequestDecorator { request in
             request.headers?.updateValue("application/json", forKey: "Content-Type")
@@ -35,9 +36,10 @@ struct NetworkBuilder {
             }
         }
         let parametersDecorator = RequestDecorator { request in
-            request.parameters?["deviceId"] = DeviceIdHelper.deviceId() ?? ""
+            let identity = identity()
+            request.parameters?["deviceId"] = identity.deviceId
             if isExternalIdRequired {
-                request.parameters?["externalUserId"] = ExternalUserIdHelper.getId()
+                request.parameters?["externalUserId"] = identity.externalUserId
             }
         }
         
@@ -47,16 +49,20 @@ struct NetworkBuilder {
         )
     }
     
-    static func buildApiManagerForDeviceProviding() -> RequestManager {
-        buildMobileApiManager(isExternalIdRequired: false)
+    static func buildApiManagerForDeviceProviding(identity: @escaping () -> RequestIdentity = { .current }) -> RequestManager {
+        buildMobileApiManager(isExternalIdRequired: false, identity: identity)
     }
     
-    static func buildApiManagerWithDeviceIdInHeaders(apiKey: @escaping @autoclosure () -> String = ApiKeyHelper.getApiKey()) -> RequestManager {
+    static func buildApiManagerWithDeviceIdInHeaders(
+        apiKey: @escaping @autoclosure () -> String = ApiKeyHelper.getApiKey(),
+        identity: @escaping () -> RequestIdentity = { .current }
+    ) -> RequestManager {
         let headersDecorator = RequestDecorator { request in
             request.headers?.updateValue("application/json", forKey: "Content-Type")
             request.headers?.updateValue(apiKey(), forKey: "X-Reteno-Access-Key")
             request.headers?.updateValue(DevicePlatformHelper.getDevicePlatform(), forKey: "X-Reteno-SDK-Version")
-            if let deviceId = DeviceIdHelper.deviceId() {
+            let deviceId = identity().deviceId
+            if !deviceId.isEmpty {
                 request.headers?.updateValue(deviceId, forKey: "X-Reteno-Device-ID")
             }
             if DebugModeHelper.isDebugModeOn() {

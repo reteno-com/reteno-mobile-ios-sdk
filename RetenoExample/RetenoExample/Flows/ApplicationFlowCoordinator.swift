@@ -138,5 +138,33 @@ extension ApplicationFlowCoordinator: ProfileModelNavigationHandler {
         navigationController?.popToRootViewController(animated: true)
     }
     
+    func openAccounts() {
+        let navigationHandler: AccountsListModelNavigationHandler = self
+        let controller = container.resolve(AccountsListViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+}
+
+// MARK: AccountsListModelNavigationHandler
+
+extension ApplicationFlowCoordinator: AccountsListModelNavigationHandler {
+    
+    func openAddAccount() {
+        let navigationHandler: AddAccountModelNavigationHandler = self
+        let controller = container.resolve(AddAccountViewController.self, argument: navigationHandler)!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+}
+
+// MARK: AddAccountModelNavigationHandler
+
+extension ApplicationFlowCoordinator: AddAccountModelNavigationHandler {
+    
+    func backToAccounts() {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
 

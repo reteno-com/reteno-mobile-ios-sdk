@@ -11,16 +11,29 @@ struct MobileRequestServiceBuilder {
     
     private init() {}
     
-    static func build() -> MobileRequestService {
-        MobileRequestService()
+    /// - Parameter identity: identity the requests are sent with; `nil` uses the identity current when each request is built
+    static func build(identity: RequestIdentity? = nil) -> MobileRequestService {
+        let provider = RequestIdentity.provider(for: identity)
+        return MobileRequestService(
+            requestManager: NetworkBuilder.buildMobileApiManager(identity: provider),
+            identity: provider
+        )
     }
     
-    static func buildForDeviceRequest() -> MobileRequestService {
-        MobileRequestService(requestManager: NetworkBuilder.buildApiManagerForDeviceProviding())
+    static func buildForDeviceRequest(identity: RequestIdentity? = nil) -> MobileRequestService {
+        let provider = RequestIdentity.provider(for: identity)
+        return MobileRequestService(
+            requestManager: NetworkBuilder.buildApiManagerForDeviceProviding(identity: provider),
+            identity: provider
+        )
     }
     
-    static func buildWithDeviceIdInHeaders() -> MobileRequestService {
-        MobileRequestService(requestManager: NetworkBuilder.buildApiManagerWithDeviceIdInHeaders())
+    static func buildWithDeviceIdInHeaders(identity: RequestIdentity? = nil) -> MobileRequestService {
+        let provider = RequestIdentity.provider(for: identity)
+        return MobileRequestService(
+            requestManager: NetworkBuilder.buildApiManagerWithDeviceIdInHeaders(identity: provider),
+            identity: provider
+        )
     }
     
 }

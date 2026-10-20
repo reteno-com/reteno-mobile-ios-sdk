@@ -95,9 +95,9 @@ extension KeyedEncodingContainerProtocol where Key == JSONCodingKeys {
         try value.forEach { key, value in
             let key = JSONCodingKeys(stringValue: key)
             switch value {
+            case let value as NSNumber where value.isBoolean:
+                try encode(value.boolValue, forKey: key)
             case let value as Int:
-                try encode(value, forKey: key)
-            case let value as Bool:
                 try encode(value, forKey: key)
             case let value as String:
                 try encode(value, forKey: key)
@@ -146,11 +146,9 @@ extension UnkeyedEncodingContainer {
     mutating func encode(_ value: [Any]) throws {
         try value.enumerated().forEach { index, value in
             switch value {
-            case let value as Bool:
-                try encode(value)
+            case let value as NSNumber where value.isBoolean:
+                try encode(value.boolValue)
             case let value as Int:
-                try encode(value)
-            case let value as Bool:
                 try encode(value)
             case let value as String:
                 try encode(value)
@@ -178,6 +176,14 @@ extension UnkeyedEncodingContainer {
     mutating func encode(_ value: [String: Any]) throws {
         var nestedContainer = self.nestedContainer(keyedBy: JSONCodingKeys.self)
         try nestedContainer.encode(value)
+    }
+    
+}
+
+private extension NSNumber {
+    
+    var isBoolean: Bool {
+        CFGetTypeID(self) == CFBooleanGetTypeID()
     }
     
 }

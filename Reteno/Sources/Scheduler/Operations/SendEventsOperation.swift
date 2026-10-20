@@ -13,11 +13,15 @@ final class SendEventsOperation: DateOperation, @unchecked Sendable {
     private let requestService: MobileRequestService
     private let storage: KeyValueStorage
     private let events: [Event]
+    /// Identity the events were logged under; checked before every batch, so a multi-account switch
+    /// in the middle of the operation does not send the rest with the next account's device id.
+    private let identity: RequestIdentity?
 
-    init(requestService: MobileRequestService, storage: KeyValueStorage, events: [Event]) {
+    init(requestService: MobileRequestService, storage: KeyValueStorage, events: [Event], identity: RequestIdentity? = nil) {
         self.requestService = requestService
         self.storage = storage
         self.events = events
+        self.identity = identity
 
         super.init(date: events.first?.date ?? Date())
     }
@@ -49,7 +53,7 @@ final class SendEventsOperation: DateOperation, @unchecked Sendable {
             return
         }
 
-        requestService.sendEvents(batch) { [storage] result in
+        requestService.pinned(to: identity).sendEvents(batch) { [storage] result in
             let isBatchHandled: Bool
             switch result {
             case .success:

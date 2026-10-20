@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Reteno
 
-struct User {
+struct User: Codable, Equatable {
     
     var id: String
     var firstName: String?
@@ -30,6 +31,22 @@ struct User {
         self.phone = phone
         self.email = email
         self.marketId = marketId
+    }
+    
+    /// SDK attributes for this user, `nil` when there is nothing to send.
+    func userAttributes(marketId: String?, fields: [UserCustomField] = []) -> UserAttributes? {
+        guard phone != nil || email != nil || firstName != nil || lastName != nil || marketId != nil || !fields.isEmpty else {
+            return nil
+        }
+        
+        return UserAttributes(
+            phone: phone,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            marketId: marketId,
+            fields: fields
+        )
     }
     
 }
