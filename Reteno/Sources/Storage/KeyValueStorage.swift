@@ -59,6 +59,8 @@ enum StorageKeys: String, CaseIterable {
     case retenoConfiguration = "com.reteno.reteno-configuration.key"
     case isDelayedInitialization = "com.reteno.reteno-delayed-initialization.key"
     case lastBaseHTMLFetchDate = "com.reteno.last-base-html-fetch-date.key"
+    case workflowState = "com.reteno.workflow-state.key"
+    case inAppContext = "com.reteno.in-app-context.key"
     case lastBaseHTMLPath = "com.reteno.last-base-html-path.key"
 }
 
@@ -108,6 +110,78 @@ final class KeyValueStorage {
         storageUnwrapper()?.removeObject(forKey: key)
     }
     
+    var hasPendingWorkflowRegistration: Bool {
+        let state: WorkflowState = readCollection(.workflowState, empty: WorkflowState())
+        return state.pendingRegistrationContext != nil
+    }
+
+    func beginWorkflowRegistration(context: String) {
+        updateCollection(.workflowState, empty: WorkflowState()) { $0.pendingRegistrationContext = context }
+    }
+
+    @discardableResult
+    func confirmWorkflowRegistration(context: String) -> Bool {
+        var confirmed = false
+        updateCollection(.workflowState, empty: WorkflowState()) { state in
+            guard state.pendingRegistrationContext == context else { return }
+            state.pendingRegistrationContext = nil
+            confirmed = true
+        }
+        return confirmed
+    }
+
+    func hasShownWorkflow(iid: String, context: String) -> Bool {
+        let state: WorkflowState = readCollection(.workflowState, empty: WorkflowState())
+        return state.shown[context]?.contains(iid) == true
+    }
+
+    func workflowDeadline(iid: String, proposed: String, context: String) -> String {
+        var deadline = proposed
+        updateCollection(.workflowState, empty: WorkflowState()) { state in
+            if let saved = state.deadlines[context]?[iid] {
+                deadline = saved
+            } else {
+                state.deadlines[context, default: [:]][iid] = proposed
+            }
+        }
+        return deadline
+    }
+
+    @discardableResult
+    func recordWorkflowInteraction(_ interaction: NewInteraction, context: String, now: Date) -> Bool {
+        var recorded = false
+        // One encoded value makes the shown marker and OPENED inseparable on reopen.
+        updateCollection(.workflowState, empty: WorkflowState()) { state in
+            if interaction.status == .opened {
+                guard state.shown[context]?.contains(interaction.id) != true else { return }
+            }
+            if interaction.status == .opened || interaction.status == .clicked {
+                state.shown[context, default: []].insert(interaction.id)
+            }
+            state.observations.append(.init(id: UUID().uuidString, context: context,
+                                            interaction: interaction, nextAttempt: now))
+            recorded = true
+        }
+        return recorded
+    }
+
+    func pendingWorkflowInteractions(context: String, now: Date) -> [QueuedInAppInteraction] {
+        let state: WorkflowState = readCollection(.workflowState, empty: WorkflowState())
+        return state.observations.filter { $0.context == context && $0.nextAttempt <= now && $0.attempts < 8 }
+    }
+
+    func completeWorkflowInteraction(id: String, retryAt: Date?) {
+        updateCollection(.workflowState, empty: WorkflowState()) { state in
+            guard let index = state.observations.firstIndex(where: { $0.id == id }) else { return }
+            if let retryAt, state.observations[index].attempts < 7 {
+                state.observations[index].attempts += 1
+                state.observations[index].nextAttempt = retryAt
+            } else {
+                state.observations.remove(at: index)
+            }
+        }
+    }
+
     // MARK: Analytics logic
 
     func getStoredSessionConfiguration() -> RetenoSessionConfiguration? {

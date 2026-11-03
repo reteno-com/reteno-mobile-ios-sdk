@@ -34,7 +34,9 @@ extension KeyedDecodingContainer {
         var dictionary = [String: Any]()
         
         for key in allKeys {
-            if let boolValue = try? decode(Bool.self, forKey: key) {
+            if try decodeNil(forKey: key) {
+                dictionary[key.stringValue] = NSNull()
+            } else if let boolValue = try? decode(Bool.self, forKey: key) {
                 dictionary[key.stringValue] = boolValue
             } else if let stringValue = try? decode(String.self, forKey: key) {
                 dictionary[key.stringValue] = stringValue
@@ -61,6 +63,7 @@ extension UnkeyedDecodingContainer {
         
         while isAtEnd == false {
             if try decodeNil() {
+                array.append(NSNull())
                 continue
             }
             

@@ -24,6 +24,13 @@ class InAppMessageWebViewController: UIViewController {
     private let message: InApp
     let webView: WKWebView
     private let inAppService: InAppService
+    private var presentationStarted = false
+
+    func beginPresentation() -> Bool {
+        guard !presentationStarted else { return false }
+        presentationStarted = true
+        return true
+    }
     
     // MARK: Init
     
@@ -34,7 +41,6 @@ class InAppMessageWebViewController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        view.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
@@ -45,15 +51,13 @@ class InAppMessageWebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .clear
         guard let htmlContent = FileStorage.shared.getBaseHtmlContent() else {
-            Logger.log("Reteno: No base HTML file found", eventType: .error)
+            reportLoadingFailure("Base HTML unavailable")
             return
         }
         
-        let personalisation = InAppPersonalisation()
-        let htmlString = htmlContent
-            .replacingOccurrences(of: "${documentModel}", with: personalisation.apply(to: message.model))
-            .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")
+        let htmlString = InAppPersonalisation().prepareHTML(htmlContent, for: message)
         
         webView.layout(in: view)
         webView.scrollView.bounces = false
@@ -66,10 +70,20 @@ class InAppMessageWebViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        webView.stopLoading()
-        webView.configuration.userContentController.removeScriptMessageHandler(forName: "retenoHandler")
+        stopRendering()
     }
-    
+
+    func stopRendering() {
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: "retenoHandler")
+        webView.navigationDelegate = nil
+        webView.stopLoading()
+    }
+
+    private func reportLoadingFailure(_ reason: String) {
+        delegate?.inAppMessageWebViewController(self, didReceive: .init(type: .failedLoading,
+            payload: InAppScriptMessageErrorPayload(reason: reason)), in: message)
+    }
+
     func disableScrolling() {
         webView.scrollView.isScrollEnabled = false
         webView.allowsBackForwardNavigationGestures = false
@@ -99,8 +113,11 @@ extension InAppMessageWebViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        Logger.log(error.localizedDescription, eventType: .error)
-        ErrorLogger.shared.capture(error: error)
+        reportLoadingFailure("Web view navigation failed")
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        reportLoadingFailure("Web view navigation failed")
     }
     
 }
@@ -115,17 +132,8 @@ extension InAppMessageWebViewController: WKScriptMessageHandler {
             let body = message.body as? String,
             let bodyData = body.data(using: .utf8)
         else {
-            Logger.log("Received message\nname: \(message.name);\nbody: \(message.body)", eventType: .debug)
-            ErrorLogger.shared.captureWarningEvent(
-                message: "Couldn't parse script message [\(message.body)]",
-                tags: ["reteno.in_app_message_id": self.message.id]
-            )
-            self.inAppService.sendInteraction(
-                with: self.message,
-                status: .failed,
-                description: "Couldn't parse script message [\(message.body)]"
-            )
-            
+            reportLoadingFailure("In-app script message could not be decoded")
+
             return
         }
         
@@ -133,16 +141,10 @@ extension InAppMessageWebViewController: WKScriptMessageHandler {
             let scriptMessage = try JSONDecoder().decode(InAppScriptMessage.self, from: bodyData)
             
             delegate?.inAppMessageWebViewController(self, didReceive: scriptMessage, in: self.message)
-            Logger.log("Received message: \(scriptMessage)", eventType: .debug)
+            Logger.log("Received in-app script message: \(scriptMessage.type.rawValue)", eventType: .debug)
         } catch {
-            Logger.log(error, eventType: .error)
-            ErrorLogger.shared.capture(error: error)
-            self.inAppService.sendInteraction(
-                with: self.message,
-                status: .failed,
-                description: error.localizedDescription
-            )
+            reportLoadingFailure("In-app script message could not be decoded")
         }
     }
-    
+
 }

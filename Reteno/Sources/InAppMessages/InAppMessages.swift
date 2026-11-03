@@ -15,6 +15,8 @@ final class InAppMessages {
     private var application: UIApplication?
     private var window: UIWindow?
     private var slideUpVC: SlideUpMessageViewController?
+    private var renderingController: InAppMessageWebViewController?
+    private var workflowPresentationPending = false
     
     private var currentInAppMessage: InApp?
     private var currentInteractionId: String?
@@ -94,6 +96,8 @@ final class InAppMessages {
     func presentInApp(by content: InAppContent) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
+            if content.isWorkflow && (UIApplication.shared.applicationState != .active ||
+                !self.inAppService.canPresentWorkflow(content)) { return }
             Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
             self.setupWebView(with: content)
         }
@@ -152,7 +156,8 @@ final class InAppMessages {
     @available(iOSApplicationExtension, unavailable)
     func setInAppMessagesPause(isPaused: Bool) {
         isPausedInApps = isPaused
-        
+        if !isPaused { inAppService.reprocessWorkflowMessages() }
+
         guard !isPaused, inAppMessagesPauseBehaviour == .postponeInApps, let inAppToShow = postponeInAppInfo.first else {
             return
         }
@@ -185,8 +190,18 @@ final class InAppMessages {
     }
     
     func clearInApps() {
+        guard Thread.isMainThread else {
+            DispatchQueue.main.sync { self.clearInApps() }
+            return
+        }
+        dismissInAppMessage(animated: false)
+        dismissSlideUp(animated: false)
+        isAlreadySendRequest = false
         inAppService.clearInApps()
         inAppPresenters = []
+        postponeInAppInfo = []
+        currentInAppMessage = nil
+        currentInteractionId = nil
         pendingEventTriggersQueue.sync { pendingEventTriggers.removeAll() }
     }
     
@@ -234,6 +249,10 @@ final class InAppMessages {
     
     @available(iOSApplicationExtension, unavailable)
     func subscribeOnNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDeviceRegistrationConfirmed(_:)),
+                                               name: Reteno.inAppDeviceRegistrationConfirmed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelPendingWorkflowPresentation),
+                                               name: UIApplication.willResignActiveNotification, object: nil)
         InAppWebViewPool.shared.warmUp()
         self.sessionService.subscribeOnNotifications()
         self.sessionService.onSessionStarted = { [weak self] in
@@ -330,20 +349,51 @@ final class InAppMessages {
         
         isAlreadySendRequest = true
         
-        inAppService.getInAppMessages()
-
+        inAppService.workflowShowModels = { [weak self] models in
+            self?.presentingInApp(contents: [], showModels: models, workflowOnly: true)
+        }
+        inAppService.discoveryFailed = { [weak self] in
+            self?.isAlreadySendRequest = false
+        }
         inAppService.inAppContents = { [weak self] contents, showModels in
             guard let self = self else { return }
             
             self.isAlreadySendRequest = false
             self.presentingInApp(contents: contents, showModels: showModels)
         }
+        inAppService.getInAppMessages()
     }
     
     @available(iOSApplicationExtension, unavailable)
-    private func presentingInApp(contents: [InAppContent], showModels: [InAppShowModel]) {
+    private func presentingInApp(contents: [InAppContent], showModels: [InAppShowModel], workflowOnly: Bool = false) {
+        let discoveryContext = WorkflowContext.current
+        let keys = Set(showModels.map { $0.message.executionKey })
+        inAppPresenters.removeAll {
+            (!workflowOnly || $0.model.message.isWorkflow) && !keys.contains($0.model.message.executionKey)
+        }
         for showModel in showModels {
             let presenter: InAppMessagePresenter = .init(model: showModel, storage: storage) { inApp, canDelete in
+                guard discoveryContext == WorkflowContext.current else { return }
+                if inApp.isWorkflow {
+                    guard !self.isPausedInApps, self.isAlreadyFetchBaseFile else { return }
+                    let authorize = {
+                        self.inAppService.authorizeWorkflow(inApp) { content in
+                            guard let content else { return }
+                            self.presentInApp(by: content)
+                        }
+                    }
+                    if inApp.displayRules.async.segment.enabled {
+                        guard let id = inApp.displayRules.async.segment.segmentId else { return }
+                        self.inAppService.checkAsyncRulesSegment(id: id) { checks in
+                            guard discoveryContext == WorkflowContext.current,
+                                  checks.contains(where: { $0.segmentId == id && $0.checkResult }) else { return }
+                            authorize()
+                        }
+                    } else {
+                        authorize()
+                    }
+                    return
+                }
                 guard !self.isPausedInApps else {
                     
                     if let content = contents.first(where: { $0.messageInstanceId == inApp.messageInstanceId }) {
@@ -379,21 +429,23 @@ final class InAppMessages {
             
             self.updateAllPresenters(
                 newPresenter: presenter,
-                isExistMessageId: { messageId in
-                    messageId == showModel.message.messageId
+                isExistMessageId: { message in
+                    message.executionKey == showModel.message.executionKey
                 }
             )
         }
-        self.inAppPresentersSelections()
-        self.drainPendingEventTriggers()
+        if !workflowOnly {
+            self.inAppPresentersSelections()
+            self.drainPendingEventTriggers()
+        }
     }
     
     private func updateAllPresenters(
         newPresenter: InAppMessagePresenter,
-        isExistMessageId: (Int) -> Bool
+        isExistMessageId: (Message) -> Bool
     ) {
         self.inAppPresenters.removeAll(where: {
-            let isExist = isExistMessageId($0.model.message.messageId)
+            let isExist = isExistMessageId($0.model.message)
             if isExist {
                 Logger.log("inApp messageId: \($0.model.message.messageId) deleted", eventType: .verbose)
             }
@@ -428,6 +480,10 @@ final class InAppMessages {
             }
         }
         guard slideUpVC.isNone && window.isNone else { return }
+        currentInteractionId = nil
+        if let content = message as? InAppContent, content.isWorkflow,
+           !inAppService.canPresentWorkflow(content) { return }
+        workflowPresentationPending = (message as? InAppContent)?.isWorkflow == true
         if message.layoutType == .slideUp || message.layoutType == .bottomBar {
             let viewController = SlideUpMessageViewController(
                 inApp: message,
@@ -435,6 +491,8 @@ final class InAppMessages {
             )
             viewController.delegate = self
             slideUpVC = viewController
+            renderingController = viewController
+            viewController.loadViewIfNeeded()
         } else {
             let viewController = InAppMessageWebViewController(
                 with: message,
@@ -442,19 +500,23 @@ final class InAppMessages {
             )
             viewController.delegate = self
             self.window = UIWindow()
+            renderingController = viewController
+            viewController.loadViewIfNeeded()
         }
     }
     
-    private func presentInAppMessage(animated: Bool = true, in viewController: UIViewController) {
+    private func presentInAppMessage(animated: Bool = true, in viewController: UIViewController,
+                                     visible: @escaping () -> Void) {
         // window for new In-app message
         var window: UIWindow?
         
         func completion() {
             // Check if some in-app is being already presented
-            if self.window.isSome {
-                dismissInAppMessage(animated: false)
+            guard self.window === window, renderingController === viewController else { return }
+            if window?.isHidden == false, window?.alpha == 1,
+               viewController.viewIfLoaded?.window != nil {
+                visible()
             }
-            self.window = window
         }
         
         if #available(iOS 13.0, *) {
@@ -471,16 +533,20 @@ final class InAppMessages {
         window?.backgroundColor = .clear
         window?.windowLevel = .normal
         window?.rootViewController = viewController
+        self.window?.isHidden = true
+        self.window = window
         window?.isHidden = false
         if window.isNone {
+            dismissInAppMessage(animated: false)
             ErrorLogger.shared.captureWarningEvent(message: "Couldn't resolve window to present InApp")
+            return
         }
         
         if animated {
             UIView.animate(
                 withDuration: 0.25,
                 animations: { window?.alpha = 1.0 },
-                completion: { _ in completion() }
+                completion: { finished in if finished { completion() } }
             )
         } else {
             window?.alpha = 1.0
@@ -492,8 +558,16 @@ final class InAppMessages {
     private func presentSlideUpMessage(_ inApp: InApp,
                                        in viewController: UIViewController,
                                        height: CGFloat,
-                                       animated: Bool = true) {
-        guard let rootVC = UIApplication.shared.keyWindow?.rootViewController, let slideUpVC = viewController as?    SlideUpMessageViewController else { return }
+                                       animated: Bool = true,
+                                       visible: @escaping () -> Void) {
+        guard let rootVC = UIApplication.shared.keyWindow?.rootViewController,
+              rootVC.presentedViewController == nil,
+              let slideUpVC = viewController as? SlideUpMessageViewController,
+              height.isFinite, height > 0 else {
+            dismissSlideUp(animated: false)
+            Logger.log("In-app presentation unavailable", eventType: .warning)
+            return
+        }
         switch inApp.layoutType {
         case .bottomBar:
             slideUpTransitioningDelegate = SlideUpTransitioningDelegate(slidePosition: .bottom)
@@ -505,13 +579,19 @@ final class InAppMessages {
         }
         slideUpVC.modalPresentationStyle = .custom
         slideUpVC.transitioningDelegate = slideUpTransitioningDelegate
-        rootVC.present(slideUpVC, animated: true)
+        rootVC.present(slideUpVC, animated: animated) {
+            if slideUpVC.viewIfLoaded?.window != nil { visible() }
+        }
     }
     
     private func dismissInAppMessage(action: InAppMessageAction? = nil, animated: Bool = true) {
         func hide() {
+            window?.isHidden = true
             window?.removeFromSuperview()
+            renderingController?.stopRendering()
             window = nil
+            renderingController = nil
+            workflowPresentationPending = false
             if let action = action {
                 Reteno.inAppStatusHander?(.inAppIsClosed(action: action))
             }
@@ -532,6 +612,8 @@ final class InAppMessages {
                                 swipeDirection: UISwipeGestureRecognizer.Direction = .left,
                                 action: InAppMessageAction? = nil) {
         if let vc = slideUpVC {
+            if !animated { vc.viewIfLoaded?.isHidden = true }
+            vc.stopRendering()
             slideUpTransitioningDelegate?.swipeDirection = swipeDirection
             vc.dismiss(animated: animated) {
                 if let action {
@@ -539,12 +621,15 @@ final class InAppMessages {
                 }
             }
             slideUpVC = nil
+            renderingController = nil
+            workflowPresentationPending = false
         }
     }
     
     // MARK: Processing InApps
     
     private func processingInApp(showModel: InAppShowModel, canDelete: Bool) {
+        guard !showModel.message.isWorkflow else { return }
         if canDelete || showModel.frequency == .oncePerApp || showModel.frequency == .oncePerSession {
             self.inAppPresenters.removeAll(where: { $0.model.message.messageId == showModel.message.messageId })
         }
@@ -563,12 +648,41 @@ final class InAppMessages {
     
     // MARK: Handle interaction
     
-    private func handleInteraction(messageId: String, action: NotificationStatus.Action) {
-        let status = NotificationStatus(interactionId: messageId, status: .clicked, date: Date(), action: action)
-        storage.addNotificationStatus(status)
+    private func handleInteraction(in message: InApp, messageId: String, action: NotificationStatus.Action) {
+        if let content = message as? InAppContent, content.isWorkflow {
+            inAppService.sendInteraction(with: content, status: .clicked, action: action)
+        } else {
+            let status = NotificationStatus(interactionId: messageId, status: .clicked, date: Date(), action: action)
+            storage.addNotificationStatus(status)
+        }
         scheduler.forcePushEvents()
     }
     
+    // Called synchronously after Core has written the complete local identity.
+    func userIdentityDidChange(from previousContext: String) {
+        guard Thread.isMainThread else {
+            DispatchQueue.main.sync { self.userIdentityDidChange(from: previousContext) }
+            return
+        }
+        let current = WorkflowContext.current
+        guard previousContext != current else { return }
+        clearInApps()
+        storage.set(value: current, forKey: StorageKeys.inAppContext.rawValue)
+        storage.beginWorkflowRegistration(context: current)
+        // Reuse the scheduler's existing current-device registration/recovery path.
+        storage.set(value: false, forKey: StorageKeys.isUpdatedDevice.rawValue)
+    }
+
+    @available(iOSApplicationExtension, unavailable)
+    @objc private func handleDeviceRegistrationConfirmed(_ notification: Notification) {
+        guard let context = notification.userInfo?["context"] as? String else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self, context == WorkflowContext.current,
+                  !self.storage.hasPendingWorkflowRegistration else { return }
+            self.getInAppMessages()
+        }
+    }
+
     // MARK: Handle notifications
     
     @available(iOSApplicationExtension, unavailable)
@@ -580,13 +694,12 @@ final class InAppMessages {
         
         DispatchQueue.global().async { [weak self] in
             self?.fetchBaseHTML { [weak self] in
-                self?.isAlreadyFetchBaseFile = true
-                self?.drainPendingEventTriggers()
-                guard let currentInAppMessage = self?.currentInAppMessage else { return }
-                
                 DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    
+                    guard let self else { return }
+                    self.isAlreadyFetchBaseFile = true
+                    self.inAppService.reprocessWorkflowMessages()
+                    self.drainPendingEventTriggers()
+                    guard let currentInAppMessage = self.currentInAppMessage else { return }
                     self.setupWebView(with: currentInAppMessage)
                     self.currentInAppMessage = nil
                 }
@@ -602,6 +715,13 @@ final class InAppMessages {
     @objc
     private func handleApplicationDidEnterBackgroundNotification(_ notification: Notification) {
         application = notification.object as? UIApplication
+        cancelPendingWorkflowPresentation()
+    }
+
+    @objc private func cancelPendingWorkflowPresentation() {
+        guard workflowPresentationPending else { return }
+        dismissInAppMessage(animated: false)
+        dismissSlideUp(animated: false)
     }
 }
 
@@ -615,38 +735,63 @@ extension InAppMessages: InAppScriptMessageHandler {
         didReceive scriptMessage: InAppScriptMessage,
         in message: InApp
     ) {
+        guard renderingController === viewController else { return }
         switch scriptMessage.type {
         case .completedLoading:
+            guard viewController.beginPresentation() else { return }
+            if let content = message as? InAppContent, content.isWorkflow,
+               (UIApplication.shared.applicationState != .active || !inAppService.canPresentWorkflow(content)) {
+                dismissInAppMessage(animated: false)
+                dismissSlideUp(animated: false)
+                return
+            }
+            let visible = { [weak self, weak viewController] in
+                guard let self, let viewController,
+                      self.renderingController === viewController,
+                      viewController.viewIfLoaded?.window != nil else { return }
+                if let content = message as? InAppContent, content.isWorkflow {
+                    guard UIApplication.shared.applicationState == .active,
+                          self.inAppService.canPresentWorkflow(content) else {
+                        self.dismissInAppMessage(animated: false)
+                        self.dismissSlideUp(animated: false)
+                        return
+                    }
+                    self.workflowPresentationPending = false
+                    self.currentInteractionId = content.iid
+                    self.inAppService.sendInteraction(with: content)
+                    self.scheduler.forcePushEvents()
+                    self.inAppPresenters.removeAll { $0.model.message.isWorkflow && $0.model.message.iid == content.iid }
+                } else if let content = message as? InAppContent {
+                    let interactionId = UUID().uuidString
+                    self.currentInteractionId = interactionId
+                    self.inAppService.sendInteraction(with: content, interactionId: interactionId)
+                }
+                Reteno.inAppStatusHander?(.inAppIsDisplayed)
+            }
             if let slideUpVC = viewController as? SlideUpMessageViewController,
                let payload = scriptMessage.payload as? SlideAppContentHeightPayload,
                message.layoutType == .slideUp || message.layoutType == .bottomBar {
-                presentSlideUpMessage(message, in: slideUpVC, height: payload.contentHeight, animated: true)
+                presentSlideUpMessage(message, in: slideUpVC, height: payload.contentHeight, animated: true, visible: visible)
             } else {
-                presentInAppMessage(in: viewController)
+                presentInAppMessage(in: viewController, visible: visible)
             }
-            Reteno.inAppStatusHander?(.inAppIsDisplayed)
-            currentInteractionId = nil
-            guard let inAppContent = message as? InAppContent else {
-                return
-            }
-            
-            let intecationId = UUID().uuidString
-            currentInteractionId = intecationId
-            self.inAppService.sendInteraction(with: inAppContent, interactionId: intecationId)
         case .failedLoading, .runtimeError:
+            dismissInAppMessage(animated: false)
+            dismissSlideUp(animated: false)
             currentInteractionId = nil
             Reteno.inAppStatusHander?(.inAppReceivedError(error: "Failed loading in-app"))
             guard let payload = scriptMessage.payload as? InAppScriptMessageErrorPayload else { return }
 
-            Logger.log("Failed loading in-app script: \(payload.reason)", eventType: .error)
+            let reason = (message as? InAppContent)?.isWorkflow == true ? "Workflow renderer failed" : payload.reason
+            Logger.log("Failed loading in-app script: \(reason)", eventType: .error)
             inAppRequestService.sendScriptEvent(
                 messageId: message.id,
-                data: ["type": scriptMessage.type.rawValue, "payload": ["reason": payload.reason]]
+                data: ["type": scriptMessage.type.rawValue, "payload": ["reason": reason]]
             )
             self.inAppService.sendInteraction(
                 with: message,
                 status: .failed,
-                description: "Failed loading in-app script: \(payload.reason)"
+                description: "Failed loading in-app script: \(reason)"
             )
             
         case .close:
@@ -669,6 +814,7 @@ extension InAppMessages: InAppScriptMessageHandler {
             }
             let payload = scriptMessage.payload as? InAppScriptMessageURLPayload
             handleInteraction(
+                in: message,
                 messageId: currentInteractionId ?? message.id,
                 action: .init(
                     type: scriptMessage.type.rawValue,
@@ -693,6 +839,7 @@ extension InAppMessages: InAppScriptMessageHandler {
             }
             if let payload = scriptMessage.payload as? InAppScriptMessageComponentPayload {
                 handleInteraction(
+                    in: message,
                     messageId: currentInteractionId ?? message.id,
                     action: .init(type: scriptMessage.type.rawValue, targetComponentId: payload.targetComponentId)
                 )

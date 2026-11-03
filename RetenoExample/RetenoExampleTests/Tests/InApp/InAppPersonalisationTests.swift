@@ -108,3 +108,35 @@ final class InAppPersonalisationTests: XCTestCase {
     }
     
 }
+
+extension InAppPersonalisationTests {
+    func test_workflow_html_keeps_raw_model_and_each_executions_prepared_map() throws {
+        let model = ["title": "Hello ${firstName}", "email": "${email}"]
+        let renderer = InAppPersonalisation(values: ["firstName": "Cached user", "email": "cached@example.com"])
+        let template = "const model = ${documentModel}; const personalisation = ${personalisation};"
+        var html: [String] = []
+        for (iid, name, email) in [("11111111-1111-4111-8111-111111111111", "Alice", "alice@example.com"),
+                                   ("22222222-2222-4222-8222-222222222222", "Bob", "bob@example.com")] {
+            let data = try JSONSerialization.data(withJSONObject: ["iid": iid, "messageInstanceId": 80,
+                "layoutType": "FULL", "model": model,
+                "personalisation": ["firstName": name, "email": email]])
+            var content = try JSONDecoder().decode(InAppContent.self, from: data)
+            content.inWorkflow = true
+            let prepared = renderer.prepareHTML(template, for: content)
+            XCTAssertTrue(prepared.contains("Hello ${firstName}"))
+            XCTAssertTrue(prepared.contains("${email}"))
+            XCTAssertTrue(prepared.contains(name))
+            XCTAssertTrue(prepared.contains(email))
+            XCTAssertFalse(prepared.contains("Cached user"))
+            XCTAssertFalse(prepared.contains("cached@example.com"))
+            html.append(prepared)
+        }
+        XCTAssertNotEqual(html[0], html[1])
+        let ordinary = InAppMessage(id: "ordinary", model: #"{"title":"Hello ${firstName}","email":"${email}"}"#,
+                                    personalisation: nil)
+        let ordinaryHTML = renderer.prepareHTML(template, for: ordinary)
+        XCTAssertTrue(ordinaryHTML.contains("Hello Cached user"))
+        XCTAssertTrue(ordinaryHTML.contains("cached@example.com"))
+        XCTAssertFalse(ordinaryHTML.contains("${firstName}"))
+    }
+}

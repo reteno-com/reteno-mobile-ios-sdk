@@ -25,6 +25,7 @@ class InAppMessagePresenter {
     private let presentInApp: ((Message, Bool) -> Void)?
     private var fireTime: Int = 0
     private var events: [Condition.EventValue] = []
+    private var elapsedTime = 0
 
     init(model: InAppShowModel, storage: KeyValueStorage, presentInApp: ((Message, Bool) -> Void)?) {
         self.model = model
@@ -62,6 +63,9 @@ class InAppMessagePresenter {
             if let afterEvent = conditions.first(where: { $0.operator == nil && $0.operand.name == .event}), let events = afterEvent.values as? [Condition.EventValue] {
                 self.events = events
             }
+            if model.message.isWorkflow && fireTime == 0 && events.isEmpty {
+                self.procesignInApp(noCondition: true)
+            }
         }
     }
     
@@ -78,6 +82,11 @@ class InAppMessagePresenter {
     }
     
     func updateTimeSpendInApp(time: Int) {
+        elapsedTime = time
+        if model.message.isWorkflow {
+            if events.isEmpty && time >= fireTime { self.procesignInApp(isTimeCondition: true) }
+            return
+        }
         guard events.isEmpty else { return }
         if model.frequency == .minInterval || model.frequency == .timesPerTimeUnit {
             if fireTime == 0 {
@@ -133,7 +142,7 @@ class InAppMessagePresenter {
                     break
                 }
             }
-            if allConditionsFine {
+            if allConditionsFine && (!model.message.isWorkflow || elapsedTime >= fireTime) {
                 self.procesignInApp(isTimeCondition: false)
             }
         }

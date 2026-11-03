@@ -19,5 +19,10 @@ struct NewInAppInteractionRequest: APIRequest {
     init(newInteraction: NewInteraction) {
         parameters = newInteraction.toJSON()
     }
+
+    init(workflowInteraction: NewInteraction, headers: [String: String]) {
+        parameters = workflowInteraction.toJSON()
+        self.headers = headers
+    }
     
 }

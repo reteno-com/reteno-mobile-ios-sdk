@@ -23,6 +23,8 @@ extension Reteno {
     static let userUpdateCompleted: Notification.Name = .init(
         "com.reteno.userUpdateCompleted"
     )
+
+    static let inAppDeviceRegistrationConfirmed = Notification.Name("com.reteno.inAppDeviceRegistrationConfirmed")
 }
 
 public struct Reteno {
@@ -321,6 +323,8 @@ public struct Reteno {
                 || groupNamesExclude.isNotEmpty
         else { return }
         
+        let previousInAppContext = WorkflowContext.current
+
         if let externalUserId = externalUserId,
             !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             NotificationCenter.default.post(name: Reteno.userUpdateInitiated, object: nil)
@@ -338,6 +342,8 @@ public struct Reteno {
             ExternalUserDataHelper.setPhone(phone)
         }
         
+        inApps.userIdentityDidChange(from: previousInAppContext)
+
         guard
             let userId = ExternalUserIdHelper.getId(),
             !userId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -514,6 +520,8 @@ public struct Reteno {
         externalUserId: String?,
         userAttributes: UserAttributes?
     ) {
+        let previousInAppContext = WorkflowContext.current
+
         // Close the previous account's session and in-app state while its identity is still in place.
         inApps.endSession()
         inApps.clearInApps()
@@ -539,6 +547,8 @@ public struct Reteno {
             ExternalUserDataHelper.setPhone(phone)
         }
         
+        inApps.userIdentityDidChange(from: previousInAppContext)
+
         // The new device id is not confirmed by the backend yet; the scheduler keeps re-registering it until it is.
         keyValueStorage.set(value: false, forKey: StorageKeys.isUpdatedDevice.rawValue)
         DeviceIdHelper.upsertCurrentDevice()

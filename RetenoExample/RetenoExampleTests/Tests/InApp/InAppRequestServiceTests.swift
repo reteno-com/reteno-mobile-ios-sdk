@@ -143,3 +143,386 @@ final class InAppRequestServiceTests: XCTestCase {
     }
 
 }
+
+extension InAppRequestServiceTests {
+    func test_workflow_interaction_retry_reopens_same_body_and_retains_shown_marker_after_ack() throws {
+        let suite = "workflow-retry-" + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let storage = KeyValueStorage(storage: defaults)
+        let context = WorkflowContext.current
+        let now = Date()
+        var opened = NewInteraction(id: "11111111-1111-4111-8111-111111111111", time: now,
+                                    messageInstanceId: 80, status: .opened, statusDescription: nil)
+        opened.inWorkflow = true
+        storage.recordWorkflowInteraction(opened, context: context, now: now)
+        let service = MobileRequestService(requestManager: .stub)
+        var requestBodies: [Data] = []
+        var responseCode: Int32 = 503
+        stub(condition: pathEndsWith("v1/interaction")) { request in
+            requestBodies.append(request.ohhttpStubs_httpBody!)
+            XCTAssertEqual(request.value(forHTTPHeaderField: "X-Reteno-Device-ID"), RequestIdentity.current.deviceId)
+            return HTTPStubsResponse(jsonObject: ["title": "Unavailable"], statusCode: responseCode,
+                                     headers: ["Retry-After": "120"])
+        }
+        let initial = try XCTUnwrap(storage.pendingWorkflowInteractions(context: context, now: now).first)
+        let failed = expectation(description: "Retry stored")
+        let firstAttempt = SendWorkflowInteractionOperation(requestService: service, storage: storage, queued: initial)
+        firstAttempt.completionBlock = { failed.fulfill() }
+        let queue = OperationQueue()
+        queue.addOperation(firstAttempt)
+        wait(for: [failed], timeout: 2)
+        XCTAssertTrue(storage.pendingWorkflowInteractions(context: context, now: now.addingTimeInterval(119)).isEmpty)
+        let reopened = KeyValueStorage(storage: UserDefaults(suiteName: suite))
+        let retry = try XCTUnwrap(reopened.pendingWorkflowInteractions(context: context, now: now.addingTimeInterval(3600)).first)
+        XCTAssertEqual(retry.id, initial.id)
+        XCTAssertEqual(retry.interaction.time, initial.interaction.time)
+        XCTAssertEqual(retry.interaction.id, initial.interaction.id)
+        XCTAssertEqual(retry.attempts, 1)
+        // Advance the saved next-attempt deadline explicitly; no background timer or sleep.
+        reopened.completeWorkflowInteraction(id: retry.id, retryAt: now.addingTimeInterval(-1))
+        let ready = try XCTUnwrap(reopened.pendingWorkflowInteractions(context: context, now: Date()).first)
+        responseCode = 200
+        let acknowledged = expectation(description: "Acknowledged")
+        let secondAttempt = SendWorkflowInteractionOperation(requestService: service, storage: reopened, queued: ready)
+        secondAttempt.completionBlock = { acknowledged.fulfill() }
+        queue.addOperation(secondAttempt)
+        wait(for: [acknowledged], timeout: 2)
+        XCTAssertEqual(requestBodies.count, 2)
+        let firstBody = try JSONSerialization.jsonObject(with: requestBodies[0]) as! NSDictionary
+        let secondBody = try JSONSerialization.jsonObject(with: requestBodies[1]) as! NSDictionary
+        XCTAssertEqual(firstBody, secondBody)
+        XCTAssertEqual(firstBody["inWorkflow"] as? Bool, true)
+        XCTAssertNil(firstBody["eventId"])
+        XCTAssertTrue(reopened.pendingWorkflowInteractions(context: context, now: Date()).isEmpty)
+        XCTAssertTrue(reopened.hasShownWorkflow(iid: opened.id, context: context))
+    }
+
+    func test_workflow_queue_preserves_multiple_observations_and_skips_other_context() throws {
+        let suite = "workflow-context-" + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let storage = KeyValueStorage(storage: defaults)
+        let now = Date()
+        let firstIID = "11111111-1111-4111-8111-111111111111"
+        let secondIID = "22222222-2222-4222-8222-222222222222"
+        for (iid, status) in [(firstIID, NewInteractionStatus.failed), (firstIID, .opened), (firstIID, .clicked), (secondIID, .opened)] {
+            var interaction = NewInteraction(id: iid, time: now, messageInstanceId: 80,
+                                             status: status, statusDescription: nil,
+                                             action: status == .clicked ? .init(type: "CLICK", targetComponentId: "button") : nil)
+            interaction.inWorkflow = true
+            storage.recordWorkflowInteraction(interaction, context: "previous-account", now: now)
+        }
+        XCTAssertEqual(storage.pendingWorkflowInteractions(context: "previous-account", now: now).count, 4)
+        XCTAssertTrue(storage.pendingWorkflowInteractions(context: WorkflowContext.current, now: now).isEmpty)
+        let request = expectation(description: "No network call for previous context")
+        request.isInverted = true
+        stub(condition: pathEndsWith("v1/interaction")) { _ in
+            request.fulfill()
+            return HTTPStubsResponse(jsonObject: [:], statusCode: 200, headers: nil)
+        }
+        let observation = try XCTUnwrap(storage.pendingWorkflowInteractions(context: "previous-account", now: now).first)
+        let operation = SendWorkflowInteractionOperation(requestService: MobileRequestService(requestManager: .stub),
+                                                       storage: storage, queued: observation)
+        let finished = expectation(description: "Skipped")
+        operation.completionBlock = { finished.fulfill() }
+        OperationQueue().addOperation(operation)
+        wait(for: [finished], timeout: 2)
+        wait(for: [request], timeout: 0.1)
+        XCTAssertEqual(storage.pendingWorkflowInteractions(context: "previous-account", now: now).count, 4)
+    }
+
+    func test_workflow_terminal_response_removes_observation_without_removing_shown_state() throws {
+        let suite = "workflow-terminal-" + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let storage = KeyValueStorage(storage: defaults)
+        let now = Date()
+        let context = WorkflowContext.current
+        var interaction = NewInteraction(id: "11111111-1111-4111-8111-111111111111", time: now,
+                                         messageInstanceId: 80, status: .opened, statusDescription: nil)
+        interaction.inWorkflow = true
+        storage.recordWorkflowInteraction(interaction, context: context, now: now)
+        stub(condition: pathEndsWith("v1/interaction")) { _ in
+            HTTPStubsResponse(jsonObject: [:], statusCode: 410, headers: nil)
+        }
+        let completed = expectation(description: "Terminal response")
+        let queued = try XCTUnwrap(storage.pendingWorkflowInteractions(context: context, now: now).first)
+        let operation = SendWorkflowInteractionOperation(requestService: MobileRequestService(requestManager: .stub),
+                                                       storage: storage, queued: queued)
+        operation.completionBlock = { completed.fulfill() }
+        let queue = OperationQueue()
+        queue.addOperation(operation)
+        wait(for: [completed], timeout: 2)
+        XCTAssertTrue(storage.pendingWorkflowInteractions(context: context, now: Date()).isEmpty)
+        XCTAssertTrue(storage.hasShownWorkflow(iid: interaction.id, context: context))
+    }
+}
+
+extension InAppRequestServiceTests {
+    func test_workflow_clicked_preserves_complete_action_and_time_through_failure_reopen_and_retry() throws {
+        let suite = "workflow-clicked-" + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let storage = KeyValueStorage(storage: defaults)
+        let now = Date()
+        let context = WorkflowContext.current
+        let requestService = MobileRequestService(requestManager: .stub)
+        let service = InAppService(requestService: requestService, storage: storage, now: { now })
+        let iid = "11111111-1111-4111-8111-111111111111"
+        let data = try JSONSerialization.data(withJSONObject: ["iid": iid, "messageInstanceId": 80,
+                                                               "layoutType": "FULL", "model": [:]])
+        var content = try JSONDecoder().decode(InAppContent.self, from: data)
+        content.inWorkflow = true
+        content.workflowContext = context
+        let action = NotificationStatus.Action(type: "OPEN_URL", targetComponentId: "buy-button",
+                                               url: "https://example.com/personalized-offer")
+        service.sendInteraction(with: content, status: .clicked, action: action)
+        XCTAssertTrue(storage.hasShownWorkflow(iid: iid, context: context))
+        XCTAssertTrue(storage.getNotificationStatuses().isEmpty, "Workflow clicks never enter the ordinary PUT queue")
+        let queued = try XCTUnwrap(storage.pendingWorkflowInteractions(context: context, now: now).first)
+        var responseCode: Int32 = 503
+        var bodies: [NSDictionary] = []
+        stub(condition: pathEndsWith("v1/interaction")) { request in
+            XCTAssertEqual(request.httpMethod, "POST")
+            XCTAssertTrue(storage.hasShownWorkflow(iid: iid, context: context), "Local suppression precedes network publication")
+            let body = try! JSONSerialization.jsonObject(with: request.ohhttpStubs_httpBody!) as! NSDictionary
+            bodies.append(body)
+            return HTTPStubsResponse(jsonObject: [:], statusCode: responseCode, headers: nil)
+        }
+        let failed = expectation(description: "Failed broker acknowledgment keeps the observation")
+        let firstAttempt = SendWorkflowInteractionOperation(requestService: requestService, storage: storage, queued: queued)
+        firstAttempt.completionBlock = { failed.fulfill() }
+        let queue = OperationQueue()
+        queue.addOperation(firstAttempt)
+        wait(for: [failed], timeout: 2)
+        let reopened = KeyValueStorage(storage: UserDefaults(suiteName: suite))
+        let retry = try XCTUnwrap(reopened.pendingWorkflowInteractions(context: context, now: now.addingTimeInterval(3600)).first)
+        XCTAssertEqual(retry.interaction.status, .clicked)
+        XCTAssertEqual(retry.interaction.action?.type, action.type)
+        XCTAssertEqual(retry.interaction.action?.targetComponentId, action.targetComponentId)
+        XCTAssertEqual(retry.interaction.action?.url, action.url)
+        reopened.completeWorkflowInteraction(id: retry.id, retryAt: now.addingTimeInterval(-1))
+        let ready = try XCTUnwrap(reopened.pendingWorkflowInteractions(context: context, now: Date()).first)
+        responseCode = 200
+        let acknowledged = expectation(description: "Retry acknowledged")
+        let secondAttempt = SendWorkflowInteractionOperation(requestService: requestService, storage: reopened, queued: ready)
+        secondAttempt.completionBlock = { acknowledged.fulfill() }
+        queue.addOperation(secondAttempt)
+        wait(for: [acknowledged], timeout: 2)
+        XCTAssertEqual(bodies.count, 2)
+        XCTAssertEqual(bodies[0], bodies[1])
+        XCTAssertEqual(bodies[0]["status"] as? String, "CLICKED")
+        XCTAssertEqual(bodies[0]["iid"] as? String, iid)
+        XCTAssertEqual(bodies[0]["time"] as? String, WorkflowDate.format(now))
+        XCTAssertEqual(bodies[0]["messageInstanceId"] as? Int, 80)
+        XCTAssertEqual(bodies[0]["inWorkflow"] as? Bool, true)
+        XCTAssertNil(bodies[0]["eventId"])
+        XCTAssertEqual(bodies[0]["action"] as? NSDictionary,
+                       ["type": "OPEN_URL", "targetComponentId": "buy-button",
+                        "url": "https://example.com/personalized-offer"] as NSDictionary)
+        XCTAssertTrue(reopened.pendingWorkflowInteractions(context: context, now: Date()).isEmpty)
+        XCTAssertTrue(reopened.hasShownWorkflow(iid: iid, context: context))
+    }
+}
+
+extension InAppRequestServiceTests {
+    func test_workflow_retry_uses_headers_from_the_same_context_snapshot_it_verified() throws {
+        let accountA = WorkflowContext.Snapshot(apiKey: "application-A",
+            identity: RequestIdentity(deviceId: "device-A", externalUserId: "account-A"), email: nil, phone: nil)
+        let accountB = WorkflowContext.Snapshot(apiKey: "application-B",
+            identity: RequestIdentity(deviceId: "device-B", externalUserId: "account-B"), email: nil, phone: nil)
+        var nextSnapshot = accountA
+        let service = MobileRequestService(requestManager: .stub, workflowContext: {
+            let captured = nextSnapshot
+            nextSnapshot = accountB
+            return captured
+        })
+        var interaction = NewInteraction(id: "11111111-1111-4111-8111-111111111111", time: Date(),
+                                         messageInstanceId: 80, status: .opened, statusDescription: nil)
+        interaction.inWorkflow = true
+        let queued = QueuedInAppInteraction(id: UUID().uuidString, context: accountA.id,
+                                             interaction: interaction, nextAttempt: Date())
+        stub(condition: pathEndsWith("v1/interaction")) { request in
+            XCTAssertEqual(request.value(forHTTPHeaderField: "X-Reteno-Access-Key"), "application-A")
+            XCTAssertEqual(request.value(forHTTPHeaderField: "X-Reteno-Device-ID"), "device-A")
+            return HTTPStubsResponse(jsonObject: [:], statusCode: 200, headers: nil)
+        }
+        let sent = expectation(description: "Sent with the verified account")
+        service.sendWorkflowInteraction(queued) { result, _ in
+            if case .failure = result { XCTFail("The captured account owns the queued event") }
+            sent.fulfill()
+        }
+        wait(for: [sent], timeout: 2)
+        let skipped = expectation(description: "Next account cannot send the previous observation")
+        service.sendWorkflowInteraction(queued) { result, _ in
+            if case .success = result { XCTFail("Account B must not replay account A's event") }
+            skipped.fulfill()
+        }
+        wait(for: [skipped], timeout: 2)
+    }
+
+
+}
+
+extension InAppRequestServiceTests {
+    func test_pending_contact_registration_survives_no_op_completion_old_ack_and_restart_until_matching_ack() throws {
+        let suite = "workflow-registration-" + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let storage = KeyValueStorage(storage: defaults)
+        let identityA = RequestIdentity(deviceId: "same-device", externalUserId: "account-A")
+        let identityB = RequestIdentity(deviceId: "same-device", externalUserId: "account-B")
+        let contextB = WorkflowContext.Snapshot(apiKey: "application", identity: identityB, email: nil, phone: nil)
+        let serviceB = MobileRequestService(requestManager: .stub, identity: { identityB },
+                                            workflowContext: { contextB }, registrationStorage: storage)
+        let inApps = InAppService(requestService: serviceB, storage: storage, context: { contextB.id })
+        storage.beginWorkflowRegistration(context: contextB.id)
+        var discoveries = 0
+        stub(condition: pathEndsWith("v1/inapp/messages")) { _ in
+            discoveries += 1
+            return HTTPStubsResponse(jsonObject: ["messages": []], statusCode: 200, headers: nil)
+        }
+        var failCurrentUpsert = true
+        stub(condition: pathEndsWith("v1/device")) { request in
+            let body = try! JSONSerialization.jsonObject(with: request.ohhttpStubs_httpBody!) as! [String: Any]
+            XCTAssertEqual(body["deviceId"] as? String, "same-device")
+            XCTAssertEqual(request.value(forHTTPHeaderField: "X-Reteno-Device-ID"), "same-device")
+            let status: Int32 = body["externalUserId"] as? String == "account-B" && failCurrentUpsert ? 503 : 200
+            return HTTPStubsResponse(jsonObject: [:], statusCode: status, headers: nil)
+        }
+        let failed = expectation(description: "Pending B registration fails")
+        serviceB.upsertDevice(externalUserId: "account-B", email: nil, phone: nil, isSubscribedOnPush: false) { _ in
+            failed.fulfill()
+        }
+        // The duplicate B no-op completes while B's asynchronous upsert has no acknowledgment.
+        NotificationCenter.default.post(name: Reteno.userUpdateCompleted, object: nil)
+        inApps.getInAppMessages()
+        XCTAssertTrue(storage.hasPendingWorkflowRegistration)
+        XCTAssertEqual(discoveries, 0)
+        wait(for: [failed], timeout: 2)
+        XCTAssertTrue(storage.hasPendingWorkflowRegistration)
+        let old = MobileRequestService(requestManager: .stub, identity: { identityA },
+                                      workflowContext: { contextB }, registrationStorage: storage)
+        let oldAcknowledged = expectation(description: "Late account A upsert acknowledged")
+        old.upsertDevice(externalUserId: "account-A", email: nil, phone: nil, isSubscribedOnPush: false) { _ in
+            oldAcknowledged.fulfill()
+        }
+        wait(for: [oldAcknowledged], timeout: 2)
+        XCTAssertTrue(storage.hasPendingWorkflowRegistration, "A's success cannot release pending B")
+        let reopened = KeyValueStorage(storage: UserDefaults(suiteName: suite))
+        XCTAssertTrue(reopened.hasPendingWorkflowRegistration)
+        let reopenedService = MobileRequestService(requestManager: .stub, identity: { identityB },
+                                                   workflowContext: { contextB }, registrationStorage: reopened)
+        let restarted = InAppService(requestService: reopenedService, storage: reopened, context: { contextB.id })
+        restarted.getInAppMessages()
+        XCTAssertEqual(discoveries, 0, "Restart cannot bypass the pending registration")
+        failCurrentUpsert = false
+        let registered = expectation(description: "Current B identity acknowledged")
+        reopenedService.upsertDevice(externalUserId: "account-B", email: nil, phone: nil, isSubscribedOnPush: false) { _ in
+            registered.fulfill()
+        }
+        wait(for: [registered], timeout: 2)
+        XCTAssertFalse(reopened.hasPendingWorkflowRegistration, "The HTTP boundary persists readiness without a UI observer")
+        let discovered = expectation(description: "Current account discovery released")
+        restarted.inAppContents = { _, _ in discovered.fulfill() }
+        restarted.getInAppMessages()
+        wait(for: [discovered], timeout: 2)
+        XCTAssertEqual(discoveries, 1)
+    }
+}
+
+extension InAppRequestServiceTests {
+    func test_scheduler_recovers_pending_contact_after_real_old_device_operation_sets_legacy_updated_flag() throws {
+        let suite = "workflow-old-device-ack-" + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let storage = KeyValueStorage(storage: defaults)
+        let currentIdentity = RequestIdentity.current
+        let currentContext = WorkflowContext.capture()
+        let oldExternalId = "old-contact-" + UUID().uuidString
+        var observedContext = WorkflowContext.Snapshot(
+            apiKey: currentContext.headers["X-Reteno-Access-Key"] ?? "",
+            identity: RequestIdentity(deviceId: currentIdentity.deviceId, externalUserId: oldExternalId),
+            email: nil, phone: nil)
+        let service = MobileRequestService(requestManager: .stub, identity: { currentIdentity },
+            workflowContext: { observedContext }, registrationStorage: storage)
+        let recovered = expectation(forNotification: Reteno.inAppDeviceRegistrationConfirmed, object: nil) {
+            $0.userInfo?["context"] as? String == currentContext.id
+        }
+        stub(condition: pathEndsWith("v1/device")) { _ in
+            HTTPStubsResponse(jsonObject: [:], statusCode: 200, headers: nil)
+        }
+        // SendDeviceOperation also invokes the SDK's normal discovery hook after success.
+        stub(condition: pathEndsWith("v1/inapp/messages")) { _ in
+            HTTPStubsResponse(jsonObject: [:], statusCode: 503, headers: nil)
+        }
+        let oldFinished = expectation(description: "Old same-device registration acknowledged late")
+        let oldOperation = SendDeviceOperation(requestService: service, storage: storage,
+            device: Device(externalUserId: oldExternalId, phone: nil, email: nil, isSubscribedOnPush: false),
+            identity: currentIdentity, date: Date())
+        oldOperation.completionBlock = { oldFinished.fulfill() }
+        oldOperation.start()
+        // The old request is already constructed, but its main-queue completion has not run.
+        observedContext = currentContext
+        storage.beginWorkflowRegistration(context: currentContext.id)
+        storage.set(value: false, forKey: StorageKeys.isUpdatedDevice.rawValue)
+        wait(for: [oldFinished], timeout: 2)
+        XCTAssertTrue(storage.getValue(forKey: StorageKeys.isUpdatedDevice.rawValue) as Bool,
+                      "The real old operation reproduces the legacy acknowledgment race")
+        XCTAssertTrue(storage.hasPendingWorkflowRegistration)
+        let wasInitialized = Reteno.sdkStateHelper.isInitialized
+        Reteno.sdkStateHelper.set(isInitialized: true)
+        defer { Reteno.sdkStateHelper.set(isInitialized: wasInitialized) }
+        let scheduler = EventsSenderScheduler(mobileRequestService: service, storage: storage)
+        scheduler.forcePushEvents()
+        wait(for: [recovered], timeout: 2)
+        XCTAssertFalse(storage.hasPendingWorkflowRegistration,
+                       "Pending context forces a fresh current-device upsert despite the legacy true flag")
+        withExtendedLifetime(scheduler) {}
+    }
+}
+
+extension InAppRequestServiceTests {
+    func test_email_identity_change_needs_only_one_matching_upsert_without_intermediate_discovery() throws {
+        let suite = "workflow-single-registration-" + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let storage = KeyValueStorage(storage: defaults)
+        let identity = RequestIdentity(deviceId: "same-device", externalUserId: nil)
+        let contextA = WorkflowContext.Snapshot(apiKey: "application", identity: identity, email: "a@example.com", phone: nil)
+        let contextB = WorkflowContext.Snapshot(apiKey: "application", identity: identity, email: "b@example.com", phone: nil)
+        var currentContext = contextA
+        let service = MobileRequestService(requestManager: .stub, identity: { identity },
+            workflowContext: { currentContext }, registrationStorage: storage)
+        let inApps = InAppService(requestService: service, storage: storage, context: { currentContext.id })
+        currentContext = contextB
+        // This is the existing service boundary invoked by the synchronous post-write hook.
+        inApps.clearInApps()
+        storage.set(value: contextB.id, forKey: StorageKeys.inAppContext.rawValue)
+        storage.beginWorkflowRegistration(context: contextB.id)
+        var upserts = 0
+        stub(condition: pathEndsWith("v1/device")) { request in
+            upserts += 1
+            let body = try! JSONSerialization.jsonObject(with: request.ohhttpStubs_httpBody!) as! [String: Any]
+            XCTAssertEqual(body["email"] as? String, "b@example.com")
+            return HTTPStubsResponse(jsonObject: [:], statusCode: 200, headers: nil)
+        }
+        let registered = expectation(description: "One current email registration acknowledged")
+        service.upsertDevice(email: "b@example.com", phone: nil, isSubscribedOnPush: false) { _ in
+            registered.fulfill()
+        }
+        wait(for: [registered], timeout: 2)
+        XCTAssertFalse(storage.hasPendingWorkflowRegistration)
+        let discovered = expectation(description: "First discovery after the acknowledgment")
+        stub(condition: pathEndsWith("v1/inapp/messages")) { _ in
+            HTTPStubsResponse(jsonObject: ["messages": []], statusCode: 200, headers: nil)
+        }
+        inApps.inAppContents = { _, _ in discovered.fulfill() }
+        inApps.getInAppMessages()
+        wait(for: [discovered], timeout: 2)
+        XCTAssertFalse(storage.hasPendingWorkflowRegistration,
+                       "Clearing the old in-memory owner must not re-establish a barrier after B was acknowledged")
+        XCTAssertEqual(upserts, 1)
+    }
+}

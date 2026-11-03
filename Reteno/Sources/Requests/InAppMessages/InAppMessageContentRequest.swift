@@ -20,6 +20,11 @@ struct InAppMessageContentRequest: APIRequest {
         let json = ["messageInstanceIds": messageInstanceIds]
         parameters = json
     }
-    
+
+    init(messages: [Message]) {
+        headers = WorkflowContext.headers
+        precondition(!messages.isEmpty && messages.count <= 100)
+        parameters = ["messages": messages.map { ["iid": $0.iid!, "messageInstanceId": $0.messageInstanceId] as [String: Any] }]
+    }
 }
 

@@ -12,6 +12,10 @@ final class InAppService {
     
     private let requestService: MobileRequestService
     private let storage: KeyValueStorage
+    private let now: () -> Date
+    private let context: () -> String
+    private var activeContext: String
+    private var authorizing: Set<String> = []
     
     private var showModels: [InAppShowModel] = []
     
@@ -22,27 +26,42 @@ final class InAppService {
     private var contents: [InAppContent] = []
     
     var inAppContents: (([InAppContent], [InAppShowModel]) -> Void)?
+    var discoveryFailed: (() -> Void)?
+    var workflowShowModels: (([InAppShowModel]) -> Void)?
 
     init(
         requestService: MobileRequestService,
-        storage: KeyValueStorage
+        storage: KeyValueStorage,
+        now: @escaping () -> Date = Date.init,
+        context: @escaping () -> String = { WorkflowContext.current }
     ) {
         self.requestService = requestService
         self.storage = storage
+        self.now = now
+        self.context = context
+        self.activeContext = context()
+        self.ensureContext()
         self.migrateCacheIfNeeded()
         self.checkForActiveCache()
     }
     
     func getInAppMessages() {
+        ensureContext()
+        guard !storage.hasPendingWorkflowRegistration else {
+            discoveryFailed?()
+            return
+        }
+        let requestedContext = activeContext
         let eTAg: String? = self.storage.getValue(forKey: StorageKeys.eTag.rawValue)
-        requestService.getInAppMessages(eTag: eTAg) { [weak self] result in
-            guard let self = self else { return }
+        requestService.getInAppMessages(eTag: eTAg, includeWorkflow: true) { [weak self] result in
+            guard let self else { return }
+            guard requestedContext == self.context(), !self.storage.hasPendingWorkflowRegistration else { return }
 
             switch result {
             case .success(let success):
-                self.messages = success.list.messages
-                self.storage.saveInAppMessages(messages: success.list.messages)
-                self.processingInApps(messages: success.list.messages)
+                self.messages = self.preserveWorkflowDeadlines(success.list.messages)
+                self.storage.saveInAppMessages(messages: self.messages)
+                self.processingInApps(messages: self.messages)
                 if let eTag = success.etag {
                     self.storage.set(value: eTag, forKey: StorageKeys.eTag.rawValue)
                     self.storage.set(value: Date().timeIntervalSince1970, forKey: StorageKeys.inAppCacheLastUpdate.rawValue)
@@ -54,6 +73,8 @@ final class InAppService {
                     self.contents = storage.getInAppMessageContents()
                     
                     self.processingInApps(messages: self.messages, isNeedDownloadContent: false)
+                } else {
+                    self.discoveryFailed?()
                 }
             }
         }
@@ -63,12 +84,25 @@ final class InAppService {
         with inApp: InApp,
         interactionId: String = UUID().uuidString,
         status: NewInteractionStatus = .opened,
-        description: String? = nil
+        description: String? = nil,
+        action: NotificationStatus.Action? = nil
     ) {
         guard let inAppContent = inApp as? InAppContent else {
             return
         }
         
+        if inAppContent.isWorkflow {
+            guard let iid = inAppContent.iid, UUID(uuidString: iid) != nil,
+                  inAppContent.workflowContext == context(), status != .clicked || action != nil else { return }
+            var observation = NewInteraction(id: iid, time: now(), messageInstanceId: inAppContent.messageInstanceId,
+                                             status: status, statusDescription: description, action: action)
+            observation.inWorkflow = true
+            if status == .opened {
+                guard canPresentWorkflow(inAppContent) else { return }
+            }
+            storage.recordWorkflowInteraction(observation, context: context(), now: now())
+            return
+        }
         requestService.sendInteraction(
             interaction: .init(
                 id: interactionId,
@@ -81,38 +115,55 @@ final class InAppService {
     }
     
     func clearInApps() {
+        activeContext = context()
         storage.clearInApps()
         contents = []
+        messages = []
         showModels = []
+        authorizing = []
+        inAppSegments = []
+        lastTimeSegmentsUpdate = [:]
         storage.removeValue(forKey: StorageKeys.eTag.rawValue)
         storage.removeValue(forKey: StorageKeys.inAppCacheLastUpdate.rawValue)
     }
     
     func reprocessInAppMessages() {
-        guard !messages.isEmpty else { return }
+        ensureContext()
+        guard !storage.hasPendingWorkflowRegistration, !messages.isEmpty else { return }
         processingInApps(messages: messages, isNeedDownloadContent: false)
     }
     
-    private func processingInApps(messages: [Message], isNeedDownloadContent: Bool = true) {
+    func reprocessWorkflowMessages() {
+        ensureContext()
+        guard !storage.hasPendingWorkflowRegistration else {
+            workflowShowModels?([])
+            return
+        }
+        processingInApps(messages: messages.filter { $0.isWorkflow }, isNeedDownloadContent: false, workflowOnly: true)
+    }
+
+    private func processingInApps(messages: [Message], isNeedDownloadContent: Bool = true, workflowOnly: Bool = false) {
         self.checkAsyncRulesSegment()
         var messageInstanceIds: [Int] = []
-        self.showModels = []
-        
+        var models: [InAppShowModel] = []
+
         let filteredMessage = self.shedulerChecks(messages)
                 
         for item in filteredMessage {
-            let frequencyInfo = frequencyChecks(item)
+            if item.isWorkflow && (!item.isAvailable(at: now()) || !workflowRulesSupported(item) ||
+                storage.hasShownWorkflow(iid: item.iid ?? "", context: context())) { continue }
+            let frequencyInfo = item.isWorkflow ? (isActive: true, frequency: PredicateName.noLimit, params: nil as FrequencyBaseParams?) : frequencyChecks(item)
             if frequencyInfo.isActive {
                 
-                messageInstanceIds.append(item.messageInstanceId)
+                if !item.isWorkflow { messageInstanceIds.append(item.messageInstanceId) }
                 
                 var conditions:[Condition] = []
                 if item.displayRules.targeting.enabled {
-                    for conditionGroups in item.displayRules.targeting.schema!.include.groups {
-                        conditions.append(contentsOf: conditionGroups!.conditions!)
+                    for group in item.displayRules.targeting.schema?.include.groups ?? [] {
+                        conditions.append(contentsOf: group?.conditions ?? [])
                     }
                 }
-                showModels.append(
+                models.append(
                     .init(
                         message: item,
                         frequency: frequencyInfo.frequency,
@@ -123,6 +174,11 @@ final class InAppService {
             }
         }
         
+        if workflowOnly {
+            workflowShowModels?(models)
+            return
+        }
+        self.showModels = models
         if isNeedDownloadContent || self.contents.isEmpty {
             self.downloadInAppContents(messageInstanceIds: messageInstanceIds)
         } else {
@@ -130,6 +186,104 @@ final class InAppService {
         }
     }
     
+    private func ensureContext() {
+        let current = context()
+        let saved: String? = storage.getValue(forKey: StorageKeys.inAppContext.rawValue)
+        if saved != current || activeContext != current {
+            if activeContext != current || (saved != nil && saved != current) {
+                // Establish the barrier before advancing shared cache ownership.
+                storage.beginWorkflowRegistration(context: current)
+                storage.set(value: false, forKey: StorageKeys.isUpdatedDevice.rawValue)
+            }
+            clearInApps()
+            storage.set(value: current, forKey: StorageKeys.inAppContext.rawValue)
+        }
+    }
+
+    private func preserveWorkflowDeadlines(_ messages: [Message]) -> [Message] {
+        messages.map { message in
+            var message = message
+            if message.isWorkflow, let iid = message.iid, UUID(uuidString: iid) != nil,
+               let expiry = message.expiresAt, WorkflowDate.parse(expiry) != nil {
+                message.expiresAt = storage.workflowDeadline(iid: iid, proposed: expiry, context: context())
+            }
+            return message
+        }
+    }
+
+    private func workflowRulesSupported(_ message: Message) -> Bool {
+        guard message.displayRules.workflowSupported else { return false }
+        let targeting = message.displayRules.targeting
+        guard targeting.enabled else { return true }
+        guard let schema = targeting.schema, schema.include.relation == "AND" else { return false }
+        var timeConditions = 0
+        var eventConditions = 0
+        for group in schema.include.groups {
+            guard let group, group.relation == "AND", let conditions = group.conditions else { return false }
+            for condition in conditions {
+                guard condition.workflowSupported else { return false }
+                if condition.operator == .timeSpentInApp,
+                   let values = condition.values as? [Condition.Value], !values.isEmpty,
+                   values.allSatisfy({ ($0.unit == .seconds || $0.unit == .minute) && ($0.amount ?? -1) >= 0 }) {
+                    timeConditions += 1
+                } else if condition.operand.name == .event, condition.operator == nil,
+                          let events = condition.values as? [Condition.EventValue], !events.isEmpty,
+                          events.allSatisfy({ $0.parameters.relation == "AND" && $0.parameters.values.allSatisfy { $0.operator != nil } }) {
+                    eventConditions += 1
+                } else {
+                    Logger.log("Workflow deferred: unsupported targeting condition", eventType: .verbose)
+                    return false
+                }
+            }
+        }
+        return timeConditions <= 1 && eventConditions <= 1
+    }
+
+    func canPresentWorkflow(_ content: InAppContent) -> Bool {
+        guard !storage.hasPendingWorkflowRegistration, content.isWorkflow, content.workflowContext == context(), content.isAvailable(at: now()),
+              let iid = content.iid, !storage.hasShownWorkflow(iid: iid, context: context()),
+              let message = messages.first(where: { $0.isWorkflow && $0.iid == iid && $0.messageInstanceId == content.messageInstanceId }),
+              message.isAvailable(at: now()), workflowRulesSupported(message),
+              let evaluatedRules = content.workflowRules,
+              message.displayRules.nonFrequencyRulesData() == evaluatedRules,
+              !shedulerChecks([message]).isEmpty else {
+            return false
+        }
+        return true
+    }
+
+    // Called only after the existing presenter has satisfied targeting/event/time rules.
+    func authorizeWorkflow(_ message: Message, completion: @escaping (InAppContent?) -> Void) {
+        ensureContext()
+        guard !storage.hasPendingWorkflowRegistration, message.isWorkflow, message.isAvailable(at: now()), workflowRulesSupported(message),
+              let iid = message.iid, !storage.hasShownWorkflow(iid: iid, context: context()),
+              !shedulerChecks([message]).isEmpty, !authorizing.contains(iid),
+              let evaluatedRules = message.displayRules.nonFrequencyRulesData(),
+              messages.contains(where: { $0.isWorkflow && $0.iid == iid &&
+                  $0.messageInstanceId == message.messageInstanceId &&
+                  $0.displayRules.nonFrequencyRulesData() == evaluatedRules }) else {
+            completion(nil)
+            return
+        }
+        let requestedContext = context()
+        authorizing.insert(iid)
+        requestService.getWorkflowContent(messages: [message]) { [weak self] result in
+            guard let self else { completion(nil); return }
+            self.authorizing.remove(iid)
+            guard requestedContext == self.context(), case .success(let response) = result,
+                  var content = response.contents.first(where: { $0.iid == iid && $0.messageInstanceId == message.messageInstanceId }) else {
+                Logger.log("Workflow content authorization unavailable", eventType: .verbose)
+                completion(nil)
+                return
+            }
+            content.inWorkflow = true
+            content.expiresAt = message.expiresAt
+            content.workflowContext = requestedContext
+            content.workflowRules = evaluatedRules
+            completion(self.canPresentWorkflow(content) ? content : nil)
+        }
+    }
+
     private func frequencyChecks(_ message: Message) -> (isActive: Bool, frequency: PredicateName, params: FrequencyBaseParams?) {
         guard message.displayRules.frequency.enabled else {
             return (false, .unknown, nil)
@@ -245,17 +399,17 @@ final class InAppService {
                         if let params = predicate.params as? Schedule.SchedulePredicate.DateParams,
                             let date = dateFormatter.date(from: params.date) {
                             if predicate.name == .showAfter {
-                                isValidPredicate = Date() > date
+                                isValidPredicate = now() > date
                             } else {
-                                isValidPredicate = date > Date()
+                                isValidPredicate = date > now()
                             }
                         } else {
                             isValidPredicate = false
                             break
                         }
                     case .specificDaysAndTime:
-                        let dayInWeek = dayFormatter.string(from: Date()).lowercased()
-                        let time = Calendar.current.dateComponents([.hour, .minute], from: Date())
+                        let dayInWeek = dayFormatter.string(from: now()).lowercased()
+                        let time = Calendar.current.dateComponents([.hour, .minute], from: now())
                         if let params = predicate.params as? Schedule.SchedulePredicate.SpecificDate,
                            params.days.contains(dayInWeek) {
                             let timeFrom = "\(params.time.from.hours):\(params.time.from.minutes)"
@@ -315,17 +469,20 @@ final class InAppService {
             return
         }
         
+        let requestedContext = context()
         requestService.getInAppMessageContent(messageInstanceIds: messageInstanceIds) { [weak self] result in
-            guard let self = self else { return }
-            
+            guard let self else { return }
+            guard requestedContext == self.context(), !self.storage.hasPendingWorkflowRegistration else { return }
+
             switch result {
             case .success(let result):
-                self.contents = result.contents
-                self.storage.saveInAppMessageContents(contents: result.contents)
-                self.inAppContents?(result.contents, self.showModels)
+                self.contents = result.contents.filter { !$0.isWorkflow }
+                self.storage.saveInAppMessageContents(contents: self.contents)
+                self.inAppContents?(self.contents, self.showModels)
                 
-            case .failure(let failure):
-                print(failure)
+            case .failure:
+                Logger.log("Ordinary in-app content unavailable", eventType: .warning)
+                self.inAppContents?([], self.showModels.filter { $0.message.isWorkflow })
             }
         }
     }
@@ -361,10 +518,11 @@ final class InAppService {
     }
     
     func checkAsyncRulesSegment(id: Int? = nil, completion: @escaping ([InAppAsyncCheck]) -> Void = { _ in }) {
+        let requestedContext = context()
         if let id = id, self.inAppSegments.isNotEmpty {
             if isNeedRetryAsyncRules(id: id) {
                 requestService.checkAsyncSegmentRules(ids: [id]) { [weak self] result in
-                    guard let self = self else { return }
+                    guard let self = self, requestedContext == self.context() else { completion([]); return }
 
                     switch result {
                     case .success(let success):
@@ -379,7 +537,7 @@ final class InAppService {
                     }
                 }
             } else {
-                completion(self.inAppSegments)
+                completion(self.inAppSegments.filter { $0.error == nil })
             }
         } else {
             let segments = messages.compactMap { $0.displayRules.async.segment.enabled ? $0.displayRules.async.segment.segmentId : nil }
@@ -390,7 +548,7 @@ final class InAppService {
             }
             
             requestService.checkAsyncSegmentRules(ids: segments) { [weak self] result in
-                guard let self = self else { return }
+                guard let self = self, requestedContext == self.context() else { completion([]); return }
 
                 switch result {
                 case .success(let success):
@@ -417,7 +575,7 @@ final class InAppService {
                 
             case 429:
                 let timeInterval = getRetryAfterTimeInterval(retry: error.retryAfter)
-                if let date = lastTimeSegmentsUpdate[id], date.addingTimeInterval(timeInterval) >= Date() {
+                if let date = lastTimeSegmentsUpdate[id], date.addingTimeInterval(timeInterval) <= Date() {
                     return true
                 } else {
                     return false
