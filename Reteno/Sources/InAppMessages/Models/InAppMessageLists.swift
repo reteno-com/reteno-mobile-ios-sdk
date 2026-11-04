@@ -27,17 +27,18 @@ struct Message: Codable {
     let messageId: Int
     let messageInstanceId: Int
     
-    var inWorkflow: Bool? = nil
+    var priority: Int? = nil
     var iid: String? = nil
     var expiresAt: String? = nil
 
-    var isWorkflow: Bool { inWorkflow == true }
-    var executionKey: String { isWorkflow ? "workflow:" + (iid ?? "") : "rules:\(messageId)" }
+    var hasServerAssignedIid: Bool { iid != nil }
+    var displayPriority: Int { priority ?? 10 }
+    var executionKey: String { hasServerAssignedIid ? "delivery:" + (iid ?? "") : "rules:\(messageId)" }
 
     func isAvailable(at date: Date) -> Bool {
-        guard isWorkflow else { return true }
+        guard hasServerAssignedIid else { return true }
         guard let iid, UUID(uuidString: iid) != nil, let expiresAt,
-              let deadline = WorkflowDate.parse(expiresAt) else { return false }
+              let deadline = DeliveryDate.parse(expiresAt) else { return false }
         return date < deadline
     }
 
@@ -48,7 +49,7 @@ struct Message: Codable {
         let async: Async
         let targeting: Targeting
         let schedule: Schedule
-        var workflowSupported: Bool = true
+        var deliverySupported: Bool = true
 
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -58,9 +59,9 @@ struct Message: Codable {
             schedule = try container.decode(Schedule.self, forKey: .schedule)
             let raw = try decoder.container(keyedBy: JSONCodingKeys.self).decode([String: Any].self)
             let known: Set<String> = ["FREQUENCY", "ASYNC", "TARGETING", "SCHEDULE"]
-            workflowSupported = (try container.decodeIfPresent(Bool.self, forKey: .workflowSupported) ?? true) && !raw.contains { !known.contains($0.key) && ($0.value as? [String: Any])?["enabled"] as? Bool == true }
+            deliverySupported = (try container.decodeIfPresent(Bool.self, forKey: .deliverySupported) ?? true) && !raw.contains { !known.contains($0.key) && ($0.value as? [String: Any])?["enabled"] as? Bool == true }
             if let asyncRules = raw["ASYNC"] as? [String: Any] {
-                workflowSupported = workflowSupported && !asyncRules.contains {
+                deliverySupported = deliverySupported && !asyncRules.contains {
                     $0.key != "IS_IN_SEGMENT" && ($0.value as? [String: Any])?["enabled"] as? Bool == true
                 }
             }
@@ -68,7 +69,7 @@ struct Message: Codable {
                let schema = targeting["schema"] as? [String: Any],
                let exclude = schema["exclude"] as? [String: Any],
                let groups = exclude["groups"] as? [Any], !groups.isEmpty {
-                workflowSupported = false
+                deliverySupported = false
             }
         }
 
@@ -81,7 +82,7 @@ struct Message: Codable {
 
         enum CodingKeys: String, CodingKey {
             case frequency = "FREQUENCY", async = "ASYNC", targeting = "TARGETING", schedule = "SCHEDULE"
-            case workflowSupported = "_sdkWorkflowSupported"
+            case deliverySupported = "_sdkDeliverySupported"
         }
     }
 }
@@ -246,11 +247,11 @@ struct Condition: Codable {
     let `operator`: ConditionOperator?
                                 
     let values: [ConditionalValue]?
-    var workflowSupported = true
+    var deliverySupported = true
 
     enum CodingKeys: String, CodingKey {
         case operand, `operator` = "operator", values
-        case workflowSupported = "_sdkWorkflowSupported"
+        case deliverySupported = "_sdkDeliverySupported"
     }
     
     init(from decoder: Decoder) throws {
@@ -258,7 +259,7 @@ struct Condition: Codable {
         self.operand = try container.decode(Condition.Operand.self, forKey: .operand)
         self.operator = try? container.decode(Condition.ConditionOperator.self, forKey: .operator)
         let rawOperator = try container.decodeIfPresent(String.self, forKey: .operator)
-        self.workflowSupported = (try container.decodeIfPresent(Bool.self, forKey: .workflowSupported) ?? true) &&
+        self.deliverySupported = (try container.decodeIfPresent(Bool.self, forKey: .deliverySupported) ?? true) &&
             (rawOperator == nil || self.operator != nil || (operand.name == .event && rawOperator == "AFTER_EVENT"))
         if operand.name == .user {
             self.values = try? container.decodeIfPresent([Condition.Value].self, forKey: .values)
@@ -271,7 +272,7 @@ struct Condition: Codable {
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(workflowSupported, forKey: .workflowSupported)
+        try container.encode(deliverySupported, forKey: .deliverySupported)
         try container.encode(self.operand, forKey: .operand)
         try? container.encode(self.operator, forKey: .operator)
         if operand.name == .user {

@@ -422,7 +422,7 @@ final class EventsSenderScheduler {
     }
     
     private func prepareOperationSequence() -> [Operation] {
-        if storage.hasPendingWorkflowRegistration || storage.getValue(forKey: StorageKeys.isUpdatedDevice.rawValue) == false {
+        if storage.hasPendingDeliveryRegistration || storage.getValue(forKey: StorageKeys.isUpdatedDevice.rawValue) == false {
             upsertDevice(
                 Device(
                     externalUserId: ExternalUserIdHelper.getId(),
@@ -444,8 +444,8 @@ final class EventsSenderScheduler {
             }
         }
         
-        operations.append(contentsOf: storage.pendingWorkflowInteractions(context: WorkflowContext.current, now: Date()).map {
-            SendWorkflowInteractionOperation(requestService: mobileRequestService, storage: storage, queued: $0)
+        operations.append(contentsOf: storage.pendingDeliveryInteractions(context: DeliveryContext.current, now: Date()).map {
+            SendDeliveryInteractionOperation(requestService: mobileRequestService, storage: storage, queued: $0)
         })
         operations.append(contentsOf: sendEventsOperations())
         operations.append(contentsOf: sendRecomEventsOperations())

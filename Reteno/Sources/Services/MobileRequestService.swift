@@ -11,18 +11,18 @@ final class MobileRequestService {
     
     private let requestManager: RequestManager
     private let identity: () -> RequestIdentity
-    private let workflowContext: () -> WorkflowContext.Snapshot
+    private let deliveryContext: () -> DeliveryContext.Snapshot
     private let registrationStorage: KeyValueStorage
     
     init(
         requestManager: RequestManager = NetworkBuilder.buildMobileApiManager(),
         identity: @escaping () -> RequestIdentity = { .current },
-        workflowContext: @escaping () -> WorkflowContext.Snapshot = WorkflowContext.capture,
+        deliveryContext: @escaping () -> DeliveryContext.Snapshot = DeliveryContext.capture,
         registrationStorage: KeyValueStorage = StorageBuilder.build()
     ) {
         self.requestManager = requestManager
         self.identity = identity
-        self.workflowContext = workflowContext
+        self.deliveryContext = deliveryContext
         self.registrationStorage = registrationStorage
     }
     
@@ -44,8 +44,8 @@ final class MobileRequestService {
         let languageCode = Bundle.main.preferredLocalizations.first ?? "en"
         let pushToken = RetenoNotificationsHelper.deviceToken() ?? ""
         let category = try? DeviceCategoryHelper.deviceType()
-        let capturedHeaders = workflowContext().headers
-        let registration = WorkflowContext.Snapshot(
+        let capturedHeaders = deliveryContext().headers
+        let registration = DeliveryContext.Snapshot(
             apiKey: capturedHeaders["X-Reteno-Access-Key"] ?? "",
             identity: RequestIdentity(deviceId: identity().deviceId, externalUserId: externalUserId),
             email: email, phone: phone)
@@ -63,8 +63,8 @@ final class MobileRequestService {
         let handler = EmptyResponseHandler()
         
         requestManager.execute(request: request, responseHandler: handler) { result in
-            if case .success = result, registration.id == self.workflowContext().id,
-               self.registrationStorage.confirmWorkflowRegistration(context: registration.id) {
+            if case .success = result, registration.id == self.deliveryContext().id,
+               self.registrationStorage.confirmDeliveryRegistration(context: registration.id) {
                 NotificationCenter.default.post(name: Reteno.inAppDeviceRegistrationConfirmed, object: nil,
                                                 userInfo: ["context": registration.id])
             }
@@ -267,8 +267,8 @@ extension MobileRequestService {
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
     
-    func getInAppMessages(eTag: String?, includeWorkflow: Bool = false, completionHandler: @escaping (Result<(list: InAppMessageLists, etag: String?), Error>) -> Void) {
-        let request = InAppMessagesRequest(eTag: eTag, includeWorkflow: includeWorkflow)
+    func getInAppMessages(eTag: String?, completionHandler: @escaping (Result<(list: InAppMessageLists, etag: String?), Error>) -> Void) {
+        let request = InAppMessagesRequest(eTag: eTag)
         let handler = DecodableResponseHandler<InAppMessageLists>()
         
         URLCache.shared.removeAllCachedResponses()
@@ -302,20 +302,20 @@ extension MobileRequestService {
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
     
-    func getWorkflowContent(messages: [Message], completionHandler: @escaping (Result<InAppContents, Error>) -> Void) {
+    func getDeliveryContent(messages: [Message], completionHandler: @escaping (Result<InAppContents, Error>) -> Void) {
         let request = InAppMessageContentRequest(messages: messages)
         requestManager.execute(request: request, responseHandler: DecodableResponseHandler<InAppContents>(),
                                completionHandler: completionHandler)
     }
 
-    func sendWorkflowInteraction(_ queued: QueuedInAppInteraction,
+    func sendDeliveryInteraction(_ queued: QueuedInAppInteraction,
                                  completion: @escaping (Result<Bool, Error>, ResponseData?) -> Void) {
-        let capturedContext = workflowContext()
+        let capturedContext = deliveryContext()
         guard queued.context == capturedContext.id else {
             completion(.failure(APIClientError.wrongResponse), nil)
             return
         }
-        requestManager.execute(request: NewInAppInteractionRequest(workflowInteraction: queued.interaction, headers: capturedContext.headers),
+        requestManager.execute(request: NewInAppInteractionRequest(deliveryInteraction: queued.interaction, headers: capturedContext.headers),
                                responseHandler: EmptyResponseHandler(), completionHandler: completion)
     }
 

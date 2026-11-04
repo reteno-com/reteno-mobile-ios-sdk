@@ -59,7 +59,7 @@ enum StorageKeys: String, CaseIterable {
     case retenoConfiguration = "com.reteno.reteno-configuration.key"
     case isDelayedInitialization = "com.reteno.reteno-delayed-initialization.key"
     case lastBaseHTMLFetchDate = "com.reteno.last-base-html-fetch-date.key"
-    case workflowState = "com.reteno.workflow-state.key"
+    case deliveryState = "com.reteno.workflow-state.key"
     case inAppContext = "com.reteno.in-app-context.key"
     case lastBaseHTMLPath = "com.reteno.last-base-html-path.key"
 }
@@ -110,19 +110,19 @@ final class KeyValueStorage {
         storageUnwrapper()?.removeObject(forKey: key)
     }
     
-    var hasPendingWorkflowRegistration: Bool {
-        let state: WorkflowState = readCollection(.workflowState, empty: WorkflowState())
+    var hasPendingDeliveryRegistration: Bool {
+        let state: DeliveryState = readCollection(.deliveryState, empty: DeliveryState())
         return state.pendingRegistrationContext != nil
     }
 
-    func beginWorkflowRegistration(context: String) {
-        updateCollection(.workflowState, empty: WorkflowState()) { $0.pendingRegistrationContext = context }
+    func beginDeliveryRegistration(context: String) {
+        updateCollection(.deliveryState, empty: DeliveryState()) { $0.pendingRegistrationContext = context }
     }
 
     @discardableResult
-    func confirmWorkflowRegistration(context: String) -> Bool {
+    func confirmDeliveryRegistration(context: String) -> Bool {
         var confirmed = false
-        updateCollection(.workflowState, empty: WorkflowState()) { state in
+        updateCollection(.deliveryState, empty: DeliveryState()) { state in
             guard state.pendingRegistrationContext == context else { return }
             state.pendingRegistrationContext = nil
             confirmed = true
@@ -130,14 +130,14 @@ final class KeyValueStorage {
         return confirmed
     }
 
-    func hasShownWorkflow(iid: String, context: String) -> Bool {
-        let state: WorkflowState = readCollection(.workflowState, empty: WorkflowState())
+    func hasShownDelivery(iid: String, context: String) -> Bool {
+        let state: DeliveryState = readCollection(.deliveryState, empty: DeliveryState())
         return state.shown[context]?.contains(iid) == true
     }
 
-    func workflowDeadline(iid: String, proposed: String, context: String) -> String {
+    func deliveryDeadline(iid: String, proposed: String, context: String) -> String {
         var deadline = proposed
-        updateCollection(.workflowState, empty: WorkflowState()) { state in
+        updateCollection(.deliveryState, empty: DeliveryState()) { state in
             if let saved = state.deadlines[context]?[iid] {
                 deadline = saved
             } else {
@@ -148,14 +148,15 @@ final class KeyValueStorage {
     }
 
     @discardableResult
-    func recordWorkflowInteraction(_ interaction: NewInteraction, context: String, now: Date) -> Bool {
+    func recordDeliveryInteraction(_ interaction: NewInteraction, context: String, now: Date) -> Bool {
         var recorded = false
         // One encoded value makes the shown marker and OPENED inseparable on reopen.
-        updateCollection(.workflowState, empty: WorkflowState()) { state in
-            if interaction.status == .opened {
+        updateCollection(.deliveryState, empty: DeliveryState()) { state in
+            if interaction.serverAssignedIid == true, interaction.status == .opened {
                 guard state.shown[context]?.contains(interaction.id) != true else { return }
             }
-            if interaction.status == .opened || interaction.status == .clicked {
+            if interaction.serverAssignedIid == true &&
+                (interaction.status == .opened || interaction.status == .clicked || interaction.status == .failed) {
                 state.shown[context, default: []].insert(interaction.id)
             }
             state.observations.append(.init(id: UUID().uuidString, context: context,
@@ -165,13 +166,13 @@ final class KeyValueStorage {
         return recorded
     }
 
-    func pendingWorkflowInteractions(context: String, now: Date) -> [QueuedInAppInteraction] {
-        let state: WorkflowState = readCollection(.workflowState, empty: WorkflowState())
+    func pendingDeliveryInteractions(context: String, now: Date) -> [QueuedInAppInteraction] {
+        let state: DeliveryState = readCollection(.deliveryState, empty: DeliveryState())
         return state.observations.filter { $0.context == context && $0.nextAttempt <= now && $0.attempts < 8 }
     }
 
-    func completeWorkflowInteraction(id: String, retryAt: Date?) {
-        updateCollection(.workflowState, empty: WorkflowState()) { state in
+    func completeDeliveryInteraction(id: String, retryAt: Date?) {
+        updateCollection(.deliveryState, empty: DeliveryState()) { state in
             guard let index = state.observations.firstIndex(where: { $0.id == id }) else { return }
             if let retryAt, state.observations[index].attempts < 7 {
                 state.observations[index].attempts += 1

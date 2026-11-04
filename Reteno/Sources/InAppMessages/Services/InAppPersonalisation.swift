@@ -36,8 +36,8 @@ struct InAppPersonalisation {
     }
     
     func prepareHTML(_ html: String, for message: InApp) -> String {
-        let isWorkflow = (message as? InAppContent)?.isWorkflow == true
-        let model = isWorkflow ? message.model : apply(to: message.model)
+        let hasServerAssignedIid = (message as? InAppContent)?.hasServerAssignedIid == true
+        let model = hasServerAssignedIid ? message.model : apply(to: message.model)
         return html
             .replacingOccurrences(of: "${documentModel}", with: model)
             .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")

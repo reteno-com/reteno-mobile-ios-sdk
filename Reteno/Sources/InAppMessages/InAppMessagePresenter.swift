@@ -63,7 +63,7 @@ class InAppMessagePresenter {
             if let afterEvent = conditions.first(where: { $0.operator == nil && $0.operand.name == .event}), let events = afterEvent.values as? [Condition.EventValue] {
                 self.events = events
             }
-            if model.message.isWorkflow && fireTime == 0 && events.isEmpty {
+            if model.message.hasServerAssignedIid && fireTime == 0 && events.isEmpty {
                 self.procesignInApp(noCondition: true)
             }
         }
@@ -83,7 +83,7 @@ class InAppMessagePresenter {
     
     func updateTimeSpendInApp(time: Int) {
         elapsedTime = time
-        if model.message.isWorkflow {
+        if model.message.hasServerAssignedIid {
             if events.isEmpty && time >= fireTime { self.procesignInApp(isTimeCondition: true) }
             return
         }
@@ -142,7 +142,7 @@ class InAppMessagePresenter {
                     break
                 }
             }
-            if allConditionsFine && (!model.message.isWorkflow || elapsedTime >= fireTime) {
+            if allConditionsFine && (!model.message.hasServerAssignedIid || elapsedTime >= fireTime) {
                 self.procesignInApp(isTimeCondition: false)
             }
         }
@@ -245,5 +245,65 @@ class InAppMessagePresenter {
         case .week:
             return component.weekOfYear ?? 0 >= 1
         }
+    }
+}
+
+final class InAppPresentationQueue {
+    private struct Candidate {
+        let message: Message
+        let token: UUID
+        var present: (() -> Void)?
+    }
+
+    private var candidates: [String: Candidate] = [:]
+    private var scheduled = false
+
+    func begin(_ message: Message) -> UUID? {
+        guard candidates[message.executionKey] == nil else { return nil }
+        let token = UUID()
+        candidates[message.executionKey] = Candidate(message: message, token: token, present: nil)
+        return token
+    }
+
+    func resolve(_ message: Message, token: UUID, present: (() -> Void)?) {
+        guard var candidate = candidates[message.executionKey], candidate.token == token else { return }
+        if let present {
+            candidate.present = present
+            candidates[message.executionKey] = candidate
+        } else {
+            candidates.removeValue(forKey: message.executionKey)
+        }
+        scheduleDrain()
+    }
+
+    func cancelServerDeliveries() {
+        candidates = candidates.filter { !$0.value.message.hasServerAssignedIid }
+        scheduleDrain()
+    }
+
+    private func scheduleDrain() {
+        guard !scheduled else { return }
+        scheduled = true
+        DispatchQueue.main.async { [weak self] in self?.drain() }
+    }
+
+    func clear() {
+        candidates.removeAll()
+    }
+
+    private func drain() {
+        scheduled = false
+        let first = candidates.values.sorted {
+            if $0.message.displayPriority != $1.message.displayPriority {
+                return $0.message.displayPriority > $1.message.displayPriority
+            }
+            if $0.message.messageId != $1.message.messageId {
+                return $0.message.messageId > $1.message.messageId
+            }
+            return $0.message.executionKey < $1.message.executionKey
+        }.first
+        guard let present = first?.present else { return }
+        clear()
+        present()
     }
 }

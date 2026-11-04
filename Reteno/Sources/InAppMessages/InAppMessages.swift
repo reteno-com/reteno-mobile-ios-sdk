@@ -16,7 +16,8 @@ final class InAppMessages {
     private var window: UIWindow?
     private var slideUpVC: SlideUpMessageViewController?
     private var renderingController: InAppMessageWebViewController?
-    private var workflowPresentationPending = false
+    private var deliveryPresentationPending = false
+    private var deliveryPresentationGeneration = UUID()
     
     private var currentInAppMessage: InApp?
     private var currentInteractionId: String?
@@ -29,6 +30,7 @@ final class InAppMessages {
     private let inAppService: InAppService
     
     private var inAppPresenters: [InAppMessagePresenter] = []
+    private let presentationQueue = InAppPresentationQueue()
     private var postponeInAppInfo: [(showModel: InAppShowModel, canDelete: Bool, content: InAppContent, segmentId: Int?)] = []
     
     private var pendingEventTriggers: [PendingEventTrigger] = []
@@ -93,11 +95,18 @@ final class InAppMessages {
     }
     
     @available(iOSApplicationExtension, unavailable)
-    func presentInApp(by content: InAppContent) {
+    func presentInApp(by content: InAppContent, showModel: InAppShowModel? = nil, canDelete: Bool = false) {
+        let generation = deliveryPresentationGeneration
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            if content.isWorkflow && (UIApplication.shared.applicationState != .active ||
-                !self.inAppService.canPresentWorkflow(content)) { return }
+            if content.hasServerAssignedIid && (generation != self.deliveryPresentationGeneration ||
+                self.isPausedInApps || UIApplication.shared.applicationState != .active ||
+                !self.inAppService.canPresentDelivery(content)) { return }
+            if !content.hasServerAssignedIid, self.isPausedInApps {
+                if let showModel { self.postponeInApp(showModel: showModel, canDelete: canDelete, content: content) }
+                return
+            }
+            if let showModel { self.processingInApp(showModel: showModel, canDelete: canDelete) }
             Reteno.inAppStatusHander?(.inAppShouldBeDisplayed)
             self.setupWebView(with: content)
         }
@@ -155,28 +164,27 @@ final class InAppMessages {
     
     @available(iOSApplicationExtension, unavailable)
     func setInAppMessagesPause(isPaused: Bool) {
+        guard Thread.isMainThread else {
+            DispatchQueue.main.sync { self.setInAppMessagesPause(isPaused: isPaused) }
+            return
+        }
         isPausedInApps = isPaused
-        if !isPaused { inAppService.reprocessWorkflowMessages() }
+        if isPaused {
+            deliveryPresentationGeneration = UUID()
+            presentationQueue.cancelServerDeliveries()
+            inAppService.cancelDeliveryAuthorizations()
+            dismissPendingDeliveryPresentation()
+            return
+        }
+        inAppService.reprocessDeliveryMessages()
 
         guard !isPaused, inAppMessagesPauseBehaviour == .postponeInApps, let inAppToShow = postponeInAppInfo.first else {
             return
         }
         
-        if let segmentID = inAppToShow.segmentId {
-            self.inAppService.checkAsyncRulesSegment(id: segmentID) { [weak self] checks in
-                guard let self else { return }
-                for segment in checks {
-                    if segment.segmentId == segmentID, segment.checkResult {
-                        self.processingInApp(showModel: inAppToShow.showModel, canDelete: inAppToShow.canDelete)
-                        self.presentInApp(by: inAppToShow.content)
-                        break
-                    }
-                }
-            }
-        } else {
-            self.processingInApp(showModel: inAppToShow.showModel, canDelete: inAppToShow.canDelete)
-            self.presentInApp(by: inAppToShow.content)
-        }
+        offer(inAppToShow.showModel.message, showModel: inAppToShow.showModel,
+              canDelete: inAppToShow.canDelete, contents: [inAppToShow.content],
+              context: DeliveryContext.current)
         postponeInAppInfo.removeAll()
     }
     
@@ -199,6 +207,8 @@ final class InAppMessages {
         isAlreadySendRequest = false
         inAppService.clearInApps()
         inAppPresenters = []
+        presentationQueue.clear()
+        deliveryPresentationGeneration = UUID()
         postponeInAppInfo = []
         currentInAppMessage = nil
         currentInteractionId = nil
@@ -251,7 +261,7 @@ final class InAppMessages {
     func subscribeOnNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDeviceRegistrationConfirmed(_:)),
                                                name: Reteno.inAppDeviceRegistrationConfirmed, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(cancelPendingWorkflowPresentation),
+        NotificationCenter.default.addObserver(self, selector: #selector(cancelPendingDeliveryPresentation),
                                                name: UIApplication.willResignActiveNotification, object: nil)
         InAppWebViewPool.shared.warmUp()
         self.sessionService.subscribeOnNotifications()
@@ -349,8 +359,8 @@ final class InAppMessages {
         
         isAlreadySendRequest = true
         
-        inAppService.workflowShowModels = { [weak self] models in
-            self?.presentingInApp(contents: [], showModels: models, workflowOnly: true)
+        inAppService.deliveryShowModels = { [weak self] models in
+            self?.presentingInApp(contents: [], showModels: models, deliveryOnly: true)
         }
         inAppService.discoveryFailed = { [weak self] in
             self?.isAlreadySendRequest = false
@@ -365,66 +375,24 @@ final class InAppMessages {
     }
     
     @available(iOSApplicationExtension, unavailable)
-    private func presentingInApp(contents: [InAppContent], showModels: [InAppShowModel], workflowOnly: Bool = false) {
-        let discoveryContext = WorkflowContext.current
+    private func presentingInApp(contents: [InAppContent], showModels: [InAppShowModel], deliveryOnly: Bool = false) {
+        deliveryPresentationGeneration = UUID()
+        inAppService.cancelDeliveryAuthorizations()
+        if deliveryOnly {
+            presentationQueue.cancelServerDeliveries()
+        } else {
+            presentationQueue.clear()
+        }
+        let discoveryContext = DeliveryContext.current
         let keys = Set(showModels.map { $0.message.executionKey })
         inAppPresenters.removeAll {
-            (!workflowOnly || $0.model.message.isWorkflow) && !keys.contains($0.model.message.executionKey)
+            (!deliveryOnly || $0.model.message.hasServerAssignedIid) && !keys.contains($0.model.message.executionKey)
         }
         for showModel in showModels {
-            let presenter: InAppMessagePresenter = .init(model: showModel, storage: storage) { inApp, canDelete in
-                guard discoveryContext == WorkflowContext.current else { return }
-                if inApp.isWorkflow {
-                    guard !self.isPausedInApps, self.isAlreadyFetchBaseFile else { return }
-                    let authorize = {
-                        self.inAppService.authorizeWorkflow(inApp) { content in
-                            guard let content else { return }
-                            self.presentInApp(by: content)
-                        }
-                    }
-                    if inApp.displayRules.async.segment.enabled {
-                        guard let id = inApp.displayRules.async.segment.segmentId else { return }
-                        self.inAppService.checkAsyncRulesSegment(id: id) { checks in
-                            guard discoveryContext == WorkflowContext.current,
-                                  checks.contains(where: { $0.segmentId == id && $0.checkResult }) else { return }
-                            authorize()
-                        }
-                    } else {
-                        authorize()
-                    }
-                    return
-                }
-                guard !self.isPausedInApps else {
-                    
-                    if let content = contents.first(where: { $0.messageInstanceId == inApp.messageInstanceId }) {
-                        let segmentId = inApp.displayRules.async.segment.enabled ? inApp.displayRules.async.segment.segmentId : nil
-                        self.postponeInAppInfo.append((showModel, canDelete, content, segmentId))
-                    }
-                    
-                    
-                    return
-                }
-                
-                guard self.isAlreadyFetchBaseFile else {
-                    return
-                }
-                
-                if let content = contents.first(where: { $0.messageInstanceId == inApp.messageInstanceId }) {
-                    if inApp.displayRules.async.segment.enabled, let segmentID = inApp.displayRules.async.segment.segmentId {
-                        self.inAppService.checkAsyncRulesSegment(id: segmentID) { checks in
-                            for segment in checks {
-                                if segment.segmentId == segmentID, segment.checkResult {
-                                    self.processingInApp(showModel: showModel, canDelete: canDelete)
-                                    self.presentInApp(by: content)
-                                    break
-                                }
-                            }
-                        }
-                    } else {
-                        self.processingInApp(showModel: showModel, canDelete: canDelete)
-                        self.presentInApp(by: content)
-                    }
-                }
+            let presenter: InAppMessagePresenter = .init(model: showModel, storage: storage) { [weak self] inApp, canDelete in
+                guard let self, discoveryContext == DeliveryContext.current else { return }
+                self.offer(inApp, showModel: showModel, canDelete: canDelete, contents: contents,
+                           context: discoveryContext)
             }
             
             self.updateAllPresenters(
@@ -434,12 +402,67 @@ final class InAppMessages {
                 }
             )
         }
-        if !workflowOnly {
+        if !deliveryOnly {
             self.inAppPresentersSelections()
             self.drainPendingEventTriggers()
         }
     }
     
+    private func offer(_ message: Message, showModel: InAppShowModel, canDelete: Bool,
+                       contents: [InAppContent], context: String) {
+        if isPausedInApps, !message.hasServerAssignedIid,
+           let content = contents.first(where: { $0.messageInstanceId == message.messageInstanceId }) {
+            postponeInApp(showModel: showModel, canDelete: canDelete, content: content)
+            return
+        }
+        guard !isPausedInApps, isAlreadyFetchBaseFile, renderingController == nil,
+              let token = presentationQueue.begin(message) else { return }
+        let generation = deliveryPresentationGeneration
+        let resolve: (Bool) -> Void = { [weak self] eligible in
+            guard let self else { return }
+            guard context == DeliveryContext.current, eligible,
+                  !message.hasServerAssignedIid || (!self.isPausedInApps && generation == self.deliveryPresentationGeneration) else {
+                self.presentationQueue.resolve(message, token: token, present: nil)
+                return
+            }
+            if message.hasServerAssignedIid {
+                self.inAppService.authorizeDelivery(message) { [weak self] content in
+                    guard let self else { return }
+                    let present: (() -> Void)? = content.map { content in
+                        { [weak self] in self?.presentInApp(by: content) }
+                    }
+                    self.presentationQueue.resolve(message, token: token, present: present)
+                }
+            } else {
+                let present: (() -> Void)? = contents.first(where: {
+                    $0.messageInstanceId == message.messageInstanceId
+                }).map { content in
+                    { [weak self] in
+                        guard let self else { return }
+                        self.presentInApp(by: content, showModel: showModel, canDelete: canDelete)
+                    }
+                }
+                self.presentationQueue.resolve(message, token: token, present: present)
+            }
+        }
+        if message.displayRules.async.segment.enabled {
+            guard let id = message.displayRules.async.segment.segmentId else {
+                resolve(false)
+                return
+            }
+            inAppService.checkAsyncRulesSegment(id: id) { checks in
+                resolve(checks.contains(where: { $0.segmentId == id && $0.checkResult }))
+            }
+        } else {
+            resolve(true)
+        }
+    }
+
+    private func postponeInApp(showModel: InAppShowModel, canDelete: Bool, content: InAppContent) {
+        let segment = showModel.message.displayRules.async.segment
+        postponeInAppInfo.append((showModel, canDelete, content, segment.enabled ? segment.segmentId : nil))
+    }
+
     private func updateAllPresenters(
         newPresenter: InAppMessagePresenter,
         isExistMessageId: (Message) -> Bool
@@ -481,9 +504,12 @@ final class InAppMessages {
         }
         guard slideUpVC.isNone && window.isNone else { return }
         currentInteractionId = nil
-        if let content = message as? InAppContent, content.isWorkflow,
-           !inAppService.canPresentWorkflow(content) { return }
-        workflowPresentationPending = (message as? InAppContent)?.isWorkflow == true
+        if let content = message as? InAppContent, content.hasServerAssignedIid,
+           (isPausedInApps || !inAppService.canPresentDelivery(content)) { return }
+        if let content = message as? InAppContent, !content.hasServerAssignedIid {
+            currentInteractionId = UUID().uuidString
+        }
+        deliveryPresentationPending = (message as? InAppContent)?.hasServerAssignedIid == true
         if message.layoutType == .slideUp || message.layoutType == .bottomBar {
             let viewController = SlideUpMessageViewController(
                 inApp: message,
@@ -591,7 +617,7 @@ final class InAppMessages {
             renderingController?.stopRendering()
             window = nil
             renderingController = nil
-            workflowPresentationPending = false
+            deliveryPresentationPending = false
             if let action = action {
                 Reteno.inAppStatusHander?(.inAppIsClosed(action: action))
             }
@@ -622,14 +648,14 @@ final class InAppMessages {
             }
             slideUpVC = nil
             renderingController = nil
-            workflowPresentationPending = false
+            deliveryPresentationPending = false
         }
     }
     
     // MARK: Processing InApps
     
     private func processingInApp(showModel: InAppShowModel, canDelete: Bool) {
-        guard !showModel.message.isWorkflow else { return }
+        guard !showModel.message.hasServerAssignedIid else { return }
         if canDelete || showModel.frequency == .oncePerApp || showModel.frequency == .oncePerSession {
             self.inAppPresenters.removeAll(where: { $0.model.message.messageId == showModel.message.messageId })
         }
@@ -649,8 +675,8 @@ final class InAppMessages {
     // MARK: Handle interaction
     
     private func handleInteraction(in message: InApp, messageId: String, action: NotificationStatus.Action) {
-        if let content = message as? InAppContent, content.isWorkflow {
-            inAppService.sendInteraction(with: content, status: .clicked, action: action)
+        if let content = message as? InAppContent {
+            inAppService.sendInteraction(with: content, interactionId: messageId, status: .clicked, action: action)
         } else {
             let status = NotificationStatus(interactionId: messageId, status: .clicked, date: Date(), action: action)
             storage.addNotificationStatus(status)
@@ -664,11 +690,11 @@ final class InAppMessages {
             DispatchQueue.main.sync { self.userIdentityDidChange(from: previousContext) }
             return
         }
-        let current = WorkflowContext.current
+        let current = DeliveryContext.current
         guard previousContext != current else { return }
         clearInApps()
         storage.set(value: current, forKey: StorageKeys.inAppContext.rawValue)
-        storage.beginWorkflowRegistration(context: current)
+        storage.beginDeliveryRegistration(context: current)
         // Reuse the scheduler's existing current-device registration/recovery path.
         storage.set(value: false, forKey: StorageKeys.isUpdatedDevice.rawValue)
     }
@@ -677,8 +703,8 @@ final class InAppMessages {
     @objc private func handleDeviceRegistrationConfirmed(_ notification: Notification) {
         guard let context = notification.userInfo?["context"] as? String else { return }
         DispatchQueue.main.async { [weak self] in
-            guard let self, context == WorkflowContext.current,
-                  !self.storage.hasPendingWorkflowRegistration else { return }
+            guard let self, context == DeliveryContext.current,
+                  !self.storage.hasPendingDeliveryRegistration else { return }
             self.getInAppMessages()
         }
     }
@@ -697,7 +723,7 @@ final class InAppMessages {
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     self.isAlreadyFetchBaseFile = true
-                    self.inAppService.reprocessWorkflowMessages()
+                    self.inAppService.reprocessDeliveryMessages()
                     self.drainPendingEventTriggers()
                     guard let currentInAppMessage = self.currentInAppMessage else { return }
                     self.setupWebView(with: currentInAppMessage)
@@ -715,11 +741,17 @@ final class InAppMessages {
     @objc
     private func handleApplicationDidEnterBackgroundNotification(_ notification: Notification) {
         application = notification.object as? UIApplication
-        cancelPendingWorkflowPresentation()
+        cancelPendingDeliveryPresentation()
     }
 
-    @objc private func cancelPendingWorkflowPresentation() {
-        guard workflowPresentationPending else { return }
+    @objc private func cancelPendingDeliveryPresentation() {
+        deliveryPresentationGeneration = UUID()
+        presentationQueue.cancelServerDeliveries()
+        dismissPendingDeliveryPresentation()
+    }
+
+    private func dismissPendingDeliveryPresentation() {
+        guard deliveryPresentationPending else { return }
         dismissInAppMessage(animated: false)
         dismissSlideUp(animated: false)
     }
@@ -739,8 +771,8 @@ extension InAppMessages: InAppScriptMessageHandler {
         switch scriptMessage.type {
         case .completedLoading:
             guard viewController.beginPresentation() else { return }
-            if let content = message as? InAppContent, content.isWorkflow,
-               (UIApplication.shared.applicationState != .active || !inAppService.canPresentWorkflow(content)) {
+            if let content = message as? InAppContent, content.hasServerAssignedIid,
+               (isPausedInApps || UIApplication.shared.applicationState != .active || !inAppService.canPresentDelivery(content)) {
                 dismissInAppMessage(animated: false)
                 dismissSlideUp(animated: false)
                 return
@@ -749,21 +781,19 @@ extension InAppMessages: InAppScriptMessageHandler {
                 guard let self, let viewController,
                       self.renderingController === viewController,
                       viewController.viewIfLoaded?.window != nil else { return }
-                if let content = message as? InAppContent, content.isWorkflow {
-                    guard UIApplication.shared.applicationState == .active,
-                          self.inAppService.canPresentWorkflow(content) else {
+                if let content = message as? InAppContent, content.hasServerAssignedIid {
+                    guard !self.isPausedInApps, UIApplication.shared.applicationState == .active,
+                          self.inAppService.canPresentDelivery(content) else {
                         self.dismissInAppMessage(animated: false)
                         self.dismissSlideUp(animated: false)
                         return
                     }
-                    self.workflowPresentationPending = false
+                    self.deliveryPresentationPending = false
                     self.currentInteractionId = content.iid
                     self.inAppService.sendInteraction(with: content)
                     self.scheduler.forcePushEvents()
-                    self.inAppPresenters.removeAll { $0.model.message.isWorkflow && $0.model.message.iid == content.iid }
-                } else if let content = message as? InAppContent {
-                    let interactionId = UUID().uuidString
-                    self.currentInteractionId = interactionId
+                    self.inAppPresenters.removeAll { $0.model.message.hasServerAssignedIid && $0.model.message.iid == content.iid }
+                } else if let content = message as? InAppContent, let interactionId = self.currentInteractionId {
                     self.inAppService.sendInteraction(with: content, interactionId: interactionId)
                 }
                 Reteno.inAppStatusHander?(.inAppIsDisplayed)
@@ -782,7 +812,7 @@ extension InAppMessages: InAppScriptMessageHandler {
             Reteno.inAppStatusHander?(.inAppReceivedError(error: "Failed loading in-app"))
             guard let payload = scriptMessage.payload as? InAppScriptMessageErrorPayload else { return }
 
-            let reason = (message as? InAppContent)?.isWorkflow == true ? "Workflow renderer failed" : payload.reason
+            let reason = (message as? InAppContent)?.hasServerAssignedIid == true ? "Delivery renderer failed" : payload.reason
             Logger.log("Failed loading in-app script: \(reason)", eventType: .error)
             inAppRequestService.sendScriptEvent(
                 messageId: message.id,
@@ -852,7 +882,9 @@ extension InAppMessages: InAppScriptMessageHandler {
                 status: .failed,
                 description: "Received unknown script message"
             )
-            currentInteractionId = nil
+            if (message as? InAppContent)?.hasServerAssignedIid != false {
+                currentInteractionId = nil
+            }
         }
     }
     

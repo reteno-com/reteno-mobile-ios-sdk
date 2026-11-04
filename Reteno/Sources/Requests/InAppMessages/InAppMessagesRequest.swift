@@ -16,9 +16,9 @@ struct InAppMessagesRequest: APIRequest {
     let method = HTTPMethod.get
     let encoding: any ParameterEncoding = URLEncoding.default
 
-    init(eTag: String?, includeWorkflow: Bool = false) {
-        parameters = includeWorkflow ? ["includeWorkflow": "true"] : [:]
-        if includeWorkflow { headers = WorkflowContext.headers }
+    init(eTag: String?) {
+        parameters = [:]
+        headers = DeliveryContext.headers
         headers?.updateValue(eTag ?? "", forKey: "If-None-Match")
     }
     

@@ -110,7 +110,7 @@ final class InAppPersonalisationTests: XCTestCase {
 }
 
 extension InAppPersonalisationTests {
-    func test_workflow_html_keeps_raw_model_and_each_executions_prepared_map() throws {
+    func test_delivery_html_keeps_raw_model_and_each_executions_prepared_map() throws {
         let model = ["title": "Hello ${firstName}", "email": "${email}"]
         let renderer = InAppPersonalisation(values: ["firstName": "Cached user", "email": "cached@example.com"])
         let template = "const model = ${documentModel}; const personalisation = ${personalisation};"
@@ -121,7 +121,6 @@ extension InAppPersonalisationTests {
                 "layoutType": "FULL", "model": model,
                 "personalisation": ["firstName": name, "email": email]])
             var content = try JSONDecoder().decode(InAppContent.self, from: data)
-            content.inWorkflow = true
             let prepared = renderer.prepareHTML(template, for: content)
             XCTAssertTrue(prepared.contains("Hello ${firstName}"))
             XCTAssertTrue(prepared.contains("${email}"))

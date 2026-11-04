@@ -18,8 +18,13 @@ struct NewInteraction: Codable {
     let messageInstanceId: Int
     let status: NewInteractionStatus
     let statusDescription: String?
-    var inWorkflow: Bool = false
+    var serverAssignedIid: Bool? = nil
     let action: NotificationStatus.Action?
+
+    private enum CodingKeys: String, CodingKey {
+        case id, time, messageInstanceId, status, statusDescription, action
+        case serverAssignedIid = "inWorkflow"
+    }
     
     init(
         id: String = UUID().uuidString,
@@ -40,13 +45,13 @@ struct NewInteraction: Codable {
     func toJSON() -> [String: Any] {
         var json: [String: Any] = [:]
         
-        if inWorkflow { json["inWorkflow"] = true }
+        if serverAssignedIid == true { json["serverAssignedIid"] = true }
         json["iid"] = id
-        json["time"] = inWorkflow ? WorkflowDate.format(time) : DateFormatter.baseBEDateFormatter.string(from: time)
+        json["time"] = serverAssignedIid == true ? DeliveryDate.format(time) : DateFormatter.baseBEDateFormatter.string(from: time)
         json["messageInstanceId"] = messageInstanceId
         json["status"] = status.rawValue
         
-        if inWorkflow, let action {
+        if let action {
             var payload = ["type": action.type]
             payload["targetComponentId"] = action.targetComponentId
             payload["url"] = action.url
@@ -62,7 +67,7 @@ struct NewInteraction: Codable {
 }
 
 // The digest scopes local state without retaining another copy of the access key.
-enum WorkflowContext {
+enum DeliveryContext {
     struct Snapshot {
         let id: String
         let headers: [String: String]
@@ -86,7 +91,7 @@ enum WorkflowContext {
     static var current: String { capture().id }
 }
 
-enum WorkflowDate {
+enum DeliveryDate {
     static func parse(_ text: String) -> Date? {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
@@ -110,7 +115,7 @@ struct QueuedInAppInteraction: Codable {
     var nextAttempt: Date
 }
 
-struct WorkflowState: Codable {
+struct DeliveryState: Codable {
     var pendingRegistrationContext: String? = nil
     var shown: [String: Set<String>] = [:]
     var deadlines: [String: [String: String]] = [:]

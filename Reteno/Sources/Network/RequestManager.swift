@@ -72,9 +72,8 @@ final class RequestManager {
         }
         
         if DebugModeHelper.isDebugModeOn() {
-            if request.parameters?["inWorkflow"] as? Bool == true || request.parameters?["messages"] != nil ||
-                request.parameters?["includeWorkflow"] as? String == "true" {
-                Logger.log("Workflow mobile API request", eventType: .info)
+            if request.parameters?["serverAssignedIid"] as? Bool == true || request.parameters?["messages"] != nil {
+                Logger.log("Delivery mobile API request", eventType: .info)
             } else {
                 Logger.log(request, eventType: .info)
             }

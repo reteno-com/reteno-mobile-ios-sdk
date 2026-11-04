@@ -22,7 +22,7 @@ struct InAppMessageContentRequest: APIRequest {
     }
 
     init(messages: [Message]) {
-        headers = WorkflowContext.headers
+        headers = DeliveryContext.headers
         precondition(!messages.isEmpty && messages.count <= 100)
         parameters = ["messages": messages.map { ["iid": $0.iid!, "messageInstanceId": $0.messageInstanceId] as [String: Any] }]
     }

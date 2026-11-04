@@ -1,156 +1,91 @@
-# iOS SDK workflow In-app implementation plan
+# iOS SDK InApp delivery plan and implementation
 
-Status (November 3, 2026): source implementation and six review passes are
-complete. Native verification, device certification, and release are pending.
-Branch: `feat/in-app-workflow`.
-Implementation baseline: `862ed2acecc404a1e58572f7950a3dd347d4b672`.
+Status: November 4, 2026 working-tree refinement. Source changes implement the
+approved contract below; native certification and release are pending. Earlier
+six-pass review records cover the previous contract.
 
-Use the [shared SDK contract and regression matrix](../../../esputnik-product-docs/changes/CHG-2026-0002-in-app-workflow-delivery/mobile-sdk-implementation-plan.md)
-for cross-platform behavior and the
-[transport and acknowledgment contract](../../../esputnik-product-docs/changes/CHG-2026-0002-in-app-workflow-delivery/mobile-sdk-implementation-plan.md#workflow-interaction-transport-and-acknowledgment)
-for wire details. The [Android plan](../../../reteno-mobile-android-sdk/docs/in-app-workflow/README.md)
-records platform-specific differences. This document covers iOS only.
+The [shared handoff](../../../esputnik-product-docs/changes/CHG-2026-0002-in-app-workflow-delivery/mobile-sdk-implementation-plan.md) and
+[mobile contract](../../../esputnik-product-docs/changes/CHG-2026-0002-in-app-workflow-delivery/interfaces/mobile-in-app-executions/README.md) own
+cross-platform behavior. This document covers iOS implementation only.
 
-## Implementation plan
+## Implementation and acceptance
 
-The source changes below are implemented locally. Acceptance tests are added
-but have not executed on this host.
-
-| Area | Implementation | Acceptance |
+| Area | Current implementation | Acceptance |
 | --- | --- | --- |
-| Discovery and content | [InAppMessageLists](../../Reteno/Sources/InAppMessages/Models/InAppMessageLists.swift), [InAppContents](../../Reteno/Sources/InAppMessages/Models/InAppContents.swift), and existing request adapters decode optional workflow metadata. Discovery sends `includeWorkflow=true`. Workflow `messages` and ordinary `messageInstanceIds` content requests remain separate. | Mixed lists preserve ordinary entries and distinct IIDs sharing a snapshot. Missing/false `inWorkflow` retains ordinary behavior. |
-| Execution state | Existing [KeyValueStorage](../../Reteno/Sources/Storage/KeyValueStorage.swift) holds shown markers, deadlines, separate queued observations, and pending contact registration in one workflow state value. | Restart retains execution isolation and suppression. Account changes cannot display old content or replay events under new credentials. |
-| Eligibility and rendering | [InAppService](../../Reteno/Sources/InAppMessages/Services/InAppService.swift) reuses existing rules, skips only workflow FREQUENCY, and authorizes content online before first display. The renderer applies the execution's prepared JSON map to the raw model. | Failed or unsupported enabled conditions defer display. Changed non-frequency rules invalidate authorization; ordinary cached-user substitution cannot replace workflow values. |
-| Visibility and retry | [InAppMessages](../../Reteno/Sources/InAppMessages/InAppMessages.swift) observes actual UIKit presentation completion. [NewInteraction](../../Reteno/Sources/InAppMessages/Models/NewInteraction.swift) retains the server IID and original observation. | OPENED/CLICKED establish local shown state. Retry preserves IID, snapshot, UTC-seconds time, and full body. FAILED before visibility does not mark shown; dismissal stays local. |
-| Clicks and compatibility | Workflow OPENED, CLICKED, and FAILED use POST interaction. CLICKED retains the full existing CTA action. Ordinary clicks keep PUT. | Persistence and retry preserve `type`, `targetComponentId`, and `url`; ordinary IID generation, frequency records, and pause behavior remain compatible. |
+| Discovery | Optional IID, absolute expiry, and backend priority. No workflow flag or query opt-in. | Mixed ordinary/server entries, distinct IIDs sharing a snapshot, legacy response defaults. Backend isolates unsupported SDK versions. |
+| Content | Received IID selects online IID/snapshot content authorization. Ordinary snapshots retain their existing content request. | Original IID, raw snapshot, prepared per-delivery personalization; no cross-account or offline first display. |
+| Rules and priority | Evaluate the prepared rules normally. Higher backend priority wins among eligible candidates; default priority is 10. | Priority 20 beats 10, failed eligibility permits fallback, and asynchronous eligibility cannot invert priority. Visible UI is not preempted. |
+| Local state | Existing account-scoped storage retains IID, expiry, suppression, and separate queued observations. | Restart, identity switch, repeated discovery, and lost acknowledgment do not redisplay a completed IID. |
+| Observations | Standalone InApp OPENED/CLICKED/FAILED use POST. `serverAssignedIid` reflects received versus generated identity and is retained with retries. | Preserve original IID/time/body and complete CTA; missing/false provenance follows ordinary processing. Push transport stays unchanged. |
+| Failure | OPENED, CLICKED, and FAILED establish local suppression for a received IID. | Server synchronously ends contact availability; local state survives ACK loss, queue exhaustion, and reopen. |
 
-No delivery-method enum, event identifier, workflow feature flag, SDK TTL
-default, or Velocity engine is introduced. Workflow content is not restored
-for offline first display. Repeated discovery or HTTP 304 does not clear shown
-state or extend `expiresAt`.
-Use `expiresAt` as the absolute deadline for first display; fetching content,
-retrying, or restarting does not start a new availability timer.
+The SDK has no workflow business mode, TTL default, or Velocity engine. It
+applies the sender's prepared JSON values and reports OPENED only after actual
+visibility. A content fetch or initialization alone is not OPENED. Dismissal
+stays local. Backend state update precedes analytics publication; see the
+shared acknowledgment contract for partial failure and retries.
 
-## iOS behavior
+## Remaining acceptance
 
-### Persistence and retry
+Run native tests, render on devices, certify supported wrappers and renderer
+versions, and exercise sender → SDK → analytics with real services. Verify
+upgrade from released local storage, account isolation, pause/resume,
+backgrounding, native loading failures, and late CTA events. Configure backend
+minimum SDK versions only after those versions are certified. This plan does
+not authorize publication or deployment.
 
-Shown state and each observation are recorded together through the existing
-workflow store. The existing scheduler allows up to eight attempts with bounded
-backoff and `Retry-After` handling. Acknowledgment or terminal delivery failure
-removes the queued observation while retaining local suppression. Original
-ordinary frequency records remain intact.
+## iOS implementation and verification
 
-Retry requests capture the owning context and authenticated headers together.
-A concurrent account change cannot substitute new credentials for an old
-observation.
+[InAppService](../../Reteno/Sources/InAppMessages/Services/InAppService.swift)
+authorizes server content and reuses the current rule and schedule checks.
+[InAppMessages](../../Reteno/Sources/InAppMessages/InAppMessages.swift) uses the
+existing UIKit presenter, scheduler, and main queue. Priority arbitration waits
+for a higher-priority asynchronous candidate before choosing a lower one.
+Pending callbacks are invalidated by account/context changes and cancellation.
 
-### Presentation and current rules
+Existing KeyValueStorage retains suppression and queued observations together.
+The stored state key and legacy encoded provenance key remain readable; wire
+JSON uses `serverAssignedIid`. The scheduler keeps its eight-attempt bounded
+retry behavior. Contact-registration barriers survive restart and use captured
+context/authentication, so old events cannot be replayed under new credentials.
 
-Workflow HTML bypasses ordinary cached-user substitution and uses its own
-prepared map. Two IIDs sharing a snapshot retain separate personalized output.
-The current evaluator supports workflow AND targeting with time and app-event
-conditions. Unsupported shapes and enabled conditions, including the existing
-unevaluated NEW_USER condition, remain deferred.
+## Review findings and resolutions
 
-Context clearing dismisses the current window or slide-up on the main queue,
-including switches to an anonymous account. Inactivity cancels unfinished
-workflow presentation; foreground retry evaluates current rules and authorizes
-content again. Foreground processing runs on main even when base HTML is cached.
-Ordinary skip/postpone behavior and existing presenters remain intact.
+The November 4 contract-alignment and follow-up reviews identified the following
+iOS issues. All are fixed in the current working tree. The latest approved
+follow-up adds authorization-refresh and postponed-priority regressions to the
+earlier six fixes. Its second review found no further actionable issues in the
+affected scope.
 
-Non-frequency rule changes invalidate pending or authorized content before
-presentation; frequency-only edits do not. Failure to load ordinary content
-from a mixed list leaves eligible workflow candidates available and completes
-the discovery callback.
+| Finding | Failure scenario | Resolution |
+| --- | --- | --- |
+| Ordinary clicks are not retried reliably | A failed ordinary CLICKED request can be lost instead of surviving for replay. | Use the existing persisted observation queue for ordinary clicks, preserving the IID, full CTA data, original account, and authentication context. |
+| Pause does not cancel pending server presentation | A server delivery finishes authorization or renderer preparation after pause and can still appear. | Invalidate pending callbacks and cancel unfinished server presentation. Already visible UI and ordinary pause behavior retain their existing handling. |
+| FAILED suppression test contradicts the contract | The test expects a server delivery to remain eligible after FAILED and then emit OPENED. | Update the test to expect terminal suppression. This is a test correction; production suppression behavior is unchanged. |
+| Server-only refresh discards ordinary candidates | Resume refreshes server deliveries while an ordinary candidate waits for a segment response. Clearing the whole queue removes its token, so the late eligible result is ignored. | Cancel only server candidates during server-only refresh. A full discovery refresh still replaces the whole candidate set. |
+| Early actions use a different IID from OPENED | CLICK or OPEN_URL arrives before visibility assigns the ordinary IID; the snapshot ID is used instead. | Allocate one ordinary UUID before renderer loading and reuse it for early actions and the later visibility-only OPENED. Each render gets a new UUID; unknown callbacks retain the active UUID. Push and server-assigned identities are preserved. |
+| Short backgrounding discards ordinary candidates | Background cancellation clears an ordinary candidate awaiting a segment response. A short foreground return refreshes only server deliveries and does not start a new session to restore it. | Cancel only server candidates on backgrounding. Preserve ordinary tokens while retaining server callback invalidation and unfinished-renderer dismissal. |
+| Candidate replacement strands server authorization | Discovery or a short foreground refresh replaces a server candidate while its content authorization is pending. The replacement is rejected as a duplicate, and the old response resolves a discarded token. | Cancel pending authorization and advance the existing presentation generation before replacing candidates. Stale segment callbacks cannot authorize discarded server candidates; server-only refresh still preserves ordinary tokens. |
+| Resumed ordinary messages bypass priority | Resume starts priority-20 server authorization, then directly presents a postponed priority-10 ordinary message, including when its segment response arrives first. | Submit the first postponed ordinary message through the existing offer and priority queue. Preserve segment checks and record ordinary frequency only when the message is selected. |
 
-### Contact registration
+The production fixes remain in
+[InAppMessages](../../Reteno/Sources/InAppMessages/InAppMessages.swift) and
+[InAppService](../../Reteno/Sources/InAppMessages/Services/InAppService.swift).
+The [request service tests](../../RetenoExample/RetenoExampleTests/Tests/InApp/InAppRequestServiceTests.swift)
+record ordinary click retry expectations, and the
+[service tests](../../RetenoExample/RetenoExampleTests/Tests/InApp/InAppServiceTests.swift)
+record terminal FAILED suppression expectations.
 
-Core invokes a synchronous workflow hook after local identity writes and passes
-the immutable pre-write context. An actual context change clears the old UI and
-cache; an unchanged context preserves them. Clearing synchronizes the service's
-in-memory owner as well as persisted context. Service-detected changes establish
-the registration barrier before advancing cache ownership.
+## Verification results
 
-Pending registration survives restart and blocks mixed discovery, cached
-reprocessing, workflow authorization, and presentation until the current
-contact's device upsert succeeds. Mixed discovery must wait because the server
-can still resolve the device to the previous contact. Push-by-IID is outside
-this gate.
-
-The upsert freezes actual application/device/contact fields and headers. Only
-a matching successful current-context response clears pending in storage,
-before notifying UI listeners. Generic user-update completions, duplicate
-no-op updates, and stale acknowledgments cannot release it. The existing
-scheduler retries pending registration even when a late same-device response
-sets the legacy updated-device Boolean. One matching acknowledgment is enough;
-no extra discovery or second upsert is required to synchronize context.
-Generic notification timing and listeners remain unchanged.
-
-```mermaid
-sequenceDiagram
-    participant SDK as Core and request service
-    participant UI as In-app service and UI
-    participant Store as Existing workflow store
-    participant API as mobile-api
-    SDK->>UI: Post-write identity hook
-    UI->>UI: Clear old presentation and cache
-    UI->>Store: Persist pending registration context
-    SDK->>API: Device upsert with captured identity
-    API-->>SDK: Matching successful response
-    SDK->>Store: Clear pending before notification
-    SDK->>UI: Registration confirmed
-    UI->>API: Discovery and online content authorization
-    UI->>Store: Persist shown and observation on visibility
-    UI->>API: POST interaction with original IID and body
-    API-->>UI: HTTP acknowledgment
-```
-
-The [shared acknowledgment contract](../../../esputnik-product-docs/changes/CHG-2026-0002-in-app-workflow-delivery/mobile-sdk-implementation-plan.md#workflow-interaction-transport-and-acknowledgment)
-requires synchronous backend shown-state storage for OPENED/CLICKED, followed by
-Kafka broker acknowledgment before HTTP success. FAILED does not update shown
-state. Backend storage and publication are not atomic; retry the saved body
-without redisplaying the IID. Cross-device exactly-once display and event-level
-exactly-once analytics are not guaranteed.
-
-## Verification
-
-| Check | Recorded result |
+| Check | Result |
 | --- | --- |
-| Source review | Six reviewer passes completed; final review has no remaining confirmed findings. |
-| Swift syntax | Official Swift 5.9.2 compiler parsed 22 changed source/test files in a network-disabled container with the checkout mounted read-only. |
-| Documentation and diff | Relative links and `git diff --check` pass. |
-| XCTest, UIKit type checking, simulator/device execution | Not executed: macOS/Xcode is unavailable on this host. |
-| Renderer, wrappers, backend integration | Pending. |
+| Swift 5.9.2 parsing | Current source parses successfully. This is not an iOS build. |
+| Extracted-production Foundation harness | The final run passed 77 assertions: all earlier 41 plus 36 authorization-refresh and resume-priority checks. It executes the affected refresh, pause/resume, queue, frequency processing, renderer setup, script handler, service, and storage method bodies with controlled UIKit/WebKit and network boundaries. |
+| Regression reproduction | The latest extension reproduced 21 failing assertions before the two approved fixes, with all earlier 41 still passing. After the fixes, all 77 assertions passed. Earlier passes changed 15 failures to 34 passing assertions, then one background failure to 41 passing assertions. These counts describe successive runs, not separate native test suites. |
+| Covered boundaries | Delayed ordinary segment responses, full and server-only refresh during authorization, stale response and segment rejection, short foreground recovery, postponed ordinary priority, authorization-failure fallback, rejected-segment fallback, frequency processing after selection, early CLICK/OPEN_URL, visibility-only OPENED, fresh per-render IID, push/server identity, pending renderer cancellation, and visible server preservation. |
+| Native UIKit/WebKit/XCTest | Pending on macOS/Xcode. Parsing and the isolated harness do not establish native rendering behavior. |
 
-Syntax checks do not establish UIKit type checking or native runtime behavior.
-
-The focused regressions are in
-[InAppServiceTests](../../RetenoExample/RetenoExampleTests/Tests/InApp/InAppServiceTests.swift),
-[InAppRequestServiceTests](../../RetenoExample/RetenoExampleTests/Tests/InApp/InAppRequestServiceTests.swift),
-and [InAppPersonalisationTests](../../RetenoExample/RetenoExampleTests/Tests/InApp/InAppPersonalisationTests.swift).
-They cover mixed lists and ordinary-content failures, prepared-map isolation,
-rule changes, visibility state, restart/retry, credential capture, identity
-writes, no-op updates, stale device acknowledgments, and single-ack recovery.
-
-On macOS with Xcode, run from the repository root:
-
-```bash
-xcodebuild -showdestinations -project RetenoExample/RetenoExample.xcodeproj -scheme RetenoExampleTests
-xcodebuild test -project RetenoExample/RetenoExample.xcodeproj -scheme RetenoExampleTests -destination 'platform=iOS Simulator,id=<installed-simulator-id>'
-```
-
-Select an installed simulator ID from the first command. Use isolated stores,
-controlled callbacks, and fixed test time for recovery and expiry scenarios.
-
-## Remaining work
-
-- Run XCTest, UIKit type checking, store-upgrade, and recovery scenarios.
-- Verify actual window/slide-up visibility, inactivity during presentation,
-  anonymous account changes, background/foreground, termination, reconnect,
-  expiry, clicks, and dismissal on devices.
-- Certify supported renderer/wrapper versions and backend integration. Showing
-  E1 must leave a different IID E2 independently available.
-- Record the evidence and publish through the SDK release process only after
-  certification. Source review and backend completion do not establish SDK
-  release readiness.
+Run the existing RetenoExample XCTest scheme on a supported simulator, then
+verify device visibility, bridge callbacks, slide-up/window handling, and
+interactions. Linux parsing does not establish those native behaviors.

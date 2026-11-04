@@ -323,7 +323,7 @@ public struct Reteno {
                 || groupNamesExclude.isNotEmpty
         else { return }
         
-        let previousInAppContext = WorkflowContext.current
+        let previousInAppContext = DeliveryContext.current
 
         if let externalUserId = externalUserId,
             !externalUserId.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
@@ -520,7 +520,7 @@ public struct Reteno {
         externalUserId: String?,
         userAttributes: UserAttributes?
     ) {
-        let previousInAppContext = WorkflowContext.current
+        let previousInAppContext = DeliveryContext.current
 
         // Close the previous account's session and in-app state while its identity is still in place.
         inApps.endSession()

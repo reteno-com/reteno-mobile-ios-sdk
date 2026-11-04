@@ -65,7 +65,7 @@ final class SendNotificationsStatusOperation: DateOperation, @unchecked Sendable
     
 }
 
-final class SendWorkflowInteractionOperation: DateOperation, @unchecked Sendable {
+final class SendDeliveryInteractionOperation: DateOperation, @unchecked Sendable {
     private let requestService: MobileRequestService
     private let storage: KeyValueStorage
     private let queued: QueuedInAppInteraction
@@ -79,15 +79,15 @@ final class SendWorkflowInteractionOperation: DateOperation, @unchecked Sendable
 
     override func main() {
         super.main()
-        guard !isCancelled, queued.context == WorkflowContext.current,
-              storage.pendingWorkflowInteractions(context: queued.context, now: Date()).contains(where: { $0.id == queued.id }) else {
+        guard !isCancelled, queued.context == DeliveryContext.current,
+              storage.pendingDeliveryInteractions(context: queued.context, now: Date()).contains(where: { $0.id == queued.id }) else {
             finish()
             return
         }
-        requestService.sendWorkflowInteraction(queued) { result, response in
+        requestService.sendDeliveryInteraction(queued) { result, response in
             switch result {
             case .success:
-                self.storage.completeWorkflowInteraction(id: self.queued.id, retryAt: nil)
+                self.storage.completeDeliveryInteraction(id: self.queued.id, retryAt: nil)
             case .failure:
                 let status = response?.statusCode ?? -1
                 let retryable = status < 0 || status == 408 || status == 429 || status >= 500
@@ -103,8 +103,8 @@ final class SendWorkflowInteractionOperation: DateOperation, @unchecked Sendable
                         if let date = formatter.date(from: text) { delay = max(delay, date.timeIntervalSinceNow) }
                     }
                 }
-                Logger.log(retryable && self.queued.attempts < 7 ? "Workflow interaction retry scheduled" : "Workflow interaction finished without acknowledgment", eventType: .warning)
-                self.storage.completeWorkflowInteraction(id: self.queued.id,
+                Logger.log(retryable && self.queued.attempts < 7 ? "Delivery interaction retry scheduled" : "Delivery interaction finished without acknowledgment", eventType: .warning)
+                self.storage.completeDeliveryInteraction(id: self.queued.id,
                     retryAt: retryable ? Date().addingTimeInterval(delay) : nil)
             }
             self.finish()
