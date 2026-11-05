@@ -4,9 +4,8 @@ Status: the November 4, 2026 contract refinement is committed and pushed. Native
 certification and release are pending. Earlier six-pass review records cover
 the previous contract.
 
-The [shared handoff](../../../esputnik-product-docs/changes/CHG-2026-0002-in-app-workflow-delivery/mobile-sdk-implementation-plan.md) and
-[mobile contract](../../../esputnik-product-docs/changes/CHG-2026-0002-in-app-workflow-delivery/interfaces/mobile-in-app-executions/README.md) own
-cross-platform behavior. This document covers iOS implementation only.
+This document covers the iOS SDK implementation, API expectations, and
+acceptance checks. Source and test references resolve within this repository.
 
 ## Implementation and acceptance
 
@@ -22,8 +21,10 @@ cross-platform behavior. This document covers iOS implementation only.
 The SDK has no workflow business mode, TTL default, or Velocity engine. It
 applies the sender's prepared JSON values and reports OPENED only after actual
 visibility. A content fetch or initialization alone is not OPENED. Dismissal
-stays local. Backend state update precedes analytics publication; see the
-shared acknowledgment contract for partial failure and retries.
+stays local. For a server-assigned IID, HTTP 200 follows server delivery
+completion and observation publication. A failed or lost response does not
+restore eligibility. Retry the original IID, time, and body through the
+existing persisted queue.
 
 ## Remaining acceptance
 
