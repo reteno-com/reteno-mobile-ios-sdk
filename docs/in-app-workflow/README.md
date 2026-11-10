@@ -1,8 +1,9 @@
 # iOS SDK InApp delivery
 
-The implementation is committed and pushed. Native certification and release are
-pending. This document describes the implemented contract; it does not confirm
-that the coordinated backend release is deployed.
+The SDK implementation is committed in this checkout. Documentation was
+reconciled with backend contracts on November 10, 2026. Native certification,
+release, and coordinated backend deployment remain unverified by the recorded
+checks.
 
 You can review the SDK behavior and backend contract here without access to
 another repository. Source and test links stay within this repository.
@@ -32,7 +33,7 @@ specific contact before that contact opens the app. This document calls it a
 | Concern | Ordinary InApp before this change | Added behavior |
 | --- | --- | --- |
 | Identity | The SDK generates an interaction UUID for a display attempt. | The backend creates an interaction UUID before discovery; the SDK reuses it. |
-| Eligibility | Published rules, targeting, segment membership, and frequency determine eligibility. | The contact must also have an unexpired `SENT` delivery. Current rules still apply; the backend disables only message-level frequency for these deliveries. |
+| Eligibility | Published rules, targeting, segment membership, and frequency determine eligibility. | The contact needs an unexpired `SENT` delivery and a currently available instant message. Ordinary publication is not required. Current rules still apply; the backend disables only message-level frequency for these deliveries. |
 | Content | A message instance is requested by `messageInstanceId`. | The same endpoint accepts an IID/instance pair and returns that delivery's prepared personalization. |
 | Selection | Existing ordinary-message selection applies. | Eligible server deliveries take precedence over eligible ordinary messages. Higher numeric priority wins; visible content is not interrupted. |
 | Observations | OPENED/FAILED use the mobile-api POST; clicks use the existing interaction-status transport. | All standalone InApp OPENED/CLICKED/FAILED use the mobile-api POST, including ordinary clicks. Push and push-embedded InApp keep their existing transport. |
@@ -84,13 +85,13 @@ sequenceDiagram
     participant I as in-app-service
     S->>M: GET /api/v1/inapp/messages<br/>SDK-version and device headers
     M->>I: Discover for authenticated<br/>org/contact and language
-    I->>I: Select contact's unexpired SENT deliveries<br/>and current published rules
+    I->>I: Select contact's unexpired SENT deliveries<br/>and current eligible rules
     I-->>M: Ordinary rules and delivery<br/>IID/instance/expiry/priority
     M-->>S: 200 messages + ETag, or 304
     S->>S: Evaluate rules and priority
     S->>M: POST /api/v1/inapp/contents/request<br/>messages with IID/instance
     M->>I: Authorize content<br/>for authenticated contact
-    I->>I: Verify IID/instance, SENT, expiry,<br/>current publication, and retained content
+    I->>I: Verify IID/instance, SENT, expiry,<br/>current eligibility, and retained content
     alt Content available
         I-->>M: Raw model and personalization
         M-->>S: 200 content<br/>with rendering context
@@ -152,10 +153,13 @@ discovery only; an empty/invalid configured minimum disables server deliveries
 for that platform. Configure the actual certified versions before rollout rather
 than changing a version string to bypass the gate.
 
-Messages with an authored availability TTL (time to live) are excluded from
-ordinary discovery and the old instance-only content path. This prevents an older SDK from
-displaying them without contact authorization, expiry, and IID handling. A mixed
-discovery response does not require a mixed content request.
+In-app-service classifies discovery using the current message's internal
+instant-message marker, independently of availability TTL (time to live).
+The old instance-only content path uses the marker frozen in each instance;
+later message edits do not reclassify that instance. Instant messages and
+instances are excluded from these respective ordinary paths. The marker is not
+an SDK field; the SDK follows the presence of an IID. A mixed discovery response
+does not require a mixed content request.
 
 `POST /api/v1/inapp/async-rules/check` and the existing push-embedded message
 lookup keep their current contracts. They have no feature-specific before/after
@@ -340,7 +344,7 @@ priority, frequency, and fallback behavior.
 <p>No per-server delivery authorization in this operation.</p>
 </td>
 <td>
-<p>For <code>messages</code>, mobile-api resolves the authenticated contact; in-app-service checks the exact delivery, message instance, expiry, SENT state, and current publication. Unavailable content returns 404. TTL message instances cannot use the ordinary form.</p>
+<p>For <code>messages</code>, mobile-api resolves the authenticated contact; in-app-service checks the exact delivery, message instance, expiry, SENT state, and current instant-message/workflow eligibility. Unavailable content returns 404. Instances with a frozen instant-message marker cannot use the ordinary form.</p>
 </td>
 </tr>
 </tbody>
@@ -810,15 +814,16 @@ sequenceDiagram
     Note over I: Prepared delivery arrives with an existing IID,<br/>retained instance, contact, and personalization
     I->>I: Store per-contact SENT delivery<br/>with instance, personalization, and fixed expiry
     I->>I: Publish successful sender result<br/>for asynchronous SEND registration
-    Note over I: Discovery can now return this delivery<br/>while publication and eligibility checks pass
+    Note over I: Discovery can now return this delivery<br/>while current eligibility checks pass
 ```
 
-A stored delivery alone is not enough for SDK discovery. The message must also
-be published and linked to an active, unpaused workflow. Content authorization
-checks current publication/workflow availability again. Rules remain editable
-after publication; their discovery cache normally refreshes within ten minutes.
-Content uses the retained instance, while targeting, segment conditions, and
-schedule use the current rules.
+A stored delivery alone is not enough for SDK discovery. In-app-service also
+requires the current instant-message marker, an active message, an open callout,
+display rules, and an active, unpaused workflow reference. An instant message
+does not need the ordinary publication revision. Content authorization checks
+this availability again. Rules remain editable; their discovery cache normally
+refreshes within ten minutes. Content uses the retained instance, while
+targeting, segment conditions, and schedule use the current rules.
 
 ### Internal: GET /v1/organisations/{orgId}/inapp/messages
 
@@ -843,7 +848,7 @@ these backend organization/contact identifiers.
 <p>No <code>contactId</code> parameter; returns organization-level ordinary rules.</p>
 </td>
 <td>
-<p>Optional <code>contactId</code> adds that contact&#x27;s unexpired SENT deliveries to ordinary rules. Without it, only ordinary non-TTL messages are returned.</p>
+<p>Optional <code>contactId</code> adds that contact&#x27;s unexpired SENT deliveries to ordinary rules. Without it, only ordinary messages are returned.</p>
 </td>
 </tr>
 <tr>
@@ -909,7 +914,7 @@ The returned rules follow the [selection contract](#discovery-rules-and-priority
 }</pre>
 </td>
 <td>
-<p>The ordinary URL and body remain supported for non-TTL message instances.</p>
+<p>The ordinary URL and body remain supported for ordinary message instances.</p>
 </td>
 </tr>
 <tr>
