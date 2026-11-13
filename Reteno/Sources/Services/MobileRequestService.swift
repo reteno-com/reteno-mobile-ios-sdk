@@ -10,17 +10,20 @@ import Foundation
 final class MobileRequestService {
     
     private let requestManager: RequestManager
+    private let interactionRequestManager: RequestManager
     private let identity: () -> RequestIdentity
     private let deliveryContext: () -> DeliveryContext.Snapshot
     private let registrationStorage: KeyValueStorage
     
     init(
         requestManager: RequestManager = NetworkBuilder.buildMobileApiManager(),
+        interactionRequestManager: RequestManager = RequestManager(),
         identity: @escaping () -> RequestIdentity = { .current },
         deliveryContext: @escaping () -> DeliveryContext.Snapshot = DeliveryContext.capture,
         registrationStorage: KeyValueStorage = StorageBuilder.build()
     ) {
         self.requestManager = requestManager
+        self.interactionRequestManager = interactionRequestManager
         self.identity = identity
         self.deliveryContext = deliveryContext
         self.registrationStorage = registrationStorage
@@ -315,8 +318,20 @@ extension MobileRequestService {
             completion(.failure(APIClientError.wrongResponse), nil)
             return
         }
-        requestManager.execute(request: NewInAppInteractionRequest(deliveryInteraction: queued.interaction, headers: capturedContext.headers),
-                               responseHandler: EmptyResponseHandler(), completionHandler: completion)
+        if queued.interaction.status == .clicked {
+            let interaction = queued.interaction
+            let status = NotificationStatus(interactionId: interaction.id, status: .clicked,
+                                            date: interaction.time, action: interaction.action)
+            var request = UpdateInteractionStatusRequest(status: status)
+            request.headers = capturedContext.headers
+            let accessKey = capturedContext.headers["X-Reteno-Access-Key"] ?? ""
+            let token = Data("username:\(accessKey)".utf8).base64EncodedString()
+            request.headers?["Authorization"] = "Basic \(token)"
+            interactionRequestManager.execute(request: request, responseHandler: EmptyResponseHandler(), completionHandler: completion)
+        } else {
+            requestManager.execute(request: NewInAppInteractionRequest(deliveryInteraction: queued.interaction, headers: capturedContext.headers),
+                                   responseHandler: EmptyResponseHandler(), completionHandler: completion)
+        }
     }
 
     func sendInteraction(

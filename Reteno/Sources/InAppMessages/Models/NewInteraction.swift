@@ -19,6 +19,7 @@ struct NewInteraction: Codable {
     let status: NewInteractionStatus
     let statusDescription: String?
     var serverAssignedIid: Bool? = nil
+    // Persisted for click retries on the existing interaction-status PUT.
     let action: NotificationStatus.Action?
 
     private enum CodingKeys: String, CodingKey {
@@ -51,12 +52,6 @@ struct NewInteraction: Codable {
         json["messageInstanceId"] = messageInstanceId
         json["status"] = status.rawValue
         
-        if let action {
-            var payload = ["type": action.type]
-            payload["targetComponentId"] = action.targetComponentId
-            payload["url"] = action.url
-            json["action"] = payload
-        }
         if let statusDescription = statusDescription {
             json["statusDescription"] = statusDescription
         }

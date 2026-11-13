@@ -156,7 +156,7 @@ final class KeyValueStorage {
                 guard state.shown[context]?.contains(interaction.id) != true else { return }
             }
             if interaction.serverAssignedIid == true &&
-                (interaction.status == .opened || interaction.status == .clicked || interaction.status == .failed) {
+                (interaction.status == .opened || interaction.status == .failed) {
                 state.shown[context, default: []].insert(interaction.id)
             }
             state.observations.append(.init(id: UUID().uuidString, context: context,

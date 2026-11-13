@@ -223,6 +223,42 @@ extension InAppServiceTests {
         XCTAssertEqual(reopened.getOnlyOnceDisplayedInAppIds(), [70])
     }
 
+    func test_early_delivery_click_keeps_visibility_opened_and_its_persistent_suppression() throws {
+        let clock = Date()
+        sut = InAppService(requestService: MobileRequestService(requestManager: .stub), storage: storage, now: { clock })
+        stub(condition: pathEndsWith("v1/inapp/messages")) { _ in
+            HTTPStubsResponse(jsonObject: ["messages": [self.deliveryMessage(iid: self.firstIID,
+                deadline: clock.addingTimeInterval(3600))]], statusCode: 200, headers: nil)
+        }
+        stub(condition: pathEndsWith("v1/inapp/contents/request")) { _ in
+            HTTPStubsResponse(jsonObject: ["contents": [self.deliveryContent(iid: self.firstIID, name: "Alice")]],
+                              statusCode: 200, headers: nil)
+        }
+        let discovered = expectation(description: "Discovery")
+        var message: Message?
+        sut.inAppContents = { _, models in message = models.first?.message; discovered.fulfill() }
+        sut.getInAppMessages()
+        wait(for: [discovered], timeout: 2)
+        let authorized = expectation(description: "Authorized content")
+        var content: InAppContent?
+        sut.authorizeDelivery(try XCTUnwrap(message)) { content = $0; authorized.fulfill() }
+        wait(for: [authorized], timeout: 2)
+        let shown = try XCTUnwrap(content)
+        sut.sendInteraction(with: shown, status: .clicked,
+                            action: .init(type: "OPEN_URL", targetComponentId: "buy", url: "https://example.com/order"))
+        XCTAssertFalse(storage.hasShownDelivery(iid: firstIID, context: DeliveryContext.current))
+        XCTAssertTrue(sut.canPresentDelivery(shown), "An early click must not block actual visibility")
+        sut.sendInteraction(with: shown)
+        sut.sendInteraction(with: shown)
+        let observations = storage.pendingDeliveryInteractions(context: DeliveryContext.current, now: clock)
+        XCTAssertEqual(observations.map { $0.interaction.status }, [.clicked, .opened])
+        XCTAssertEqual(Set(observations.map { $0.interaction.id }), [firstIID])
+        for observation in observations { storage.completeDeliveryInteraction(id: observation.id, retryAt: nil) }
+        let reopened = KeyValueStorage(storage: UserDefaults(suiteName: suiteName))
+        XCTAssertTrue(reopened.hasShownDelivery(iid: firstIID, context: DeliveryContext.current))
+        XCTAssertFalse(sut.canPresentDelivery(shown), "Visibility suppression survives both acknowledgments")
+    }
+
     func test_delivery_expiry_offline_revalidation_and_identity_switch_prevent_first_display() throws {
         var clock = Date()
         var account = "account-A"

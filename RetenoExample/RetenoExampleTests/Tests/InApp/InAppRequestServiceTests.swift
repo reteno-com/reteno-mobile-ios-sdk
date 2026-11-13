@@ -277,19 +277,19 @@ extension InAppRequestServiceTests {
         let action = NotificationStatus.Action(type: "OPEN_URL", targetComponentId: "buy-button",
                                                url: "https://example.com/personalized-offer")
         service.sendInteraction(with: content, status: .clicked, action: action)
-        XCTAssertTrue(storage.hasShownDelivery(iid: iid, context: context))
-        XCTAssertTrue(storage.getNotificationStatuses().isEmpty, "Delivery clicks never enter the ordinary PUT queue")
+        XCTAssertFalse(storage.hasShownDelivery(iid: iid, context: context))
+        XCTAssertTrue(storage.getNotificationStatuses().isEmpty, "Clicks retain their context-scoped persisted queue")
         let queued = try XCTUnwrap(storage.pendingDeliveryInteractions(context: context, now: now).first)
         var responseCode: Int32 = 503
         var bodies: [NSDictionary] = []
-        stub(condition: pathEndsWith("v1/interaction")) { request in
-            XCTAssertEqual(request.httpMethod, "POST")
-            XCTAssertTrue(storage.hasShownDelivery(iid: iid, context: context), "Local suppression precedes network publication")
+        stub(condition: pathEndsWith("v1/interactions/\(iid)/status")) { request in
+            XCTAssertEqual(request.httpMethod, "PUT")
+            XCTAssertFalse(storage.hasShownDelivery(iid: iid, context: context), "An early click must not prevent visibility OPENED")
             let body = try! JSONSerialization.jsonObject(with: request.ohhttpStubs_httpBody!) as! NSDictionary
             bodies.append(body)
             return HTTPStubsResponse(jsonObject: [:], statusCode: responseCode, headers: nil)
         }
-        let failed = expectation(description: "Failed broker acknowledgment keeps the observation")
+        let failed = expectation(description: "Failed request keeps the click")
         let firstAttempt = SendDeliveryInteractionOperation(requestService: requestService, storage: storage, queued: queued)
         firstAttempt.completionBlock = { failed.fulfill() }
         let queue = OperationQueue()
@@ -312,27 +312,73 @@ extension InAppRequestServiceTests {
         XCTAssertEqual(bodies.count, 2)
         XCTAssertEqual(bodies[0], bodies[1])
         XCTAssertEqual(bodies[0]["status"] as? String, "CLICKED")
-        XCTAssertEqual(bodies[0]["iid"] as? String, iid)
-        XCTAssertEqual(bodies[0]["time"] as? String, DeliveryDate.format(now))
-        XCTAssertEqual(bodies[0]["messageInstanceId"] as? Int, 80)
-        XCTAssertEqual(bodies[0]["serverAssignedIid"] as? Bool, true)
+        XCTAssertNil(bodies[0]["iid"])
+        XCTAssertEqual(bodies[0]["time"] as? String, DateFormatter.baseBEDateFormatter.string(from: now))
+        XCTAssertNil(bodies[0]["messageInstanceId"])
+        XCTAssertNil(bodies[0]["serverAssignedIid"])
         XCTAssertNil(bodies[0]["eventId"])
         XCTAssertEqual(bodies[0]["action"] as? NSDictionary,
                        ["type": "OPEN_URL", "targetComponentId": "buy-button",
                         "url": "https://example.com/personalized-offer"] as NSDictionary)
         XCTAssertTrue(reopened.pendingDeliveryInteractions(context: context, now: Date()).isEmpty)
-        XCTAssertTrue(reopened.hasShownDelivery(iid: iid, context: context))
+        XCTAssertFalse(reopened.hasShownDelivery(iid: iid, context: context))
     }
 }
 
 extension InAppRequestServiceTests {
+    func test_click_uses_verified_context_headers_and_refuses_replay_after_account_switch() throws {
+        for serverAssigned in [false, true] {
+            let accountA = DeliveryContext.Snapshot(apiKey: "application-A",
+                identity: RequestIdentity(deviceId: "device-A", externalUserId: "account-A"), email: nil, phone: nil)
+            let accountB = DeliveryContext.Snapshot(apiKey: "application-B",
+                identity: RequestIdentity(deviceId: "device-B", externalUserId: "account-B"), email: nil, phone: nil)
+            var nextSnapshot = accountA
+            let service = MobileRequestService(deliveryContext: {
+                let captured = nextSnapshot
+                nextSnapshot = accountB
+                return captured
+            })
+            var click = NewInteraction(time: Date(), messageInstanceId: 80, status: .clicked,
+                                       statusDescription: nil, action: .init(type: "CLICK", targetComponentId: "buy"))
+            click.serverAssignedIid = serverAssigned
+            let queued = QueuedInAppInteraction(id: UUID().uuidString, context: accountA.id,
+                                                 interaction: click, nextAttempt: Date())
+            var requests = 0
+            stub(condition: { _ in true }) { request in
+                requests += 1
+                XCTAssertEqual(request.httpMethod, "PUT")
+                XCTAssertEqual(request.url?.host, "api.reteno.com")
+                XCTAssertTrue(request.url!.path.hasSuffix("v1/interactions/\(click.id)/status"))
+                XCTAssertEqual(request.value(forHTTPHeaderField: "X-Reteno-Access-Key"), "application-A")
+                XCTAssertEqual(request.value(forHTTPHeaderField: "X-Reteno-Device-ID"), "device-A")
+                let authorization = "Basic " + Data("username:application-A".utf8).base64EncodedString()
+                XCTAssertEqual(request.value(forHTTPHeaderField: "Authorization"), authorization)
+                return HTTPStubsResponse(jsonObject: [:], statusCode: 200, headers: nil)
+            }
+            let sent = expectation(description: "Click sent with verified account")
+            service.sendDeliveryInteraction(queued) { result, _ in
+                if case .failure = result { XCTFail("Account A owns the click") }
+                sent.fulfill()
+            }
+            wait(for: [sent], timeout: 2)
+            let skipped = expectation(description: "Account switch rejects queued click")
+            service.sendDeliveryInteraction(queued) { result, _ in
+                if case .success = result { XCTFail("Account B must not replay account A's click") }
+                skipped.fulfill()
+            }
+            wait(for: [skipped], timeout: 2)
+            XCTAssertEqual(requests, 1)
+            HTTPStubs.removeAllStubs()
+        }
+    }
+
     func test_delivery_retry_uses_headers_from_the_same_context_snapshot_it_verified() throws {
         let accountA = DeliveryContext.Snapshot(apiKey: "application-A",
             identity: RequestIdentity(deviceId: "device-A", externalUserId: "account-A"), email: nil, phone: nil)
         let accountB = DeliveryContext.Snapshot(apiKey: "application-B",
             identity: RequestIdentity(deviceId: "device-B", externalUserId: "account-B"), email: nil, phone: nil)
         var nextSnapshot = accountA
-        let service = MobileRequestService(requestManager: .stub, deliveryContext: {
+        let service = MobileRequestService(deliveryContext: {
             let captured = nextSnapshot
             nextSnapshot = accountB
             return captured
@@ -343,6 +389,8 @@ extension InAppRequestServiceTests {
         let queued = QueuedInAppInteraction(id: UUID().uuidString, context: accountA.id,
                                              interaction: interaction, nextAttempt: Date())
         stub(condition: pathEndsWith("v1/interaction")) { request in
+            XCTAssertEqual(request.url?.host, "mobile-api.reteno.com")
+            XCTAssertEqual(request.httpMethod, "POST")
             XCTAssertEqual(request.value(forHTTPHeaderField: "X-Reteno-Access-Key"), "application-A")
             XCTAssertEqual(request.value(forHTTPHeaderField: "X-Reteno-Device-ID"), "device-A")
             return HTTPStubsResponse(jsonObject: [:], statusCode: 200, headers: nil)
@@ -543,8 +591,8 @@ extension InAppRequestServiceTests {
         let action = NotificationStatus.Action(type: "OPEN_URL", targetComponentId: "buy", url: "https://example.org/order")
         var responseCode: Int32 = 503
         var bodies: [NSDictionary] = []
-        stub(condition: pathEndsWith("v1/interaction")) { request in
-            XCTAssertEqual(request.httpMethod, "POST")
+        stub(condition: pathEndsWith("v1/interactions/\(iid)/status")) { request in
+            XCTAssertEqual(request.httpMethod, "PUT")
             bodies.append(try! JSONSerialization.jsonObject(with: request.ohhttpStubs_httpBody!) as! NSDictionary)
             return HTTPStubsResponse(jsonObject: [:], statusCode: responseCode, headers: nil)
         }
@@ -580,9 +628,10 @@ extension InAppRequestServiceTests {
         XCTAssertEqual(bodies.count, 2)
         XCTAssertEqual(bodies.first, bodies.last)
         let body = try XCTUnwrap(bodies.first)
-        XCTAssertEqual(body["iid"] as? String, iid)
-        XCTAssertEqual(body["messageInstanceId"] as? Int, 80)
+        XCTAssertNil(body["iid"])
+        XCTAssertNil(body["messageInstanceId"])
         XCTAssertEqual(body["status"] as? String, "CLICKED")
+        XCTAssertEqual(body["time"] as? String, DateFormatter.baseBEDateFormatter.string(from: now))
         XCTAssertNil(body["serverAssignedIid"])
         XCTAssertEqual(body["action"] as? NSDictionary,
                        ["type": "OPEN_URL", "targetComponentId": "buy", "url": "https://example.org/order"] as NSDictionary)
@@ -616,8 +665,8 @@ extension InAppRequestServiceTests {
         XCTAssertEqual(Set(observations.map { $0.id }).count, 3)
         XCTAssertFalse(reopened.hasShownDelivery(iid: iid, context: context))
         XCTAssertTrue(reopened.pendingDeliveryInteractions(context: DeliveryContext.current, now: now).isEmpty)
-        let skipped = expectation(description: "Old account click never posts under current credentials")
-        stub(condition: pathEndsWith("v1/interaction")) { _ in
+        let skipped = expectation(description: "Old account click never sends under current credentials")
+        stub(condition: { _ in true }) { _ in
             XCTFail("An ordinary click must retain its captured account")
             return HTTPStubsResponse(jsonObject: [:], statusCode: 200, headers: nil)
         }
