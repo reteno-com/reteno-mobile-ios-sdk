@@ -17,6 +17,8 @@ struct InAppMessagesRequest: APIRequest {
     let encoding: any ParameterEncoding = URLEncoding.default
 
     init(eTag: String?) {
+        parameters = [:]
+        headers = DeliveryContext.headers
         headers?.updateValue(eTag ?? "", forKey: "If-None-Match")
     }
     

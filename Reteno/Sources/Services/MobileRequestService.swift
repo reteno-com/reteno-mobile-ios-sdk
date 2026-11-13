@@ -10,14 +10,23 @@ import Foundation
 final class MobileRequestService {
     
     private let requestManager: RequestManager
+    private let interactionRequestManager: RequestManager
     private let identity: () -> RequestIdentity
+    private let deliveryContext: () -> DeliveryContext.Snapshot
+    private let registrationStorage: KeyValueStorage
     
     init(
         requestManager: RequestManager = NetworkBuilder.buildMobileApiManager(),
-        identity: @escaping () -> RequestIdentity = { .current }
+        interactionRequestManager: RequestManager = RequestManager(),
+        identity: @escaping () -> RequestIdentity = { .current },
+        deliveryContext: @escaping () -> DeliveryContext.Snapshot = DeliveryContext.capture,
+        registrationStorage: KeyValueStorage = StorageBuilder.build()
     ) {
         self.requestManager = requestManager
+        self.interactionRequestManager = interactionRequestManager
         self.identity = identity
+        self.deliveryContext = deliveryContext
+        self.registrationStorage = registrationStorage
     }
     
     /// `self` while `identity` is still the current one, otherwise a mobile API service pinned to `identity`,
@@ -38,7 +47,12 @@ final class MobileRequestService {
         let languageCode = Bundle.main.preferredLocalizations.first ?? "en"
         let pushToken = RetenoNotificationsHelper.deviceToken() ?? ""
         let category = try? DeviceCategoryHelper.deviceType()
-        let request = DeviceRequest(
+        let capturedHeaders = deliveryContext().headers
+        let registration = DeliveryContext.Snapshot(
+            apiKey: capturedHeaders["X-Reteno-Access-Key"] ?? "",
+            identity: RequestIdentity(deviceId: identity().deviceId, externalUserId: externalUserId),
+            email: email, phone: phone)
+        var request = DeviceRequest(
             category: category ?? .mobile,
             languageCode: languageCode,
             pushToken: pushToken,
@@ -47,9 +61,16 @@ final class MobileRequestService {
             email: email,
             phone: phone
         )
+        request.headers = registration.headers
+        request.parameters?["deviceId"] = registration.headers["X-Reteno-Device-ID"]
         let handler = EmptyResponseHandler()
         
         requestManager.execute(request: request, responseHandler: handler) { result in
+            if case .success = result, registration.id == self.deliveryContext().id,
+               self.registrationStorage.confirmDeliveryRegistration(context: registration.id) {
+                NotificationCenter.default.post(name: Reteno.inAppDeviceRegistrationConfirmed, object: nil,
+                                                userInfo: ["context": registration.id])
+            }
             completionHandler(result)
         }
     }
@@ -284,6 +305,35 @@ extension MobileRequestService {
         requestManager.execute(request: request, responseHandler: handler, completionHandler: completionHandler)
     }
     
+    func getDeliveryContent(messages: [Message], completionHandler: @escaping (Result<InAppContents, Error>) -> Void) {
+        let request = InAppMessageContentRequest(messages: messages)
+        requestManager.execute(request: request, responseHandler: DecodableResponseHandler<InAppContents>(),
+                               completionHandler: completionHandler)
+    }
+
+    func sendDeliveryInteraction(_ queued: QueuedInAppInteraction,
+                                 completion: @escaping (Result<Bool, Error>, ResponseData?) -> Void) {
+        let capturedContext = deliveryContext()
+        guard queued.context == capturedContext.id else {
+            completion(.failure(APIClientError.wrongResponse), nil)
+            return
+        }
+        if queued.interaction.status == .clicked {
+            let interaction = queued.interaction
+            let status = NotificationStatus(interactionId: interaction.id, status: .clicked,
+                                            date: interaction.time, action: interaction.action)
+            var request = UpdateInteractionStatusRequest(status: status)
+            request.headers = capturedContext.headers
+            let accessKey = capturedContext.headers["X-Reteno-Access-Key"] ?? ""
+            let token = Data("username:\(accessKey)".utf8).base64EncodedString()
+            request.headers?["Authorization"] = "Basic \(token)"
+            interactionRequestManager.execute(request: request, responseHandler: EmptyResponseHandler(), completionHandler: completion)
+        } else {
+            requestManager.execute(request: NewInAppInteractionRequest(deliveryInteraction: queued.interaction, headers: capturedContext.headers),
+                                   responseHandler: EmptyResponseHandler(), completionHandler: completion)
+        }
+    }
+
     func sendInteraction(
         interaction: NewInteraction,
         completionHandler: @escaping (Result<Bool, Error>) -> Void = { _ in }

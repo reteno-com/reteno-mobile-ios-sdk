@@ -59,6 +59,8 @@ enum StorageKeys: String, CaseIterable {
     case retenoConfiguration = "com.reteno.reteno-configuration.key"
     case isDelayedInitialization = "com.reteno.reteno-delayed-initialization.key"
     case lastBaseHTMLFetchDate = "com.reteno.last-base-html-fetch-date.key"
+    case deliveryState = "com.reteno.workflow-state.key"
+    case inAppContext = "com.reteno.in-app-context.key"
     case lastBaseHTMLPath = "com.reteno.last-base-html-path.key"
 }
 
@@ -108,6 +110,79 @@ final class KeyValueStorage {
         storageUnwrapper()?.removeObject(forKey: key)
     }
     
+    var hasPendingDeliveryRegistration: Bool {
+        let state: DeliveryState = readCollection(.deliveryState, empty: DeliveryState())
+        return state.pendingRegistrationContext != nil
+    }
+
+    func beginDeliveryRegistration(context: String) {
+        updateCollection(.deliveryState, empty: DeliveryState()) { $0.pendingRegistrationContext = context }
+    }
+
+    @discardableResult
+    func confirmDeliveryRegistration(context: String) -> Bool {
+        var confirmed = false
+        updateCollection(.deliveryState, empty: DeliveryState()) { state in
+            guard state.pendingRegistrationContext == context else { return }
+            state.pendingRegistrationContext = nil
+            confirmed = true
+        }
+        return confirmed
+    }
+
+    func hasShownDelivery(iid: String, context: String) -> Bool {
+        let state: DeliveryState = readCollection(.deliveryState, empty: DeliveryState())
+        return state.shown[context]?.contains(iid) == true
+    }
+
+    func deliveryDeadline(iid: String, proposed: String, context: String) -> String {
+        var deadline = proposed
+        updateCollection(.deliveryState, empty: DeliveryState()) { state in
+            if let saved = state.deadlines[context]?[iid] {
+                deadline = saved
+            } else {
+                state.deadlines[context, default: [:]][iid] = proposed
+            }
+        }
+        return deadline
+    }
+
+    @discardableResult
+    func recordDeliveryInteraction(_ interaction: NewInteraction, context: String, now: Date) -> Bool {
+        var recorded = false
+        // One encoded value makes the shown marker and OPENED inseparable on reopen.
+        updateCollection(.deliveryState, empty: DeliveryState()) { state in
+            if interaction.serverAssignedIid == true, interaction.status == .opened {
+                guard state.shown[context]?.contains(interaction.id) != true else { return }
+            }
+            if interaction.serverAssignedIid == true &&
+                (interaction.status == .opened || interaction.status == .failed) {
+                state.shown[context, default: []].insert(interaction.id)
+            }
+            state.observations.append(.init(id: UUID().uuidString, context: context,
+                                            interaction: interaction, nextAttempt: now))
+            recorded = true
+        }
+        return recorded
+    }
+
+    func pendingDeliveryInteractions(context: String, now: Date) -> [QueuedInAppInteraction] {
+        let state: DeliveryState = readCollection(.deliveryState, empty: DeliveryState())
+        return state.observations.filter { $0.context == context && $0.nextAttempt <= now && $0.attempts < 8 }
+    }
+
+    func completeDeliveryInteraction(id: String, retryAt: Date?) {
+        updateCollection(.deliveryState, empty: DeliveryState()) { state in
+            guard let index = state.observations.firstIndex(where: { $0.id == id }) else { return }
+            if let retryAt, state.observations[index].attempts < 7 {
+                state.observations[index].attempts += 1
+                state.observations[index].nextAttempt = retryAt
+            } else {
+                state.observations.remove(at: index)
+            }
+        }
+    }
+
     // MARK: Analytics logic
 
     func getStoredSessionConfiguration() -> RetenoSessionConfiguration? {

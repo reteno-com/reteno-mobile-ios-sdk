@@ -35,6 +35,14 @@ struct InAppPersonalisation {
         self.init(values: Self.values(from: storage))
     }
     
+    func prepareHTML(_ html: String, for message: InApp) -> String {
+        let hasServerAssignedIid = (message as? InAppContent)?.hasServerAssignedIid == true
+        let model = hasServerAssignedIid ? message.model : apply(to: message.model)
+        return html
+            .replacingOccurrences(of: "${documentModel}", with: model)
+            .replacingOccurrences(of: "${personalisation}", with: message.personalisation ?? "{}")
+    }
+
     func apply(to content: String) -> String {
         guard content.contains("${"), let regex = Self.placeholderRegex else { return content }
         

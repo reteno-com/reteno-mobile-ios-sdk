@@ -29,13 +29,15 @@ struct NetworkBuilder {
     ) -> RequestManager {
         let headersDecorator = RequestDecorator { request in
             request.headers?.updateValue("application/json", forKey: "Content-Type")
-            request.headers?.updateValue(apiKey(), forKey: "X-Reteno-Access-Key")
+            let accessKey = request.headers?["X-Reteno-Access-Key"] ?? apiKey()
+            request.headers?.updateValue(accessKey, forKey: "X-Reteno-Access-Key")
             request.headers?.updateValue(DevicePlatformHelper.getDevicePlatform(), forKey: "X-Reteno-SDK-Version")
             if DebugModeHelper.isDebugModeOn() {
                 request.headers?.updateValue("true", forKey: "X-Reteno-Debug")
             }
         }
         let parametersDecorator = RequestDecorator { request in
+            guard request.headers?["X-Reteno-Device-ID"] == nil else { return }
             let identity = identity()
             request.parameters?["deviceId"] = identity.deviceId
             if isExternalIdRequired {
@@ -59,7 +61,8 @@ struct NetworkBuilder {
     ) -> RequestManager {
         let headersDecorator = RequestDecorator { request in
             request.headers?.updateValue("application/json", forKey: "Content-Type")
-            request.headers?.updateValue(apiKey(), forKey: "X-Reteno-Access-Key")
+            let accessKey = request.headers?["X-Reteno-Access-Key"] ?? apiKey()
+            request.headers?.updateValue(accessKey, forKey: "X-Reteno-Access-Key")
             request.headers?.updateValue(DevicePlatformHelper.getDevicePlatform(), forKey: "X-Reteno-SDK-Version")
             let deviceId = identity().deviceId
             if !deviceId.isEmpty {

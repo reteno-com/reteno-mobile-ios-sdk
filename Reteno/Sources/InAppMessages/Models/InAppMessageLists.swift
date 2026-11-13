@@ -9,6 +9,16 @@ import Foundation
 
 struct InAppMessageLists: Codable {
     let messages: [Message]
+
+    private enum CodingKeys: String, CodingKey { case messages }
+    private struct Entry: Decodable {
+        let value: Message?
+        init(from decoder: Decoder) throws { value = try? Message(from: decoder) }
+    }
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        messages = try container.decode([Entry].self, forKey: .messages).compactMap { $0.value }
+    }
 }
 
 protocol ConditionalValue: Codable, Encodable { }
@@ -17,6 +27,21 @@ struct Message: Codable {
     let messageId: Int
     let messageInstanceId: Int
     
+    var priority: Int? = nil
+    var iid: String? = nil
+    var expiresAt: String? = nil
+
+    var hasServerAssignedIid: Bool { iid != nil }
+    var displayPriority: Int { priority ?? 10 }
+    var executionKey: String { hasServerAssignedIid ? "delivery:" + (iid ?? "") : "rules:\(messageId)" }
+
+    func isAvailable(at date: Date) -> Bool {
+        guard hasServerAssignedIid else { return true }
+        guard let iid, UUID(uuidString: iid) != nil, let expiresAt,
+              let deadline = DeliveryDate.parse(expiresAt) else { return false }
+        return date < deadline
+    }
+
     let displayRules: DisplayRules
 
     struct DisplayRules: Codable {
@@ -24,9 +49,40 @@ struct Message: Codable {
         let async: Async
         let targeting: Targeting
         let schedule: Schedule
-        
+        var deliverySupported: Bool = true
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            frequency = try container.decode(Frequency.self, forKey: .frequency)
+            async = try container.decode(Async.self, forKey: .async)
+            targeting = try container.decode(Targeting.self, forKey: .targeting)
+            schedule = try container.decode(Schedule.self, forKey: .schedule)
+            let raw = try decoder.container(keyedBy: JSONCodingKeys.self).decode([String: Any].self)
+            let known: Set<String> = ["FREQUENCY", "ASYNC", "TARGETING", "SCHEDULE"]
+            deliverySupported = (try container.decodeIfPresent(Bool.self, forKey: .deliverySupported) ?? true) && !raw.contains { !known.contains($0.key) && ($0.value as? [String: Any])?["enabled"] as? Bool == true }
+            if let asyncRules = raw["ASYNC"] as? [String: Any] {
+                deliverySupported = deliverySupported && !asyncRules.contains {
+                    $0.key != "IS_IN_SEGMENT" && ($0.value as? [String: Any])?["enabled"] as? Bool == true
+                }
+            }
+            if let targeting = raw["TARGETING"] as? [String: Any], targeting["enabled"] as? Bool == true,
+               let schema = targeting["schema"] as? [String: Any],
+               let exclude = schema["exclude"] as? [String: Any],
+               let groups = exclude["groups"] as? [Any], !groups.isEmpty {
+                deliverySupported = false
+            }
+        }
+
+        func nonFrequencyRulesData() -> Data? {
+            guard let encoded = try? JSONEncoder().encode(self),
+                  var rules = (try? JSONSerialization.jsonObject(with: encoded)) as? [String: Any] else { return nil }
+            rules.removeValue(forKey: "FREQUENCY")
+            return try? JSONSerialization.data(withJSONObject: rules, options: .sortedKeys)
+        }
+
         enum CodingKeys: String, CodingKey {
             case frequency = "FREQUENCY", async = "ASYNC", targeting = "TARGETING", schedule = "SCHEDULE"
+            case deliverySupported = "_sdkDeliverySupported"
         }
     }
 }
@@ -49,7 +105,7 @@ struct Frequency: Codable {
         
         init(from decoder: Decoder) throws {
             let container: KeyedDecodingContainer<CodingKeys> = try decoder.container(keyedBy: CodingKeys.self)
-            self.name = try container.decode(PredicateName.self, forKey: Frequency.Predicate.CodingKeys.name)
+            self.name = (try? container.decode(PredicateName.self, forKey: Frequency.Predicate.CodingKeys.name)) ?? .unknown
             self.isActive = try container.decode(Bool.self, forKey: Frequency.Predicate.CodingKeys.isActive)
             if name == .timesPerTimeUnit {
                 self.params = try? container.decode(FrequencyPerUnitParams.self, forKey: .params)
@@ -191,15 +247,20 @@ struct Condition: Codable {
     let `operator`: ConditionOperator?
                                 
     let values: [ConditionalValue]?
-    
+    var deliverySupported = true
+
     enum CodingKeys: String, CodingKey {
         case operand, `operator` = "operator", values
+        case deliverySupported = "_sdkDeliverySupported"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.operand = try container.decode(Condition.Operand.self, forKey: .operand)
         self.operator = try? container.decode(Condition.ConditionOperator.self, forKey: .operator)
+        let rawOperator = try container.decodeIfPresent(String.self, forKey: .operator)
+        self.deliverySupported = (try container.decodeIfPresent(Bool.self, forKey: .deliverySupported) ?? true) &&
+            (rawOperator == nil || self.operator != nil || (operand.name == .event && rawOperator == "AFTER_EVENT"))
         if operand.name == .user {
             self.values = try? container.decodeIfPresent([Condition.Value].self, forKey: .values)
         } else if operand.name == .event {
@@ -211,6 +272,7 @@ struct Condition: Codable {
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(deliverySupported, forKey: .deliverySupported)
         try container.encode(self.operand, forKey: .operand)
         try? container.encode(self.operator, forKey: .operator)
         if operand.name == .user {
